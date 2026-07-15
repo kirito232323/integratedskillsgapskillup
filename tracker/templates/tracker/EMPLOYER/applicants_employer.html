@@ -1,0 +1,486 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#0051d5",
+                    "inverse-surface": "#213145",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "outline-variant": "#c6c6cd",
+                    "primary-fixed": "#dae2fd",
+                    "on-error": "#ffffff",
+                    "surface-container": "#e5eeff",
+                    "on-tertiary": "#ffffff",
+                    "surface-tint": "#565e74",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "surface-container-low": "#eff4ff",
+                    "on-surface": "#0b1c30",
+                    "on-secondary-fixed-variant": "#003ea8",
+                    "surface-bright": "#f8f9ff",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-primary-container": "#7c839b",
+                    "primary-fixed-dim": "#bec6e0",
+                    "outline": "#76777d",
+                    "on-secondary-fixed": "#00174b",
+                    "on-secondary": "#ffffff",
+                    "surface-container-highest": "#d3e4fe",
+                    "tertiary-container": "#002113",
+                    "primary-container": "#131b2e",
+                    "tertiary": "#000000",
+                    "on-secondary-container": "#fefcff",
+                    "surface-dim": "#cbdbf5",
+                    "error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "on-background": "#0b1c30",
+                    "on-surface-variant": "#45464d",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed": "#002113",
+                    "inverse-on-surface": "#eaf1ff",
+                    "background": "#f8f9ff",
+                    "secondary-fixed": "#dbe1ff",
+                    "primary": "#000000",
+                    "secondary-container": "#316bf3",
+                    "on-tertiary-container": "#009668",
+                    "surface-variant": "#d3e4fe",
+                    "surface-container-high": "#dce9ff",
+                    "error-container": "#ffdad6",
+                    "on-error-container": "#93000a",
+                    "surface": "#f8f9ff",
+                    "secondary-fixed-dim": "#b4c5ff",
+                    "on-primary-fixed": "#131b2e",
+                    "inverse-primary": "#bec6e0"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "40px",
+                    "container-max": "1440px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["JetBrains Mono"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-md": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .zebra-row:nth-child(even) {
+            background-color: #F8FAFC;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md">
+{% if messages %}
+<div class="fixed top-20 right-4 z-50 flex flex-col gap-2 max-w-sm w-full">
+    {% for message in messages %}
+    <div class="toast-notification flex items-center gap-3 p-4 rounded-xl border border-outline-variant bg-surface-container-lowest/80 backdrop-blur-md shadow-lg transition-all duration-300 transform translate-x-12 opacity-0" data-type="{{ message.tags }}">
+        {% if message.tags == 'success' %}
+        <span class="material-symbols-outlined text-[20px] text-green-600 bg-green-50 p-1.5 rounded-full" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+        {% elif message.tags == 'error' %}
+        <span class="material-symbols-outlined text-[20px] text-error bg-error-container/10 p-1.5 rounded-full">error</span>
+        {% else %}
+        <span class="material-symbols-outlined text-[20px] text-secondary bg-secondary/10 p-1.5 rounded-full">info</span>
+        {% endif %}
+        <div class="flex-grow">
+            <p class="font-body-sm text-body-sm font-semibold text-on-surface">{{ message }}</p>
+        </div>
+        <button onclick="this.parentElement.remove()" class="material-symbols-outlined text-on-surface-variant hover:text-on-surface text-sm">close</button>
+    </div>
+    {% endfor %}
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const toasts = document.querySelectorAll('.toast-notification');
+        toasts.forEach((toast, index) => {
+            setTimeout(() => {
+                toast.classList.remove('translate-x-12', 'opacity-0');
+            }, index * 150);
+            
+            setTimeout(() => {
+                toast.classList.add('translate-x-12', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000 + (index * 150));
+        });
+    });
+</script>
+{% endif %}
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-surface dark:bg-surface-container-low border-b border-outline-variant dark:border-outline flex items-center justify-between px-margin-desktop h-16 w-full">
+<div class="flex items-center gap-8">
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-inverse-on-surface">SKILLUP</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative flex items-center justify-center">
+  <a href="{% url 'employer_notifications' %}"
+     class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80 block"
+     {% if unread_match_alerts %}style="color:#0051d5" {% endif %}>notifications</a>
+  {% if unread_match_alerts %}<span
+     class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">{{ unread_match_alerts }}</span>{% endif %}
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">settings</button>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-64 pt-20 bg-surface-container-lowest dark:bg-primary-container border-r border-outline-variant dark:border-outline hidden md:flex flex-col p-4 gap-2 z-40">
+<div class="flex items-center gap-3 px-2 py-4 mb-4 border-b border-outline-variant/30">
+<div class="w-10 h-10 bg-surface border border-outline-variant rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
+  {% if request.user.profile.company_logo %}
+    <img class="w-full h-full object-cover" src="{{ request.user.profile.company_logo.url }}" alt="Company Logo">
+  {% else %}
+    <span class="text-white font-black text-xl bg-secondary w-full h-full flex items-center justify-center">{{ request.user.profile.company_name|slice:":1"|default:"P" }}</span>
+  {% endif %}
+</div>
+<div>
+<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">Enterprise Portal</h2>
+<p class="text-[10px] text-on-surface-variant opacity-70">Talent Management</p>
+</div>
+</div>
+<nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'employer_dashboard' %}"><span class="material-symbols-outlined">dashboard</span><span>Dashboard</span></a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'hiring_tracker_employer' %}"><span class="material-symbols-outlined">developer_board</span><span>Hiring Tracker</span></a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'job_management_employer' %}"><span class="material-symbols-outlined">work</span><span>Job Management</span></a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'company_profile_employer' %}"><span class="material-symbols-outlined">corporate_fare</span><span>Company Profile</span></a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md relative" href="{% url 'employer_notifications' %}"><span class="material-symbols-outlined">notifications</span><span>Match Alerts</span></a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'logout' %}"><span class="material-symbols-outlined">logout</span><span>Log Out</span></a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="ml-64 pt-20 min-h-screen">
+<div class="p-margin-desktop space-y-gutter">
+<!-- Page Header & Stats -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-2">Applicants Overview</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+  {% if selected_job %}
+    Reviewing candidates for <span class="text-headline-md font-extrabold text-secondary">{{ selected_job.title }}</span>.
+  {% else %}
+    Reviewing candidates across all open roles.
+  {% endif %}
+</p>
+</div>
+<div class="flex gap-4">
+<div class="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant flex flex-col min-w-[140px]">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Total Applied</span>
+<span class="font-headline-md text-headline-md font-bold text-on-surface">{{ total_applied_count }}</span>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant flex flex-col min-w-[140px]">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">High Match</span>
+<span class="font-headline-md text-headline-md font-bold text-on-secondary-container">{{ high_match_count }}</span>
+</div>
+</div>
+</div>
+<!-- Dashboard Filters & Actions -->
+<div class="flex flex-wrap items-center justify-between gap-4 py-2">
+<div class="flex items-center gap-2 overflow-x-auto pb-2 custom-scrollbar">
+<a href="{% url 'applicants_employer' %}{% if selected_job_id %}?job_id={{ selected_job_id }}{% endif %}" class="{% if not selected_filter or selected_filter == 'all' %}bg-secondary text-white font-bold{% else %}bg-surface-container-high text-on-surface-variant{% endif %} px-4 py-2 rounded-full font-label-md text-label-md flex items-center gap-2 whitespace-nowrap hover:opacity-95 transition-all">
+                        All Applicants
+</a>
+<a href="{% url 'applicants_employer' %}?filter=high_potential{% if selected_job_id %}&job_id={{ selected_job_id }}{% endif %}" class="{% if selected_filter == 'high_potential' %}bg-secondary text-white font-bold{% else %}bg-surface-container-high text-on-surface-variant{% endif %} px-4 py-2 rounded-full font-label-md text-label-md flex items-center gap-2 whitespace-nowrap hover:opacity-95 transition-all">
+                        High Potential
+</a>
+<a href="{% url 'applicants_employer' %}?filter=Shortlisted{% if selected_job_id %}&job_id={{ selected_job_id }}{% endif %}" class="{% if selected_filter == 'Shortlisted' %}bg-secondary text-white font-bold{% else %}bg-surface-container-high text-on-surface-variant{% endif %} px-4 py-2 rounded-full font-label-md text-label-md flex items-center gap-2 whitespace-nowrap hover:opacity-95 transition-all">
+                        Shortlisted
+</a>
+<a href="{% url 'applicants_employer' %}?filter=Rejected{% if selected_job_id %}&job_id={{ selected_job_id }}{% endif %}" class="{% if selected_filter == 'Rejected' %}bg-secondary text-white font-bold{% else %}bg-surface-container-high text-on-surface-variant{% endif %} px-4 py-2 rounded-full font-label-md text-label-md flex items-center gap-2 whitespace-nowrap hover:opacity-95 transition-all">
+                        Rejected
+</a>
+</div>
+<div class="flex items-center gap-3">
+<button id="advancedFiltersBtn" class="flex items-center gap-2 font-label-md text-label-md text-on-surface-variant border border-outline-variant px-4 py-2 rounded-lg hover:bg-surface-container-low transition-colors {% if show_advanced %}bg-surface-container-low border-secondary text-secondary{% endif %}">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+                        Advanced Filters
+                    </button>
+<button onclick="exportApplicantsExcel()" class="flex items-center gap-2 font-label-md text-label-md text-on-surface-variant border border-outline-variant px-4 py-2 rounded-lg hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[20px]">download</span>
+                        Export Excel
+                    </button>
+</div>
+</div>
+
+<!-- Advanced Filters Panel -->
+<div id="advancedFiltersPanel" class="{% if not show_advanced %}hidden{% endif %} bg-surface-container-low/40 border border-outline-variant p-5 rounded-xl mb-6 transition-all duration-300">
+  <form method="get" action="{% url 'applicants_employer' %}" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <!-- Keep existing query params -->
+    {% if selected_job_id %}
+      <input type="hidden" name="job_id" value="{{ selected_job_id }}">
+    {% endif %}
+    {% if selected_filter %}
+      <input type="hidden" name="filter" value="{{ selected_filter }}">
+    {% endif %}
+    
+    <!-- Search Name / Skill -->
+    <div>
+      <label class="block text-xs font-bold text-on-surface-variant uppercase mb-1.5">Search Name / Skill</label>
+      <div class="relative">
+        <span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-[18px]">search</span>
+        <input type="text" name="search" value="{{ search_query|default:'' }}" placeholder="e.g. John, Python..." class="w-full pl-10 pr-3 py-2 bg-white border border-outline-variant rounded-lg font-body-sm focus:ring-2 focus:ring-secondary focus:border-transparent outline-none">
+      </div>
+    </div>
+
+    <!-- Match Percentage -->
+    <div>
+      <label class="block text-xs font-bold text-on-surface-variant uppercase mb-1.5">Min Match Percentage</label>
+      <select name="min_match" class="w-full px-3 py-2 bg-white border border-outline-variant rounded-lg font-body-sm focus:ring-2 focus:ring-secondary focus:border-transparent outline-none">
+        <option value="">Any Match</option>
+        <option value="50" {% if min_match == '50' %}selected{% endif %}>&ge; 50% Match</option>
+        <option value="75" {% if min_match == '75' %}selected{% endif %}>&ge; 75% Match</option>
+        <option value="90" {% if min_match == '90' %}selected{% endif %}>&ge; 90% Match</option>
+      </select>
+    </div>
+
+    <!-- Experience Years -->
+    <div>
+      <label class="block text-xs font-bold text-on-surface-variant uppercase mb-1.5">Min Experience (Years)</label>
+      <select name="min_exp" class="w-full px-3 py-2 bg-white border border-outline-variant rounded-lg font-body-sm focus:ring-2 focus:ring-secondary focus:border-transparent outline-none">
+        <option value="">Any Experience</option>
+        <option value="1" {% if min_exp == '1' %}selected{% endif %}>&ge; 1 Year</option>
+        <option value="3" {% if min_exp == '3' %}selected{% endif %}>&ge; 3 Years</option>
+        <option value="5" {% if min_exp == '5' %}selected{% endif %}>&ge; 5 Years</option>
+      </select>
+    </div>
+
+    <!-- Education Level -->
+    <div>
+      <label class="block text-xs font-bold text-on-surface-variant uppercase mb-1.5">Min Education Level</label>
+      <select name="education" class="w-full px-3 py-2 bg-white border border-outline-variant rounded-lg font-body-sm focus:ring-2 focus:ring-secondary focus:border-transparent outline-none">
+        <option value="">Any Education</option>
+        <option value="Bachelor" {% if selected_education == 'Bachelor' %}selected{% endif %}>Bachelor's Degree</option>
+        <option value="Master" {% if selected_education == 'Master' %}selected{% endif %}>Master's Degree</option>
+        <option value="Doctorate" {% if selected_education == 'Doctorate' %}selected{% endif %}>Doctorate (PhD)</option>
+      </select>
+    </div>
+
+    <!-- Buttons -->
+    <div class="md:col-span-4 flex justify-end gap-3 mt-2 border-t border-outline-variant/30 pt-3">
+      <a href="{% url 'applicants_employer' %}{% if selected_job_id %}?job_id={{ selected_job_id }}{% endif %}" class="px-4 py-2 text-xs font-bold text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg flex items-center justify-center">
+        Reset Filters
+      </a>
+      <button type="submit" class="px-5 py-2 text-xs font-bold text-white bg-secondary hover:opacity-95 transition-all active:scale-95 rounded-lg flex items-center justify-center gap-1.5">
+        <span class="material-symbols-outlined text-[16px]">filter_list</span>
+        Apply Filters
+      </button>
+    </div>
+  </form>
+</div>
+<!-- Applicants Table Container -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm">
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-left border-collapse min-w-[1000px]">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="px-6 py-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Candidate</th>
+<th class="px-6 py-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Applied Position</th>
+<th class="px-6 py-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Skill Match</th>
+<th class="px-6 py-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Experience</th>
+<th class="px-6 py-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Top Skills</th>
+<th class="px-6 py-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+{% for applicant in applicants %}
+<tr class="zebra-row group hover:bg-surface-container-high/40 transition-colors">
+<td class="px-6 py-5">
+<div class="flex items-center gap-4">
+<div class="relative">
+{% if applicant.user.email == 'alex.rivera@design.ai' %}
+<img class="w-10 h-10 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-MWBeBcolOZ2HI4H5YZlcREKGlJzBPbNNLBO_NGTgqIKcqwJzdP41KIVuSa3SWOYHgRRcp-qpEazpoE3xNo8DRSOtsz5EjtJ0BAKmbzRqgM6G1bC7A1c2Zzx1WjNLuFPtda6DetkM3iTqfO-Oh_O-ZGQMgz8S0DG0BPvTPu_6aSOp-YRE7cHd_9GyZPMPxEnMJP93RcwvU1aBu8uxFx3evnAjSG9mjM_7PDi67shJXAUYkkosbbcv5liNBPoKGQ0xLqFMSnSi4nVN">
+{% elif applicant.user.email == 'sarah.j@analytics.ai' %}
+<img class="w-10 h-10 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkye5mwhaMweUxBzbv4TrBAD1qdbgRIU1znVso28sxrAei1LqVFef5IimygVQ5H0BBfXDqHRXSswctoRB0i-6IpFs3rbF7wfVUxMIARRQRgxF_LVQAm4urCiLN3FByA3a4ltNZ67c9lkSAlk9E8WI3ydc8QUDuZcuGBGvvy23vEZrA1KIpaiQSwU1PKa2P5RyWTU459tRx3KgMVMwas1jZgnJ4get1lhD0A0WN4K2Bjp8L-PlUy9Ah4qOvfZomD1Sbd0h2TqTXPMOB">
+{% elif applicant.user.email == 'marcus.c@product.ai' %}
+<img class="w-10 h-10 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkJPfyZ04hpx9so9BDIdQwVaUUILuLAvyNH5RF0FeWi5yL3PkeOp71YxxSoiI_MxY-q_4Ga8UIpJd6CdoWk_TmF-Jvhs3avlolKpbrNwi_r6tVbOSICCHRJ-Kg2WT6GPx3nKvG6VCOlyufCVUE2V12n6EEXj9y8Oea0NRV-vfin3pOyS5n9xCzLk7iktFIFJrQ4keHMv3dOgZWDC3w7NC0nulfB6jQd1mVgTW6BVWKHzspzX9hznQI1m9224F5HosufV4eSnyRh_PD">
+{% elif applicant.user.email == 'lila.t@design.ai' %}
+<img class="w-10 h-10 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBb8bZ2esVBTpfJv5GZKIgcwVtUW8PrEfYqrDhu3XewpPFGrUjuNtwrWHRIHewz0qc6clbDZHzUaI6hiZqqo59xcr6sIKej_KQOV2EB-1PxBpyjV-biMCKF_pOL-nRMDtOuWXkW4BHCCw-h2qgmQZFF4xtFFl-SSd7FD9qrSldHC-7oTNzeezAnn-_ZdIzAhMxmE-xPcI6DlCrImFri2f-DE5jCPUyrzN7fCMF3gJNn_3zwT3ujZMovdGD72lJP_wBMxgqp54N7va-R">
+{% else %}
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-sm">
+    {{ applicant.user.first_name|slice:":1" }}{{ applicant.user.last_name|slice:":1" }}
+</div>
+{% endif %}
+</div>
+<div>
+<a href="{% url 'applicant_details_employer_id' applicant.id %}{% if selected_job %}?job_id={{ selected_job.id }}{% endif %}" class="font-body-md text-body-md font-bold text-on-surface hover:text-secondary transition-colors block">{{ applicant.user.first_name }} {{ applicant.user.last_name }}</a>
+<p class="font-body-sm text-body-sm text-on-surface-variant">{{ applicant.location|default:"Remote" }}</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<p class="font-body-lg text-body-lg font-extrabold text-on-surface mb-0.5">{{ applicant.referred_job_title|default:"Senior Cloud Architect" }}</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Profile: {{ applicant.title|default:"Job Applicant" }} • {{ applicant.status|default:"Applied" }}</p>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-bold text-secondary">
+    {{ applicant.match_percentage }}%
+</span>
+</div>
+<div class="w-32 h-2 bg-outline-variant/30 rounded-full overflow-hidden">
+<div class="h-full bg-secondary rounded-full progress-bar" data-progress="{{ applicant.match_percentage }}"></div>
+</div>
+<a href="{% url 'applicant_gap_analysis_employer' %}?applicant_id={{ applicant.id }}" class="text-[10px] text-secondary hover:underline flex items-center gap-0.5 mt-1 font-medium">
+  <span class="material-symbols-outlined text-[12px]">analytics</span> View Skill Gaps
+</a>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="font-label-md text-label-md font-medium text-on-surface">{{ applicant.experience_years|default:"0 Years" }}</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-wrap gap-1 max-w-[200px]">
+{% for skill in applicant.skills_list %}
+<span class="bg-surface-container text-on-surface font-label-sm text-[10px] px-2 py-0.5 rounded border border-outline-variant">{{ skill }}</span>
+{% empty %}
+<span class="text-xs text-on-surface-variant italic">No skills listed</span>
+{% endfor %}
+</div>
+</td>
+<td class="px-6 py-5 text-right">
+<div class="flex items-center justify-end gap-2">
+<a href="{% url 'applicant_gap_analysis_employer' %}?applicant_id={{ applicant.id }}" class="p-2 text-secondary hover:bg-secondary/10 rounded-lg transition-all" title="View Skill Gaps">
+    <span class="material-symbols-outlined">bar_chart</span>
+</a>
+<form method="post" action="{% url 'update_applicant_status' applicant.id %}" style="display:inline;">
+    {% csrf_token %}
+    <input type="hidden" name="status" value="Shortlisted">
+    <button type="submit" class="p-2 {% if applicant.status == 'Shortlisted' or applicant.status == 'Interviewing' or applicant.status == 'Employed — Onboarding' %}bg-secondary text-white shadow-sm{% else %}text-secondary hover:bg-secondary/10{% endif %} rounded-lg transition-all" title="{% if applicant.status == 'Shortlisted' or applicant.status == 'Interviewing' or applicant.status == 'Employed — Onboarding' %}Shortlisted{% else %}Shortlist{% endif %}">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+    </button>
+</form>
+<form method="post" action="{% url 'update_applicant_status' applicant.id %}" style="display:inline;">
+    {% csrf_token %}
+    <input type="hidden" name="status" value="Rejected">
+    <button type="submit" class="p-2 {% if applicant.status == 'Rejected' %}bg-error text-white shadow-sm{% else %}text-error hover:bg-error/10{% endif %} rounded-lg transition-all" title="{% if applicant.status == 'Rejected' %}Rejected{% else %}Reject{% endif %}">
+        <span class="material-symbols-outlined">cancel</span>
+    </button>
+</form>
+</div>
+</td>
+</tr>
+{% empty %}
+<tr>
+<td colspan="6" class="px-6 py-8 text-center text-on-surface-variant italic">
+    No applicants registered yet.
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination -->
+<div class="px-6 py-4 bg-surface-container-low flex items-center justify-between">
+<p class="font-body-sm text-body-sm text-on-surface-variant">Showing {{ applicants|length }} active candidate{{ applicants|length|pluralize }}</p>
+<div class="flex items-center gap-1">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded transition-colors disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="px-3 py-1 bg-secondary text-white font-label-md text-label-md rounded">1</button>
+<button class="px-3 py-1 hover:bg-surface-container-high font-label-md text-label-md rounded">2</button>
+<button class="px-3 py-1 hover:bg-surface-container-high font-label-md text-label-md rounded">3</button>
+<span class="px-2">...</span>
+<button class="px-3 py-1 hover:bg-surface-container-high font-label-md text-label-md rounded">125</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+
+</div>
+</main>
+
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.progress-bar').forEach(bar => {
+                const pct = bar.getAttribute('data-progress');
+                bar.style.width = pct + '%';
+            });
+        });
+
+        // Simple micro-interactions for screening
+        document.querySelectorAll('button[title="Shortlist"]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const row = this.closest('tr');
+                row.classList.add('bg-on-tertiary-container/10');
+                this.innerHTML = '<span class="material-symbols-outlined" style="font-variation-settings: \'FILL\' 1;">check_circle</span>';
+                this.style.color = '#009668'; // Tonal green match
+            });
+        });
+
+        document.querySelectorAll('button[title="Reject"]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const row = this.closest('tr');
+                row.style.opacity = '0.5';
+                row.style.filter = 'grayscale(1)';
+                this.innerHTML = '<span class="material-symbols-outlined" style="font-variation-settings: \'FILL\' 1;">cancel</span>';
+            });
+        });
+
+        // Advanced Filters Panel Toggle
+        const advancedFiltersBtn = document.getElementById('advancedFiltersBtn');
+        const advancedFiltersPanel = document.getElementById('advancedFiltersPanel');
+        if (advancedFiltersBtn && advancedFiltersPanel) {
+            advancedFiltersBtn.addEventListener('click', () => {
+                advancedFiltersPanel.classList.toggle('hidden');
+            });
+        }
+
+        function exportApplicantsExcel() {
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.set('export', 'excel');
+            window.location.href = window.location.pathname + '?' + urlParams.toString();
+        }
+    </script>
+</body></html>

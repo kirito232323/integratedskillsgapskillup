@@ -1,0 +1,866 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Employer Job Management | SKILLUP</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet">
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "secondary": "#0051d5",
+            "inverse-surface": "#213145",
+            "on-primary-fixed-variant": "#3f465c",
+            "outline-variant": "#c6c6cd",
+            "primary-fixed": "#dae2fd",
+            "on-error": "#ffffff",
+            "surface-container": "#e5eeff",
+            "on-tertiary": "#ffffff",
+            "surface-tint": "#565e74",
+            "on-tertiary-fixed-variant": "#005236",
+            "surface-container-low": "#eff4ff",
+            "on-surface": "#0b1c30",
+            "on-secondary-fixed-variant": "#003ea8",
+            "surface-bright": "#f8f9ff",
+            "tertiary-fixed": "#6ffbbe",
+            "on-primary-container": "#7c839b",
+            "primary-fixed-dim": "#bec6e0",
+            "outline": "#76777d",
+            "on-secondary-fixed": "#00174b",
+            "on-secondary": "#ffffff",
+            "surface-container-highest": "#d3e4fe",
+            "tertiary-container": "#002113",
+            "primary-container": "#131b2e",
+            "tertiary": "#000000",
+            "on-secondary-container": "#fefcff",
+            "surface-dim": "#cbdbf5",
+            "error": "#ba1a1a",
+            "on-primary": "#ffffff",
+            "tertiary-fixed-dim": "#4edea3",
+            "on-background": "#0b1c30",
+            "on-surface-variant": "#45464d",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed": "#002113",
+            "inverse-on-surface": "#eaf1ff",
+            "background": "#f8f9ff",
+            "secondary-fixed": "#dbe1ff",
+            "primary": "#000000",
+            "secondary-container": "#316bf3",
+            "on-tertiary-container": "#009668",
+            "surface-variant": "#d3e4fe",
+            "surface-container-high": "#dce9ff",
+            "error-container": "#ffdad6",
+            "on-error-container": "#93000a",
+            "surface": "#f8f9ff",
+            "secondary-fixed-dim": "#b4c5ff",
+            "on-primary-fixed": "#131b2e",
+            "inverse-primary": "#bec6e0"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "gutter": "24px",
+            "margin-mobile": "16px",
+            "margin-desktop": "40px",
+            "container-max": "1440px",
+            "unit": "4px"
+          },
+          "fontFamily": {
+            "body-md": ["Inter"],
+            "headline-md": ["Inter"],
+            "display-lg": ["Inter"],
+            "body-lg": ["Inter"],
+            "label-sm": ["JetBrains Mono"],
+            "headline-lg-mobile": ["Inter"],
+            "body-sm": ["Inter"],
+            "headline-lg": ["Inter"],
+            "label-md": ["JetBrains Mono"]
+          },
+          "fontSize": {
+            "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+            "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "label-sm": ["12px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+            "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+            "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "label-md": ["14px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }]
+          }
+        },
+      },
+    }
+  </script>
+  <style>
+    body {
+      background-color: #f8f9ff;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .glass-header {
+      backdrop-filter: blur(8px);
+      background-color: rgba(248, 249, 255, 0.8);
+    }
+
+    .card-hover:hover {
+      box-shadow: 0px 4px 20px rgba(15, 23, 42, 0.05);
+      border-color: #0051d5;
+    }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+    }
+  </style>
+</head>
+
+<body class="bg-background text-on-surface">
+  <!-- TopNavBar -->
+  <header
+    class="fixed top-0 w-full z-50 bg-surface dark:bg-surface-container-low border-b border-outline-variant dark:border-outline flex items-center justify-between px-margin-desktop h-16 w-full">
+    <div class="flex items-center gap-8">
+      <h1 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-inverse-on-surface">SKILLUP</h1>
+    </div>
+    <div class="flex items-center gap-4">
+      <div class="relative flex items-center justify-center">
+        <a href="{% url 'employer_notifications' %}"
+           class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80 block"
+           {% if unread_match_alerts %}style="color:#0051d5" {% endif %}>notifications</a>
+        {% if unread_match_alerts %}<span
+           class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">{{ unread_match_alerts }}</span>{% endif %}
+      </div>
+      <button
+        class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">settings</button>
+    </div>
+  </header>
+  <!-- SideNavBar -->
+  <aside class="fixed left-0 top-0 h-full w-64 pt-20 bg-surface-container-lowest dark:bg-primary-container border-r border-outline-variant dark:border-outline hidden md:flex flex-col p-4 gap-2 z-40">
+    <div class="flex items-center gap-3 px-2 py-4 mb-4 border-b border-outline-variant/30">
+      <div class="w-10 h-10 bg-surface border border-outline-variant rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
+        {% if request.user.profile.company_logo %}
+          <img class="w-full h-full object-cover" src="{{ request.user.profile.company_logo.url }}" alt="Company Logo">
+        {% else %}
+          <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdMw5mmmox8BYZy-x0WBPiT0GMsmdUQYYDKU6rhH-gEpoK6FE5UJa8c575bgaBIsZFB-JxpuxyzA1i0OZxVcf8XHtB_DpVFrzPWTtM2vk1odO-k43Rvq9vrx-RMhNx-Qam1umYBcf25DNfLu0wKq0txPFg0I-lk2qOPS3yo-qFLm8Tihvjy5j8jw9TUt5-N1rg7dSyDW_Pw4n8gkb2a7VzxsxlZ_77QMehstREVXIlUxNCZuA1eLzhzSGtRr1H_8kYgDrwBc7X1tcV" alt="Company Logo">
+        {% endif %}
+      </div>
+      <div>
+        <h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">Enterprise Portal</h2>
+        <p class="text-[10px] text-on-surface-variant opacity-70">Talent Management</p>
+      </div>
+    </div>
+    <nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
+      <a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'employer_dashboard' %}">
+        <span class="material-symbols-outlined">dashboard</span><span>Dashboard</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'hiring_tracker_employer' %}">
+        <span class="material-symbols-outlined">developer_board</span><span>Hiring Tracker</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2 bg-surface-container dark:bg-secondary-container text-on-surface dark:text-on-secondary-container font-bold rounded-lg scale-98 active:scale-95 duration-150 transition-all font-label-md text-label-md" href="{% url 'job_management_employer' %}">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">work</span><span>Job Management</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'company_profile_employer' %}">
+        <span class="material-symbols-outlined">corporate_fare</span><span>Company Profile</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md relative" href="{% url 'employer_notifications' %}">
+        <span class="material-symbols-outlined">notifications</span><span>Match Alerts</span>
+      </a>
+    </nav>
+    <div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-1">
+      <a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'logout' %}">
+        <span class="material-symbols-outlined">logout</span><span>Log Out</span>
+      </a>
+    </div>
+  </aside>
+  <!-- Main Content -->
+  <main class="ml-64 pt-20 min-h-screen p-margin-desktop">
+    <!-- Top Navigation Area -->
+    <header class="flex items-center justify-between mb-8">
+      <div>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface">Job Management</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant">Manage your organization's recruitment pipeline and
+          featured positions.</p>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="relative">
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+          <input id="jobSearchInput" onkeyup="filterAndSortJobs()"
+            class="pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-lg focus:ring-2 focus:ring-secondary focus:border-secondary outline-none w-64 transition-all"
+            placeholder="Search postings..." type="text">
+        </div>
+        <div
+          class="relative flex items-center gap-1.5 bg-surface-container-low border border-outline-variant rounded-lg px-3 py-2">
+          <span class="material-symbols-outlined text-[18px] text-outline">sort</span>
+          <select id="jobSortSelect" onchange="filterAndSortJobs()"
+            class="bg-transparent text-label-sm font-label-sm text-on-surface outline-none cursor-pointer">
+            <option value="desc">Date: Newest First</option>
+            <option value="asc">Date: Oldest First</option>
+          </select>
+        </div>
+        <button onclick="openModal()"
+          class="flex items-center gap-2 bg-primary text-on-primary px-6 py-2.5 rounded-lg font-label-md text-label-md hover:bg-opacity-90 transition-all shadow-sm">
+          <span class="material-symbols-outlined">add</span> Post New Job
+        </button>
+      </div>
+    </header>
+
+    {% if messages %}
+    <div class="space-y-2 mb-6">
+      {% for message in messages %}
+      <div
+        class="p-4 rounded-lg {% if message.tags == 'success' %}bg-tertiary-fixed text-on-tertiary-fixed-variant border border-tertiary-fixed-dim{% else %}bg-error-container text-on-error-container border border-error{% endif %} flex items-center gap-2">
+        <span class="material-symbols-outlined">{% if message.tags == 'success' %}check_circle{% else %}error{% endif %}</span>
+        <span>{{ message }}</span>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <!-- Analytics Overview Widgets -->
+    <section class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+      <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant">
+        <div class="flex justify-between items-start mb-4">
+          <span class="p-2 bg-surface-container-high rounded-lg text-secondary">
+            <span class="material-symbols-outlined">work_history</span>
+          </span>
+          <span class="text-on-tertiary-container font-label-sm text-label-sm">+12% vs last month</span>
+        </div>
+        <h4 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Active Postings</h4>
+        <p class="font-display-lg text-display-lg text-on-surface mt-1">{{ active_postings_count }}</p>
+      </div>
+      <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant">
+        <div class="flex justify-between items-start mb-4">
+          <span class="p-2 bg-surface-container-high rounded-lg text-secondary">
+            <span class="material-symbols-outlined">group_add</span>
+          </span>
+        </div>
+        <h4 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Total Applicants</h4>
+        <p class="font-display-lg text-display-lg text-on-surface mt-1">{{ total_applicants_count }}</p>
+      </div>
+      <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant">
+        <div class="flex justify-between items-start mb-4">
+          <span class="p-2 bg-surface-container-high rounded-lg text-secondary">
+            <span class="material-symbols-outlined">star</span>
+          </span>
+        </div>
+        <h4 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Featured Slots</h4>
+        <p class="font-display-lg text-display-lg text-on-surface mt-1">3/5</p>
+      </div>
+      <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant">
+        <div class="flex justify-between items-start mb-4">
+          <span class="p-2 bg-surface-container-high rounded-lg text-secondary">
+            <span class="material-symbols-outlined">timer</span>
+          </span>
+        </div>
+        <h4 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Avg. Time to Fill</h4>
+        <p class="font-display-lg text-display-lg text-on-surface mt-1">18d</p>
+      </div>
+    </section>
+    <!-- Main Workspace: Job List and Featured Management -->
+    <div class="flex flex-col lg:flex-row gap-8">
+      <!-- Active & Closed Jobs Table -->
+      <div class="flex-grow bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+        <div class="px-6 py-4 border-b border-outline-variant flex items-center justify-between bg-surface-bright">
+          <h3 class="font-headline-md text-headline-md text-on-surface">Job Inventory</h3>
+          <div class="flex gap-2">
+            <button onclick="setStatusFilter('all', this)"
+              class="px-4 py-2 font-label-md text-label-md bg-secondary text-white rounded-lg">All</button>
+            <button onclick="setStatusFilter('active', this)"
+              class="px-4 py-2 font-label-md text-label-md text-on-surface-variant hover:bg-surface-container transition-colors rounded-lg">Active</button>
+            <button onclick="setStatusFilter('closed', this)"
+              class="px-4 py-2 font-label-md text-label-md text-on-surface-variant hover:bg-surface-container transition-colors rounded-lg">Closed</button>
+            <button onclick="setStatusFilter('draft', this)"
+              class="px-4 py-2 font-label-md text-label-md text-on-surface-variant hover:bg-surface-container transition-colors rounded-lg">Draft</button>
+            <button onclick="setStatusFilter('on hold', this)"
+              class="px-4 py-2 font-label-md text-label-md text-on-surface-variant hover:bg-surface-container transition-colors rounded-lg">On
+              Hold</button>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-surface-container-low border-b border-outline-variant">
+                <th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">Job Title</th>
+                <th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">Status</th>
+                <th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">Applicants</th>
+                <th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-outline-variant">
+              {% for item in vacancies %}
+              <tr class="job-row hover:bg-surface-container-low transition-colors group"
+                data-title="{{ item.vacancy.title|lower }}" data-category="{{ item.vacancy.category_display|lower }}"
+                data-location="{{ item.vacancy.location|lower }}" data-date="{{ item.vacancy.created_at|date:'U' }}"
+                data-status="{{ item.vacancy.status|lower }}">
+                <td class="px-6 py-5">
+                  <div>
+                    <p class="font-body-md text-body-md font-semibold text-on-surface">{{ item.vacancy.title }}</p>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant">{{ item.vacancy.category_display }} •
+                      {{ item.vacancy.location }}</p>
+                    <p
+                      class="font-label-sm text-label-sm text-on-surface-variant opacity-60 flex items-center gap-1 mt-0.5">
+                      <span class="material-symbols-outlined text-[13px]">schedule</span>
+                      Posted {{ item.vacancy.created_at|date:"M d, Y" }} at {{ item.vacancy.created_at|time:"g:i A" }}
+                    </p>
+                  </div>
+                </td>
+                <td class="px-6 py-5">
+                  <form method="POST" action="{% url 'job_status_update' item.vacancy.id %}" class="flex items-center">
+                    {% csrf_token %}
+                    <select name="status" onchange="this.form.submit()" class="text-label-sm font-label-sm px-2.5 py-1 rounded-full border cursor-pointer focus:outline-none transition-colors
+    {% if item.vacancy.status == 'Open' %}bg-tertiary-fixed text-on-tertiary-fixed-variant border-tertiary-fixed-dim
+    {% elif item.vacancy.status == 'Closed' %}bg-error-container text-on-error-container border-error
+    {% elif item.vacancy.status == 'Draft' %}bg-surface-container text-on-surface-variant border-outline-variant
+    {% elif item.vacancy.status == 'On Hold' %}bg-secondary-fixed text-on-secondary-fixed-variant border-secondary-fixed-dim
+    {% else %}bg-surface-container text-on-surface-variant border-outline-variant{% endif %}">
+                      <option value="Open" {% if item.vacancy.status == 'Open' %}selected{% endif %}>Open</option>
+                      <option value="Closed" {% if item.vacancy.status == 'Closed' %}selected{% endif %}>Closed</option>
+                      <option value="Draft" {% if item.vacancy.status == 'Draft' %}selected{% endif %}>Draft</option>
+                      <option value="On Hold" {% if item.vacancy.status == 'On Hold' %}selected{% endif %}>On Hold</option>
+                    </select>
+                  </form>
+                </td>
+                <td class="px-6 py-5">
+                  <div class="flex items-center gap-2">
+                    <div class="flex -space-x-2">
+                      {% for cand in item.candidates %}
+                      <div
+                        class="w-8 h-8 rounded-full bg-secondary text-white border-2 border-white flex items-center justify-center text-[10px] font-bold"
+                        title="{{ cand.user.first_name }} {{ cand.user.last_name }}">
+                        {{ cand.user.first_name|slice:":1" }}{{ cand.user.last_name|slice:":1" }}
+                      </div>
+                      {% empty %}
+                      <span class="text-body-sm text-on-surface-variant opacity-60">No applicants yet</span>
+                      {% endfor %}
+                      {% if item.candidates_count > 3 %}
+                      <div
+                        class="w-8 h-8 rounded-full bg-surface-container-highest border-2 border-white flex items-center justify-center text-[10px] font-bold">
+                        +{{ item.candidates_count|add:"-3" }}</div>
+                      {% endif %}
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-5 text-right">
+                  <div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button type="button" data-vacancy-id="{{ item.vacancy.id }}"
+                      data-title="{{ item.vacancy.title|escapejs }}"
+                      data-location="{{ item.vacancy.location|escapejs }}"
+                      data-salary="{{ item.vacancy.salary_range|escapejs }}"
+                      data-category="{{ item.vacancy.category|escapejs }}"
+                      data-experience="{{ item.vacancy.required_experience_years }}"
+                      data-education="{{ item.vacancy.min_education|escapejs }}"
+                      data-certs="{{ item.vacancy.required_certifications|escapejs }}"
+                      data-description="{{ item.vacancy.description|escapejs }}"
+                      data-remarks="{{ item.vacancy.remarks|escapejs }}"
+                      data-status="{{ item.vacancy.status|escapejs }}"
+                      data-skills='[{% for req in item.requirements %}{"id":"{{ req.skill.id }}","prof":"{{ req.required_proficiency }}"}{% if not forloop.last %},{% endif %}{% endfor %}]'
+                      onclick="openEditModalFromBtn(this)" class="p-2 text-outline hover:text-secondary"
+                      title="Edit Job"><span class="material-symbols-outlined">edit</span></button>
+                    <a href="{% url 'applicants_employer' %}?job_id={{ item.vacancy.id }}"
+                      class="p-2 text-outline hover:text-secondary" title="View Applicants"><span
+                        class="material-symbols-outlined">groups</span></a>
+                    <button type="button" data-vacancy-id="{{ item.vacancy.id }}"
+                      data-vacancy-title="{{ item.vacancy.title|escapejs }}" onclick="openDeleteModal(this)"
+                      class="p-2 text-outline hover:text-error transition-colors" title="Delete Job">
+                      <span class="material-symbols-outlined">delete</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              {% empty %}
+              <tr id="emptyInventoryRow">
+                <td colspan="4" class="px-6 py-10 text-center text-on-surface-variant opacity-60">No vacancies posted
+                  yet.</td>
+              </tr>
+              {% endfor %}
+              <tr id="noResultsRow" class="hidden">
+                <td colspan="4" class="px-6 py-10 text-center text-on-surface-variant opacity-60">No matching vacancies
+                  found.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Full-Width Promo Banner -->
+    <div class="mt-8 relative h-36 rounded-xl overflow-hidden shadow-md group cursor-pointer">
+      <img alt="Promotional recruitment banner"
+        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        data-alt="A professional collaborative workspace with diverse team members discussing strategic growth. The environment is a modern corporate office with high ceilings, glass partitions, and soft natural lighting. The color palette emphasizes corporate blues and clean whites, projecting an atmosphere of innovative and data-driven success."
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1826b8GfcinB6HBcFxJ9ZOOKarzz5KkeqCC_Lg0IQeMf30U1_bnDUSktuBMz_HHZLQa4ze1GS6A5GXheo7iLUltoUmmjirrV5gNCYGe3nA1DJGGMcRx6BhhNsVlHGC0dby_q0I_GRSDVo4UqNiptPzkrIvUWct0O2MH8T18xrJfK72Hf9eL2RT7Cg2RZYmNUKKbjW-48pmAU7Iv9fOn-05B38wPNaEWFWODs44F3Rx_crXwCQTRjTkKlkmS4F8MmZeB54gpX2qE49">
+      <div class="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/40 to-transparent flex items-center p-8">
+        <p class="text-white font-headline-md text-headline-md font-bold max-w-md">Optimize your hiring strategy with AI insights.</p>
+      </div>
+    </div>
+
+    <!-- Post Job Modal -->
+    <div id="postJobModal" class="fixed inset-0 z-50 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog"
+      aria-modal="true">
+      <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-black/50 transition-opacity" aria-hidden="true" onclick="closeModal()"></div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+        <div
+          class="inline-block align-bottom bg-surface-container-lowest rounded-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full border border-outline-variant">
+          <form id="vacancyForm" method="POST" action="{% url 'job_management_employer' %}">
+            {% csrf_token %}
+            <input type="hidden" name="action" id="formAction" value="create">
+            <input type="hidden" name="vacancy_id" id="formVacancyId" value="">
+            <div class="px-6 py-4 border-b border-outline-variant bg-surface-bright flex justify-between items-center">
+              <h3 class="font-headline-md text-headline-md text-on-surface" id="modal-title">Post New Job Vacancy</h3>
+              <button type="button" class="text-on-surface-variant hover:text-on-surface" onclick="closeModal()">
+                <span class="material-symbols-outlined">close</span>
+              </button>
+            </div>
+            <div class="px-6 py-4 max-h-[60vh] overflow-y-auto space-y-4">
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-label-sm font-label-sm text-on-surface-variant mb-2">JOB TITLE *</label>
+                  <input type="text" name="title" id="modalTitle" required autocomplete="off"
+                    class="w-full bg-white border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent outline-none">
+                </div>
+                <div>
+                  <label class="block text-label-sm font-label-sm text-on-surface-variant mb-2">LOCATION *</label>
+                  <input type="text" name="location" id="modalLocation" required
+                    class="w-full bg-white border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent outline-none"
+                    placeholder="e.g. Austin, TX">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-3 gap-4">
+                <div>
+                  <label class="block text-label-sm font-label-sm text-on-surface-variant mb-2">SALARY RANGE</label>
+                  <input type="text" name="salary_range" id="modalSalary"
+                    class="w-full bg-white border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent outline-none"
+                    placeholder="e.g. $45k - $55k">
+                </div>
+                <div>
+                  <label class="block text-label-sm font-label-sm text-on-surface-variant mb-2">EMPLOYMENT CATEGORY
+                    *</label>
+                  <select name="category" id="modalCategory" required
+                    class="w-full bg-white border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent outline-none">
+                    <option value="IT">Information Technology (IT)</option>
+                    <option value="BPO">BPO & Customer Service (BPO)</option>
+                    <option value="ADM">Administrative & Office (ADM)</option>
+                    <option value="FIN">Finance & Accounting (FIN)</option>
+                    <option value="MKT">Sales & Marketing (MKT)</option>
+                    <option value="RTL">Retail & Merchandising (RTL)</option>
+                    <option value="F&B">Food & Beverage / Hospitality (F&B)</option>
+                    <option value="MED">Healthcare & Medical (MED)</option>
+                    <option value="EDU">Education & Training (EDU)</option>
+                    <option value="ENG">Engineering & Construction (ENG)</option>
+                    <option value="ELC">Electrical & Electronics (ELC)</option>
+                    <option value="MCH">Mechanical & Automotive (MCH)</option>
+                    <option value="TVT">TESDA Trade & Vocational (TVT)</option>
+                    <option value="LOG">Logistics & Warehousing (LOG)</option>
+                    <option value="SEC">Security & Safety (SEC)</option>
+                    <option value="GEN">General Services & Facilities (GEN)</option>
+                    <option value="DRV">Driving & Transportation (DRV)</option>
+                    <option value="MFG">Manufacturing & Garments (MFG)</option>
+                    <option value="AGR">Agriculture & Environment (AGR)</option>
+                    <option value="OFW">Overseas / OFW Positions (OFW)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-label-sm font-label-sm text-on-surface-variant mb-2">REQUIRED EXPERIENCE
+                    (YEARS)</label>
+                  <input type="number" name="required_experience_years" id="modalExperience" min="0" value="0"
+                    class="w-full bg-white border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent outline-none">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-3 gap-4">
+                <div>
+                  <label class="block text-label-sm font-label-sm text-on-surface-variant mb-2">MINIMUM EDUCATION
+                    REQUIREMENT</label>
+                  <select name="min_education" id="modalEducation"
+                    class="w-full bg-white border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent outline-none">
+                    <option value="College graduate">College graduate</option>
+                    <option value="High school">High school</option>
+                    <option value="Vocational">Vocational</option>
+                    <option value="No preference">No preference</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-label-sm font-label-sm text-on-surface-variant mb-2">REQUIRED
+                    CERTIFICATIONS</label>
+                  <input type="text" name="required_certifications" id="modalCertifications"
+                    class="w-full bg-white border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent outline-none"
+                    placeholder="e.g. TESDA NC II Welding">
+                </div>
+                <div>
+                  <label class="block text-label-sm font-label-sm text-on-surface-variant mb-2">JOB STATUS *</label>
+                  <select name="status" id="modalStatus" required
+                    class="w-full bg-white border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent outline-none">
+                    <option value="Open">🟢 Open</option>
+                    <option value="Closed">🔴 Closed</option>
+                    <option value="Draft">⚪ Draft</option>
+                    <option value="On Hold">🔵 On Hold</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-label-sm font-label-sm text-on-surface-variant mb-2">JOB DESCRIPTION *</label>
+                <textarea name="description" id="modalDescription" required rows="4"
+                  class="w-full bg-white border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent outline-none"></textarea>
+              </div>
+
+              <div>
+                <label class="block text-label-sm font-label-sm text-on-surface-variant mb-2">REMARKS (ADDITIONAL
+                  INFO)</label>
+                <textarea name="remarks" id="modalRemarks" rows="2"
+                  class="w-full bg-white border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent outline-none"
+                  placeholder="e.g. Will require weekend overtime shifts, overtime meal allowance, etc."></textarea>
+              </div>
+
+              <!-- Required Skills Checklist -->
+              <div>
+                <label class="block text-label-sm font-label-sm text-on-surface-variant mb-2">SELECT REQUIRED SKILLS</label>
+                <div class="relative mb-2">
+                  <input type="text" id="modalSkillSearch" onkeyup="filterModalSkills()"
+                    placeholder="Search available skills..."
+                    class="w-full px-3 py-1.5 bg-white border border-outline-variant rounded-lg focus:ring-2 focus:ring-secondary focus:border-secondary outline-none text-xs">
+                  <span class="material-symbols-outlined absolute right-2.5 top-1.5 text-outline text-lg">search</span>
+                </div>
+                <div
+                  class="border border-outline-variant rounded-lg p-3 bg-surface-container-lowest max-h-48 overflow-y-auto space-y-2"
+                  id="modalSkillsList">
+                  {% for skill in all_skills %}
+                  <div
+                    class="modal-skill-item flex items-center justify-between p-1 hover:bg-surface-container-low rounded"
+                    data-name="{{ skill.name|lower }}">
+                    <label
+                      class="flex items-center gap-2 font-body-sm text-body-sm text-on-surface cursor-pointer select-none">
+                      <input type="checkbox" name="skills[]" value="{{ skill.id }}"
+                        class="rounded text-secondary focus:ring-secondary"
+                        onchange="toggleProficiency(this, '{{ skill.id }}')">
+                      <span>{{ skill.name }} ({{ skill.category }})</span>
+                    </label>
+                    <select id="prof_{{ skill.id }}" disabled class="hidden">
+                      <option value="1" selected>1 - Basic</option>
+                      <option value="2">2 - Some experience</option>
+                      <option value="3">3 - Intermediate</option>
+                      <option value="4">4 - Advanced</option>
+                      <option value="5">5 - Expert</option>
+                    </select>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- Add new skill on-the-fly -->
+              <div>
+                <label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">ADD CUSTOM SKILLS
+                  ON-THE-FLY</label>
+                <p class="text-[11px] text-on-surface-variant mb-2">Separate multiple skills with commas (e.g. PySpark,
+                  Generative AI). These will be added to the Skills Dictionary.
+                </p>
+                <input type="text" name="new_skills"
+                  class="w-full bg-white border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent outline-none"
+                  placeholder="e.g. AWS Sagemaker, Docker">
+              </div>
+            </div>
+            <div class="px-6 py-4 border-t border-outline-variant bg-surface-bright flex justify-end gap-3">
+              <button type="button"
+                class="px-4 py-2 border border-outline text-on-surface font-label-md text-label-md rounded-lg hover:bg-surface-container-low transition-colors"
+                onclick="closeModal()">Cancel</button>
+              <button type="submit" id="btnSubmit"
+                class="px-6 py-2 bg-secondary text-on-secondary font-label-md text-label-md font-bold rounded-lg hover:opacity-90 transition-all">Post
+                Job</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script>        function openModal() {
+      // Reset form action and hidden fields
+      document.getElementById('formAction').value = 'create';
+      document.getElementById('formVacancyId').value = '';
+
+      // Reset text / input fields
+      document.getElementById('modalTitle').value = '';
+      document.getElementById('modalLocation').value = '';
+      document.getElementById('modalSalary').value = '';
+      document.getElementById('modalCategory').value = 'IT';
+      document.getElementById('modalExperience').value = '0';
+      document.getElementById('modalEducation').value = 'College graduate';
+      document.getElementById('modalCertifications').value = '';
+      document.getElementById('modalDescription').value = '';
+      document.getElementById('modalRemarks').value = '';
+      document.getElementById('modalStatus').value = 'Open';
+
+      // Uncheck skills and disable selections
+      document.querySelectorAll('#modalSkillsList input[type="checkbox"]').forEach(cb => {
+        cb.checked = false;
+        const skillId = cb.value;
+        const select = document.getElementById('prof_' + skillId);
+        if (select) {
+          select.disabled = true;
+          select.removeAttribute('name');
+          select.value = "1";
+        }
+      });
+
+      // Reset custom skills input
+      const customSkillsInput = document.querySelector('input[name="new_skills"]');
+      if (customSkillsInput) customSkillsInput.value = '';
+
+      // Adjust texts
+      document.getElementById('modal-title').textContent = 'Post New Job Vacancy';
+      document.getElementById('btnSubmit').textContent = 'Post Job';
+
+      document.getElementById('postJobModal').classList.remove('hidden');
+    }
+    function openEditModal(id, title, location, salary, category, experience, education, certifications, description, remarks, status, requirements) {
+      // Set form action and hidden fields
+      document.getElementById('formAction').value = 'edit';
+      document.getElementById('formVacancyId').value = id;
+
+      // Populate basic fields
+      document.getElementById('modalTitle').value = title;
+      document.getElementById('modalLocation').value = location;
+      document.getElementById('modalSalary').value = salary;
+      document.getElementById('modalCategory').value = category;
+      document.getElementById('modalExperience').value = experience;
+      document.getElementById('modalEducation').value = education;
+      document.getElementById('modalCertifications').value = certifications;
+      document.getElementById('modalDescription').value = description;
+      document.getElementById('modalRemarks').value = remarks;
+      document.getElementById('modalStatus').value = status;
+
+      // Uncheck skills first
+      document.querySelectorAll('#modalSkillsList input[type="checkbox"]').forEach(cb => {
+        cb.checked = false;
+        const skillId = cb.value;
+        const select = document.getElementById('prof_' + skillId);
+        if (select) {
+          select.disabled = true;
+          select.removeAttribute('name');
+          select.value = "1";
+        }
+      });
+
+      // Check requirements
+      requirements.forEach(req => {
+        const checkbox = document.querySelector('#modalSkillsList input[value="' + req.id + '"]');
+        if (checkbox) {
+          checkbox.checked = true;
+          const select = document.getElementById('prof_' + req.id);
+          if (select) {
+            select.disabled = false;
+            select.name = 'proficiencies[]';
+            select.value = req.prof;
+          }
+        }
+      });
+
+      // Reset custom skills input
+      const customSkillsInput = document.querySelector('input[name="new_skills"]');
+      if (customSkillsInput) customSkillsInput.value = '';
+
+      // Adjust texts
+      document.getElementById('modal-title').textContent = 'Edit Job Vacancy';
+      document.getElementById('btnSubmit').textContent = 'Save Changes';
+
+      document.getElementById('postJobModal').classList.remove('hidden');
+    }
+    function closeModal() {
+      document.getElementById('postJobModal').classList.add('hidden');
+    }
+    function toggleProficiency(checkbox, skillId) {
+      const select = document.getElementById('prof_' + skillId);
+      if (checkbox.checked) {
+        select.disabled = false;
+        select.name = 'proficiencies[]';
+      } else {
+        select.disabled = true;
+        select.removeAttribute('name');
+      }
+    }
+
+    let currentStatusFilter = 'all';
+
+    function setStatusFilter(filterType, btn) {
+      currentStatusFilter = filterType;
+
+      // Update active states
+      const buttons = btn.parentElement.querySelectorAll('button');
+      buttons.forEach(b => {
+        b.className = "px-4 py-2 font-label-md text-label-md text-on-surface-variant hover:bg-surface-container transition-colors rounded-lg";
+      });
+      btn.className = "px-4 py-2 font-label-md text-label-md bg-secondary text-white rounded-lg";
+
+      filterAndSortJobs();
+    }
+
+    function filterAndSortJobs() {
+      const query = document.getElementById('jobSearchInput').value.toLowerCase().trim();
+      const sortVal = document.getElementById('jobSortSelect').value;
+      const tbody = document.querySelector('table tbody');
+      const rows = Array.from(tbody.querySelectorAll('.job-row'));
+      let visibleCount = 0;
+
+      rows.forEach(row => {
+        const title = row.getAttribute('data-title') || '';
+        const category = row.getAttribute('data-category') || '';
+        const location = row.getAttribute('data-location') || '';
+        const status = row.getAttribute('data-status') || '';
+
+        const matchesQuery = !query || title.includes(query) || category.includes(query) || location.includes(query);
+
+        let matchesStatus = true;
+        if (currentStatusFilter === 'active') {
+          matchesStatus = (status === 'open' || status === 'on hold');
+        } else if (currentStatusFilter === 'closed') {
+          matchesStatus = (status === 'closed');
+        } else if (currentStatusFilter === 'draft') {
+          matchesStatus = (status === 'draft');
+        } else if (currentStatusFilter === 'on hold') {
+          matchesStatus = (status === 'on hold');
+        }
+
+        if (matchesQuery && matchesStatus) {
+          row.style.display = '';
+          visibleCount++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      // Sort rows based on data-date (epoch timestamp)
+      rows.sort((a, b) => {
+        const dateA = parseInt(a.getAttribute('data-date') || '0');
+        const dateB = parseInt(b.getAttribute('data-date') || '0');
+        return sortVal === 'asc' ? dateA - dateB : dateB - dateA;
+      });
+
+      // Re-append sorted rows to container
+      rows.forEach(row => tbody.appendChild(row));
+
+      // Show noResultsRow if no visible results
+      const noResultsRow = document.getElementById('noResultsRow');
+      if (noResultsRow) {
+        if (visibleCount === 0 && rows.length > 0) {
+          noResultsRow.classList.remove('hidden');
+        } else {
+          noResultsRow.classList.add('hidden');
+        }
+      }
+    }
+
+    // Search focus interaction
+    const searchInput = document.getElementById('jobSearchInput');
+    if (searchInput) {
+      searchInput.addEventListener('focus', () => {
+        searchInput.classList.add('w-80');
+        searchInput.classList.remove('w-64');
+      });
+      searchInput.addEventListener('blur', () => {
+        searchInput.classList.add('w-64');
+        searchInput.classList.remove('w-80');
+      });
+    }
+
+    function filterModalSkills() {
+      const query = document.getElementById('modalSkillSearch').value.toLowerCase();
+      document.querySelectorAll('.modal-skill-item').forEach(item => {
+        const name = item.dataset.name || '';
+        if (name.includes(query)) {
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+    }
+
+    function openEditModalFromBtn(btn) {
+      const skills = JSON.parse(btn.dataset.skills || '[]');
+      openEditModal(
+        btn.dataset.vacancyId,
+        btn.dataset.title,
+        btn.dataset.location,
+        btn.dataset.salary,
+        btn.dataset.category,
+        btn.dataset.experience,
+        btn.dataset.education,
+        btn.dataset.certs,
+        btn.dataset.description,
+        btn.dataset.remarks,
+        btn.dataset.status,
+        skills
+      );
+    }
+
+    // Run default sort on page load (Newest First)
+    document.addEventListener('DOMContentLoaded', filterAndSortJobs);
+  </script>
+  <script src="{% static 'tracker/js/job_titles.js' %}"></script>
+
+  <!-- Delete Confirmation Modal -->
+  <div id="deleteJobModal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+    <div class="bg-surface-container-lowest rounded-2xl shadow-2xl w-full max-w-md p-8 space-y-6">
+      <div class="flex items-start gap-4">
+        <div class="w-12 h-12 bg-error-container rounded-full flex items-center justify-center flex-shrink-0">
+          <span class="material-symbols-outlined text-error">warning</span>
+        </div>
+        <div>
+          <h3 class="font-headline-md text-headline-md text-on-surface">Delete Job Posting</h3>
+          <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Are you sure you want to delete <strong
+              id="deleteJobTitle" class="text-on-surface"></strong>? This will also remove all associated applicant
+            referrals and cannot be undone.</p>
+        </div>
+      </div>
+      <form id="deleteJobForm" method="POST" action="">
+        {% csrf_token %}
+        <input type="hidden" name="_method" value="DELETE">
+        <div class="flex gap-3 justify-end">
+          <button type="button" onclick="closeDeleteModal()"
+            class="px-5 py-2.5 font-label-md text-label-md text-on-surface-variant hover:bg-surface-container rounded-lg transition-colors">Cancel</button>
+          <button type="submit"
+            class="px-5 py-2.5 font-label-md text-label-md bg-error text-on-error rounded-lg hover:bg-error/90 transition-colors flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">delete</span> Delete Job
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script>
+    function openDeleteModal(btn) {
+      document.getElementById('deleteJobTitle').textContent = btn.dataset.vacancyTitle;
+      document.getElementById('deleteJobForm').action = '/employer/job-management/' + btn.dataset.vacancyId + '/delete/';
+      document.getElementById('deleteJobModal').classList.remove('hidden');
+    }
+    function closeDeleteModal() {
+      document.getElementById('deleteJobModal').classList.add('hidden');
+    }
+    document.getElementById('deleteJobModal').addEventListener('click', function (e) {
+      if (e.target === this) closeDeleteModal();
+    });
+  </script>
+</body>
+
+</html>

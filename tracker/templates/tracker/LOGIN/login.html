@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login | SKILLUP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary": "#000000",
+                    "primary-container": "#131b2e",
+                    "on-primary": "#ffffff",
+                    "on-surface": "#0b1c30",
+                    "secondary": "#0051d5",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "error-container": "#ffdad6",
+                    "surface-container-low": "#eff4ff",
+                    "on-secondary": "#ffffff",
+                    "secondary-container": "#316bf3",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "surface-bright": "#f8f9ff",
+                    "on-primary-container": "#7c839b",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "surface-tint": "#565e74",
+                    "on-surface-variant": "#45464d",
+                    "on-secondary-fixed-variant": "#003ea8",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "tertiary-fixed": "#6ffbbe",
+                    "tertiary": "#000000",
+                    "secondary-fixed": "#dbe1ff",
+                    "surface": "#f8f9ff",
+                    "inverse-on-surface": "#eaf1ff",
+                    "primary-fixed": "#dae2fd",
+                    "surface-container-highest": "#d3e4fe",
+                    "surface-dim": "#cbdbf5",
+                    "outline": "#76777d",
+                    "inverse-primary": "#bec6e0",
+                    "background": "#f8f9ff",
+                    "on-background": "#0b1c30",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-container": "#fefcff",
+                    "on-tertiary-fixed": "#002113",
+                    "surface-container-high": "#dce9ff",
+                    "on-primary-fixed": "#131b2e",
+                    "primary-fixed-dim": "#bec6e0",
+                    "on-tertiary-container": "#009668",
+                    "on-secondary-fixed": "#00174b",
+                    "on-error": "#ffffff",
+                    "surface-variant": "#d3e4fe",
+                    "outline-variant": "#c6c6cd",
+                    "inverse-surface": "#213145",
+                    "secondary-fixed-dim": "#b4c5ff",
+                    "surface-container": "#e5eeff",
+                    "tertiary-container": "#002113"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-desktop": "40px",
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "container-max": "1440px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "label-md": ["JetBrains Mono"],
+                    "headline-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-sm": ["JetBrains Mono"],
+                    "body-lg": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "headline-lg-mobile": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .login-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface overflow-hidden">
+<main class="flex h-screen w-full overflow-hidden">
+<!-- Split Screen: Hero Image Side -->
+<section class="hidden lg:flex lg:w-1/2 relative bg-primary-container overflow-hidden">
+<div class="absolute inset-0 z-10 bg-gradient-to-br from-primary-container/80 to-transparent"></div>
+<img alt="Modern Architecture Workspace" class="absolute inset-0 object-cover w-full h-full" data-alt="A sophisticated, high-end corporate office interior featuring minimalist glass partitions and polished concrete floors. The lighting is cool-toned with soft ambient glows from architectural recessed fixtures. A massive floor-to-ceiling window overlooks a soft-focus cityscape at twilight, creating a sense of professional ambition. The scene is clean, spacious, and dominated by deep navy, slate, and metallic textures to match a professional AI-driven platform aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfbkqOpa8rmA_HK4KZgJzSNBC3Tn3QgS1aLfJIdAdCW_g8MDDb362Q5i3RmP27_jXte1mqB1VrUBkRhOkB9Y3Dsy5vhWVuY4mOjeZ3KehruySC8Z2_sUkyMdVHM6UrIPTFBeyANbN41UQIU09QUF4m_CM3pFlJrhJsYMD1en_BQbw0dYFX0w3uNWjshTfQ6CHJQKXjr8HBdU5tBb4mkV-v9VtV9-fpSoZqkw-kTAw_5LtIKDobjsqzDhi-sOtdZOt_4tR9rw16wnD6"/>
+<div class="relative z-20 flex flex-col justify-between p-margin-desktop w-full text-on-primary">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-secondary rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">sync_alt</span>
+</div>
+<span class="font-headline-md text-headline-md font-bold tracking-tight">SKILLUP</span>
+</div>
+<div class="max-w-md">
+<h1 class="font-display-lg text-display-lg mb-4">Master the skills of the future.</h1>
+<p class="font-body-lg text-body-lg text-on-primary-container mb-8">
+                        Our enterprise-grade talent intelligence platform helps you bridge the skill gap through data-driven insights and personalized learning paths.
+                    </p>
+<div class="flex gap-4">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-primary-container">Trusted by</span>
+<span class="font-headline-md text-headline-md text-white">500+ Enterprises</span>
+</div>
+<div class="w-px h-12 bg-outline-variant/30"></div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-primary-container">Active Paths</span>
+<span class="font-headline-md text-headline-md text-white">12,000+ Students</span>
+</div>
+</div>
+</div>
+<div class="font-label-sm text-label-sm text-on-primary-container/60">
+                    © 2024 SKILLUP. All Rights Reserved. Professional Talent Management Systems.
+                </div>
+</div>
+</section>
+<!-- Split Screen: Form Side -->
+<section class="w-full lg:w-1/2 bg-surface flex items-center justify-center p-margin-mobile md:p-margin-desktop relative">
+<!-- Mobile Header Only -->
+<div class="absolute top-8 left-margin-mobile flex lg:hidden items-center gap-2">
+<div class="w-8 h-8 bg-secondary rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-sm" style="font-variation-settings: 'FILL' 1;">sync_alt</span>
+</div>
+<span class="font-headline-md text-headline-md font-bold">SKILLUP</span>
+</div>
+<div class="w-full max-w-md space-y-8">
+<header class="space-y-2">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Sign In</h2>
+<p class="font-body-md text-on-surface-variant">Access your dashboard to manage skills and analytics.</p>
+</header>
+<div class="space-y-4">
+<!-- Social Login Buttons -->
+<div class="grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center gap-3 px-4 py-3 border border-outline-variant bg-white hover:bg-surface-container-low login-transition rounded-lg">
+<svg class="w-5 h-5" viewbox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 12-4.53z" fill="#EA4335"></path>
+</svg>
+<span class="font-label-md text-label-md">Google</span>
+</button>
+<button class="flex items-center justify-center gap-3 px-4 py-3 border border-outline-variant bg-white hover:bg-surface-container-low login-transition rounded-lg">
+<svg class="w-5 h-5" fill="#0077B5" viewbox="0 0 24 24">
+<path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path>
+</svg>
+<span class="font-label-md text-label-md">LinkedIn</span>
+</button>
+</div>
+<div class="relative flex items-center py-4">
+<div class="flex-grow border-t border-outline-variant"></div>
+<span class="flex-shrink mx-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">or continue with</span>
+<div class="flex-grow border-t border-outline-variant"></div>
+</div>
+<!-- Main Form -->
+{% if messages %}
+<div class="space-y-2 mb-4">
+    {% for message in messages %}
+    <div class="p-4 rounded-lg {% if message.tags == 'error' %}bg-error-container text-on-error-container{% else %}bg-tertiary-fixed-dim/20 text-on-tertiary-fixed-variant{% endif %} font-body-sm">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+<form class="space-y-5" id="loginForm" method="POST" action="{% url 'login' %}">
+{% csrf_token %}
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface" for="email">Email Address</label>
+<input class="w-full px-4 py-3 bg-white border border-outline-variant rounded-lg focus:ring-2 focus:ring-secondary focus:border-secondary outline-none login-transition placeholder:text-outline/50" id="email" name="email" placeholder="name@company.com" required="" type="email"/>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="font-label-md text-label-md text-on-surface" for="password">Password</label>
+<a class="font-label-sm text-label-sm text-secondary hover:underline" href="{% url 'forgot_password' %}">Forgot password?</a>
+</div>
+<div class="relative">
+<input class="w-full px-4 py-3 bg-white border border-outline-variant rounded-lg focus:ring-2 focus:ring-secondary focus:border-secondary outline-none login-transition placeholder:text-outline/50" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface focus:outline-none" type="button" id="togglePassword">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+</div>
+</div>
+<div class="flex items-center">
+<input class="w-4 h-4 text-secondary border-outline-variant rounded focus:ring-secondary" id="remember" type="checkbox"/>
+<label class="ml-2 font-body-sm text-body-sm text-on-surface-variant" for="remember">Remember me for 30 days</label>
+</div>
+<button class="w-full py-4 bg-primary text-on-primary font-headline-md text-headline-md rounded-lg hover:bg-primary/90 active:scale-[0.98] login-transition shadow-lg shadow-primary/10" type="submit">
+                            Sign In
+                        </button>
+</form>
+<p class="text-center font-body-md text-body-md text-on-surface-variant mt-8">
+                        Don't have an account? 
+                        <a class="text-secondary font-bold hover:underline" href="{% url 'signup' %}">Sign up</a>
+</p>
+
+</div>
+</div>
+<!-- Footer Decorative -->
+<div class="absolute bottom-8 text-center w-full px-margin-mobile">
+<div class="flex justify-center gap-6 font-label-sm text-label-sm text-on-surface-variant/40">
+<a class="hover:text-secondary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-secondary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-secondary transition-colors" href="#">Support</a>
+</div>
+</div>
+</section>
+</main>
+<script>
+        // Micro-interactions for form focus
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.querySelector('label')?.classList.add('text-secondary');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.querySelector('label')?.classList.remove('text-secondary');
+            });
+        });
+
+
+
+        // Show/hide password toggle logic
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+
+        if (togglePassword && passwordInput) {
+            togglePassword.addEventListener('click', function () {
+                const isPassword = passwordInput.getAttribute('type') === 'password';
+                passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+                
+                const icon = this.querySelector('.material-symbols-outlined');
+                if (icon) {
+                    icon.textContent = isPassword ? 'visibility_off' : 'visibility';
+                }
+            });
+        }
+
+        // Visual feedback for social buttons
+        const socialBtns = document.querySelectorAll('button[class*="border-outline-variant"]');
+        socialBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.classList.add('opacity-50');
+                setTimeout(() => btn.classList.remove('opacity-50'), 200);
+            });
+        });
+    </script>
+</body></html>

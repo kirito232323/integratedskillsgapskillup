@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>SKILLUP | Skill Gap Analysis</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet">
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "secondary": "#0051d5",
+            "inverse-surface": "#213145",
+            "on-primary-fixed-variant": "#3f465c",
+            "outline-variant": "#c6c6cd",
+            "primary-fixed": "#dae2fd",
+            "on-error": "#ffffff",
+            "surface-container": "#e5eeff",
+            "on-tertiary": "#ffffff",
+            "surface-tint": "#565e74",
+            "on-tertiary-fixed-variant": "#005236",
+            "surface-container-low": "#eff4ff",
+            "on-surface": "#0b1c30",
+            "on-secondary-fixed-variant": "#003ea8",
+            "surface-bright": "#f8f9ff",
+            "tertiary-fixed": "#6ffbbe",
+            "on-primary-container": "#7c839b",
+            "primary-fixed-dim": "#bec6e0",
+            "outline": "#76777d",
+            "on-secondary-fixed": "#00174b",
+            "on-secondary": "#ffffff",
+            "surface-container-highest": "#d3e4fe",
+            "tertiary-container": "#002113",
+            "primary-container": "#131b2e",
+            "tertiary": "#000000",
+            "on-secondary-container": "#fefcff",
+            "surface-dim": "#cbdbf5",
+            "error": "#ba1a1a",
+            "on-primary": "#ffffff",
+            "tertiary-fixed-dim": "#4edea3",
+            "on-background": "#0b1c30",
+            "on-surface-variant": "#45464d",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed": "#002113",
+            "inverse-on-surface": "#eaf1ff",
+            "background": "#f8f9ff",
+            "secondary-fixed": "#dbe1ff",
+            "primary": "#000000",
+            "secondary-container": "#316bf3",
+            "on-tertiary-container": "#009668",
+            "surface-variant": "#d3e4fe",
+            "surface-container-high": "#dce9ff",
+            "error-container": "#ffdad6",
+            "on-error-container": "#93000a",
+            "surface": "#f8f9ff",
+            "secondary-fixed-dim": "#b4c5ff",
+            "on-primary-fixed": "#131b2e",
+            "inverse-primary": "#bec6e0"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "gutter": "24px",
+            "margin-mobile": "16px",
+            "margin-desktop": "40px",
+            "container-max": "1440px",
+            "unit": "4px"
+          },
+          "fontFamily": {
+            "body-md": ["Inter"],
+            "headline-md": ["Inter"],
+            "display-lg": ["Inter"],
+            "body-lg": ["Inter"],
+            "label-sm": ["JetBrains Mono"],
+            "headline-lg-mobile": ["Inter"],
+            "body-sm": ["Inter"],
+            "headline-lg": ["Inter"],
+            "label-md": ["JetBrains Mono"]
+          },
+          "fontSize": {
+            "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+            "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "label-sm": ["12px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+            "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+            "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "label-md": ["14px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }]
+          }
+        },
+      },
+    }
+  </script>
+  <style>
+    .radar-grid {
+      stroke: #E2E8F0;
+      stroke-width: 1;
+      fill: none;
+    }
+
+    .radar-axis {
+      stroke: #CBD5E1;
+      stroke-width: 1;
+    }
+
+    .radar-area-target {
+      fill: rgba(0, 81, 213, 0.1);
+      stroke: #0051d5;
+      stroke-width: 2;
+    }
+
+    .radar-area-current {
+      fill: rgba(78, 222, 163, 0.3);
+      stroke: #4edea3;
+      stroke-width: 2;
+    }
+
+    .radar-point {
+      transition: all 0.2s ease;
+    }
+
+    .radar-point:hover {
+      r: 6;
+    }
+
+    .glass-panel {
+      backdrop-filter: blur(8px);
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #E2E8F0;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body class="bg-background text-on-surface font-body-md min-h-screen overflow-x-hidden">
+  {% if messages %}
+  <div class="fixed top-20 right-4 z-50 flex flex-col gap-2 max-w-sm w-full">
+    {% for message in messages %}
+    <div
+      class="toast-notification flex items-center gap-3 p-4 rounded-xl border border-outline-variant bg-surface-container-lowest/80 backdrop-blur-md shadow-lg transition-all duration-300 transform translate-x-12 opacity-0"
+      data-type="{{ message.tags }}">
+      {% if message.tags == 'success' %}
+      <span class="material-symbols-outlined text-[20px] text-green-600 bg-green-50 p-1.5 rounded-full"
+        style="font-variation-settings: 'FILL' 1;">check_circle</span>
+      {% elif message.tags == 'error' %}
+      <span
+        class="material-symbols-outlined text-[20px] text-error bg-error-container/10 p-1.5 rounded-full">error</span>
+      {% else %}
+      <span class="material-symbols-outlined text-[20px] text-secondary bg-secondary/10 p-1.5 rounded-full">info</span>
+      {% endif %}
+      <div class="flex-grow">
+        <p class="font-body-sm text-body-sm font-semibold text-on-surface">{{ message }}</p>
+      </div>
+      <button onclick="this.parentElement.remove()"
+        class="material-symbols-outlined text-on-surface-variant hover:text-on-surface text-sm">close</button>
+    </div>
+    {% endfor %}
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const toasts = document.querySelectorAll('.toast-notification');
+      toasts.forEach((toast, index) => {
+        setTimeout(() => {
+          toast.classList.remove('translate-x-12', 'opacity-0');
+        }, index * 150);
+
+        setTimeout(() => {
+          toast.classList.add('translate-x-12', 'opacity-0');
+          setTimeout(() => toast.remove(), 300);
+        }, 4000 + (index * 150));
+      });
+    });
+  </script>
+  {% endif %}
+  <!-- Top Navigation Bar -->
+  <header
+    class="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant h-16 flex items-center justify-between px-margin-desktop">
+    <div class="flex items-center gap-8">
+      <a href="{% url 'applicant_dashboard' %}"
+        class="font-headline-md text-headline-md font-bold text-on-surface">SKILLUP</a>
+      <nav class="hidden md:flex items-center gap-6 h-16">
+        <a class="font-body-md text-body-md h-full flex items-center px-2 transition-colors duration-200 text-on-surface-variant hover:bg-surface-container-low"
+          href="{% url 'applicant_dashboard' %}">Dashboard</a>
+        <a class="font-body-md text-body-md h-full flex items-center px-2 transition-colors duration-200 text-on-surface-variant hover:bg-surface-container-low"
+          href="{% url 'applicant_applications_list' %}">My Applications</a>
+        <a class="font-body-md text-body-md h-full flex items-center px-2 transition-colors duration-200 text-on-surface-variant hover:bg-surface-container-low"
+          href="{% url 'training_recommendations' %}">My Learning</a>
+        <a class="font-body-md text-body-md h-full flex items-center px-2 transition-colors duration-200 text-on-surface-variant hover:bg-surface-container-low"
+          href="{% url 'job_search' %}">Job Board</a>
+        <a class="font-body-md text-body-md h-full flex items-center px-2 transition-colors duration-200 text-on-surface-variant hover:bg-surface-container-low"
+          href="{% url 'applicant_profile' %}">Profile</a>
+      </nav>
+    </div>
+    <div class="flex items-center gap-4">
+      <div class="flex items-center gap-2">
+        <a href="{% url 'applicant_notifications' %}" class="p-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant relative block" title="Notifications">
+          <span class="material-symbols-outlined">notifications</span>
+          {% if unread_notifications_count %}<span class="absolute top-0.5 right-0.5 w-4 h-4 rounded-full bg-red-500 text-white text-[9px] font-black flex items-center justify-center">{{ unread_notifications_count }}</span>{% endif %}
+        </a>
+        <a href="{% url 'applicant_settings' %}" class="p-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant" title="Settings">
+          <span class="material-symbols-outlined">settings</span>
+        </a>
+        <a href="{% url 'logout' %}"
+          class="p-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant"
+          title="Logout">
+          <span class="material-symbols-outlined">logout</span>
+        </a>
+      </div>
+    </div>
+  </header>
+  <main class="pt-24 pb-24 md:pb-12 px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto">
+    <!-- Form for applying to the job (used globally via form attribute on submit buttons) -->
+    <form id="applyForm" method="POST" action="{% url 'apply_to_job' vacancy.id %}">
+      {% csrf_token %}
+    </form>
+
+
+
+
+    <!-- Premium Header Card -->
+    <div
+      class="bg-surface-container-lowest border border-outline-variant rounded-lg p-6 mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative shadow-sm">
+      <div class="flex items-start gap-4">
+        <!-- Gray Square Placeholder representing Company Logo -->
+        <div
+          class="w-16 h-16 bg-surface-container-low border border-outline-variant rounded-lg flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-outline-variant text-4xl"
+            style="font-variation-settings: 'FILL' 0;">image</span>
+        </div>
+
+        <div>
+          <h2 class="font-headline-md text-xl font-black text-secondary uppercase tracking-tight mb-1">
+            {{ vacancy.title }}
+          </h2>
+          <p class="text-xs font-semibold text-secondary mb-3 uppercase tracking-wider">
+            {{ vacancy.employer.company_name|default:"Nexus Digital Solutions" }}
+          </p>
+
+          <div class="flex flex-wrap items-center gap-y-2 gap-x-4 text-xs text-on-surface-variant font-medium">
+            <span class="flex items-center gap-1"><span
+                class="material-symbols-outlined text-sm text-outline">category</span> {{ vacancy.category_display }}</span>
+            <span class="flex items-center gap-1"><span
+                class="material-symbols-outlined text-sm text-outline">location_on</span> {{ vacancy.location }}</span>
+            <span class="flex items-center gap-1"><span
+                class="material-symbols-outlined text-sm text-outline">school</span> {{ vacancy.min_education|default:"Educ. level not specified" }}</span>
+            <span class="flex items-center gap-1"><span
+                class="material-symbols-outlined text-sm text-outline">work</span> Contractual</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="shrink-0 flex flex-col items-start md:items-end gap-2 w-full md:w-auto">
+        <span class="text-xs text-secondary font-semibold">
+          {% if vacancy.salary_range %}{{ vacancy.salary_range }}{% else %}Salary not specified{% endif %}
+        </span>
+
+        <div class="flex items-center gap-2 mt-1 w-full md:w-auto">
+          {% if has_applied %}
+          <div
+            class="px-5 py-2 bg-surface-container border border-outline-variant text-on-surface-variant font-body-sm font-bold rounded-lg cursor-not-allowed select-none text-xs">
+            Already Applied
+          </div>
+          {% elif vacancy.status != 'Open' %}
+          <div
+            class="px-5 py-2 bg-surface-container border border-outline-variant text-error font-body-sm font-bold rounded-lg cursor-not-allowed select-none text-xs flex items-center gap-1">
+            <span class="material-symbols-outlined text-xs">lock</span> POSITION {{ vacancy.status|upper }}
+          </div>
+          {% else %}
+          <button type="submit" form="applyForm"
+            class="px-5 py-2 bg-secondary text-white font-body-sm font-bold rounded hover:opacity-90 active:scale-95 transition-all text-xs">
+            APPLY NOW
+          </button>
+          {% endif %}
+
+          <form method="POST" action="{% url 'toggle_bookmark' vacancy.id %}" class="inline">
+            {% csrf_token %}
+            <button type="submit" class="text-xs text-secondary hover:underline ml-2">
+              {% if is_bookmarked %}or Unsave job{% else %}or Save job{% endif %}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid Layout: Left Column Details, Right Column Metadata Cards -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+
+      <!-- Left Column: Details & Radar Comparison (Col Span 8) -->
+      <div class="lg:col-span-8 space-y-6">
+
+        <!-- Job Description Section -->
+        <div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-lg shadow-sm">
+          <div class="flex justify-between items-center mb-4 border-b border-outline-variant/30 pb-2">
+            <h3 class="font-headline-md text-lg font-bold text-secondary">Job Description</h3>
+            <span class="text-[11px] text-outline">Posted on {{ vacancy.created_at|date:"d N Y"|default:"23 June 2026" }}</span>
+          </div>
+          <p class="text-on-surface-variant text-sm leading-relaxed whitespace-pre-line">{{ vacancy.description }}</p>
+        </div>
+
+        <!-- Qualifications/Requirements Section -->
+        <div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-lg shadow-sm">
+          <h3 class="font-headline-md text-lg font-bold text-secondary mb-4 border-b border-outline-variant/30 pb-2">
+            Qualifications/Requirements</h3>
+          <ul class="list-disc pl-5 text-on-surface-variant text-sm space-y-2.5">
+            {% for g in gaps %}
+            <li>Required competency in <strong class="text-on-surface">{{ g.skill }}</strong>.</li>
+            {% endfor %}
+            {% if vacancy.required_experience_years > 0 %}
+            <li>At least {{ vacancy.required_experience_years }} year{{ vacancy.required_experience_years|pluralize }}
+              of relevant experience.</li>
+            {% endif %}
+            {% if vacancy.min_education %}
+            <li>Minimum education requirement: {{ vacancy.min_education }}.</li>
+            {% endif %}
+          </ul>
+        </div>
+
+        <!-- Work location Section -->
+        <div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-lg shadow-sm">
+          <h3 class="font-headline-md text-lg font-bold text-secondary mb-3 border-b border-outline-variant/30 pb-2">
+            Work location</h3>
+          <p class="text-on-surface-variant text-sm font-semibold">{{ vacancy.location }}</p>
+        </div>
+
+        <!-- Remarks Section -->
+        <div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-lg shadow-sm">
+          <h3 class="font-headline-md text-lg font-bold text-secondary mb-3 border-b border-outline-variant/30 pb-2">
+            Remarks</h3>
+          <p class="text-on-surface text-body-md mb-6 whitespace-pre-line">{{ vacancy.remarks|default:"No additional remarks" }}</p>
+
+          <!-- Bottom Action Row -->
+          <div class="flex items-center gap-3 pt-6 border-t border-outline-variant/30">
+            {% if has_applied %}
+            <div
+              class="px-5 py-2 bg-surface-container border border-outline-variant text-on-surface-variant font-body-sm font-bold rounded-lg cursor-not-allowed select-none text-xs">
+              Already Applied
+            </div>
+            {% elif vacancy.status != 'Open' %}
+            <div
+              class="px-5 py-2 bg-surface-container border border-outline-variant text-error font-body-sm font-bold rounded-lg cursor-not-allowed select-none text-xs flex items-center gap-1">
+              <span class="material-symbols-outlined text-xs">lock</span> POSITION {{ vacancy.status|upper }}
+            </div>
+            {% else %}
+            <button type="submit" form="applyForm"
+              class="px-5 py-2 bg-secondary text-white font-body-sm font-bold rounded hover:opacity-90 active:scale-95 transition-all text-xs">
+              APPLY NOW
+            </button>
+            {% endif %}
+            <form method="POST" action="{% url 'toggle_bookmark' vacancy.id %}" class="inline">
+              {% csrf_token %}
+              <button type="submit" class="text-xs text-secondary hover:underline ml-2">
+                {% if is_bookmarked %}or Unsave job{% else %}or Save job{% endif %}
+              </button>
+            </form>
+          </div>
+        </div>
+
+
+
+        <!-- Alternative Recommended Careers -->
+        {% if alternatives %}
+        <div class="pt-4">
+          <h3 class="font-headline-md text-lg font-bold text-secondary mb-4">Alternative Job Options</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {% for alt in alternatives %}
+            <div
+              class="bg-surface-container-lowest border border-outline-variant rounded-lg p-5 hover:border-secondary hover:shadow-md transition-all">
+              <span class="text-[10px] text-secondary font-bold uppercase tracking-wider block mb-1">Alternative
+                Option</span>
+              <h4 class="font-bold text-sm text-on-surface mb-2 line-clamp-1">{{ alt.vacancy.title }}</h4>
+              <div class="flex items-center gap-2 text-on-surface-variant mb-3 text-xs">
+                <span class="material-symbols-outlined text-xs">analytics</span>
+                <span>{{ alt.match_score }}% Skill Match</span>
+              </div>
+              <div class="w-full bg-outline-variant h-1 rounded-full mb-4">
+                <div class="bg-secondary h-full progress-bar" data-width-pct="{{ alt.match_score }}"></div>
+              </div>
+              <a class="text-secondary font-bold text-xs flex items-center gap-1 hover:underline font-body-sm"
+                href="{% url 'skill_gap_analysis' %}?job_id={{ alt.vacancy.id }}">
+                View Details <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </a>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Recommended Training Programs for Gaps -->
+        {% if recommended_programs.exists %}
+        <div class="pt-6 border-t border-outline-variant/30 mt-6">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="material-symbols-outlined text-secondary font-bold">school</span>
+            <h3 class="font-headline-md text-lg font-bold text-secondary">Recommended Training Programs</h3>
+          </div>
+          <p class="text-xs text-on-surface-variant mb-4">Based on your identified skill gaps, we recommend enrolling in these programs to meet the requirements for this role:</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {% for prog in recommended_programs %}
+            <div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-5 flex flex-col justify-between hover:border-secondary hover:shadow-md transition-all">
+              <div>
+                <span class="bg-secondary/10 text-secondary text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider mb-2 inline-block">
+                  Missing Skill: {{ prog.skill_addressed.name }}
+                </span>
+                <h4 class="font-bold text-sm text-on-surface mb-1">{{ prog.title }}</h4>
+                <p class="text-xs text-on-surface-variant line-clamp-2 mb-3">{{ prog.description|default:"Enhance your competencies in this skill area with expert mentoring and hand-on exercises." }}</p>
+                <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-outline mb-4">
+                  <span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-xs">business</span> {{ prog.provider }}</span>
+                  <span>•</span>
+                  <span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-xs">schedule</span> {{ prog.duration }}</span>
+                </div>
+              </div>
+              <div class="pt-2 border-t border-outline-variant/20 flex items-center justify-between mt-auto">
+                {% if prog.id in enrolled_ids %}
+                <span class="inline-flex items-center gap-1 text-green-600 font-bold text-xs">
+                  <span class="material-symbols-outlined text-sm">check_circle</span> Enrolled
+                </span>
+                {% else %}
+                <button type="button"
+                  data-url="{% url 'applicant_enroll_training' prog.id %}"
+                  data-title="{{ prog.title|escapejs }}"
+                  onclick="confirmEnroll(this.dataset.url, this.dataset.title)"
+                  class="w-full py-2 bg-secondary text-white text-xs font-bold rounded hover:opacity-90 active:scale-95 transition-all text-center">
+                  Enroll Now
+                </button>
+                {% endif %}
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+      </div>
+
+      <!-- Right Column: Sidebar Cards (Col Span 4) -->
+      <div class="lg:col-span-4 space-y-6">
+
+        <!-- About the company Card -->
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-6 shadow-sm">
+          <h3 class="font-bold text-sm text-secondary mb-4 uppercase tracking-wider">About the company</h3>
+          <p class="text-xs text-on-surface font-semibold mb-3">ABOUT US At</p>
+
+          <div class="space-y-3 text-xs">
+            <div>
+              <span class="text-outline block text-[10px] uppercase font-bold tracking-wider">Industry</span>
+              <span class="text-on-surface font-semibold">{{ vacancy.employer.industry|default:"Information Technology / AI" }}</span>
+            </div>
+            <div>
+              <span class="text-outline block text-[10px] uppercase font-bold tracking-wider">Employment size</span>
+              <span class="text-on-surface font-semibold">{{ vacancy.employer.company_size|default:"200 and over (Large)" }}</span>
+            </div>
+            <div class="pt-2 border-t border-outline-variant/30">
+              <a href="{% url 'company_profile_detail' vacancy.employer.id %}" class="text-secondary font-bold hover:underline font-body-sm">View company profile</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fit Assessment Card -->
+        <div
+          class="bg-surface-container-lowest border border-outline-variant rounded-lg p-6 flex flex-col items-center text-center shadow-sm">
+          <h3 class="font-bold text-sm text-secondary mb-4 w-full text-left uppercase tracking-wider">Fit Assessment
+          </h3>
+          <div class="relative w-28 h-28 flex items-center justify-center mb-4">
+            <svg class="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="40" stroke="#eff4ff" stroke-width="8" fill="transparent" />
+              <circle cx="50" cy="50" r="40" stroke="#0051d5" stroke-width="8" fill="transparent"
+                stroke-dasharray="251.2" stroke-dashoffset="{{ match_stroke_offset }}" />
+            </svg>
+            <span class="text-xl font-black text-on-surface">{{ match_score }}%</span>
+          </div>
+          <p class="text-xs text-on-surface-variant leading-relaxed">Your current profile matches {{ match_score }}% of
+            the skills required for this job vacancy.</p>
+        </div>
+
+        <!-- Critical Gaps Card -->
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-6 shadow-sm">
+          <h3 class="font-bold text-sm text-secondary mb-4 flex items-center gap-1.5 uppercase tracking-wider">
+            <span class="material-symbols-outlined text-error text-sm">warning</span>
+            Critical Gaps
+          </h3>
+          <div class="space-y-3">
+            {% for g in gaps %}
+            {% if g.gap > 0 %}
+            <div class="flex items-center justify-between p-2.5 bg-surface-container-low border border-outline-variant/60 rounded-lg">
+              <span class="font-bold text-xs text-on-surface">{{ g.skill }}</span>
+              <span class="text-[9px] font-bold text-error bg-error-container/30 px-1.5 py-0.5 rounded">Missing</span>
+            </div>
+            {% endif %}
+            {% empty %}
+            <p class="text-xs text-on-surface-variant italic">No gaps identified. You meet all target requirements!</p>
+            {% endfor %}
+          </div>
+        </div>
+
+
+
+        <!-- Share Job Card -->
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-6 shadow-sm">
+          <h3 class="font-bold text-sm text-secondary mb-4 uppercase tracking-wider">Share job</h3>
+          <div
+            class="flex items-center border border-outline-variant rounded overflow-hidden bg-surface-container-low p-1 gap-1">
+            <input type="text" readonly id="shareUrlInput"
+              class="border-none focus:ring-0 bg-transparent text-xs text-outline flex-grow p-1.5 focus:outline-none"
+              value="http://127.0.0.1:8000/applicant/skill-gap/?job_id={{ vacancy.id }}">
+            <button onclick="copyShareUrl()"
+              class="p-1.5 bg-white border border-outline-variant rounded shadow-sm text-outline hover:text-secondary flex items-center justify-center"
+              title="Copy link">
+              <span class="material-symbols-outlined text-[16px]">content_copy</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Bottom navigation row -->
+    <div class="mt-8 border-t border-outline-variant/30 pt-6">
+      <a href="{% url 'applicant_dashboard' %}"
+        class="px-5 py-2.5 bg-white border border-secondary text-secondary font-body-sm font-semibold rounded hover:bg-surface-container-low transition-all inline-flex items-center gap-1">
+        BACK TO DASHBOARD
+      </a>
+    </div>
+
+    <script>
+      function copyShareUrl() {
+        const input = document.getElementById('shareUrlInput');
+        input.select();
+        input.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(input.value);
+
+        // Show quick alert/toast
+        alert("Job link copied to clipboard!");
+      }
+    </script>
+  </main>
+  <!-- Contextual Footer -->
+  <footer class="bg-surface-container-lowest border-t border-outline-variant py-12 px-margin-desktop mt-12">
+    <div class="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div class="col-span-2">
+        <h4 class="font-headline-md text-on-surface mb-4">SKILLUP</h4>
+        <p class="text-on-surface-variant text-body-sm max-w-sm">Empowering professionals with precise, AI-driven skill
+          insights to navigate their careers with absolute confidence.</p>
+      </div>
+      <div>
+        <h5 class="font-label-md text-on-surface font-bold mb-4">Platform</h5>
+        <ul class="space-y-2 text-body-sm text-on-surface-variant">
+          <li><a class="hover:text-secondary" href="{% url 'applicant_dashboard' %}">Dashboard</a></li>
+          <li><a class="hover:text-secondary" href="#">Talent Match</a></li>
+          <li><a class="hover:text-secondary" href="#">Learning Paths</a></li>
+          <li><a class="hover:text-secondary" href="#">Employer Portal</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="font-label-md text-on-surface font-bold mb-4">Support</h5>
+        <ul class="space-y-2 text-body-sm text-on-surface-variant">
+          <li><a class="hover:text-secondary" href="#">Documentation</a></li>
+          <li><a class="hover:text-secondary" href="#">API Access</a></li>
+          <li><a class="hover:text-secondary" href="#">Privacy Policy</a></li>
+          <li><a class="hover:text-secondary" href="#">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div
+      class="max-w-[1200px] mx-auto mt-12 pt-8 border-t border-outline-variant flex justify-between items-center text-label-sm text-outline">
+      <span>© 2024 SKILLUP Enterprise. All rights reserved.</span>
+      <div class="flex gap-4">
+        <span class="material-symbols-outlined cursor-pointer hover:text-secondary">language</span>
+        <span class="material-symbols-outlined cursor-pointer hover:text-secondary">share</span>
+      </div>
+    </div>
+  </footer>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Set dynamic width for progress bars
+      document.querySelectorAll('.progress-bar').forEach(el => {
+        el.style.width = el.getAttribute('data-width-pct') + '%';
+      });
+    });
+  </script>
+
+  <!-- Mobile Bottom Navigation Bar -->
+  <nav
+    class="md:hidden fixed bottom-0 left-0 right-0 bg-surface border-t border-outline-variant px-4 py-2 flex justify-around items-center z-50">
+    <a href="{% url 'applicant_dashboard' %}"
+      class="flex flex-col items-center gap-1 transition-all duration-200 text-on-surface-variant opacity-70 hover:opacity-100">
+      <span class="material-symbols-outlined">dashboard</span>
+      <span class="text-[10px] font-label-sm">Dashboard</span>
+    </a>
+    <a href="{% url 'skill_gap_analysis' %}"
+      class="flex flex-col items-center gap-1 transition-all duration-200 text-secondary font-bold">
+      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+      <span class="text-[10px] font-label-sm">Gaps</span>
+    </a>
+    <a href="{% url 'training_recommendations' %}"
+      class="flex flex-col items-center gap-1 transition-all duration-200 text-on-surface-variant opacity-70 hover:opacity-100">
+      <span class="material-symbols-outlined">school</span>
+      <span class="text-[10px] font-label-sm">Learning</span>
+    </a>
+    <a href="{% url 'job_search' %}"
+      class="flex flex-col items-center gap-1 transition-all duration-200 text-on-surface-variant opacity-70 hover:opacity-100">
+      <span class="material-symbols-outlined">work</span>
+      <span class="text-[10px] font-label-sm">Jobs</span>
+    </a>
+    <a href="{% url 'applicant_profile' %}"
+      class="flex flex-col items-center gap-1 transition-all duration-200 text-on-surface-variant opacity-70 hover:opacity-100">
+      <span class="material-symbols-outlined">person</span>
+      <span class="text-[10px] font-label-sm">Profile</span>
+    </a>
+  </nav>
+
+  <!-- Custom Confirmation Modal -->
+  <div id="confirmationModal"
+    class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+    <!-- Backdrop -->
+    <div id="modalBackdrop" class="absolute inset-0 bg-inverse-surface/40 backdrop-blur-sm"></div>
+
+    <!-- Modal Content Container -->
+    <div
+      class="relative bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-2xl max-w-sm w-full mx-4 transform scale-95 transition-transform duration-300 z-10">
+      <div class="flex flex-col items-center text-center">
+        <!-- Icon Container with Glow -->
+        <div
+          class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center text-secondary mb-4 shadow-inner active-glow">
+          <span class="material-symbols-outlined text-2xl">help_outline</span>
+        </div>
+
+        <!-- Heading -->
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Confirm Application</h3>
+
+        <!-- Message -->
+        <p class="text-on-surface-variant text-body-sm">are you sure you wanna apply?</p>
+
+        <!-- Actions -->
+        <div class="flex items-center gap-3 w-full mt-6">
+          <button id="cancelApplyBtn" type="button"
+            class="flex-1 px-4 py-2.5 border border-outline-variant hover:border-secondary text-on-surface-variant hover:text-secondary font-body-sm font-semibold rounded-lg hover:bg-surface-container-low transition-all">
+            Cancel
+          </button>
+          <button id="confirmApplyBtn" type="button"
+            class="flex-1 px-4 py-2.5 bg-secondary text-white font-body-sm font-semibold rounded-lg hover:opacity-90 active:scale-95 transition-all">
+            Yes, Apply
+          </button>
+        </div>
+      </div>
+    </div>
+  <!-- Custom Training Enrollment Confirmation Modal -->
+  <div id="enrollConfirmationModal"
+    class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+    <!-- Backdrop -->
+    <div id="enrollModalBackdrop" class="absolute inset-0 bg-inverse-surface/40 backdrop-blur-sm"></div>
+
+    <!-- Modal Content Container -->
+    <div
+      class="relative bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-2xl max-w-sm w-full mx-4 transform scale-95 transition-transform duration-300 z-10">
+      <div class="flex flex-col items-center text-center">
+        <!-- Icon Container with Glow -->
+        <div
+          class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center text-secondary mb-4 shadow-inner active-glow">
+          <span class="material-symbols-outlined text-2xl">school</span>
+        </div>
+
+        <!-- Heading -->
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Confirm Enrollment</h3>
+
+        <!-- Message -->
+        <p class="text-on-surface-variant text-body-sm">Are you sure you want to enroll in this training program?</p>
+        <p id="enrollProgramName" class="font-semibold text-secondary text-sm mt-2"></p>
+
+        <!-- Actions -->
+        <div class="flex items-center gap-3 w-full mt-6">
+          <button id="cancelEnrollBtn" type="button"
+            class="flex-1 px-4 py-2.5 border border-outline-variant hover:border-secondary text-on-surface-variant hover:text-secondary font-body-sm font-semibold rounded-lg hover:bg-surface-container-low transition-all">
+            Cancel
+          </button>
+          <button id="confirmEnrollBtn" type="button"
+            class="flex-1 px-4 py-2.5 bg-secondary text-white font-body-sm font-semibold rounded-lg hover:opacity-90 active:scale-95 transition-all">
+            Yes, Enroll
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden Form for Enrollment -->
+  <form id="globalEnrollForm" method="POST" action="" style="display: none;">
+    {% csrf_token %}
+  </form>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const applyForm = document.getElementById('applyForm');
+      const confirmationModal = document.getElementById('confirmationModal');
+      const modalContent = confirmationModal ? confirmationModal.querySelector('.relative') : null;
+      const cancelApplyBtn = document.getElementById('cancelApplyBtn');
+      const confirmApplyBtn = document.getElementById('confirmApplyBtn');
+      const modalBackdrop = document.getElementById('modalBackdrop');
+
+      if (applyForm && confirmationModal && cancelApplyBtn && confirmApplyBtn) {
+        applyForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          // Show modal
+          confirmationModal.classList.remove('hidden');
+          // Trigger animation on next frame
+          requestAnimationFrame(() => {
+            confirmationModal.classList.remove('opacity-0');
+            if (modalContent) {
+              modalContent.classList.remove('scale-95');
+              modalContent.classList.add('scale-100');
+            }
+          });
+        });
+
+        const hideModal = () => {
+          confirmationModal.classList.add('opacity-0');
+          if (modalContent) {
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+          }
+          // Wait for transition to finish
+          setTimeout(() => {
+            confirmationModal.classList.add('hidden');
+          }, 300);
+        };
+
+        cancelApplyBtn.addEventListener('click', hideModal);
+        if (modalBackdrop) {
+          modalBackdrop.addEventListener('click', hideModal);
+        }
+
+        confirmApplyBtn.addEventListener('click', () => {
+          applyForm.submit();
+        });
+      }
+
+      let currentEnrollUrl = '';
+
+      window.confirmEnroll = function(url, title) {
+          currentEnrollUrl = url;
+          const modal = document.getElementById('enrollConfirmationModal');
+          const titleEl = document.getElementById('enrollProgramName');
+          if (titleEl) {
+              titleEl.textContent = title;
+          }
+          if (modal) {
+              modal.classList.remove('hidden');
+              requestAnimationFrame(() => {
+                  modal.classList.remove('opacity-0');
+                  const content = modal.querySelector('.relative');
+                  if (content) {
+                      content.classList.remove('scale-95');
+                      content.classList.add('scale-100');
+                  }
+              });
+          }
+      };
+
+      const hideEnrollModal = () => {
+          const modal = document.getElementById('enrollConfirmationModal');
+          if (modal) {
+              modal.classList.add('opacity-0');
+              const content = modal.querySelector('.relative');
+              if (content) {
+                  content.classList.remove('scale-100');
+                  content.classList.add('scale-95');
+              }
+              setTimeout(() => {
+                  modal.classList.add('hidden');
+              }, 300);
+          }
+      };
+
+      document.getElementById('cancelEnrollBtn')?.addEventListener('click', hideEnrollModal);
+      document.getElementById('enrollModalBackdrop')?.addEventListener('click', hideEnrollModal);
+      document.getElementById('confirmEnrollBtn')?.addEventListener('click', () => {
+          const form = document.getElementById('globalEnrollForm');
+          if (form && currentEnrollUrl) {
+              form.action = currentEnrollUrl;
+              form.submit();
+          }
+      });
+    });
+  </script>
+</body>
+
+</html>

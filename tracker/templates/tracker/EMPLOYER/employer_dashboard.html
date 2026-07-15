@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Employer Dashboard - SKILLUP</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#0051d5",
+                        "inverse-surface": "#213145",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "outline-variant": "#c6c6cd",
+                        "primary-fixed": "#dae2fd",
+                        "on-error": "#ffffff",
+                        "surface-container": "#e5eeff",
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#565e74",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "surface-container-low": "#eff4ff",
+                        "on-surface": "#0b1c30",
+                        "on-secondary-fixed-variant": "#003ea8",
+                        "surface-bright": "#f8f9ff",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-primary-container": "#7c839b",
+                        "primary-fixed-dim": "#bec6e0",
+                        "outline": "#76777d",
+                        "on-secondary-fixed": "#00174b",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#d3e4fe",
+                        "tertiary-container": "#002113",
+                        "primary-container": "#131b2e",
+                        "tertiary": "#000000",
+                        "on-secondary-container": "#fefcff",
+                        "surface-dim": "#cbdbf5",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-background": "#0b1c30",
+                        "on-surface-variant": "#45464d",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed": "#002113",
+                        "inverse-on-surface": "#eaf1ff",
+                        "background": "#f8f9ff",
+                        "secondary-fixed": "#dbe1ff",
+                        "primary": "#000000",
+                        "secondary-container": "#316bf3",
+                        "on-tertiary-container": "#009668",
+                        "surface-variant": "#d3e4fe",
+                        "surface-container-high": "#dce9ff",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#93000a",
+                        "surface": "#f8f9ff",
+                        "secondary-fixed-dim": "#b4c5ff",
+                        "on-primary-fixed": "#131b2e",
+                        "inverse-primary": "#bec6e0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "40px",
+                        "container-max": "1440px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+
+        body {
+            background-color: #f8f9ff;
+            color: #0b1c30;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+
+        .glass-effect {
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .zebra-row:nth-child(even) {
+            background-color: #f8f9ff;
+        }
+
+        .filter-chip-active {
+            background-color: #0051d5;
+            color: #ffffff;
+            border: 1px solid #0051d5;
+        }
+        .filter-chip-inactive {
+            background-color: transparent;
+            color: #3f465c;
+            border: 1px solid #c6c6cd;
+        }
+        .filter-chip-inactive:hover {
+            background-color: #eff4ff;
+        }
+    </style>
+</head>
+
+<body class="font-body-md text-body-md">
+    {% if messages %}
+    <div class="fixed top-20 right-4 z-50 flex flex-col gap-2 max-w-sm w-full">
+        {% for message in messages %}
+        <div class="toast-notification flex items-center gap-3 p-4 rounded-xl border border-outline-variant bg-surface-container-lowest/80 backdrop-blur-md shadow-lg transition-all duration-300 transform translate-x-12 opacity-0" data-type="{{ message.tags }}">
+            {% if message.tags == 'success' %}
+            <span class="material-symbols-outlined text-[20px] text-green-600 bg-green-50 p-1.5 rounded-full" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+            {% elif message.tags == 'error' %}
+            <span class="material-symbols-outlined text-[20px] text-error bg-error-container/10 p-1.5 rounded-full">error</span>
+            {% else %}
+            <span class="material-symbols-outlined text-[20px] text-secondary bg-secondary/10 p-1.5 rounded-full">info</span>
+            {% endif %}
+            <div class="flex-grow">
+                <p class="font-body-sm text-body-sm font-semibold text-on-surface text-xs">{{ message }}</p>
+            </div>
+            <button onclick="this.parentElement.remove()" class="material-symbols-outlined text-on-surface-variant hover:text-on-surface text-sm">close</button>
+        </div>
+        {% endfor %}
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toasts = document.querySelectorAll('.toast-notification');
+            toasts.forEach((toast, index) => {
+                setTimeout(() => {
+                    toast.classList.remove('translate-x-12', 'opacity-0');
+                }, index * 150);
+                
+                setTimeout(() => {
+                    toast.classList.add('translate-x-12', 'opacity-0');
+                    setTimeout(() => toast.remove(), 300);
+                }, 4000 + (index * 150));
+            });
+        });
+    </script>
+    {% endif %}
+    <!-- TopNavBar -->
+    <header
+        class="fixed top-0 w-full z-50 bg-surface dark:bg-surface-container-low border-b border-outline-variant dark:border-outline flex items-center justify-between px-margin-desktop h-16 w-full">
+        <div class="flex items-center gap-8">
+            <h1 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-inverse-on-surface">SKILLUP
+            </h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="relative">
+                <a href="{% url 'employer_notifications' %}"
+                    class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80 block"
+                    {% if unread_match_alerts %}style="color:#0051d5" {% endif %}>notifications</a>
+                {% if unread_match_alerts %}<span
+                    class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">{{ unread_match_alerts }}</span>{% endif %}
+            </div>
+
+            <button
+                class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">settings</button>
+        </div>
+    </header>
+    <!-- SideNavBar -->
+    <aside
+        class="fixed left-0 top-0 h-full w-64 pt-20 bg-surface-container-lowest dark:bg-primary-container border-r border-outline-variant dark:border-outline hidden md:flex flex-col p-4 gap-2 z-40">
+        <div class="flex items-center gap-3 px-2 py-4 mb-4 border-b border-outline-variant/30">
+            <div class="w-10 h-10 bg-surface border border-outline-variant rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
+              {% if request.user.profile.company_logo %}
+                <img class="w-full h-full object-cover" src="{{ request.user.profile.company_logo.url }}" alt="Company Logo">
+              {% else %}
+                <span class="text-white font-black text-xl bg-secondary w-full h-full flex items-center justify-center">{{ request.user.profile.company_name|slice:":1"|default:"P" }}</span>
+              {% endif %}
+            </div>
+            <div>
+                <h2
+                    class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">
+                    Enterprise Portal</h2>
+                <p class="text-[10px] text-on-surface-variant opacity-70">Talent Management</p>
+            </div>
+        </div>
+        <nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
+            <a class="flex items-center gap-3 px-3 py-2 bg-surface-container dark:bg-secondary-container text-on-surface dark:text-on-secondary-container font-bold rounded-lg scale-98 active:scale-95 duration-150 transition-all font-label-md text-label-md"
+                href="{% url 'employer_dashboard' %}">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md"
+                href="{% url 'hiring_tracker_employer' %}">
+                <span class="material-symbols-outlined">developer_board</span>
+                <span>Hiring Tracker</span>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md"
+                href="{% url 'job_management_employer' %}">
+                <span class="material-symbols-outlined">work</span>
+                <span>Job Management</span>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md"
+                href="{% url 'company_profile_employer' %}">
+                <span class="material-symbols-outlined">corporate_fare</span>
+                <span>Company Profile</span>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md relative"
+                href="{% url 'employer_notifications' %}">
+                <span class="material-symbols-outlined">notifications</span>
+                <span>Match Alerts</span>
+            </a>
+        </nav>
+        <div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-1">
+            <a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md"
+                href="{% url 'logout' %}">
+                <span class="material-symbols-outlined">logout</span>
+                <span>Log Out</span>
+            </a>
+        </div>
+    </aside>
+    <!-- Main Canvas -->
+    <main class="ml-64 pt-20 min-h-screen">
+        <div class="p-margin-desktop">
+            <!-- Header & Action Row -->
+            <div class="flex items-end justify-between mb-8">
+                <div>
+                    <h1 class="font-headline-lg text-headline-lg text-on-surface mb-1">Employer Dashboard</h1>
+                    <p class="text-on-surface-variant">Real-time overview of your organizational talent health and
+                        hiring pipeline.</p>
+                </div>
+                <div class="flex gap-3 relative">
+                    <div class="relative inline-block text-left">
+                        <button id="filterBtn" onclick="toggleFilterDropdown(event)"
+                            class="flex items-center gap-2 px-6 py-3 border border-outline text-on-surface font-semibold rounded-lg hover:bg-surface-container transition-colors">
+                            <span class="material-symbols-outlined" data-icon="filter_list">filter_list</span>
+                            Filter View
+                        </button>
+                        
+                        <!-- Floating Filter Dropdown -->
+                        <div id="filterDropdown" class="origin-top-right absolute right-0 mt-2 w-72 rounded-xl shadow-2xl bg-surface-container-lowest border border-outline-variant z-50 p-4 hidden">
+                            <h4 class="font-bold text-xs text-on-surface-variant uppercase tracking-wider mb-3">Filter Pipelines</h4>
+                            
+                            <div class="space-y-4">
+                                <!-- Search Input -->
+                                <div>
+                                    <label class="block text-[11px] font-bold text-on-surface-variant uppercase mb-1">Search Role or Location</label>
+                                    <div class="relative flex items-center">
+                                        <span class="material-symbols-outlined absolute left-2.5 text-on-surface-variant text-sm">search</span>
+                                        <input type="text" id="filterSearch" oninput="applyFilters()" placeholder="e.g. Cloud, Remote..." class="w-full pl-9 pr-3 py-2 text-xs rounded-lg border border-outline-variant bg-surface text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary text-sm">
+                                    </div>
+                                </div>
+
+                                <!-- Sort Order -->
+                                <div>
+                                    <label class="block text-[11px] font-bold text-on-surface-variant uppercase mb-1">Sort by Date</label>
+                                    <div class="flex gap-2">
+                                        <button onclick="setSortOrder('new-to-old')" id="sort-new" class="filter-chip-active px-3 py-1.5 text-xs font-semibold rounded-lg transition-all">Newest First</button>
+                                        <button onclick="setSortOrder('old-to-new')" id="sort-old" class="filter-chip-inactive px-3 py-1.5 text-xs font-semibold rounded-lg transition-all">Oldest First</button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Location Filter -->
+                                <div>
+                                    <label class="block text-[11px] font-bold text-on-surface-variant uppercase mb-1">Location Type</label>
+                                    <div class="flex gap-2">
+                                        <button onclick="setLocationFilter('all')" id="loc-all" class="filter-chip-active px-3 py-1.5 text-xs font-semibold rounded-lg transition-all">All</button>
+                                        <button onclick="setLocationFilter('remote')" id="loc-remote" class="filter-chip-inactive px-3 py-1.5 text-xs font-semibold rounded-lg transition-all">Remote</button>
+                                        <button onclick="setLocationFilter('onsite')" id="loc-onsite" class="filter-chip-inactive px-3 py-1.5 text-xs font-semibold rounded-lg transition-all">On-site</button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Performance Filters -->
+                                <div class="pt-2 border-t border-outline-variant/30 space-y-2">
+                                    <label class="flex items-center gap-2 cursor-pointer text-xs text-on-surface font-medium">
+                                        <input type="checkbox" id="filterHighMatch" onchange="applyFilters()" class="w-4 h-4 rounded text-secondary border-outline-variant focus:ring-secondary">
+                                        High Avg Match (>= 80%)
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer text-xs text-on-surface font-medium">
+                                        <input type="checkbox" id="filterHasCandidates" onchange="applyFilters()" class="w-4 h-4 rounded text-secondary border-outline-variant focus:ring-secondary">
+                                        Has Candidates
+                                    </label>
+                                </div>
+                                
+                                <div class="pt-3 border-t border-outline-variant/30 flex justify-between items-center">
+                                    <button onclick="clearFilters()" class="text-xs text-on-surface-variant hover:text-on-surface font-bold">Clear All</button>
+                                    <span id="activeFiltersCount" class="text-[10px] text-secondary font-bold uppercase"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Summary Metrics (Level 1 Cards) -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="p-2 bg-surface-container rounded-lg">
+                            <span class="material-symbols-outlined text-secondary" data-icon="work">work</span>
+                        </div>
+                        <span
+                            class="text-label-sm font-label-sm text-on-tertiary-container bg-tertiary-fixed-dim/20 px-2 py-0.5 rounded">+4
+                            this week</span>
+                    </div>
+                    <p class="text-on-surface-variant font-label-md text-label-md uppercase tracking-widest">Active
+                        Vacancies</p>
+                    <h2 class="font-display-lg text-display-lg font-bold">{{ active_vacs_count }}</h2>
+                </div>
+                <div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="p-2 bg-surface-container rounded-lg">
+                            <span class="material-symbols-outlined text-secondary"
+                                data-icon="person_search">person_search</span>
+                        </div>
+                        <div class="w-16 h-4">
+                            <div class="w-full h-full bg-outline-variant rounded-full overflow-hidden">
+                                <div class="bg-secondary h-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-on-surface-variant font-label-md text-label-md uppercase tracking-widest">Total
+                        Applications</p>
+                    <h2 class="font-display-lg text-display-lg font-bold">{{ total_apps_count }}</h2>
+                </div>
+                <div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="p-2 bg-surface-container rounded-lg">
+                            <span class="material-symbols-outlined text-secondary"
+                                data-icon="event_available">event_available</span>
+                        </div>
+                        <span class="text-label-sm font-label-sm text-error bg-error-container px-2 py-0.5 rounded">3
+                            urgent</span>
+                    </div>
+                    <p class="text-on-surface-variant font-label-md text-label-md uppercase tracking-widest">Interviews
+                        Slated</p>
+                    <h2 class="font-display-lg text-display-lg font-bold">{{ interviews_count }}</h2>
+                </div>
+                <div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="p-2 bg-surface-container rounded-lg">
+                            <span class="material-symbols-outlined text-secondary"
+                                data-icon="check_circle">check_circle</span>
+                        </div>
+                        <span
+                            class="text-label-sm font-label-sm text-on-tertiary-container bg-tertiary-fixed-dim/20 px-2 py-0.5 rounded">Target:
+                            20</span>
+                    </div>
+                    <p class="text-on-surface-variant font-label-md text-label-md uppercase tracking-widest">Successful
+                        Hires</p>
+                    <h2 class="font-display-lg text-display-lg font-bold">{{ hires_count }}</h2>
+                </div>
+            </div>
+            <!-- Main Content Bento Grid -->
+            <div class="bento-grid">
+                <!-- Recent Applications Table -->
+                <div
+                    class="col-span-12 lg:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+                    <div class="px-6 py-5 border-b border-outline-variant flex justify-between items-center">
+                        <h3 class="font-headline-md text-headline-md">Active Pipelines</h3>
+                        <a href="{% url 'job_management_employer' %}" class="text-secondary font-semibold hover:underline">View All</a>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead
+                                class="bg-surface-container-low text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">
+                                <tr>
+                                    <th class="px-6 py-4">Role Name</th>
+                                    <th class="px-6 py-4">Location</th>
+                                    <th class="px-6 py-4">Candidates</th>
+                                    <th class="px-6 py-4">Match Rate</th>
+                                    <th class="px-6 py-4">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-outline-variant">
+                                {% for pipe in pipelines %}
+                                <tr class="zebra-row hover:bg-surface-container transition-colors group cursor-pointer pipeline-row"
+                                    data-url="{% url 'applicants_employer' %}?job_id={{ pipe.vacancy.id }}"
+                                    data-title="{{ pipe.vacancy.title|lower }}"
+                                    data-location="{{ pipe.vacancy.location|lower }}"
+                                    data-match="{{ pipe.avg_match }}"
+                                    data-candidates="{{ pipe.candidates_count }}"
+                                    data-created="{{ pipe.vacancy.created_at|date:"c" }}">
+                                    <td class="px-6 py-5 font-bold">
+                                        {{ pipe.vacancy.title }}
+                                        <p class="text-[11px] text-on-surface-variant font-medium mt-0.5">Posted: {{ pipe.vacancy.created_at|date:"M d, Y" }}</p>
+                                    </td>
+                                    <td class="px-6 py-5 text-on-surface-variant">{{ pipe.vacancy.location }}</td>
+                                    <td class="px-6 py-5">
+                                        <div class="flex -space-x-2">
+                                            {% for cand in pipe.candidates %}
+                                            <a href="{% url 'applicant_details_employer_id' cand.id %}" class="w-8 h-8 rounded-full border-2 border-white overflow-hidden bg-secondary text-white flex items-center justify-center text-[10px] font-bold z-10 hover:scale-110 hover:bg-opacity-95 transition-all duration-150 active:scale-95"
+                                                title="{{ cand.user.first_name }} {{ cand.user.last_name }}">
+                                                {{ cand.user.first_name|slice:":1" }}{{ cand.user.last_name|slice:":1" }}
+                                            </a>
+                                            {% empty %}
+                                            <span class="text-xs text-on-surface-variant opacity-60">No applicants
+                                                yet</span>
+                                            {% endfor %}
+                                            {% if pipe.candidates_count > 3 %}
+                                            <div
+                                                class="w-8 h-8 rounded-full border-2 border-white bg-secondary flex items-center justify-center text-[10px] text-white font-bold">
+                                                +{{ pipe.candidates_count|add:"-3" }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                    <td class="px-6 py-5 font-label-sm text-label-sm">
+                                        <span class="text-on-tertiary-container font-bold">{{ pipe.avg_match }}%
+                                            AVG</span>
+                                    </td>
+                                    <td class="px-6 py-5">
+                                         <span class="px-3 py-1 {% if pipe.status == 'Active' %}bg-surface-container-highest text-secondary{% elif pipe.status == 'Closed' %}bg-error-container text-on-error-container{% elif pipe.status == 'On Hold' %}bg-secondary-fixed text-on-secondary-fixed-variant{% else %}bg-surface-container text-on-surface-variant{% endif %} text-label-sm rounded-full font-bold">{{ pipe.status }}</span>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="5" class="px-6 py-5 text-center text-on-surface-variant italic">No
+                                        active pipelines found. Post a vacancy to begin.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Interview Schedule -->
+                <div class="col-span-12 lg:col-span-4 space-y-6">
+                    <div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl h-full">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="font-headline-md text-headline-md">Today's Schedule</h3>
+                            <span class="material-symbols-outlined text-on-surface-variant"
+                                data-icon="calendar_month">calendar_month</span>
+                        </div>
+                        <div class="space-y-4">
+                            {% for interview in today_interviews %}
+                            <div class="p-4 bg-surface-container-low rounded-lg border-l-4 {% if interview.interview_type == 'Video Call' %}border-secondary{% else %}border-outline-variant{% endif %} flex gap-4 {% if interview.is_past %}opacity-70{% endif %}">
+                                <div class="flex flex-col items-center justify-center min-w-[48px]">
+                                    <p class="font-bold text-headline-md">{{ interview.start_time|time:"h" }}</p>
+                                    <p class="text-label-sm">{{ interview.start_time|time:"A" }}</p>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-bold text-on-surface text-sm">
+                                        {% if interview.candidate %}
+                                            <a href="{% url 'applicant_details_employer_id' interview.candidate.id %}" class="text-secondary hover:underline transition-colors">
+                                                {{ interview.candidate.user.get_full_name }}
+                                            </a>
+                                        {% else %}
+                                            {{ interview.title }}
+                                        {% endif %}
+                                    </p>
+                                    <p class="text-xs text-on-surface-variant">
+                                        {% if interview.vacancy %}
+                                            {{ interview.vacancy.title }}
+                                        {% elif interview.candidate %}
+                                            Candidate Interview
+                                        {% else %}
+                                            Engineering Team
+                                        {% endif %}
+                                        • {{ interview.round_name }}
+                                    </p>
+                                    {% if interview.interview_type == 'Video Call' %}
+                                    <div class="mt-2 flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-sm text-secondary" data-icon="video_call">video_call</span>
+                                        {% if interview.meeting_link %}
+                                        <a href="{{ interview.meeting_link }}" target="_blank" class="text-label-sm text-secondary font-bold hover:underline">Join Meet</a>
+                                        {% else %}
+                                        <span class="text-label-sm text-secondary font-bold">Video Call</span>
+                                        {% endif %}
+                                    </div>
+                                    {% elif interview.interview_type == 'Phone Call' %}
+                                    <div class="mt-2 flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-sm text-on-surface-variant" data-icon="call">call</span>
+                                        <span class="text-label-sm text-on-surface-variant font-medium">Phone Call</span>
+                                    </div>
+                                    {% elif interview.interview_type == 'In-Person' %}
+                                    <div class="mt-2 flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-sm text-on-surface-variant" data-icon="location_on">location_on</span>
+                                        <span class="text-label-sm text-on-surface-variant font-medium">In-Person</span>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% empty %}
+                            <div class="py-8 text-center text-on-surface-variant italic text-sm">
+                                No interviews or meetings scheduled for today.
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <button onclick="openCalendarModal()"
+                            class="w-full mt-6 py-3 border border-secondary text-secondary font-bold rounded-lg hover:bg-secondary hover:text-white transition-all">
+                            Full Calendar View
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+    <!-- FAB for quick job posting (Contextual) -->
+    <button
+        class="fixed bottom-8 right-8 w-14 h-14 bg-secondary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50">
+        <span class="material-symbols-outlined text-[32px]" data-icon="post_add">post_add</span>
+    </button>
+    <script>
+        // Micro-interaction for hover effects on table rows
+        document.querySelectorAll('tr.zebra-row').forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                row.style.transform = 'translateX(4px)';
+            });
+            row.addEventListener('mouseleave', () => {
+                row.style.transform = 'translateX(0)';
+            });
+        });
+
+        // Redirect on row click
+        document.querySelectorAll('.pipeline-row').forEach(row => {
+            row.addEventListener('click', (e) => {
+                if (!e.target.closest('a')) {
+                    window.location.href = row.dataset.url;
+                }
+            });
+        });
+
+        // Simple animation for progress bars on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const bars = document.querySelectorAll('.h-full.bg-secondary, .h-full.bg-tertiary-fixed-dim');
+            bars.forEach(bar => {
+                const targetWidth = bar.style.width;
+                bar.style.width = '0';
+                setTimeout(() => {
+                    bar.style.transition = 'width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    bar.style.width = targetWidth;
+                }, 100);
+            });
+        });
+
+        // Modals Functions
+        function openScheduleModal() {
+            document.getElementById('scheduleModal').classList.remove('hidden');
+        }
+        function closeScheduleModal() {
+            document.getElementById('scheduleModal').classList.add('hidden');
+        }
+        function openCalendarModal() {
+            document.getElementById('calendarModal').classList.remove('hidden');
+        }
+        function closeCalendarModal() {
+            document.getElementById('calendarModal').classList.add('hidden');
+        }
+        function openScheduleModalFromCalendar() {
+            closeCalendarModal();
+            openScheduleModal();
+        }
+
+        // Filtering & Sorting Functions
+        let currentLocFilter = 'all';
+        let currentSortOrder = 'new-to-old';
+        
+        function toggleFilterDropdown(event) {
+            event.stopPropagation();
+            const dropdown = document.getElementById('filterDropdown');
+            dropdown.classList.toggle('hidden');
+        }
+        
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('filterDropdown');
+            const filterBtn = document.getElementById('filterBtn');
+            if (dropdown && !dropdown.classList.contains('hidden') && !dropdown.contains(event.target) && !filterBtn.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+        
+        function setLocationFilter(loc) {
+            currentLocFilter = loc;
+            
+            const chips = ['all', 'remote', 'onsite'];
+            chips.forEach(c => {
+                const btn = document.getElementById('loc-' + c);
+                if (btn) {
+                    if (c === loc) {
+                        btn.className = 'filter-chip-active px-3 py-1.5 text-xs font-semibold rounded-lg transition-all';
+                    } else {
+                        btn.className = 'filter-chip-inactive px-3 py-1.5 text-xs font-semibold rounded-lg transition-all';
+                    }
+                }
+            });
+            
+            applyFilters();
+        }
+        
+        function setSortOrder(order) {
+            currentSortOrder = order;
+            const btnNew = document.getElementById('sort-new');
+            const btnOld = document.getElementById('sort-old');
+            if (btnNew && btnOld) {
+                if (order === 'new-to-old') {
+                    btnNew.className = 'filter-chip-active px-3 py-1.5 text-xs font-semibold rounded-lg transition-all';
+                    btnOld.className = 'filter-chip-inactive px-3 py-1.5 text-xs font-semibold rounded-lg transition-all';
+                } else {
+                    btnNew.className = 'filter-chip-inactive px-3 py-1.5 text-xs font-semibold rounded-lg transition-all';
+                    btnOld.className = 'filter-chip-active px-3 py-1.5 text-xs font-semibold rounded-lg transition-all';
+                }
+            }
+            applyFilters();
+        }
+        
+        function applyFilters() {
+            const searchQuery = document.getElementById('filterSearch').value.toLowerCase().trim();
+            const highMatchOnly = document.getElementById('filterHighMatch').checked;
+            const hasCandidatesOnly = document.getElementById('filterHasCandidates').checked;
+            
+            const rows = Array.from(document.querySelectorAll('.pipeline-row'));
+            
+            // Sort rows based on data-created
+            if (rows.length > 0) {
+                const tbody = rows[0].parentNode;
+                rows.sort((a, b) => {
+                    const dateA = new Date(a.getAttribute('data-created'));
+                    const dateB = new Date(b.getAttribute('data-created'));
+                    if (currentSortOrder === 'new-to-old') {
+                        return dateB - dateA;
+                    } else {
+                        return dateA - dateB;
+                    }
+                });
+                rows.forEach(row => tbody.appendChild(row));
+            }
+            
+            let visibleCount = 0;
+            let activeFilters = 0;
+            
+            if (searchQuery) activeFilters++;
+            if (currentLocFilter !== 'all') activeFilters++;
+            if (highMatchOnly) activeFilters++;
+            if (hasCandidatesOnly) activeFilters++;
+            if (currentSortOrder !== 'new-to-old') activeFilters++;
+            
+            rows.forEach(row => {
+                const title = row.getAttribute('data-title') || '';
+                const location = row.getAttribute('data-location') || '';
+                const match = parseInt(row.getAttribute('data-match') || '0');
+                const candidates = parseInt(row.getAttribute('data-candidates') || '0');
+                
+                let matchesSearch = title.includes(searchQuery) || location.includes(searchQuery);
+                
+                let matchesLoc = true;
+                if (currentLocFilter === 'remote') {
+                    matchesLoc = location.includes('remote');
+                } else if (currentLocFilter === 'onsite') {
+                    matchesLoc = !location.includes('remote');
+                }
+                
+                let matchesHighMatch = !highMatchOnly || (match >= 80);
+                let matchesCandidates = !hasCandidatesOnly || (candidates > 0);
+                
+                if (matchesSearch && matchesLoc && matchesHighMatch && matchesCandidates) {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            
+            const badge = document.getElementById('activeFiltersCount');
+            if (badge) {
+                if (activeFilters > 0) {
+                    badge.innerText = `${activeFilters} Active`;
+                } else {
+                    badge.innerText = '';
+                }
+            }
+        }
+        
+        function clearFilters() {
+            document.getElementById('filterSearch').value = '';
+            document.getElementById('filterHighMatch').checked = false;
+            document.getElementById('filterHasCandidates').checked = false;
+            setLocationFilter('all');
+            setSortOrder('new-to-old');
+        }
+    </script>
+
+    <!-- MODAL 1: Schedule Interview Modal -->
+    <div id="scheduleModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl transition-all scale-95 duration-200">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="font-headline-md text-headline-md font-bold text-on-surface">Schedule Interview / Meeting</h3>
+                <button onclick="closeScheduleModal()" class="material-symbols-outlined text-on-surface-variant hover:text-on-surface p-1 rounded-full hover:bg-surface-container-low transition-colors">close</button>
+            </div>
+            
+            <form method="POST" action="{% url 'schedule_interview_employer' %}" class="space-y-4">
+                {% csrf_token %}
+                
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-1">Candidate (Optional)</label>
+                    <select name="candidate_id" class="w-full rounded-lg border border-outline-variant p-2.5 bg-surface text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary text-sm">
+                        <option value="">-- No Candidate (Team Meeting / Sync) --</option>
+                        {% for candidate in candidates_list %}
+                        <option value="{{ candidate.id }}">{{ candidate.user.get_full_name }} ({{ candidate.title }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-1">Title (Optional for Candidates, Required for Team Syncs)</label>
+                    <input type="text" name="title" placeholder="e.g. Review Session, Final Technical Assessment" class="w-full rounded-lg border border-outline-variant p-2.5 bg-surface text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary text-sm">
+                </div>
+                
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-1">Job Vacancy (Optional)</label>
+                    <select name="vacancy_id" class="w-full rounded-lg border border-outline-variant p-2.5 bg-surface text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary text-sm">
+                        <option value="">-- None (General Meeting) --</option>
+                        {% for vac in vacancies %}
+                        <option value="{{ vac.id }}">{{ vac.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-1">Date</label>
+                        <input type="date" name="date" required class="w-full rounded-lg border border-outline-variant p-2.5 bg-surface text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-1">Start Time</label>
+                        <input type="time" name="start_time" required class="w-full rounded-lg border border-outline-variant p-2.5 bg-surface text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary text-sm">
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-1">Type</label>
+                        <select name="interview_type" class="w-full rounded-lg border border-outline-variant p-2.5 bg-surface text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary text-sm">
+                            <option value="Video Call">Video Call</option>
+                            <option value="Phone Call">Phone Call</option>
+                            <option value="In-Person">In-Person</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-1">Round / Category</label>
+                        <input type="text" name="round_name" placeholder="e.g. Screening, Final Round, Sync" value="Screening" required class="w-full rounded-lg border border-outline-variant p-2.5 bg-surface text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary text-sm">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-1">Meeting Link (Optional)</label>
+                    <input type="url" name="meeting_link" placeholder="e.g. https://meet.google.com/abc-defg-hij" class="w-full rounded-lg border border-outline-variant p-2.5 bg-surface text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary text-sm">
+                </div>
+                
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-1">Notes / Description (Optional)</label>
+                    <textarea name="notes" rows="2" placeholder="Brief guidelines or details..." class="w-full rounded-lg border border-outline-variant p-2.5 bg-surface text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary text-sm"></textarea>
+                </div>
+                
+                <div class="flex justify-end gap-3 pt-4 border-t border-outline-variant/30">
+                    <button type="button" onclick="closeScheduleModal()" class="px-4 py-2 border border-outline-variant rounded-lg font-bold text-on-surface hover:bg-surface-container-low transition-colors text-sm">Cancel</button>
+                    <button type="submit" class="px-5 py-2 bg-secondary text-white font-bold rounded-lg hover:bg-opacity-95 transition-all text-sm shadow-sm">Schedule</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: Full Calendar View Modal -->
+    <div id="calendarModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl transition-all scale-95 duration-200">
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-secondary text-3xl">calendar_month</span>
+                    <h3 class="font-headline-md text-headline-md font-bold text-on-surface">Scheduled Interviews & Events</h3>
+                </div>
+                <button onclick="closeCalendarModal()" class="material-symbols-outlined text-on-surface-variant hover:text-on-surface p-1 rounded-full hover:bg-surface-container-low transition-colors">close</button>
+            </div>
+            
+            <div class="mb-4 flex justify-between items-center bg-surface-container-low p-3 rounded-lg border border-outline-variant/30">
+                <p class="text-xs text-on-surface-variant">Manage all upcoming and past events. Seeding relative to today is done automatically.</p>
+                <button onclick="openScheduleModalFromCalendar()" class="flex items-center gap-1.5 px-3 py-1.5 bg-secondary text-white text-xs font-bold rounded-lg hover:bg-opacity-95 shadow-sm transition-all">
+                    <span class="material-symbols-outlined text-xs">add</span>Schedule Event
+                </button>
+            </div>
+            
+            <div class="space-y-3 max-h-[50vh] overflow-y-auto pr-1">
+                {% for interview in all_interviews %}
+                <div class="p-4 bg-surface rounded-lg border border-outline-variant/60 flex justify-between items-start gap-4 {% if interview.is_past %}opacity-60 bg-surface-container-low{% endif %} hover:shadow-sm transition-shadow">
+                    <div class="flex gap-4">
+                        <div class="flex flex-col items-center justify-center bg-surface-container-low px-3 py-2 rounded-lg min-w-[70px] text-center border border-outline-variant/30">
+                            <span class="text-[10px] font-bold text-secondary uppercase">{{ interview.date|date:"M" }}</span>
+                            <span class="text-lg font-extrabold text-on-surface">{{ interview.date|date:"d" }}</span>
+                            <span class="text-[9px] text-on-surface-variant font-medium">{{ interview.start_time|time:"h:i A" }}</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm text-on-surface">
+                                {% if interview.candidate %}
+                                    {{ interview.candidate.user.get_full_name }}
+                                {% else %}
+                                    {{ interview.title }}
+                                {% endif %}
+                            </h4>
+                            <p class="text-xs text-on-surface-variant">
+                                {% if interview.vacancy %}
+                                    Job: {{ interview.vacancy.title }}
+                                {% elif interview.candidate %}
+                                    Candidate Interview
+                                {% else %}
+                                    Internal Meeting
+                                {% endif %}
+                                • {{ interview.round_name }}
+                            </p>
+                            <div class="mt-2 flex flex-wrap gap-x-3 gap-y-1 items-center text-[11px] text-on-surface-variant">
+                                <span class="flex items-center gap-1 bg-surface-container-low px-2 py-0.5 rounded text-[10px] border border-outline-variant/20">
+                                    {% if interview.interview_type == 'Video Call' %}
+                                        <span class="material-symbols-outlined text-[10px] text-secondary">video_call</span>Video Call
+                                    {% elif interview.interview_type == 'Phone Call' %}
+                                        <span class="material-symbols-outlined text-[10px]">call</span>Phone Call
+                                    {% else %}
+                                        <span class="material-symbols-outlined text-[10px]">location_on</span>In-Person
+                                    {% endif %}
+                                </span>
+                                {% if interview.meeting_link %}
+                                <a href="{{ interview.meeting_link }}" target="_blank" class="text-secondary hover:underline flex items-center gap-0.5">
+                                    <span class="material-symbols-outlined text-xs">link</span>Link
+                                </a>
+                                {% endif %}
+                                {% if interview.notes %}
+                                <span class="italic max-w-[250px] truncate" title="{{ interview.notes }}">"{{ interview.notes }}"</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <form method="POST" action="{% url 'cancel_interview_employer' interview.id %}" onsubmit="return confirm('Are you sure you want to cancel this interview?');">
+                        {% csrf_token %}
+                        <button type="submit" class="material-symbols-outlined text-xs text-error hover:bg-error/10 p-1.5 rounded-full transition-colors" title="Cancel/Delete Event">delete</button>
+                    </form>
+                </div>
+                {% empty %}
+                <div class="py-12 text-center text-on-surface-variant italic text-sm border border-dashed border-outline-variant/60 rounded-xl">
+                    No scheduled interviews or events found.
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="flex justify-end pt-4 mt-6 border-t border-outline-variant/30">
+                <button type="button" onclick="closeCalendarModal()" class="px-5 py-2 border border-outline-variant rounded-lg font-bold text-on-surface hover:bg-surface-container-low transition-colors text-sm">Close</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

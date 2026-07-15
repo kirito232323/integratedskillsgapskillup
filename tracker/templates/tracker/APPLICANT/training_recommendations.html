@@ -1,0 +1,547 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>My Learning | SKILLUP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#0051d5",
+                    "inverse-surface": "#213145",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "outline-variant": "#c6c6cd",
+                    "primary-fixed": "#dae2fd",
+                    "on-error": "#ffffff",
+                    "surface-container": "#e5eeff",
+                    "on-tertiary": "#ffffff",
+                    "surface-tint": "#565e74",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "surface-container-low": "#eff4ff",
+                    "on-surface": "#0b1c30",
+                    "on-secondary-fixed-variant": "#003ea8",
+                    "surface-bright": "#f8f9ff",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-primary-container": "#7c839b",
+                    "primary-fixed-dim": "#bec6e0",
+                    "outline": "#76777d",
+                    "on-secondary-fixed": "#00174b",
+                    "on-secondary": "#ffffff",
+                    "surface-container-highest": "#d3e4fe",
+                    "tertiary-container": "#002113",
+                    "primary-container": "#131b2e",
+                    "tertiary": "#000000",
+                    "on-secondary-container": "#fefcff",
+                    "surface-dim": "#cbdbf5",
+                    "error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "on-background": "#0b1c30",
+                    "on-surface-variant": "#45464d",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed": "#002113",
+                    "inverse-on-surface": "#eaf1ff",
+                    "background": "#f8f9ff",
+                    "secondary-fixed": "#dbe1ff",
+                    "primary": "#000000",
+                    "secondary-container": "#316bf3",
+                    "on-tertiary-container": "#009668",
+                    "surface-variant": "#d3e4fe",
+                    "surface-container-high": "#dce9ff",
+                    "error-container": "#ffdad6",
+                    "on-error-container": "#93000a",
+                    "surface": "#f8f9ff",
+                    "secondary-fixed-dim": "#b4c5ff",
+                    "on-primary-fixed": "#131b2e",
+                    "inverse-primary": "#bec6e0"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "40px",
+                    "container-max": "1440px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["JetBrains Mono"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-md": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-header {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .tonal-card {
+            background-color: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .tonal-card:hover {
+            border-color: #0051d5;
+            box-shadow: 0px 4px 20px rgba(15, 23, 42, 0.05);
+        }
+        .progress-bar-bg { background-color: #E2E8F0; }
+        .tab-active { position: relative; }
+        .tab-active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #0051d5;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+{% if messages %}
+<div class="fixed top-20 right-4 z-50 flex flex-col gap-2 max-w-sm w-full">
+    {% for message in messages %}
+    <div class="toast-notification flex items-center gap-3 p-4 rounded-xl border border-outline-variant bg-surface-container-lowest/80 backdrop-blur-md shadow-lg transition-all duration-300 transform translate-x-12 opacity-0" data-type="{{ message.tags }}">
+        {% if message.tags == 'success' %}
+        <span class="material-symbols-outlined text-[20px] text-green-600 bg-green-50 p-1.5 rounded-full" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+        {% elif message.tags == 'error' %}
+        <span class="material-symbols-outlined text-[20px] text-error bg-error-container/10 p-1.5 rounded-full">error</span>
+        {% else %}
+        <span class="material-symbols-outlined text-[20px] text-secondary bg-secondary/10 p-1.5 rounded-full">info</span>
+        {% endif %}
+        <div class="flex-grow">
+            <p class="font-body-sm text-body-sm font-semibold text-on-surface">{{ message }}</p>
+        </div>
+        <button onclick="this.parentElement.remove()" class="material-symbols-outlined text-on-surface-variant hover:text-on-surface text-sm">close</button>
+    </div>
+    {% endfor %}
+</div>
+<script id="toast-script">
+    document.addEventListener('DOMContentLoaded', () => {
+        const toasts = document.querySelectorAll('.toast-notification');
+        toasts.forEach((toast, index) => {
+            setTimeout(() => {
+                toast.classList.remove('translate-x-12', 'opacity-0');
+            }, index * 150);
+            
+            setTimeout(() => {
+                toast.classList.add('translate-x-12', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000 + (index * 150));
+        });
+    });
+</script>
+{% endif %}
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant h-16 flex items-center justify-between px-margin-desktop">
+  <div class="flex items-center gap-8">
+    <a href="{% url 'applicant_dashboard' %}" class="font-headline-md text-headline-md font-bold text-on-surface">SKILLUP</a>
+    <nav class="hidden md:flex items-center gap-6 h-16">
+      <a class="font-body-md text-body-md h-full flex items-center px-2 transition-colors duration-200 text-on-surface-variant hover:bg-surface-container-low" href="{% url 'applicant_dashboard' %}">Dashboard</a>
+      <a class="font-body-md text-body-md h-full flex items-center px-2 transition-colors duration-200 text-on-surface-variant hover:bg-surface-container-low" href="{% url 'applicant_applications_list' %}">My Applications</a>
+      <a class="font-body-md text-body-md h-full flex items-center px-2 transition-colors duration-200 text-secondary font-semibold border-b-2 border-secondary" href="{% url 'training_recommendations' %}">My Learning</a>
+      <a class="font-body-md text-body-md h-full flex items-center px-2 transition-colors duration-200 text-on-surface-variant hover:bg-surface-container-low" href="{% url 'job_search' %}">Job Board</a>
+      <a class="font-body-md text-body-md h-full flex items-center px-2 transition-colors duration-200 text-on-surface-variant hover:bg-surface-container-low" href="{% url 'applicant_profile' %}">Profile</a>
+    </nav>
+  </div>
+  <div class="flex items-center gap-4">
+    <div class="flex items-center gap-2">
+      <a href="{% url 'applicant_notifications' %}" class="p-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant relative block" title="Notifications">
+        <span class="material-symbols-outlined">notifications</span>
+        {% if unread_notifications_count %}<span class="absolute top-0.5 right-0.5 w-4 h-4 rounded-full bg-red-500 text-white text-[9px] font-black flex items-center justify-center">{{ unread_notifications_count }}</span>{% endif %}
+      </a>
+      <a href="{% url 'applicant_settings' %}" class="p-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant" title="Settings">
+        <span class="material-symbols-outlined">settings</span>
+      </a>
+      <a href="{% url 'logout' %}" class="p-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant" title="Logout">
+        <span class="material-symbols-outlined">logout</span>
+      </a>
+    </div>
+  </div>
+</header>
+<main class="mt-16 min-h-screen">
+<!-- Hero Summary Section -->
+<section class="bg-surface-container-lowest border-b border-outline-variant pt-12 pb-16">
+<div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+<div class="space-y-3">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest">Personalized Growth Path</span>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Targeted Skill Development</h1>
+
+<form id="categoryFilterForm" method="GET" class="flex flex-col sm:flex-row items-start sm:items-center gap-3 pt-1 pb-2">
+  <label class="font-bold text-sm text-on-surface-variant whitespace-nowrap" for="category_select">Preferred Job Category:</label>
+  <div class="relative">
+    <select name="category" id="category_select" onchange="document.getElementById('categoryFilterForm').submit()" class="bg-white border border-outline-variant rounded-lg px-4 py-2 font-body-md text-sm focus:ring-2 focus:ring-secondary focus:border-transparent outline-none">
+      <option value="">-- All Categories --</option>
+      {% for cat in categories %}
+        <option value="{{ cat.code }}" {% if target_category == cat.code %}selected{% endif %}>{{ cat.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+</form>
+
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">We've identified {{ gaps_count }} key gaps in your profile for vacancies matching your selected category. These recommendations are curated to bridge those gaps through certified training and workshops (including TESDA trades).</p>
+</div>
+<div class="bg-surface-container rounded-xl p-6 flex items-center gap-6 border border-outline-variant">
+<div class="relative h-20 w-20">
+<svg class="h-20 w-20 -rotate-90">
+<circle class="text-outline-variant" cx="40" cy="40" fill="transparent" r="36" stroke="currentColor" stroke-width="8"></circle>
+<circle id="matchCircle" class="text-secondary" cx="40" cy="40" fill="transparent" r="36" stroke="currentColor" stroke-dasharray="226.2" stroke-dashoffset="226.2" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center font-headline-md text-headline-md">{{ profile_match_percentage }}%</div>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant">Best Profile Match</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Bridge the remaining <span class="text-secondary font-bold">{{ remaining_gap }}%</span> gap</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Content Area -->
+<div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop pt-12 pb-24 md:py-12">
+  <!-- My Enrolled Trainings Section -->
+  {% if enrolled_trainings.exists %}
+    <div class="mb-12">
+      <h2 class="font-headline-md text-headline-md text-on-surface mb-6 flex items-center gap-2">
+        <span class="material-symbols-outlined text-secondary">assignment_turned_in</span>
+        My Enrolled & Completed Trainings
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {% for enroll in enrolled_trainings %}
+          <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="px-2 py-1 rounded text-[10px] font-bold uppercase 
+                  {% if enroll.status == 'Attended' %}bg-green-100 text-green-800
+                  {% elif enroll.status == 'No Show' %}bg-error-container text-error
+                  {% else %}bg-blue-100 text-blue-800{% endif %}">
+                  {% if enroll.status == 'Attended' %}Completed{% else %}{{ enroll.status }}{% endif %}
+                </span>
+                <span class="text-xs text-outline font-medium">Provider: {{ enroll.training_program.provider }}</span>
+              </div>
+              <h3 class="font-bold text-on-surface text-lg mb-2">{{ enroll.training_program.title }}</h3>
+              <p class="text-xs text-on-surface-variant mb-4">{{ enroll.training_program.description }}</p>
+            </div>
+            <div class="pt-4 border-t border-outline-variant/30 text-xs text-outline space-y-1">
+              <div>Addresses: <span class="font-semibold text-secondary">{{ enroll.training_program.skill_addressed.name }}</span></div>
+              <div>Duration: {{ enroll.training_program.duration }}</div>
+              <div>Scheduled Date: {{ enroll.training_program.scheduled_date|default:"TBD" }}</div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  <!-- Bento-style Grid of Recommendations -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+{% for program in recommended_programs %}
+<div class="tonal-card rounded-xl p-8 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-2 mb-4 text-secondary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">school</span>
+{% if program.provider == "TESDA" or program.provider == "TUP" %}TESDA Vocational Trade{% else %}Professional Development{% endif %}
+</div>
+<h3 class="font-headline-md text-headline-md mb-2 text-xl">{{ program.title }}</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6">{{ program.description }}</p>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between text-body-sm">
+<span class="text-on-surface-variant">Addresses Skill:</span>
+<span class="font-medium text-secondary">{{ program.skill_addressed.name }}</span>
+</div>
+<div class="flex justify-between text-body-sm">
+<span class="text-on-surface-variant">Provider:</span>
+<span class="font-medium">{{ program.provider }}</span>
+</div>
+<div class="flex justify-between text-body-sm">
+<span class="text-on-surface-variant">Duration:</span>
+<span class="font-medium">{{ program.duration }}</span>
+</div>
+<div class="pt-4 border-t border-outline-variant flex gap-4 w-full">
+  {% if program.id in enrolled_ids %}
+    <button disabled class="flex-grow w-full bg-surface-container text-on-surface-variant py-2 rounded text-label-md font-label-md cursor-not-allowed">Enrolled</button>
+  {% else %}
+    <button type="button"
+      data-url="{% url 'applicant_enroll_training' program.id %}"
+      data-title="{{ program.title|escapejs }}"
+      onclick="confirmEnroll(this.dataset.url, this.dataset.title)"
+      class="flex-grow w-full bg-secondary text-white py-2 rounded text-label-md font-label-md hover:bg-opacity-90 transition-colors">Enroll Program</button>
+  {% endif %}
+</div>
+</div>
+</div>
+{% empty %}
+<div class="col-span-3 text-center py-12 bg-surface-container-lowest border border-outline-variant rounded-xl w-full">
+<span class="material-symbols-outlined text-outline text-5xl mb-4">school</span>
+<p class="text-on-surface-variant">No training recommendations currently available. Rate your skills in your Profile to check for course recommendations.</p>
+</div>
+{% endfor %}
+</div>
+
+<!-- All Available Training Programs Section -->
+<div class="mt-16 pt-12 border-t border-outline-variant">
+  <div class="mb-8 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+    <div>
+      <h2 class="font-headline-lg text-headline-lg mb-2 text-on-surface flex items-center gap-2">
+        <span class="material-symbols-outlined text-secondary">explore</span>
+        All Available Training Courses
+      </h2>
+      <p class="text-on-surface-variant font-body-md">Browse the complete catalogue of training and vocational trade programs posted by PESO.</p>
+    </div>
+    
+    <!-- Search Bar -->
+    <form method="GET" action="{% url 'training_recommendations' %}" class="w-full lg:w-auto min-w-[320px]">
+      <div class="bg-surface-container-lowest border border-outline-variant p-1.5 rounded-xl shadow-sm flex items-center gap-2">
+        <div class="flex-grow flex items-center px-3 py-1">
+          <span class="material-symbols-outlined text-outline mr-2 text-[20px]">search</span>
+          <input class="w-full border-none focus:ring-0 bg-transparent text-body-sm p-0 placeholder-outline focus:outline-none" 
+                 name="q" value="{{ q|default:'' }}" placeholder="Search courses, provider, or skill..." type="text">
+          {% if q %}
+            <a href="{% url 'training_recommendations' %}" class="material-symbols-outlined text-outline hover:text-on-surface text-lg cursor-pointer mr-1">close</a>
+          {% endif %}
+        </div>
+        <button type="submit" class="bg-secondary text-white px-5 py-2.5 rounded-lg font-semibold hover:opacity-90 transition-opacity active:scale-95 text-body-sm shrink-0">
+          Search
+        </button>
+      </div>
+    </form>
+  </div>
+  
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    {% for program in all_programs %}
+      <div class="tonal-card rounded-xl p-8 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center gap-2 mb-4 text-secondary font-label-sm text-label-sm">
+            <span class="material-symbols-outlined text-[16px]">school</span>
+            {% if program.provider == "TESDA" or program.provider == "TUP" %}TESDA Vocational Trade{% else %}Professional Development{% endif %}
+          </div>
+          <h3 class="font-headline-md text-headline-md mb-2 text-xl">{{ program.title }}</h3>
+          <p class="font-body-sm text-body-sm text-on-surface-variant mb-6">{{ program.description }}</p>
+        </div>
+        <div class="space-y-4">
+          <div class="flex justify-between text-body-sm">
+            <span class="text-on-surface-variant">Addresses Skill:</span>
+            <span class="font-medium text-secondary">{{ program.skill_addressed.name }}</span>
+          </div>
+          <div class="flex justify-between text-body-sm">
+            <span class="text-on-surface-variant">Provider:</span>
+            <span class="font-medium">{{ program.provider }}</span>
+          </div>
+          <div class="flex justify-between text-body-sm">
+            <span class="text-on-surface-variant">Duration:</span>
+            <span class="font-medium">{{ program.duration }}</span>
+          </div>
+          <div class="pt-4 border-t border-outline-variant flex gap-4 w-full">
+            {% if program.id in enrolled_ids %}
+              <button disabled class="flex-grow w-full bg-surface-container text-on-surface-variant py-2 rounded text-label-md font-label-md cursor-not-allowed">Enrolled</button>
+            {% else %}
+              <button type="button"
+                data-url="{% url 'applicant_enroll_training' program.id %}"
+                data-title="{{ program.title|escapejs }}"
+                onclick="confirmEnroll(this.dataset.url, this.dataset.title)"
+                class="flex-grow w-full bg-secondary text-white py-2 rounded text-label-md font-label-md hover:bg-opacity-90 transition-colors">Enroll Program</button>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-span-3 text-center py-12 bg-surface-container-lowest border border-outline-variant rounded-xl w-full">
+        <span class="material-symbols-outlined text-outline text-5xl mb-4">school</span>
+        <p class="text-on-surface-variant">No training programs are currently posted.</p>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Learning Path Visualization -->
+<div class="mt-12">
+<div class="bg-primary-container rounded-2xl p-10 text-on-primary-fixed relative overflow-hidden">
+<!-- Background abstract shape -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-secondary opacity-10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
+<div class="relative z-10">
+<h3 class="font-headline-lg text-headline-lg text-white mb-8">Your 6-Month Roadmap</h3>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-12 relative">
+<!-- Connecting Line (Desktop) -->
+<div class="hidden sm:block absolute top-6 left-0 right-0 h-0.5 bg-on-primary-container opacity-30 z-0"></div>
+<div class="relative z-10 flex flex-col items-center sm:items-start">
+<div class="w-12 h-12 rounded-full bg-secondary text-white flex items-center justify-center font-bold mb-4 border-4 border-primary-container">1</div>
+<p class="font-label-md text-label-md text-white mb-1">Months 1-2</p>
+<p class="font-body-sm text-body-sm text-on-primary-container">Technical Deep Dive: Master the foundational certifications and trade skills.</p>
+</div>
+<div class="relative z-10 flex flex-col items-center sm:items-start">
+<div class="w-12 h-12 rounded-full bg-on-primary-container text-primary-container flex items-center justify-center font-bold mb-4 border-4 border-primary-container">2</div>
+<p class="font-label-md text-label-md text-white mb-1">Months 3-4</p>
+<p class="font-body-sm text-body-sm text-on-primary-container">Competency Practice: Apply skills through mock assignments and workshops.</p>
+</div>
+<div class="relative z-10 flex flex-col items-center sm:items-start">
+<div class="w-12 h-12 rounded-full bg-on-primary-container text-primary-container flex items-center justify-center font-bold mb-4 border-4 border-primary-container">3</div>
+<p class="font-label-md text-label-md text-white mb-1">Months 5-6</p>
+<p class="font-body-sm text-body-sm text-on-primary-container">Placement Alignment: Refine resumes, update certifications, and apply to vacancy matches.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Mobile Bottom Navigation Bar -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-surface border-t border-outline-variant px-4 py-2 flex justify-around items-center z-50">
+  <a href="{% url 'applicant_dashboard' %}" class="flex flex-col items-center gap-1 transition-all duration-200 text-on-surface-variant opacity-70 hover:opacity-100">
+    <span class="material-symbols-outlined">dashboard</span>
+    <span class="text-[10px] font-label-sm">Dashboard</span>
+  </a>
+  <a href="{% url 'skill_gap_analysis' %}" class="flex flex-col items-center gap-1 transition-all duration-200 text-on-surface-variant opacity-70 hover:opacity-100">
+    <span class="material-symbols-outlined">analytics</span>
+    <span class="text-[10px] font-label-sm">Gaps</span>
+  </a>
+  <a href="{% url 'training_recommendations' %}" class="flex flex-col items-center gap-1 transition-all duration-200 text-secondary font-bold">
+    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">school</span>
+    <span class="text-[10px] font-label-sm">Learning</span>
+  </a>
+  <a href="{% url 'job_search' %}" class="flex flex-col items-center gap-1 transition-all duration-200 text-on-surface-variant opacity-70 hover:opacity-100">
+    <span class="material-symbols-outlined">work</span>
+    <span class="text-[10px] font-label-sm">Jobs</span>
+  </a>
+  <a href="{% url 'applicant_profile' %}" class="flex flex-col items-center gap-1 transition-all duration-200 text-on-surface-variant opacity-70 hover:opacity-100">
+    <span class="material-symbols-outlined">person</span>
+    <span class="text-[10px] font-label-sm">Profile</span>
+  </a>
+</nav>
+<!-- Custom Training Enrollment Confirmation Modal -->
+<div id="enrollConfirmationModal"
+  class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+  <!-- Backdrop -->
+  <div id="enrollModalBackdrop" class="absolute inset-0 bg-inverse-surface/40 backdrop-blur-sm"></div>
+
+  <!-- Modal Content Container -->
+  <div
+    class="relative bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-2xl max-w-sm w-full mx-4 transform scale-95 transition-transform duration-300 z-10">
+    <div class="flex flex-col items-center text-center">
+      <!-- Icon Container with Glow -->
+      <div
+        class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center text-secondary mb-4 shadow-inner active-glow">
+        <span class="material-symbols-outlined text-2xl">school</span>
+      </div>
+
+      <!-- Heading -->
+      <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Confirm Enrollment</h3>
+
+      <!-- Message -->
+      <p class="text-on-surface-variant text-body-sm">Are you sure you want to enroll in this training program?</p>
+      <p id="enrollProgramName" class="font-semibold text-secondary text-sm mt-2"></p>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-3 w-full mt-6">
+        <button id="cancelEnrollBtn" type="button"
+          class="flex-1 px-4 py-2.5 border border-outline-variant hover:border-secondary text-on-surface-variant hover:text-secondary font-body-sm font-semibold rounded-lg hover:bg-surface-container-low transition-all">
+          Cancel
+        </button>
+        <button id="confirmEnrollBtn" type="button"
+          class="flex-1 px-4 py-2.5 bg-secondary text-white font-body-sm font-semibold rounded-lg hover:opacity-90 active:scale-95 transition-all">
+          Yes, Enroll
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Hidden Form for Enrollment -->
+<form id="globalEnrollForm" method="POST" action="" style="display: none;">
+  {% csrf_token %}
+</form>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const matchPct = parseInt("{{ profile_match_percentage|default:0 }}", 10);
+    const circle = document.getElementById('matchCircle');
+    if (circle) {
+        const radius = 36;
+        const circumference = 2 * Math.PI * radius; // 226.19
+        const offset = circumference - (matchPct / 100) * circumference;
+        circle.style.strokeDasharray = circumference;
+        circle.style.strokeDashoffset = offset;
+    }
+
+    let currentEnrollUrl = '';
+
+    window.confirmEnroll = function(url, title) {
+        currentEnrollUrl = url;
+        const modal = document.getElementById('enrollConfirmationModal');
+        const titleEl = document.getElementById('enrollProgramName');
+        if (titleEl) {
+            titleEl.textContent = title;
+        }
+        if (modal) {
+            modal.classList.remove('hidden');
+            requestAnimationFrame(() => {
+                modal.classList.remove('opacity-0');
+                const content = modal.querySelector('.relative');
+                if (content) {
+                    content.classList.remove('scale-95');
+                    content.classList.add('scale-100');
+                }
+            });
+        }
+    };
+
+    const hideEnrollModal = () => {
+        const modal = document.getElementById('enrollConfirmationModal');
+        if (modal) {
+            modal.classList.add('opacity-0');
+            const content = modal.querySelector('.relative');
+            if (content) {
+                content.classList.remove('scale-100');
+                content.classList.add('scale-95');
+            }
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+    };
+
+    document.getElementById('cancelEnrollBtn')?.addEventListener('click', hideEnrollModal);
+    document.getElementById('enrollModalBackdrop')?.addEventListener('click', hideEnrollModal);
+    document.getElementById('confirmEnrollBtn')?.addEventListener('click', () => {
+        const form = document.getElementById('globalEnrollForm');
+        if (form && currentEnrollUrl) {
+            form.action = currentEnrollUrl;
+            form.submit();
+        }
+    });
+});
+</script>
+</body></html>

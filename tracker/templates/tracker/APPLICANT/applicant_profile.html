@@ -1,0 +1,819 @@
+{% load static %}
+<!DOCTYPE html><html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>SKILLUP | Applicant Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#0051d5",
+                    "inverse-surface": "#213145",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "outline-variant": "#c6c6cd",
+                    "primary-fixed": "#dae2fd",
+                    "on-error": "#ffffff",
+                    "surface-container": "#e5eeff",
+                    "on-tertiary": "#ffffff",
+                    "surface-tint": "#565e74",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "surface-container-low": "#eff4ff",
+                    "on-surface": "#0b1c30",
+                    "on-secondary-fixed-variant": "#003ea8",
+                    "surface-bright": "#f8f9ff",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-primary-container": "#7c839b",
+                    "primary-fixed-dim": "#bec6e0",
+                    "outline": "#76777d",
+                    "on-secondary-fixed": "#00174b",
+                    "on-secondary": "#ffffff",
+                    "surface-container-highest": "#d3e4fe",
+                    "tertiary-container": "#002113",
+                    "primary-container": "#131b2e",
+                    "tertiary": "#000000",
+                    "on-secondary-container": "#fefcff",
+                    "surface-dim": "#cbdbf5",
+                    "error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "on-background": "#0b1c30",
+                    "on-surface-variant": "#45464d",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed": "#002113",
+                    "inverse-on-surface": "#eaf1ff",
+                    "background": "#f8f9ff",
+                    "secondary-fixed": "#dbe1ff",
+                    "primary": "#000000",
+                    "secondary-container": "#316bf3",
+                    "on-tertiary-container": "#009668",
+                    "surface-variant": "#d3e4fe",
+                    "surface-container-high": "#dce9ff",
+                    "error-container": "#ffdad6",
+                    "on-error-container": "#93000a",
+                    "surface": "#f8f9ff",
+                    "secondary-fixed-dim": "#b4c5ff",
+                    "on-primary-fixed": "#131b2e",
+                    "inverse-primary": "#bec6e0"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "40px",
+                    "container-max": "1440px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["JetBrains Mono"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-md": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .skill-radar-bg {
+            background-image: radial-gradient(circle at 50% 50%, #e5eeff 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f8f9ff;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #dbe1ff;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+{% if messages %}
+<div class="fixed top-20 right-4 z-50 flex flex-col gap-2 max-w-sm w-full">
+    {% for message in messages %}
+    <div class="toast-notification flex items-center gap-3 p-4 rounded-xl border border-outline-variant bg-surface-container-lowest/80 backdrop-blur-md shadow-lg transition-all duration-300 transform translate-x-12 opacity-0" data-type="{{ message.tags }}">
+        {% if message.tags == 'success' %}
+        <span class="material-symbols-outlined text-[20px] text-green-600 bg-green-50 p-1.5 rounded-full" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+        {% elif message.tags == 'error' %}
+        <span class="material-symbols-outlined text-[20px] text-error bg-error-container/10 p-1.5 rounded-full">error</span>
+        {% else %}
+        <span class="material-symbols-outlined text-[20px] text-secondary bg-secondary/10 p-1.5 rounded-full">info</span>
+        {% endif %}
+        <div class="flex-grow">
+            <p class="font-body-sm text-body-sm font-semibold text-on-surface">{{ message }}</p>
+        </div>
+        <button onclick="this.parentElement.remove()" class="material-symbols-outlined text-on-surface-variant hover:text-on-surface text-sm">close</button>
+    </div>
+    {% endfor %}
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const toasts = document.querySelectorAll('.toast-notification');
+        toasts.forEach((toast, index) => {
+            setTimeout(() => {
+                toast.classList.remove('translate-x-12', 'opacity-0');
+            }, index * 150);
+            
+            setTimeout(() => {
+                toast.classList.add('translate-x-12', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000 + (index * 150));
+        });
+    });
+</script>
+{% endif %}
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant h-16 flex items-center justify-between px-margin-desktop">
+  <div class="flex items-center gap-8">
+    <a href="{% url 'applicant_dashboard' %}" class="font-headline-md text-headline-md font-bold text-on-surface">SKILLUP</a>
+    <nav class="hidden md:flex items-center gap-6 h-16">
+      <a class="font-body-md text-body-md h-full flex items-center px-2 transition-colors duration-200 text-on-surface-variant hover:bg-surface-container-low" href="{% url 'applicant_dashboard' %}">Dashboard</a>
+      <a class="font-body-md text-body-md h-full flex items-center px-2 transition-colors duration-200 text-on-surface-variant hover:bg-surface-container-low" href="{% url 'applicant_applications_list' %}">My Applications</a>
+      <a class="font-body-md text-body-md h-full flex items-center px-2 transition-colors duration-200 text-on-surface-variant hover:bg-surface-container-low" href="{% url 'training_recommendations' %}">My Learning</a>
+      <a class="font-body-md text-body-md h-full flex items-center px-2 transition-colors duration-200 text-on-surface-variant hover:bg-surface-container-low" href="{% url 'job_search' %}">Job Board</a>
+      <a class="font-body-md text-body-md h-full flex items-center px-2 transition-colors duration-200 text-secondary font-semibold border-b-2 border-secondary" href="{% url 'applicant_profile' %}">Profile</a>
+    </nav>
+  </div>
+  <div class="flex items-center gap-4">
+    <div class="flex items-center gap-2">
+      <a href="{% url 'applicant_notifications' %}" class="p-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant relative block" title="Notifications">
+        <span class="material-symbols-outlined">notifications</span>
+        {% if unread_notifications_count %}<span class="absolute top-0.5 right-0.5 w-4 h-4 rounded-full bg-red-500 text-white text-[9px] font-black flex items-center justify-center">{{ unread_notifications_count }}</span>{% endif %}
+      </a>
+      <a href="{% url 'applicant_settings' %}" class="p-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant" title="Settings">
+        <span class="material-symbols-outlined">settings</span>
+      </a>
+      <a href="{% url 'logout' %}" class="p-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant" title="Logout">
+        <span class="material-symbols-outlined">logout</span>
+      </a>
+    </div>
+  </div>
+</header>
+<main class="mt-16 min-h-screen max-w-[1200px] mx-auto px-margin-desktop pt-12 pb-24 md:pb-12 flex flex-col gap-8">
+<!-- Profile Header -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 flex flex-col md:flex-row gap-8 items-start relative overflow-hidden">
+<!-- Background Decorative Element -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-secondary/5 rounded-full -mr-20 -mt-20 blur-3xl"></div>
+<div class="relative group">
+<div class="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg bg-surface-container-low flex items-center justify-center">
+{% if profile.profile_picture %}
+<img alt="{{ profile.user.first_name }} {{ profile.user.last_name }}" class="w-full h-full object-cover" src="{{ profile.profile_picture.url }}">
+{% elif profile.user.email == 'alex.rivera@design.ai' %}
+<img alt="{{ profile.user.first_name }} {{ profile.user.last_name }}" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAx1wO4PB2_C0dh2TNTnbOHa9EC4RifTH8G_qzxE5H92QlPk8Rlg8gUPQD5oEVPkXbW47yLNChZzdg28Aevb_bxDF0QzjC6zDK6XgAp1x4twawhgNDyW0hc5dJ6Wq4c2ZR2B6F6Q3FElGrJfq-WhP4jS_cxFpFgdFervX1kdSzVJJ4tKSeyOc5-WVD9Y547F4SW2wJnbgG1d6spqw6FiL0hFJvSMRCNgVOqKzX-EZOJrn7H-mcpB3aG5xskVpbqiRbRHUIYZyAr6D4e">
+{% else %}
+<span class="text-secondary text-3xl font-bold">{{ profile.user.first_name|slice:":1" }}{{ profile.user.last_name|slice:":1" }}</span>
+{% endif %}
+</div>
+<button onclick="document.getElementById('avatarFileInput').click()" class="absolute bottom-1 right-1 bg-secondary text-on-secondary p-1.5 rounded-full shadow-md hover:scale-105 transition-transform" title="Change Photo">
+<span class="material-symbols-outlined text-sm">photo_camera</span>
+</button>
+</div>
+
+<!-- Hidden Photo Upload Form -->
+<form id="avatarUploadForm" method="POST" action="" enctype="multipart/form-data" class="hidden">
+  {% csrf_token %}
+  <input type="hidden" name="action" value="upload_avatar">
+  <input type="file" id="avatarFileInput" name="avatar" onchange="submitAvatarUpload()" accept="image/*">
+</form>
+<div class="flex-1 space-y-4">
+<div>
+<div class="flex items-center gap-3">
+<h1 class="font-headline-lg text-headline-lg">{{ profile.user.first_name }} {{ profile.user.last_name }}</h1>
+<span class="flex items-center gap-1 px-2 py-0.5 bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-full text-label-sm font-label-sm">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">verified</span> Verified Talent
+                        </span>
+</div>
+<p class="text-on-surface-variant font-body-lg text-body-lg">{{ profile.title|default:"Job Title Not Specified" }}</p>
+<div class="flex flex-wrap gap-4 mt-2 text-on-surface-variant text-body-sm">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">location_on</span> {{ profile.location|default:"Location Not Specified" }}</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">cake</span> {% if profile.age %}{{ profile.age }} Years Old{% else %}Age Not Specified{% endif %}</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">diversity_1</span> {% if profile.civil_status %}{{ profile.civil_status }}{% else %}Civil Status Not Specified{% endif %}</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">home</span> {{ profile.address|default:"Address Not Specified" }}</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">mail</span> {{ profile.user.email }}</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">phone</span> {{ profile.phone_number|default:"Phone Not Specified" }}</span>
+</div>
+</div>
+<div class="flex gap-3">
+<button onclick="openEditProfileModal()" class="px-6 py-2 bg-primary text-on-primary rounded-lg font-body-md hover:opacity-90 transition-opacity flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">edit_square</span> Edit Profile
+                    </button>
+</div>
+</div>
+
+</section>
+<!-- Bento Layout Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Main Content (8 cols) -->
+<div class="lg:col-span-8 flex flex-col gap-gutter">
+<!-- Work Experience -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-headline-md text-headline-md flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">work</span> Experience
+                        </h2>
+<button onclick="openAddExperienceModal()" class="text-secondary font-label-md text-label-md hover:underline">+ Add Experience</button>
+</div>
+<div class="space-y-8">
+{% for exp in experience_list %}
+<div class="flex gap-6 group">
+<div class="flex flex-col items-center">
+<div class="w-12 h-12 rounded bg-surface-container-high flex items-center justify-center border border-outline-variant shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant">apartment</span>
+</div>
+{% if not forloop.last %}<div class="w-0.5 h-full bg-outline-variant/30 mt-2"></div>{% endif %}
+</div>
+<div class="flex-1 pb-4">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-semibold text-body-lg">{{ exp.position }}</h3>
+<p class="text-secondary font-medium">{{ exp.company }}</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-label-sm text-on-surface-variant bg-surface-container px-2 py-1 rounded">{{ exp.start_date }} — {{ exp.end_date }}</span>
+<form method="post" action="{% url 'applicant_profile' %}">
+  {% csrf_token %}
+  <input type="hidden" name="action" value="delete_experience">
+  <input type="hidden" name="id" value="{{ exp.id }}">
+  <button type="submit" class="material-symbols-outlined text-error hover:text-red-800 text-sm">delete</button>
+</form>
+</div>
+</div>
+<p class="mt-3 text-on-surface-variant text-body-md leading-relaxed">
+    {{ exp.description }}
+</p>
+</div>
+</div>
+{% empty %}
+<p class="text-sm text-on-surface-variant italic">No work experience listed yet. Capture your history here.</p>
+{% endfor %}
+</div>
+</section>
+<!-- Education -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-headline-md text-headline-md flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">school</span> Education
+                        </h2>
+<button onclick="openAddEducationModal()" class="text-secondary font-label-md text-label-md hover:underline">+ Add Education</button>
+</div>
+<div class="space-y-6">
+{% for edu in education_list %}
+<div class="flex gap-6">
+<div class="w-12 h-12 rounded bg-surface-container-high flex items-center justify-center border border-outline-variant shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant">account_balance</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-semibold text-body-lg">{{ edu.degree }}</h3>
+<p class="text-on-surface-variant">{{ edu.institution }} • Field of Study: {{ edu.field_of_study }}</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-label-sm font-label-sm text-on-surface-variant bg-surface-container px-2 py-1 rounded">{{ edu.start_year }} — {{ edu.end_year }}</span>
+<form method="post" action="{% url 'applicant_profile' %}">
+  {% csrf_token %}
+  <input type="hidden" name="action" value="delete_education">
+  <input type="hidden" name="id" value="{{ edu.id }}">
+  <button type="submit" class="material-symbols-outlined text-error hover:text-red-800 text-sm">delete</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+{% empty %}
+<p class="text-sm text-on-surface-variant italic">No education entries listed yet.</p>
+{% endfor %}
+</div>
+</section>
+<!-- Documents / Portfolio -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8">
+<h2 class="font-headline-md text-headline-md mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">folder_open</span> Documents
+                    </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  {% for doc in profile.documents.all %}
+  <div class="flex items-center justify-between p-4 border border-outline-variant rounded-lg hover:border-secondary transition-colors group">
+    <div class="flex items-center gap-3">
+      {% if doc.file_name|lower|slice:"-4:" == ".pdf" %}
+      <span class="material-symbols-outlined text-red-600 bg-red-50 p-2 rounded">description</span>
+      {% elif doc.file_name|lower|slice:"-4:" == ".zip" %}
+      <span class="material-symbols-outlined text-blue-600 bg-blue-50 p-2 rounded">folder_shared</span>
+      {% else %}
+      <span class="material-symbols-outlined text-secondary bg-surface-container p-2 rounded">article</span>
+      {% endif %}
+      <div>
+        <p class="font-medium text-body-sm">{{ doc.file_name }}</p>
+        <p class="text-[10px] text-on-surface-variant">Uploaded {{ doc.uploaded_at|date:"M d, Y" }} • {{ doc.file_size }}</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <a href="{{ doc.file.url }}" download class="p-1.5 hover:bg-surface-container rounded transition-all group-hover:text-secondary flex items-center justify-center">
+        <span class="material-symbols-outlined text-on-surface-variant group-hover:text-secondary">download</span>
+      </a>
+      <form method="POST" action="" class="inline">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="delete_document">
+        <input type="hidden" name="id" value="{{ doc.id }}">
+        <button type="submit" class="p-1.5 hover:bg-red-50 text-on-surface-variant hover:text-red-600 rounded transition-all flex items-center justify-center" title="Delete Document">
+          <span class="material-symbols-outlined text-[18px]">delete</span>
+        </button>
+      </form>
+    </div>
+  </div>
+  {% empty %}
+  <div class="col-span-2 text-center py-8 text-on-surface-variant italic border border-dashed border-outline-variant rounded-lg bg-surface-container-low/20">No documents uploaded yet.</div>
+  {% endfor %}
+</div>
+
+<!-- Upload file trigger container -->
+<div onclick="document.getElementById('docFileInput').click()" class="mt-6 border-2 border-dashed border-outline-variant rounded-lg p-8 flex flex-col items-center justify-center gap-2 bg-surface-container-low/30 hover:bg-surface-container-low transition-all cursor-pointer">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant">cloud_upload</span>
+<p class="font-medium text-body-md">Drag &amp; drop files or click to upload</p>
+<p class="text-body-sm text-on-surface-variant">Supported formats: PDF, DOCX, ZIP (Max 50MB)</p>
+</div>
+
+<!-- Hidden File Upload Form -->
+<form id="docUploadForm" method="POST" action="" enctype="multipart/form-data" class="hidden">
+  {% csrf_token %}
+  <input type="hidden" name="action" value="upload_document">
+  <input type="file" id="docFileInput" name="document" onchange="submitDocUpload()" accept=".pdf,.docx,.zip">
+</form>
+</section>
+</div>
+<!-- Sidebar (4 cols) -->
+<aside class="lg:col-span-4 flex flex-col gap-gutter">
+<!-- Verified Skills -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 overflow-hidden">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-headline-md text-headline-md flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">analytics</span> Skills
+                    </h2>
+    <button onclick="openAddSkillModal()" class="text-secondary font-label-md text-label-md hover:underline">+ Add Skill</button>
+</div>
+<div class="flex flex-col gap-2">
+  {% for askill in skills_list %}
+  <div class="flex items-center justify-between p-2.5 bg-surface-container-low border border-outline-variant/60 rounded-lg">
+    <div class="flex items-center gap-2">
+      <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+      <span class="font-semibold text-xs text-on-surface">{{ askill.skill.name }}</span>
+    </div>
+    <form method="post" action="{% url 'applicant_profile' %}" class="ml-4 flex items-center">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="delete_skill">
+      <input type="hidden" name="id" value="{{ askill.id }}">
+      <button type="submit" class="material-symbols-outlined text-error hover:text-red-800 text-[18px]">delete</button>
+    </form>
+  </div>
+  {% empty %}
+  <div class="text-xs text-on-surface-variant italic p-2 bg-surface-container-low border border-dashed border-outline-variant rounded-lg text-center">No skills added yet. Click Add Skill above.</div>
+  {% endfor %}
+</div>
+</section>
+<!-- Certifications -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-headline-md text-headline-md flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">workspace_premium</span> Certs
+                        </h2>
+<button onclick="openAddCertificationModal()" class="text-secondary font-label-md text-label-md hover:underline">+ Add</button>
+</div>
+<div class="space-y-4">
+{% for cert in certification_list %}
+<div class="p-4 bg-surface-container-low rounded-lg border border-outline-variant/50 flex justify-between items-start">
+<div class="flex gap-3">
+<div class="w-10 h-10 rounded bg-secondary flex items-center justify-center text-white font-bold shrink-0">
+  {% if cert.is_tesda %}T{% else %}C{% endif %}
+</div>
+<div>
+<h4 class="font-semibold text-body-sm">{{ cert.name }}</h4>
+<p class="text-[10px] text-on-surface-variant font-label-sm">{{ cert.issuing_organization }} {% if cert.is_tesda %}• <span class="text-green-700 font-bold bg-green-50 px-1 py-0.5 rounded">TESDA</span>{% endif %}</p>
+</div>
+</div>
+<form method="post" action="{% url 'applicant_profile' %}">
+  {% csrf_token %}
+  <input type="hidden" name="action" value="delete_certification">
+  <input type="hidden" name="id" value="{{ cert.id }}">
+  <button type="submit" class="material-symbols-outlined text-error hover:text-red-800 text-sm">delete</button>
+</form>
+</div>
+{% empty %}
+<p class="text-xs text-on-surface-variant italic">No certifications listed yet.</p>
+{% endfor %}
+</div>
+</section>
+
+</aside>
+</div>
+</main>
+<!-- Footer Meta (Minimalist) -->
+<footer class="mt-12 py-8 border-t border-outline-variant bg-surface-container-lowest">
+<div class="max-w-[1200px] mx-auto px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-body-sm text-on-surface-variant">© 2024 SKILLUP. All Rights Reserved.</p>
+<div class="flex gap-6 text-label-sm font-label-sm text-on-surface-variant">
+<a class="hover:text-secondary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-secondary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-secondary transition-colors" href="#">Accessibility</a>
+</div>
+</div>
+</footer>
+<script>
+        // Simple Micro-interaction for hovering cards
+        document.querySelectorAll('section').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                if(card.classList.contains('border-outline-variant')) {
+                    card.classList.add('border-secondary/30');
+                }
+            });
+            card.addEventListener('mouseleave', () => {
+                card.classList.remove('border-secondary/30');
+            });
+        });
+    </script>
+<!-- Mobile Bottom Navigation Bar -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-surface border-t border-outline-variant px-4 py-2 flex justify-around items-center z-50">
+  <a href="{% url 'applicant_dashboard' %}" class="flex flex-col items-center gap-1 transition-all duration-200 text-on-surface-variant opacity-70 hover:opacity-100">
+    <span class="material-symbols-outlined">dashboard</span>
+    <span class="text-[10px] font-label-sm">Dashboard</span>
+  </a>
+  <a href="{% url 'skill_gap_analysis' %}" class="flex flex-col items-center gap-1 transition-all duration-200 text-on-surface-variant opacity-70 hover:opacity-100">
+    <span class="material-symbols-outlined">analytics</span>
+    <span class="text-[10px] font-label-sm">Gaps</span>
+  </a>
+  <a href="{% url 'training_recommendations' %}" class="flex flex-col items-center gap-1 transition-all duration-200 text-on-surface-variant opacity-70 hover:opacity-100">
+    <span class="material-symbols-outlined">school</span>
+    <span class="text-[10px] font-label-sm">Learning</span>
+  </a>
+  <a href="{% url 'job_search' %}" class="flex flex-col items-center gap-1 transition-all duration-200 text-on-surface-variant opacity-70 hover:opacity-100">
+    <span class="material-symbols-outlined">work</span>
+    <span class="text-[10px] font-label-sm">Jobs</span>
+  </a>
+  <a href="{% url 'applicant_profile' %}" class="flex flex-col items-center gap-1 transition-all duration-200 text-secondary font-bold">
+    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+    <span class="text-[10px] font-label-sm">Profile</span>
+  </a>
+</nav>
+<!-- Edit Profile Modal -->
+<div id="editProfileModal" class="fixed inset-0 z-50 hidden bg-inverse-surface/40 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-2xl w-full max-w-xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300">
+        <div class="px-6 py-4 border-b border-outline-variant flex items-center justify-between">
+            <h3 class="font-headline-md text-headline-md text-on-surface font-bold">Edit Profile Details</h3>
+            <button onclick="closeEditProfileModal()" class="material-symbols-outlined text-on-surface-variant hover:text-on-surface">close</button>
+        </div>
+        <form method="post" action="{% url 'applicant_profile' %}" class="p-6 space-y-4 max-h-[70vh] overflow-y-auto custom-scrollbar">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="update_profile">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">First Name</label>
+                    <input type="text" name="first_name" value="{{ profile.user.first_name }}" class="w-full bg-transparent border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:ring-secondary focus:border-secondary">
+                </div>
+                <div>
+                    <label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">Last Name</label>
+                    <input type="text" name="last_name" value="{{ profile.user.last_name }}" class="w-full bg-transparent border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:ring-secondary focus:border-secondary">
+                </div>
+            </div>
+            <div>
+                <label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">Job Title</label>
+                <input type="text" name="title" value="{{ profile.title|default:'' }}" autocomplete="off" class="w-full bg-transparent border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:ring-secondary focus:border-secondary" placeholder="e.g. e.g. Senior Frontend Engineer">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">Location</label>
+                    <input type="text" name="location" value="{{ profile.location|default:'' }}" class="w-full bg-transparent border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:ring-secondary focus:border-secondary" placeholder="e.g. San Francisco, CA">
+                </div>
+                <div>
+                    <label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">Phone Number</label>
+                    <input type="text" name="phone_number" value="{{ profile.phone_number|default:'' }}" class="w-full bg-transparent border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:ring-secondary focus:border-secondary" placeholder="e.g. +63 912 345 6789">
+                </div>
+            </div>
+            <div class="grid grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">Birthdate</label>
+                    <input type="date" name="birthdate" value="{{ profile.birthdate|date:'Y-m-d' }}" class="w-full bg-transparent border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:ring-secondary focus:border-secondary">
+                </div>
+                <div>
+                    <label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">Civil Status</label>
+                    <select name="civil_status" class="w-full bg-transparent border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:ring-secondary focus:border-secondary">
+                        <option value="Single" {% if profile.civil_status == 'Single' %}selected{% endif %}>Single</option>
+                        <option value="Married" {% if profile.civil_status == 'Married' %}selected{% endif %}>Married</option>
+                        <option value="Divorced" {% if profile.civil_status == 'Divorced' %}selected{% endif %}>Divorced</option>
+                        <option value="Widowed" {% if profile.civil_status == 'Widowed' %}selected{% endif %}>Widowed</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">Address</label>
+                    <input type="text" name="address" value="{{ profile.address|default:'' }}" class="w-full bg-transparent border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:ring-secondary focus:border-secondary" placeholder="e.g. 123 Main St, Austin, TX">
+                </div>
+            </div>
+            <div>
+                <label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">Experience Years</label>
+                <input type="text" name="experience_years" value="{{ profile.experience_years|default:'' }}" class="w-full bg-transparent border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:ring-secondary focus:border-secondary" placeholder="e.g. 5 Years">
+            </div>
+            <div>
+                <label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">Preferred Job Category</label>
+                <select name="preferred_job" class="w-full bg-transparent border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:ring-secondary focus:border-secondary text-sm">
+                    <option value="">-- No Preferred Category --</option>
+                    {% for cat in categories %}
+                    <option value="{{ cat.code }}" {% if profile.preferred_job == cat.code %}selected{% endif %}>{{ cat.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="pt-4 border-t border-outline-variant flex justify-end gap-3">
+                <button type="button" onclick="closeEditProfileModal()" class="px-5 py-2 border border-outline text-on-surface rounded-lg font-body-md hover:bg-surface-container-low transition-colors">Cancel</button>
+                <button type="submit" class="px-5 py-2 bg-secondary text-white rounded-lg font-body-md hover:bg-secondary/90 transition-colors">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Add Education Modal -->
+<div id="addEducationModal" class="fixed inset-0 z-50 hidden bg-inverse-surface/40 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-2xl w-full max-w-md shadow-2xl overflow-hidden transform scale-95 transition-all duration-300">
+        <div class="px-6 py-4 border-b border-outline-variant flex items-center justify-between">
+            <h3 class="font-headline-md text-headline-md text-on-surface font-bold">Add Education Details</h3>
+            <button onclick="closeAddEducationModal()" class="material-symbols-outlined text-on-surface-variant hover:text-on-surface">close</button>
+        </div>
+        <form method="post" action="{% url 'applicant_profile' %}" class="p-6 space-y-4">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="add_education">
+            <div>
+                <label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">School / Institution</label>
+                <input type="text" name="institution" required class="w-full bg-transparent border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:ring-secondary focus:border-secondary" placeholder="e.g. Stanford University">
+            </div>
+            <div>
+                <label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">Degree / Qualification</label>
+                <input type="text" name="degree" required class="w-full bg-transparent border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:ring-secondary focus:border-secondary" placeholder="e.g. Bachelor of Science">
+            </div>
+            <div>
+                <label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">Field of Study</label>
+                <input type="text" name="field_of_study" required class="w-full bg-transparent border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:ring-secondary focus:border-secondary" placeholder="e.g. Computer Science">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">Start Year</label>
+                    <input type="number" name="start_year" required class="w-full bg-transparent border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:ring-secondary focus:border-secondary" placeholder="2018">
+                </div>
+                <div>
+                    <label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">End Year</label>
+                    <input type="number" name="end_year" required class="w-full bg-transparent border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:ring-secondary focus:border-secondary" placeholder="2022">
+                </div>
+            </div>
+            <div class="pt-4 border-t border-outline-variant flex justify-end gap-3">
+                <button type="button" onclick="closeAddEducationModal()" class="px-5 py-2 border border-outline text-on-surface rounded-lg font-body-md hover:bg-surface-container-low transition-colors">Cancel</button>
+                <button type="submit" class="px-5 py-2 bg-secondary text-white rounded-lg font-body-md hover:bg-secondary/90 transition-colors">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Add Experience Modal -->
+<div id="addExperienceModal" class="fixed inset-0 z-50 hidden bg-inverse-surface/40 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-2xl w-full max-w-md shadow-2xl overflow-hidden transform scale-95 transition-all duration-300">
+        <div class="px-6 py-4 border-b border-outline-variant flex items-center justify-between">
+            <h3 class="font-headline-md text-headline-md text-on-surface font-bold">Add Work History</h3>
+            <button onclick="closeAddExperienceModal()" class="material-symbols-outlined text-on-surface-variant hover:text-on-surface">close</button>
+        </div>
+        <form method="post" action="{% url 'applicant_profile' %}" class="p-6 space-y-4">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="add_experience">
+            <div>
+                <label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">Company</label>
+                <input type="text" name="company" required class="w-full bg-transparent border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:ring-secondary focus:border-secondary" placeholder="e.g. TechFlow Systems">
+            </div>
+            <div>
+                <label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">Job Title / Position</label>
+                <input type="text" name="position" required class="w-full bg-transparent border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:ring-secondary focus:border-secondary" placeholder="e.g. Senior Software Engineer">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">Start Year</label>
+                    <input type="text" name="start_date" required class="w-full bg-transparent border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:ring-secondary focus:border-secondary" placeholder="e.g. 2021">
+                </div>
+                <div>
+                    <label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">End Year</label>
+                    <input type="text" name="end_date" class="w-full bg-transparent border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:ring-secondary focus:border-secondary" placeholder="e.g. Present">
+                </div>
+            </div>
+            <div>
+                <label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">Job Description</label>
+                <textarea name="description" rows="3" required class="w-full bg-transparent border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:ring-secondary focus:border-secondary" placeholder="Provide detailed duties, achievements, and responsibilities..."></textarea>
+            </div>
+            <div>
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" name="is_current" value="true" class="rounded border-outline text-secondary focus:ring-secondary">
+                    <span class="text-body-sm text-on-surface">I currently work here</span>
+                </label>
+            </div>
+            <div class="pt-4 border-t border-outline-variant flex justify-end gap-3">
+                <button type="button" onclick="closeAddExperienceModal()" class="px-5 py-2 border border-outline text-on-surface rounded-lg font-body-md hover:bg-surface-container-low transition-colors">Cancel</button>
+                <button type="submit" class="px-5 py-2 bg-secondary text-white rounded-lg font-body-md hover:bg-secondary/90 transition-colors">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Add Certification Modal -->
+<div id="addCertificationModal" class="fixed inset-0 z-50 hidden bg-inverse-surface/40 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-2xl w-full max-w-md shadow-2xl overflow-hidden transform scale-95 transition-all duration-300">
+        <div class="px-6 py-4 border-b border-outline-variant flex items-center justify-between">
+            <h3 class="font-headline-md text-headline-md text-on-surface font-bold">Add Certification</h3>
+            <button onclick="closeAddCertificationModal()" class="material-symbols-outlined text-on-surface-variant hover:text-on-surface">close</button>
+        </div>
+        <form method="post" action="{% url 'applicant_profile' %}" class="p-6 space-y-4">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="add_certification">
+            <div>
+                <label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">Certification Name</label>
+                <input type="text" name="name" required class="w-full bg-transparent border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:ring-secondary focus:border-secondary" placeholder="e.g. AWS Solutions Architect">
+            </div>
+            <div>
+                <label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">Issuing Organization</label>
+                <input type="text" name="issuing_organization" required class="w-full bg-transparent border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:ring-secondary focus:border-secondary" placeholder="e.g. Amazon Web Services">
+            </div>
+            <div>
+                <label class="flex items-center gap-2 cursor-pointer mt-2">
+                    <input type="checkbox" name="is_tesda" value="true" class="rounded border-outline text-secondary focus:ring-secondary">
+                    <span class="text-body-sm text-on-surface">TESDA vocational qualification / trade cert</span>
+                </label>
+            </div>
+            <div class="pt-4 border-t border-outline-variant flex justify-end gap-3">
+                <button type="button" onclick="closeAddCertificationModal()" class="px-5 py-2 border border-outline text-on-surface rounded-lg font-body-md hover:bg-surface-container-low transition-colors">Cancel</button>
+                <button type="submit" class="px-5 py-2 bg-secondary text-white rounded-lg font-body-md hover:bg-secondary/90 transition-colors">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Add Skill Modal -->
+<div id="addSkillModal" class="fixed inset-0 z-50 hidden bg-inverse-surface/40 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-2xl w-full max-w-md shadow-2xl overflow-hidden transform scale-95 transition-all duration-300">
+        <div class="px-6 py-4 border-b border-outline-variant flex items-center justify-between">
+            <h3 class="font-headline-md text-headline-md text-on-surface font-bold">Add Technical Skill</h3>
+            <button onclick="closeAddSkillModal()" class="material-symbols-outlined text-on-surface-variant hover:text-on-surface">close</button>
+        </div>
+        <form method="post" action="{% url 'applicant_profile' %}" class="p-6 space-y-4">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="add_skill">
+            <input type="hidden" name="proficiency" value="3">
+            <div>
+                <label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">Select Skill</label>
+                <div class="relative mb-2">
+                    <input type="text" id="profileSkillSearch" onkeyup="filterProfileSelectSkills()" placeholder="Type to filter skills list..." class="w-full bg-transparent border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:ring-secondary focus:border-secondary text-sm">
+                </div>
+                <select id="profileSkillSelect" name="skill_id" required class="w-full bg-transparent border border-outline-variant rounded-lg px-3 py-2 font-body-md focus:ring-secondary focus:border-secondary">
+                    {% for skill in all_centralized_skills %}
+                    <option value="{{ skill.id }}">{{ skill.name }} ({{ skill.category }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="pt-4 border-t border-outline-variant flex justify-end gap-3">
+                <button type="button" onclick="closeAddSkillModal()" class="px-5 py-2 border border-outline text-on-surface rounded-lg font-body-md hover:bg-surface-container-low transition-colors">Cancel</button>
+                <button type="submit" class="px-5 py-2 bg-secondary text-white rounded-lg font-body-md hover:bg-secondary/90 transition-colors">Save Skill</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openEditProfileModal() {
+        const modal = document.getElementById('editProfileModal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        setTimeout(() => {
+            modal.firstElementChild.classList.remove('scale-95');
+            modal.firstElementChild.classList.add('scale-100');
+        }, 10);
+    }
+    
+    function closeEditProfileModal() {
+        const modal = document.getElementById('editProfileModal');
+        modal.firstElementChild.classList.remove('scale-100');
+        modal.firstElementChild.classList.add('scale-95');
+        setTimeout(() => {
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }, 300);
+    }
+
+    function submitDocUpload() {
+        const input = document.getElementById('docFileInput');
+        if (input.files.length > 0) {
+            document.getElementById('docUploadForm').submit();
+        }
+    }
+
+    function submitAvatarUpload() {
+        const input = document.getElementById('avatarFileInput');
+        if (input.files.length > 0) {
+            document.getElementById('avatarUploadForm').submit();
+        }
+    }
+
+    function openAddEducationModal() {
+        const modal = document.getElementById('addEducationModal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+    function closeAddEducationModal() {
+        const modal = document.getElementById('addEducationModal');
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+    }
+
+    function openAddExperienceModal() {
+        const modal = document.getElementById('addExperienceModal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+    function closeAddExperienceModal() {
+        const modal = document.getElementById('addExperienceModal');
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+    }
+
+    function openAddCertificationModal() {
+        const modal = document.getElementById('addCertificationModal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+    function closeAddCertificationModal() {
+        const modal = document.getElementById('addCertificationModal');
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+    }
+
+    function openAddSkillModal() {
+        const modal = document.getElementById('addSkillModal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+    function closeAddSkillModal() {
+        const modal = document.getElementById('addSkillModal');
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+    }
+
+    // Dynamic filtering for Add Skill select dropdown
+    let originalProfileSkills = [];
+    document.addEventListener('DOMContentLoaded', () => {
+        const select = document.getElementById('profileSkillSelect');
+        if (select) {
+            originalProfileSkills = Array.from(select.options).map(opt => ({
+                value: opt.value,
+                text: opt.textContent
+            }));
+        }
+    });
+
+    function filterProfileSelectSkills() {
+        const query = document.getElementById('profileSkillSearch').value.toLowerCase();
+        const select = document.getElementById('profileSkillSelect');
+        if (!select) return;
+        select.innerHTML = '';
+        originalProfileSkills.forEach(opt => {
+            if (opt.text.toLowerCase().includes(query)) {
+                const newOpt = document.createElement('option');
+                newOpt.value = opt.value;
+                newOpt.textContent = opt.text;
+                select.appendChild(newOpt);
+            }
+        });
+    }
+</script>
+<script src="{% static 'tracker/js/job_titles.js' %}"></script>
+</body></html>

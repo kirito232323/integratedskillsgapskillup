@@ -1,0 +1,337 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Match Alerts | SKILLUP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#0051d5",
+                        "inverse-surface": "#213145",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "outline-variant": "#c6c6cd",
+                        "primary-fixed": "#dae2fd",
+                        "on-error": "#ffffff",
+                        "surface-container": "#e5eeff",
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#565e74",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "surface-container-low": "#eff4ff",
+                        "on-surface": "#0b1c30",
+                        "on-secondary-fixed-variant": "#003ea8",
+                        "surface-bright": "#f8f9ff",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-primary-container": "#7c839b",
+                        "primary-fixed-dim": "#bec6e0",
+                        "outline": "#76777d",
+                        "on-secondary-fixed": "#00174b",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#d3e4fe",
+                        "tertiary-container": "#002113",
+                        "primary-container": "#131b2e",
+                        "tertiary": "#000000",
+                        "on-secondary-container": "#fefcff",
+                        "surface-dim": "#cbdbf5",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-background": "#0b1c30",
+                        "on-surface-variant": "#45464d",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed": "#002113",
+                        "inverse-on-surface": "#eaf1ff",
+                        "background": "#f8f9ff",
+                        "secondary-fixed": "#dbe1ff",
+                        "primary": "#000000",
+                        "secondary-container": "#316bf3",
+                        "on-tertiary-container": "#009668",
+                        "surface-variant": "#d3e4fe",
+                        "surface-container-high": "#dce9ff",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#93000a",
+                        "surface": "#f8f9ff",
+                        "secondary-fixed-dim": "#b4c5ff",
+                        "on-primary-fixed": "#131b2e",
+                        "inverse-primary": "#bec6e0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "40px",
+                        "container-max": "1440px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #f8f9ff;
+            color: #0b1c30;
+        }
+        .zebra-row:nth-child(even) {
+            background-color: #f8f9ff;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .alert-card { animation: slideIn 0.3s ease both; }
+        .match-bar-fill { transition: width 0.7s cubic-bezier(.4,0,.2,1); }
+    </style>
+</head>
+<body class="font-body-md text-body-md">
+<!-- TopNavBar — identical to employer_dashboard.html -->
+<header class="fixed top-0 w-full z-50 bg-surface dark:bg-surface-container-low border-b border-outline-variant dark:border-outline flex items-center justify-between px-margin-desktop h-16 w-full">
+<div class="flex items-center gap-8">
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-inverse-on-surface">SKILLUP</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<a href="{% url 'employer_notifications' %}" class="material-symbols-outlined text-secondary hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80 block" style="font-variation-settings:'FILL' 1">notifications</a>
+{% if unread_match_alerts %}<span class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">{{ unread_match_alerts }}</span>{% endif %}
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">settings</button>
+</div>
+</header>
+<!-- SideNavBar — identical to employer_dashboard.html, Match Alerts is active -->
+<aside class="fixed left-0 top-0 h-full w-64 pt-20 bg-surface-container-lowest dark:bg-primary-container border-r border-outline-variant dark:border-outline hidden md:flex flex-col p-4 gap-2 z-40">
+<div class="flex items-center gap-3 px-2 py-4 mb-4 border-b border-outline-variant/30">
+<div class="w-10 h-10 bg-surface border border-outline-variant rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
+  {% if request.user.profile.company_logo %}
+    <img class="w-full h-full object-cover" src="{{ request.user.profile.company_logo.url }}" alt="Company Logo">
+  {% else %}
+    <span class="text-white font-black text-xl bg-secondary w-full h-full flex items-center justify-center">{{ request.user.profile.company_name|slice:":1"|default:"P" }}</span>
+  {% endif %}
+</div>
+<div>
+<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">Enterprise Portal</h2>
+<p class="text-[10px] text-on-surface-variant opacity-70">Talent Management</p>
+</div>
+</div>
+<nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
+<!-- Dashboard (inactive) -->
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'employer_dashboard' %}">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- Hiring Tracker (inactive) -->
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'hiring_tracker_employer' %}">
+<span class="material-symbols-outlined">developer_board</span>
+<span>Hiring Tracker</span>
+</a>
+<!-- Job Management (inactive) -->
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'job_management_employer' %}">
+<span class="material-symbols-outlined">work</span>
+<span>Job Management</span>
+</a>
+<!-- Company Profile (inactive) -->
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'company_profile_employer' %}">
+<span class="material-symbols-outlined">corporate_fare</span>
+<span>Company Profile</span>
+</a>
+<!-- Match Alerts (ACTIVE) -->
+<a class="flex items-center gap-3 px-3 py-2 bg-surface-container dark:bg-secondary-container text-on-surface dark:text-on-secondary-container font-bold rounded-lg scale-98 active:scale-95 duration-150 transition-all font-label-md text-label-md" href="{% url 'employer_notifications' %}">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">notifications</span>
+<span>Match Alerts</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'logout' %}">
+<span class="material-symbols-outlined">logout</span>
+<span>Log Out</span>
+</a>
+</div>
+</aside>
+
+<!-- Main Canvas — same layout as employer_dashboard (ml-64 pt-20) -->
+<main class="ml-64 pt-20 min-h-screen">
+<div class="p-margin-desktop">
+
+  <!-- Page Header -->
+  <div class="flex items-end justify-between mb-8">
+    <div>
+      <h1 class="font-headline-lg text-headline-lg text-on-surface mb-1">Match Alerts</h1>
+      <p class="text-on-surface-variant">
+        Applicants with <strong>75%+ skill match</strong> on your open job postings —
+        whether or not they've applied.
+      </p>
+    </div>
+  </div>
+
+  {% if match_alerts %}
+
+  <!-- Filter pills -->
+  <div class="flex gap-2 mb-6 flex-wrap">
+    <button onclick="filterCards('all')" class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold bg-secondary text-white transition-all" data-filter="all">All ({{ match_alerts|length }})</button>
+    <button onclick="filterCards('not-applied')" class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold bg-surface-container text-on-surface hover:bg-surface-container-high transition-all" data-filter="not-applied">Not Yet Applied</button>
+    <button onclick="filterCards('applied')" class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold bg-surface-container text-on-surface hover:bg-surface-container-high transition-all" data-filter="applied">Applied</button>
+    <button onclick="filterCards('offer-sent')" class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold bg-surface-container text-on-surface hover:bg-surface-container-high transition-all" data-filter="offer-sent">Offer Sent</button>
+  </div>
+
+  <!-- Alert Cards -->
+  <div class="space-y-4" id="alertContainer">
+    {% for alert in match_alerts %}
+    <div class="alert-card bg-surface-container-lowest border border-outline-variant rounded-xl p-5 flex items-center gap-5 hover:shadow-md transition-all"
+         data-delay="{{ forloop.counter0 }}0"
+         data-status="{% if alert.offer_sent %}offer-sent{% elif alert.has_applied %}applied{% else %}not-applied{% endif %}">
+
+      <!-- Avatar -->
+      <div class="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-white font-black text-lg bg-secondary">
+        {{ alert.applicant.user.first_name|first|upper }}{{ alert.applicant.user.last_name|first|upper }}
+      </div>
+
+      <!-- Info -->
+      <div class="flex-1 min-w-0">
+        <div class="flex flex-wrap items-center gap-2 mb-1">
+          <span class="font-semibold text-on-surface">{{ alert.applicant.user.get_full_name }}</span>
+
+          {% if alert.offer_sent %}
+          <span class="inline-flex items-center gap-1 text-xs bg-green-100 text-green-700 border border-green-200 px-2 py-0.5 rounded-full font-semibold">
+            <span class="material-symbols-outlined" style="font-size:12px;font-variation-settings:'FILL' 1">check_circle</span> Offer Sent
+          </span>
+          {% elif alert.has_applied %}
+          <span class="inline-flex items-center gap-1 text-xs bg-primary-fixed text-on-primary-fixed border border-primary-fixed-dim px-2 py-0.5 rounded-full font-semibold">
+            <span class="material-symbols-outlined" style="font-size:12px">description</span> Applied
+          </span>
+          {% else %}
+          <span class="inline-flex items-center gap-1 text-xs bg-surface-container text-on-surface-variant border border-outline-variant px-2 py-0.5 rounded-full font-semibold">
+            <span class="material-symbols-outlined" style="font-size:12px">person_search</span> Not Applied Yet
+          </span>
+          {% endif %}
+        </div>
+
+        <p class="text-body-sm text-on-surface-variant mb-2 flex items-center gap-1">
+          <span class="material-symbols-outlined text-secondary" style="font-size:15px">work</span>
+          {{ alert.vacancy.title }}
+          {% if alert.vacancy.location %}
+          <span class="text-outline">·</span>
+          <span class="material-symbols-outlined text-outline" style="font-size:13px">location_on</span>
+          <span class="text-outline">{{ alert.vacancy.location }}</span>
+          {% endif %}
+        </p>
+
+        <!-- Match bar -->
+        <div class="flex items-center gap-3">
+          <div class="w-48 h-2 bg-surface-container rounded-full overflow-hidden">
+            <div class="match-bar-fill h-full rounded-full bg-secondary" style="width:0%" data-pct="{{ alert.match_pct }}"></div>
+          </div>
+          <span class="text-xs font-black text-secondary">{{ alert.match_pct }}% match</span>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex flex-col gap-2 shrink-0">
+        {% if alert.offer_sent %}
+        <span class="flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-lg bg-surface-container text-on-surface-variant cursor-default">
+          <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">check_circle</span> Offer Sent
+        </span>
+        {% else %}
+        <a href="{% url 'send_offer_employer' alert.applicant.id alert.vacancy.id %}"
+           class="flex items-center gap-2 bg-secondary text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-secondary/90 active:scale-95 transition-all whitespace-nowrap">
+          <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">send</span>
+          Send Offer
+        </a>
+        {% endif %}
+        <a href="{% url 'applicant_details_employer_id' alert.applicant.id %}"
+           class="flex items-center gap-2 border border-outline-variant text-on-surface text-sm font-medium px-4 py-2 rounded-lg hover:bg-surface-container transition-all whitespace-nowrap">
+          <span class="material-symbols-outlined text-sm">person</span>
+          View Profile
+        </a>
+      </div>
+
+    </div>
+    {% endfor %}
+  </div>
+
+  {% else %}
+  <!-- Empty state -->
+  <div class="flex flex-col items-center justify-center py-24 text-center">
+    <span class="material-symbols-outlined text-[72px] text-outline-variant mb-4">person_search</span>
+    <h3 class="font-headline-md text-headline-md text-on-surface mb-2">No Strong Matches Yet</h3>
+    <p class="text-body-sm text-on-surface-variant max-w-sm mb-1">
+      No applicants currently meet the 75%+ skill match threshold for your open job postings.
+    </p>
+    <p class="text-xs text-outline max-w-sm">
+      Tip: Make sure your job postings have skill requirements set, and that applicants have skills listed in their profiles.
+    </p>
+    <a href="{% url 'job_management_employer' %}" class="mt-6 bg-secondary text-white text-sm font-semibold px-6 py-3 rounded-xl hover:bg-secondary/90 transition-all">
+      Manage Job Postings
+    </a>
+  </div>
+  {% endif %}
+
+</div>
+</main>
+
+<script>
+  // Apply staggered animation delay from data-delay attribute
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.alert-card').forEach(card => {
+      const delay = card.dataset.delay || '0';
+      card.style.animationDelay = delay + 'ms';
+    });
+    // Animate match bars
+    document.querySelectorAll('.match-bar-fill').forEach(bar => {
+      const pct = bar.dataset.pct;
+      setTimeout(() => { bar.style.width = pct + '%'; }, 150);
+    });
+  });
+
+  // Filter cards
+  function filterCards(filter) {
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      if (btn.dataset.filter === filter) {
+        btn.classList.add('bg-secondary', 'text-white');
+        btn.classList.remove('bg-surface-container', 'text-on-surface');
+      } else {
+        btn.classList.remove('bg-secondary', 'text-white');
+        btn.classList.add('bg-surface-container', 'text-on-surface');
+      }
+    });
+    document.querySelectorAll('.alert-card').forEach(card => {
+      card.style.display = (filter === 'all' || card.dataset.status === filter) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

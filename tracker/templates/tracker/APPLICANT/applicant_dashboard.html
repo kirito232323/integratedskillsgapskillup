@@ -1,0 +1,595 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Applicant Dashboard | SKILLUP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#0051d5",
+                    "inverse-surface": "#213145",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "outline-variant": "#c6c6cd",
+                    "primary-fixed": "#dae2fd",
+                    "on-error": "#ffffff",
+                    "surface-container": "#e5eeff",
+                    "on-tertiary": "#ffffff",
+                    "surface-tint": "#565e74",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "surface-container-low": "#eff4ff",
+                    "on-surface": "#0b1c30",
+                    "on-secondary-fixed-variant": "#003ea8",
+                    "surface-bright": "#f8f9ff",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-primary-container": "#7c839b",
+                    "primary-fixed-dim": "#bec6e0",
+                    "outline": "#76777d",
+                    "on-secondary-fixed": "#00174b",
+                    "on-secondary": "#ffffff",
+                    "surface-container-highest": "#d3e4fe",
+                    "tertiary-container": "#002113",
+                    "primary-container": "#131b2e",
+                    "tertiary": "#000000",
+                    "on-secondary-container": "#fefcff",
+                    "surface-dim": "#cbdbf5",
+                    "error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "on-background": "#0b1c30",
+                    "on-surface-variant": "#45464d",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed": "#002113",
+                    "inverse-on-surface": "#eaf1ff",
+                    "background": "#f8f9ff",
+                    "secondary-fixed": "#dbe1ff",
+                    "primary": "#000000",
+                    "secondary-container": "#316bf3",
+                    "on-tertiary-container": "#009668",
+                    "surface-variant": "#d3e4fe",
+                    "surface-container-high": "#dce9ff",
+                    "error-container": "#ffdad6",
+                    "on-error-container": "#93000a",
+                    "surface": "#f8f9ff",
+                    "secondary-fixed-dim": "#b4c5ff",
+                    "on-primary-fixed": "#131b2e",
+                    "inverse-primary": "#bec6e0"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "40px",
+                    "container-max": "1440px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["JetBrains Mono"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-md": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .skill-radar-bg {
+            background-image: radial-gradient(circle at center, #E2E8F0 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .bento-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .bento-card:hover {
+            border-color: #0051d5;
+            box-shadow: 0px 4px 20px rgba(15, 23, 42, 0.05);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md selection:bg-secondary-fixed-dim">
+{% if messages %}
+<div class="fixed top-20 right-4 z-50 flex flex-col gap-2 max-w-sm w-full">
+    {% for message in messages %}
+    <div class="toast-notification flex items-center gap-3 p-4 rounded-xl border border-outline-variant bg-surface-container-lowest/80 backdrop-blur-md shadow-lg transition-all duration-300 transform translate-x-12 opacity-0" data-type="{{ message.tags }}">
+        {% if message.tags == 'success' %}
+        <span class="material-symbols-outlined text-[20px] text-green-600 bg-green-50 p-1.5 rounded-full" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+        {% elif message.tags == 'error' %}
+        <span class="material-symbols-outlined text-[20px] text-error bg-error-container/10 p-1.5 rounded-full">error</span>
+        {% else %}
+        <span class="material-symbols-outlined text-[20px] text-secondary bg-secondary/10 p-1.5 rounded-full">info</span>
+        {% endif %}
+        <div class="flex-grow">
+            <p class="font-body-sm text-body-sm font-semibold text-on-surface">{{ message }}</p>
+        </div>
+        <button onclick="this.parentElement.remove()" class="material-symbols-outlined text-on-surface-variant hover:text-on-surface text-sm">close</button>
+    </div>
+    {% endfor %}
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const toasts = document.querySelectorAll('.toast-notification');
+        toasts.forEach((toast, index) => {
+            setTimeout(() => {
+                toast.classList.remove('translate-x-12', 'opacity-0');
+            }, index * 150);
+            
+            setTimeout(() => {
+                toast.classList.add('translate-x-12', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000 + (index * 150));
+        });
+    });
+</script>
+{% endif %}
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant h-16 flex items-center justify-between px-margin-desktop">
+  <div class="flex items-center gap-8">
+    <a href="{% url 'applicant_dashboard' %}" class="font-headline-md text-headline-md font-bold text-on-surface">SKILLUP</a>
+    <nav class="hidden md:flex items-center gap-6 h-16">
+      <a class="font-body-md text-body-md h-full flex items-center px-2 transition-colors duration-200 text-secondary font-semibold border-b-2 border-secondary" href="{% url 'applicant_dashboard' %}">Dashboard</a>
+      <a class="font-body-md text-body-md h-full flex items-center px-2 transition-colors duration-200 text-on-surface-variant hover:bg-surface-container-low" href="{% url 'applicant_applications_list' %}">My Applications</a>
+      <a class="font-body-md text-body-md h-full flex items-center px-2 transition-colors duration-200 text-on-surface-variant hover:bg-surface-container-low" href="{% url 'training_recommendations' %}">My Learning</a>
+      <a class="font-body-md text-body-md h-full flex items-center px-2 transition-colors duration-200 text-on-surface-variant hover:bg-surface-container-low" href="{% url 'job_search' %}">Job Board</a>
+      <a class="font-body-md text-body-md h-full flex items-center px-2 transition-colors duration-200 text-on-surface-variant hover:bg-surface-container-low" href="{% url 'applicant_profile' %}">Profile</a>
+    </nav>
+  </div>
+  <div class="flex items-center gap-4">
+    <div class="flex items-center gap-2">
+      <a href="{% url 'applicant_notifications' %}" class="p-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant relative block" title="Notifications">
+        <span class="material-symbols-outlined">notifications</span>
+        {% if unread_notifications_count %}<span class="absolute top-0.5 right-0.5 w-4 h-4 rounded-full bg-red-500 text-white text-[9px] font-black flex items-center justify-center">{{ unread_notifications_count }}</span>{% endif %}
+      </a>
+      <a href="{% url 'applicant_settings' %}" class="p-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant" title="Settings">
+        <span class="material-symbols-outlined">settings</span>
+      </a>
+      <a href="{% url 'logout' %}" class="p-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant" title="Logout">
+        <span class="material-symbols-outlined">logout</span>
+      </a>
+    </div>
+  </div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-24 md:pb-12 px-margin-desktop max-w-[1200px] mx-auto">
+
+
+  {% if pending_evaluation %}
+  <div class="bg-surface-container border border-on-tertiary-container/30 rounded-xl p-6 mb-8 text-on-surface relative overflow-hidden shadow animate-fade-in flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+      <div class="absolute top-0 left-0 w-2 h-full bg-on-tertiary-container"></div>
+      <div class="pl-3">
+          <h3 class="font-headline-md text-headline-md font-bold text-on-tertiary-container mb-2 flex items-center gap-2">
+              <span class="material-symbols-outlined text-[24px]">rate_review</span> How is your new job?
+          </h3>
+          <p class="text-body-md leading-relaxed text-on-surface">
+              We noticed you were placed at <strong>{{ pending_evaluation.job_vacancy.employer.user.first_name }}</strong> as <strong>{{ pending_evaluation.accepted_position }}</strong>. Please take a moment to evaluate your job match experience.
+          </p>
+      </div>
+      <div class="flex gap-3 shrink-0 pl-3 md:pl-0">
+          <button type="button" onclick="openApplicantEvaluationModal()" class="px-5 py-2.5 bg-secondary text-white font-bold rounded-lg text-xs uppercase tracking-wider hover:opacity-90 transition-all flex items-center gap-1.5 shadow-sm">
+              <span class="material-symbols-outlined text-sm">rate_review</span> Evaluate Match
+          </button>
+      </div>
+  </div>
+  {% endif %}
+
+<header class="mb-10">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-2">Welcome back, {{ profile.user.first_name }}</h1>
+<p class="text-on-surface-variant font-body-lg text-body-lg">You've completed <span class="text-secondary font-bold">{{ profile.training_progress_percentage|default:"0" }}%</span> of your {{ profile.training_progress_title|default:"General Training" }} path. Ready to finish?</p>
+</div>
+<div class="flex gap-3">
+<a href="{% url 'training_recommendations' %}" class="px-6 py-2.5 bg-primary text-on-primary rounded-lg font-body-md font-semibold hover:opacity-90 active:scale-95 transition-all flex items-center justify-center">Resume Learning</a>
+<a href="{% url 'applicant_profile' %}" class="px-6 py-2.5 bg-surface-container-highest text-on-surface rounded-lg font-body-md font-semibold hover:bg-surface-dim transition-all flex items-center justify-center">View Profile</a>
+</div>
+</div>
+</header>
+
+<!-- Job Application Status Section -->
+<section class="mb-10">
+  <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="font-headline-md text-headline-md text-on-surface">Applications</h2>
+      <a href="{% url 'applicant_applications_list' %}" class="text-secondary font-label-md text-label-md hover:underline font-bold">View All</a>
+    </div>
+    <div class="space-y-4">
+      {% for ref in recent_referrals %}
+      <a href="{% url 'applicant_application_details' ref.id %}" class="flex items-center gap-4 p-3 hover:bg-surface-bright rounded-lg transition-colors border border-transparent hover:border-outline-variant">
+        <div class="w-12 h-12 bg-surface-container rounded-lg flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-secondary">work</span>
+        </div>
+        <div class="flex-grow min-w-0">
+          <div class="font-body-md text-body-md font-semibold truncate text-on-surface">{{ ref.job_vacancy.title }}</div>
+          <div class="text-body-sm text-on-surface-variant truncate">{{ ref.job_vacancy.employer.company_name }}</div>
+        </div>
+        <div class="px-2 py-1 {% if ref.status == 'Hired' %}bg-tertiary-fixed text-on-tertiary-fixed-variant{% elif ref.status == 'Not Hired' %}bg-error-container text-error{% else %}bg-secondary-container text-on-secondary{% endif %} text-[10px] uppercase tracking-wider font-bold rounded shrink-0">
+          {{ ref.status }}
+        </div>
+      </a>
+      {% empty %}
+      <div class="text-center py-8 text-on-surface-variant italic">No active applications.</div>
+      {% endfor %}
+    </div>
+    <div class="mt-8 pt-6 border-t border-outline-variant">
+      <div class="flex justify-around text-center">
+        <div>
+          <div class="font-label-md text-label-md text-secondary text-2xl font-bold">{{ active_count }}</div>
+          <div class="text-label-sm text-on-surface-variant">Active</div>
+        </div>
+        <div class="border-x border-outline-variant px-6">
+          <div class="font-label-md text-label-md text-on-surface text-2xl font-bold">{{ interview_count }}</div>
+          <div class="text-label-sm text-on-surface-variant">Interviews</div>
+        </div>
+        <div>
+          <div class="font-label-md text-label-md text-on-tertiary-container text-2xl font-bold">{{ offer_count }}</div>
+          <div class="text-label-sm text-on-surface-variant">Offers</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Recommended Jobs Section -->
+<section class="mb-10">
+  <div class="flex items-center justify-between mb-6">
+    <div class="flex items-center gap-2">
+      <span class="material-symbols-outlined text-secondary font-bold" style="font-variation-settings: 'FILL' 1;">recommend</span>
+      <h2 class="font-headline-md text-headline-md text-on-surface">Recommended Jobs for You</h2>
+    </div>
+    <a href="{% url 'job_search' %}" class="text-secondary font-label-md text-label-md hover:underline font-bold flex items-center gap-1">
+      View All Jobs <span class="material-symbols-outlined text-sm">arrow_forward</span>
+    </a>
+  </div>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for r_job in recommended_jobs %}
+      <div class="bg-surface-container-lowest border-2 border-secondary/20 p-5 rounded-xl hover:border-secondary transition-all bento-card relative flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-start mb-4">
+            <span class="px-2 py-0.5 bg-secondary/10 text-secondary rounded text-[10px] font-bold uppercase tracking-wider">Top Match</span>
+            <div class="bg-surface-container text-secondary font-bold px-2 py-0.5 rounded text-[13px] active-glow">{{ r_job.match_score }}% Match</div>
+          </div>
+          <h3 class="font-body-lg text-body-lg font-bold text-on-surface mb-1 group-hover:text-secondary transition-colors">{{ r_job.vacancy.title }}</h3>
+          <p class="text-body-sm text-on-surface-variant font-medium mb-3">{{ r_job.vacancy.employer.company_name|default:"Nexus Digital Solutions" }}</p>
+          <p class="text-body-sm text-on-surface-variant line-clamp-2 mb-4">{{ r_job.vacancy.description }}</p>
+        </div>
+        <div>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            {% for skill in r_job.skills %}
+              <span class="bg-surface-container-low text-on-surface-variant text-[11px] px-2 py-0.5 rounded">{{ skill }}</span>
+            {% endfor %}
+          </div>
+          <div class="flex gap-2">
+            <a href="{% url 'skill_gap_analysis' %}?job_id={{ r_job.vacancy.id }}" class="flex-1 text-center py-2.5 bg-secondary text-white font-body-sm font-bold rounded-lg hover:opacity-90 transition-all block">View Gaps & Apply</a>
+            <form method="POST" action="{% url 'toggle_bookmark' r_job.vacancy.id %}">
+              {% csrf_token %}
+              <button type="submit" class="px-3 py-2 border border-outline-variant text-outline hover:text-secondary rounded-lg hover:bg-surface-container-low transition-colors flex items-center justify-center" title="{% if r_job.is_bookmarked %}Remove Bookmark{% else %}Bookmark Job{% endif %}">
+                {% if r_job.is_bookmarked %}
+                  <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+                {% else %}
+                  <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">bookmark</span>
+                {% endif %}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-span-3 p-8 border border-outline-variant border-dashed rounded-xl text-center text-on-surface-variant italic bg-white w-full">
+        No recommended jobs (>= 50% match) found. Add more skills to your profile to get matches!
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% if preferred_category_name %}
+<!-- Preferred Job Category Section -->
+<section class="mb-10 animate-fade-in">
+  <div class="flex items-center justify-between mb-6">
+    <div class="flex items-center gap-2">
+      <span class="material-symbols-outlined text-secondary font-bold" style="font-variation-settings: 'FILL' 1;">star</span>
+      <h2 class="font-headline-md text-headline-md text-on-surface">Targeting Category: <span class="text-secondary font-extrabold">{{ preferred_category_name }}</span></h2>
+    </div>
+  </div>
+  
+  {% if preferred_jobs_data %}
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for job in preferred_jobs_data %}
+    <div class="bg-surface-container-lowest border-2 border-secondary/20 p-5 rounded-xl hover:border-secondary hover:shadow-md transition-all bento-card relative flex flex-col justify-between active-glow">
+      <div class="absolute -top-3 right-3 bg-secondary text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider shadow-sm">
+        Target
+      </div>
+      
+      <div>
+        <div class="flex justify-between items-start mb-3">
+          <span class="px-2 py-0.5 bg-surface-container text-on-surface-variant rounded text-[9px] font-bold uppercase tracking-wider">
+            {{ job.vacancy.category_display }}
+          </span>
+          <div class="bg-surface-container text-secondary font-bold px-2 py-0.5 rounded text-[12px]">
+            {{ job.match_score }}% Match
+          </div>
+        </div>
+        <h3 class="font-body-md text-body-md font-bold text-on-surface mb-0.5">{{ job.vacancy.title }}</h3>
+        <p class="text-xs text-on-surface-variant font-medium mb-3">{{ job.vacancy.employer.company_name|default:"Nexus Digital Solutions" }}</p>
+        <p class="text-xs text-on-surface-variant mb-4 line-clamp-3">{{ job.vacancy.description }}</p>
+      </div>
+      
+      <div>
+        <div class="flex flex-wrap gap-1 mb-4">
+          {% for skill in job.skills %}
+            <span class="bg-surface-container-low text-on-surface-variant text-[10px] px-1.5 py-0.5 rounded">{{ skill }}</span>
+          {% endfor %}
+        </div>
+        <div class="flex gap-2">
+          {% if job.has_applied %}
+            <div class="flex-1 text-center py-2 bg-surface-container border border-outline-variant text-on-surface-variant font-body-sm font-bold rounded-lg cursor-not-allowed select-none flex items-center justify-center gap-1 text-xs">
+              <span class="material-symbols-outlined text-[14px] text-green-600 font-bold" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+              Applied
+            </div>
+          {% else %}
+            <a href="{% url 'skill_gap_analysis' %}?job_id={{ job.vacancy.id }}" class="flex-1 text-center py-2 bg-secondary text-white font-body-sm font-bold rounded-lg hover:opacity-90 transition-all block text-xs">View Gaps & Apply</a>
+          {% endif %}
+          <form method="POST" action="{% url 'toggle_bookmark' job.vacancy.id %}">
+            {% csrf_token %}
+            <button type="submit" class="px-2.5 py-1.5 border border-outline-variant text-outline hover:text-secondary rounded-lg hover:bg-surface-container-low transition-colors flex items-center justify-center" title="{% if job.is_bookmarked %}Remove Bookmark{% else %}Bookmark Job{% endif %}">
+              {% if job.is_bookmarked %}
+                <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+              {% else %}
+                <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0;">bookmark</span>
+              {% endif %}
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      {% if job.gaps_count > 0 %}
+      <!-- Skill Gap Badge -->
+      <div class="absolute -bottom-2.5 right-3 bg-error text-white text-[10px] px-2 py-0.5 rounded-full flex items-center gap-0.5 shadow-sm">
+        <span class="material-symbols-outlined text-[10px]">warning</span>
+        {{ job.gaps_count }} Gap{{ job.gaps_count|pluralize }} Identified
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="p-6 bg-surface-container-low border border-outline-variant/60 rounded-xl text-center">
+    <p class="text-body-md text-on-surface-variant mb-2">There are currently no open positions posted in the <strong class="text-on-surface">{{ preferred_category_name }}</strong> category.</p>
+    <a href="{% url 'job_search' %}?category={{ profile.preferred_job }}" class="inline-block mt-2 text-secondary hover:underline text-sm font-semibold">Explore other categories &rarr;</a>
+  </div>
+  {% endif %}
+</section>
+{% endif %}
+
+{% if bookmarked_jobs %}
+<!-- Bookmarked Jobs Section -->
+<section class="mb-10">
+  <div class="flex items-center justify-between mb-6">
+    <div class="flex items-center gap-2">
+      <span class="material-symbols-outlined text-secondary font-bold" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+      <h2 class="font-headline-md text-headline-md text-on-surface">Bookmarked Jobs</h2>
+      <span class="bg-surface-container-highest text-secondary text-[12px] font-bold px-2 py-0.5 rounded-full">{{ bookmarked_jobs|length }} Saved</span>
+    </div>
+  </div>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for r_job in bookmarked_jobs %}
+      <div class="bg-surface-container-lowest border-2 border-secondary/20 p-5 rounded-xl hover:border-secondary transition-all bento-card relative flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-start mb-4">
+            <span class="px-2 py-0.5 bg-surface-container text-on-surface-variant rounded text-[10px] font-bold uppercase tracking-wider">Saved Job</span>
+            <div class="bg-surface-container text-secondary font-bold px-2 py-0.5 rounded text-[13px] active-glow">{{ r_job.match_score }}% Match</div>
+          </div>
+          <h3 class="font-body-lg text-body-lg font-bold text-on-surface mb-1 group-hover:text-secondary transition-colors">{{ r_job.vacancy.title }}</h3>
+          <p class="text-body-sm text-on-surface-variant font-medium mb-3">{{ r_job.vacancy.employer.company_name|default:"Nexus Digital Solutions" }}</p>
+          <p class="text-body-sm text-on-surface-variant line-clamp-2 mb-4">{{ r_job.vacancy.description }}</p>
+        </div>
+        <div>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            {% for skill in r_job.skills %}
+              <span class="bg-surface-container-low text-on-surface-variant text-[11px] px-2 py-0.5 rounded">{{ skill }}</span>
+            {% endfor %}
+          </div>
+          <div class="flex gap-2">
+            <a href="{% url 'skill_gap_analysis' %}?job_id={{ r_job.vacancy.id }}" class="flex-1 text-center py-2.5 bg-secondary text-white font-body-sm font-bold rounded-lg hover:opacity-90 transition-all block">View Gaps & Apply</a>
+            <form method="POST" action="{% url 'toggle_bookmark' r_job.vacancy.id %}">
+              {% csrf_token %}
+              <button type="submit" class="px-3 py-2 border border-outline-variant text-secondary rounded-lg hover:bg-surface-container-low transition-colors flex items-center justify-center" title="Remove Bookmark">
+                <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+              </button>
+            </form>
+          </div>
+        </div>
+        {% if r_job.gaps_count > 0 %}
+        <!-- Skill Gap Badge -->
+        <div class="absolute -top-3 -right-3 bg-error text-white text-label-sm px-3 py-1 rounded-full flex items-center gap-1 shadow-md">
+          <span class="material-symbols-outlined text-xs">warning</span>
+          {{ r_job.gaps_count }} Gap{{ r_job.gaps_count|pluralize }}
+        </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+
+
+
+
+</main>
+<!-- FAB for quick actions (Contextual to Dashboard) -->
+<a href="{% url 'job_search' %}" class="fixed bottom-8 right-8 w-14 h-14 bg-secondary text-white rounded-full shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-40 group">
+<span class="material-symbols-outlined">add</span>
+<span class="absolute right-16 bg-primary text-white px-4 py-2 rounded-lg text-body-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-xl">New Application</span>
+</a>
+<footer class="mt-auto border-t border-outline-variant py-8 px-margin-desktop text-center bg-surface-container-lowest">
+<div class="flex justify-center gap-8 mb-6">
+<a class="text-on-surface-variant hover:text-secondary transition-colors font-label-md text-label-md" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors font-label-md text-label-md" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors font-label-md text-label-md" href="#">Support</a>
+</div>
+<p class="text-label-sm font-label-sm text-outline">© 2024 SKILLUP. Empowering talent through data-driven growth.</p>
+</footer>
+
+<script>
+        // Micro-interactions for dashboard elements
+        document.querySelectorAll('.bento-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                // Potential for localized animations or data refreshes
+            });
+        });
+
+        // Simple mock search functionality
+        const searchInput = document.querySelector('input[type="text"]');
+        if (searchInput) {
+            searchInput.addEventListener('focus', () => {
+                searchInput.parentElement.classList.add('w-80');
+            });
+            searchInput.addEventListener('blur', () => {
+                searchInput.parentElement.classList.remove('w-80');
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initializations
+        });
+    </script>
+
+
+<!-- STAGE 7: Applicant Evaluation Modal -->
+{% if pending_evaluation %}
+<div id="applicantEvaluationModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center hidden animate-fade-in">
+  <div class="bg-white border border-outline-variant rounded-xl max-w-lg w-full p-6 shadow-2xl relative">
+    <div class="flex justify-between items-center border-b pb-3 mb-4">
+      <h3 class="font-headline-md text-headline-md font-bold text-on-surface flex items-center gap-2">
+        <span class="material-symbols-outlined text-secondary text-[24px]">rate_review</span>
+        PESO Match Evaluation Feedback
+      </h3>
+      <button onclick="closeApplicantEvaluationModal()" class="material-symbols-outlined text-outline hover:text-on-surface text-lg">close</button>
+    </div>
+    <form method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="submit_applicant_evaluation">
+      <input type="hidden" name="referral_id" value="{{ pending_evaluation.id }}">
+      
+      <div class="space-y-4 max-h-[350px] overflow-y-auto pr-2 custom-scrollbar">
+        <div class="bg-surface-container-low p-4 rounded-lg text-xs text-on-surface-variant">
+          <p>You have been placed at <strong>{{ pending_evaluation.job_vacancy.employer.user.first_name }}</strong> as <strong>{{ pending_evaluation.accepted_position }}</strong>. Help us improve matching algorithms by answering the feedback survey below.</p>
+        </div>
+        
+        <div>
+          <label class="block text-xs font-semibold text-on-surface mb-1">1. Was the job accurately described by PESO? *</label>
+          <select name="eval_app_accurate_desc" required class="w-full text-sm border border-outline-variant rounded px-3 py-2 bg-white">
+            <option value="Yes">Yes, description was accurate</option>
+            <option value="No">No, description differed significantly</option>
+          </select>
+        </div>
+        
+        <div>
+          <label class="block text-xs font-semibold text-on-surface mb-1">2. Did the employer meet the agreed terms (salary, role, conditions)? *</label>
+          <select name="eval_app_terms_met" required class="w-full text-sm border border-outline-variant rounded px-3 py-2 bg-white">
+            <option value="Yes">Yes, terms were fully met</option>
+            <option value="No">No, terms differed from discussions</option>
+          </select>
+        </div>
+        
+        <div>
+          <label class="block text-xs font-semibold text-on-surface mb-1">3. How did the job match your skills and expectations? *</label>
+          <textarea name="eval_app_expectations" required placeholder="Please describe how the role fits your upskilling/career background..." class="w-full text-xs border border-outline-variant rounded px-3 py-2 h-20 outline-none focus:ring-2 focus:ring-secondary"></textarea>
+        </div>
+        
+        <div>
+          <label class="block text-xs font-semibold text-on-surface mb-1">4. Would you use PESO's referral services again? *</label>
+          <select name="eval_app_future_use" required class="w-full text-sm border border-outline-variant rounded px-3 py-2 bg-white font-body-sm text-sm">
+            <option value="Yes">Yes, definitely</option>
+            <option value="No">No, would use other channels</option>
+          </select>
+        </div>
+        
+        <div>
+          <label class="block text-xs font-semibold text-on-surface mb-1">5. Overall satisfaction with PESO's referral service? *</label>
+          <select name="eval_app_satisfaction" required class="w-full text-sm border border-outline-variant rounded px-3 py-2 bg-white font-body-sm text-sm">
+            <option value="5">Extremely Satisfied (5/5)</option>
+            <option value="4">Satisfied (4/5)</option>
+            <option value="3">Neutral (3/5)</option>
+            <option value="2">Dissatisfied (2/5)</option>
+            <option value="1">Extremely Dissatisfied (1/5)</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="flex justify-end gap-2 border-t pt-4 mt-6">
+        <button type="button" onclick="closeApplicantEvaluationModal()" class="px-4 py-2 border border-outline text-on-surface rounded text-xs hover:bg-slate-50 transition-colors">Cancel</button>
+        <button type="submit" class="px-4 py-2 bg-secondary text-white rounded text-xs hover:opacity-90 font-bold">Submit Evaluation</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endif %}
+
+<script>
+    function openApplicantEvaluationModal() {
+        const modal = document.getElementById('applicantEvaluationModal');
+        if (modal) modal.classList.remove('hidden');
+    }
+    function closeApplicantEvaluationModal() {
+        const modal = document.getElementById('applicantEvaluationModal');
+        if (modal) modal.classList.add('hidden');
+    }
+</script>
+
+<!-- Mobile Bottom Navigation Bar -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-surface border-t border-outline-variant px-4 py-2 flex justify-around items-center z-50">
+  <a href="{% url 'applicant_dashboard' %}" class="flex flex-col items-center gap-1 transition-all duration-200 text-secondary font-bold">
+    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+    <span class="text-[10px] font-label-sm">Dashboard</span>
+  </a>
+  <a href="{% url 'skill_gap_analysis' %}" class="flex flex-col items-center gap-1 transition-all duration-200 text-on-surface-variant opacity-70 hover:opacity-100">
+    <span class="material-symbols-outlined">analytics</span>
+    <span class="text-[10px] font-label-sm">Gaps</span>
+  </a>
+  <a href="{% url 'training_recommendations' %}" class="flex flex-col items-center gap-1 transition-all duration-200 text-on-surface-variant opacity-70 hover:opacity-100">
+    <span class="material-symbols-outlined">school</span>
+    <span class="text-[10px] font-label-sm">Learning</span>
+  </a>
+  <a href="{% url 'job_search' %}" class="flex flex-col items-center gap-1 transition-all duration-200 text-on-surface-variant opacity-70 hover:opacity-100">
+    <span class="material-symbols-outlined">work</span>
+    <span class="text-[10px] font-label-sm">Jobs</span>
+  </a>
+  <a href="{% url 'applicant_profile' %}" class="flex flex-col items-center gap-1 transition-all duration-200 text-on-surface-variant opacity-70 hover:opacity-100">
+    <span class="material-symbols-outlined">person</span>
+    <span class="text-[10px] font-label-sm">Profile</span>
+  </a>
+</nav>
+</body></html>

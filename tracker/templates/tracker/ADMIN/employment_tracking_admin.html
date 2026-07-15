@@ -1,0 +1,772 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Reports | SKILLUP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#0051d5",
+                    "inverse-surface": "#213145",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "outline-variant": "#c6c6cd",
+                    "primary-fixed": "#dae2fd",
+                    "on-error": "#ffffff",
+                    "surface-container": "#e5eeff",
+                    "on-tertiary": "#ffffff",
+                    "surface-tint": "#565e74",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "surface-container-low": "#eff4ff",
+                    "on-surface": "#0b1c30",
+                    "on-secondary-fixed-variant": "#003ea8",
+                    "surface-bright": "#f8f9ff",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-primary-container": "#7c839b",
+                    "primary-fixed-dim": "#bec6e0",
+                    "outline": "#76777d",
+                    "on-secondary-fixed": "#00174b",
+                    "on-secondary": "#ffffff",
+                    "surface-container-highest": "#d3e4fe",
+                    "tertiary-container": "#002113",
+                    "primary-container": "#131b2e",
+                    "tertiary": "#000000",
+                    "on-tertiary-container": "#009668",
+                    "surface-variant": "#d3e4fe",
+                    "surface-container-high": "#dce9ff",
+                    "error-container": "#ffdad6",
+                    "on-error-container": "#93000a",
+                    "surface": "#f8f9ff",
+                    "secondary-fixed-dim": "#b4c5ff",
+                    "on-primary-fixed": "#131b2e",
+                    "inverse-primary": "#bec6e0"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "40px",
+                    "container-max": "1440px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["JetBrains Mono"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-md": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #f8f9ff; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+        }
+        .zebra-row:nth-child(even) { background-color: #f8fafc; }
+        .transition-flow-line {
+            background: linear-gradient(90deg, #dbe1ff 0%, #0051d5 100%);
+        }
+        .glass-effect {
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.8);
+        }
+        .bento-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        .bento-card:hover {
+            border-color: #0051d5;
+            box-shadow: 0px 4px 20px rgba(15, 23, 42, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen">
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 w-full z-50 bg-surface dark:bg-surface-container-low border-b border-outline-variant dark:border-outline flex items-center justify-between px-margin-desktop h-16 w-full">
+<div class="flex items-center gap-8">
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-inverse-on-surface">SKILLUP</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">help</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">settings</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCn5ndUBvKYHDdfjOtDcuDcmEa-zwbSgM-ZLHNPtfHm7uL9e355N19pHC8c-XBPUwwXHIzoATnKENMDvabjLGF5diSFylP09pwQghoAY0N70mks-GlVv2KmatElbeqz2_5J-gSw4HGwnHnPHYMLeRKflzGezIfmEqF1sJTCsVHaAp-3UBTYmVg6yrq3nRzkltjZyYRqaTWNO9ETM3eG6xeP_aE-PZkbZbeBZvG-dmCW3fgaiDFfFN1v9i2cwj6DH0AUyxyPRP9c4y2t">
+</div>
+</div>
+</header>
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 h-full w-64 pt-20 bg-surface-container-lowest dark:bg-primary-container border-r border-outline-variant dark:border-outline hidden md:flex flex-col p-4 gap-2 z-40">
+<div class="flex items-center gap-3 px-2 py-4 mb-4 border-b border-outline-variant/30">
+<div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center text-white font-black text-xl">P</div>
+<div>
+<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">Enterprise Portal</h2>
+<p class="text-[10px] text-on-surface-variant opacity-70">Talent Management</p>
+</div>
+</div>
+<nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'peso_dashboard_admin' %}">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'applicant_monitoring_admin' %}">
+<span class="material-symbols-outlined">groups</span>
+<span>Talent Bench</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'employer_management_admin' %}">
+<span class="material-symbols-outlined">domain</span>
+<span>Employers</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'vacancy_management_admin' %}">
+<span class="material-symbols-outlined">work</span>
+<span>Vacancies</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-surface-container dark:bg-secondary-container text-on-surface dark:text-on-secondary-container font-bold rounded-lg scale-98 active:scale-95 duration-150 transition-all font-label-md text-label-md" href="{% url 'employment_tracking_admin' %}">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">description</span>
+<span>Reports</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'skill_monitoring_admin' %}">
+<span class="material-symbols-outlined">analytics</span>
+<span>Skill Gaps</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'training_monitoring_admin' %}">
+<span class="material-symbols-outlined">school</span>
+<span>Learning Paths</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'job_matching_analytics_admin' %}">
+<span class="material-symbols-outlined">monitoring</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'peso_profile_admin' %}">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+<span>Support</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'logout' %}">
+<span class="material-symbols-outlined">logout</span>
+<span>Log Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="md:ml-64 pt-20 min-h-screen">
+<div class="p-margin-desktop space-y-gutter">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Reports</h2>
+<p class="font-body-md text-on-surface-variant max-w-2xl">Visualizing the full talent lifecycle from initial application through successful placement and long-term retention.</p>
+</div>
+<div class="flex gap-3">
+<div class="flex items-center bg-white border border-outline-variant px-3 py-1.5 rounded-lg text-sm font-medium">
+<span class="material-symbols-outlined text-[18px] mr-2">calendar_today</span>
+                    Last 90 Days
+                </div>
+<a href="{% url 'export_analytics_csv' %}?report=all" class="bg-secondary text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">download</span> Export Data
+</a>
+</div>
+</header>
+<!-- KPI Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<div class="bento-card p-6 rounded-xl relative overflow-hidden">
+<div class="flex justify-between items-start mb-4">
+<span class="text-on-surface-variant font-label-md">PLACEMENT RATE</span>
+<span class="text-on-tertiary-container bg-tertiary-fixed text-[10px] px-2 py-0.5 rounded-full">+4.2%</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-display-lg text-display-lg text-on-surface">{{ conversion_rate|floatformat:1 }}%</span>
+<span class="font-label-sm text-outline">AVG</span>
+</div>
+<div class="w-full h-1 bg-surface-container mt-4 rounded-full overflow-hidden">
+<div class="h-full bg-secondary progress-bar" data-progress="{{ conversion_rate }}"></div>
+</div>
+<p class="text-xs text-on-surface-variant mt-2">Referral to Placement</p>
+</div>
+<div class="bento-card p-6 rounded-xl">
+<div class="flex justify-between items-start mb-4">
+<span class="text-on-surface-variant font-label-md">NO FEEDBACK GAP</span>
+<span class="text-on-tertiary-container bg-tertiary-fixed text-[10px] px-2 py-0.5 rounded-full">Gap rate</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-display-lg text-display-lg text-on-surface">{{ no_response_rate|floatformat:1 }}%</span>
+<span class="font-label-sm text-outline">TARGET 0%</span>
+</div>
+<div class="w-full h-1 bg-surface-container mt-4 rounded-full overflow-hidden">
+<div class="h-full bg-error progress-bar" data-progress="{{ no_response_rate }}"></div>
+</div>
+<p class="text-xs text-on-surface-variant mt-2">Referrals with no employer feedback</p>
+</div>
+<div class="bento-card p-6 rounded-xl">
+<div class="flex justify-between items-start mb-4">
+<span class="text-on-surface-variant font-label-md">MISMATCH RATE</span>
+<span class="text-error bg-error-container text-[10px] px-2 py-0.5 rounded-full">Education</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-display-lg text-display-lg text-on-surface">{{ mismatch_rate|floatformat:1 }}%</span>
+<span class="font-label-sm text-outline">MISMATCH</span>
+</div>
+<div class="w-full h-1 bg-surface-container mt-4 rounded-full overflow-hidden">
+<div class="h-full bg-secondary progress-bar" data-progress="{{ mismatch_rate }}"></div>
+</div>
+<p class="text-xs text-on-surface-variant mt-2">Placed outside field of study</p>
+</div>
+<div class="bento-card p-6 rounded-xl">
+<div class="flex justify-between items-start mb-4">
+<span class="text-on-surface-variant font-label-md">TOTAL REFERRALS</span>
+<span class="text-on-tertiary-container bg-tertiary-fixed text-[10px] px-2 py-0.5 rounded-full">Active</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-display-lg text-display-lg text-on-surface">{{ total_referrals }}</span>
+<span class="font-label-sm text-outline">LOGGED</span>
+</div>
+<div class="w-full h-1 bg-surface-container mt-4 rounded-full overflow-hidden">
+<div class="h-full bg-secondary" style="width: 100%"></div>
+</div>
+<p class="text-xs text-on-surface-variant mt-2">Referrals in system</p>
+</div>
+</section>
+<!-- Visualization Row 1 -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+<!-- Transition Flow -->
+<div class="lg:col-span-2 bento-card rounded-xl p-6">
+<h3 class="font-headline-md text-[18px] text-on-surface mb-6">Candidate Transition Funnel</h3>
+<div class="relative h-64 flex items-end justify-between gap-4 px-4">
+<!-- Funnel Steps -->
+<div class="flex flex-col items-center flex-1">
+<span class="font-label-sm text-outline mb-2">12,400</span>
+<div class="w-full bg-surface-container-high rounded-t-lg transition-all duration-500 hover:bg-secondary/20" style="height: 100%"></div>
+<span class="mt-2 text-xs font-semibold text-on-surface-variant">Applied</span>
+</div>
+<div class="flex flex-col items-center flex-1">
+<span class="font-label-sm text-outline mb-2">4,820</span>
+<div class="w-full bg-surface-container-highest rounded-t-lg transition-all duration-500 hover:bg-secondary/40" style="height: 38%"></div>
+<span class="mt-2 text-xs font-semibold text-on-surface-variant">Vetted</span>
+</div>
+<div class="flex flex-col items-center flex-1">
+<span class="font-label-sm text-outline mb-2">2,150</span>
+<div class="w-full bg-secondary-fixed rounded-t-lg transition-all duration-500 hover:bg-secondary/60" style="height: 17%"></div>
+<span class="mt-2 text-xs font-semibold text-on-surface-variant">Interviewed</span>
+</div>
+<div class="flex flex-col items-center flex-1">
+<span class="font-label-sm text-outline mb-2">840</span>
+<div class="w-full bg-secondary-container rounded-t-lg transition-all duration-500 hover:opacity-80" style="height: 7%"></div>
+<span class="mt-2 text-xs font-semibold text-on-surface-variant">Offered</span>
+</div>
+<div class="flex flex-col items-center flex-1">
+<span class="font-label-sm text-outline mb-2">712</span>
+<div class="w-full bg-secondary rounded-t-lg transition-all duration-500" style="height: 6%"></div>
+<span class="mt-2 text-xs font-semibold text-on-surface-variant">Placed</span>
+</div>
+</div>
+</div>
+<!-- Industry Distribution (Radar-like vibe) -->
+<div class="bento-card rounded-xl p-6">
+<h3 class="font-headline-md text-[18px] text-on-surface mb-6">Industry Distribution</h3>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span>FinTech</span>
+<span class="font-label-md">32%</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary" style="width: 32%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span>HealthCare</span>
+<span class="font-label-md">24%</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary" style="width: 24%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span>E-Commerce</span>
+<span class="font-label-md">18%</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary" style="width: 18%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span>Cybersecurity</span>
+<span class="font-label-md">14%</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary" style="width: 14%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span>AI &amp; Robotics</span>
+<span class="font-label-md">12%</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary" style="width: 12%"></div>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-outline-variant flex justify-center">
+<img alt="Chart Background" class="w-24 h-24 opacity-10 grayscale" data-alt="A subtle, minimalist illustrative icon representing global industry connections and data points in a monochromatic gray style. The aesthetic is clean and professional, designed to sit as a faint background element in a corporate talent dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzRbBpmq-m1s2qXEquenyI-Dvu5uzXUELf3xGQo__bami8tLXdWT0K7n3dBADM-JK7UEplWE8yuDJZs7AwuprQaj7Ix4FLEIYvRSnt-v937VSuNe9APVEqU5Ikq8-hKGWsHshmmPmcVHv6Kek0-lGUvb7FC82HTrmlcztp7ENCmey574VOLxIT1tMHIJ9EiYsgJcDm5SVYJbgADjC76wjygPimH3Wigh-yBXI9nhiLSWH5_Vm4RCuIg54rrta-oFmUDykgS1T_u2lr">
+</div>
+</div>
+</div>
+<!-- High Density Data Table -->
+<section class="bento-card rounded-xl overflow-hidden mb-8">
+<div class="p-6 border-b border-outline-variant flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<h3 class="font-headline-md text-[18px] text-on-surface">Referral & Placement Logs</h3>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low text-on-surface-variant font-label-md text-[12px] uppercase tracking-wider">
+<tr>
+<th class="px-6 py-4">Applicant</th>
+<th class="px-6 py-4">Job vacancy</th>
+<th class="px-6 py-4">Field of study</th>
+<th class="px-6 py-4">Date referred</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4 text-right">Gaps & Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+{% for r in referrals %}
+<tr class="zebra-row hover:bg-surface-container transition-colors cursor-pointer group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container/30 flex items-center justify-center text-secondary font-bold text-xs">
+    {{ r.applicant.user.first_name|slice:":1" }}{{ r.applicant.user.last_name|slice:":1" }}
+</div>
+<div>
+<div class="text-sm font-semibold text-on-surface">{{ r.applicant.user.first_name }} {{ r.applicant.user.last_name }}</div>
+<div class="text-xs text-on-surface-variant">{{ r.applicant.user.email }}</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-medium">
+  {{ r.job_vacancy.title }}
+  <div class="text-xs text-on-surface-variant">at {{ r.job_vacancy.employer.user.first_name }}</div>
+</td>
+<td class="px-6 py-4 text-sm font-semibold">
+  {{ r.field_of_study }}
+</td>
+<td class="px-6 py-4 text-sm font-label-md">
+  {{ r.date_referred|date:"M d, Y" }}
+</td>
+<td class="px-6 py-4">
+  {% if r.status == 'Pending' %}
+    <span class="bg-gray-100 text-gray-700 text-[10px] px-2 py-0.5 rounded font-bold uppercase inline-flex items-center">Pending</span>
+    {% if r.is_stale %}
+      <span class="bg-amber-100 text-amber-800 text-[10px] px-2 py-0.5 rounded font-bold uppercase ml-1 flex items-center gap-1 inline-flex animate-pulse">
+        <span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">warning</span> Follow-up Required
+      </span>
+    {% endif %}
+  {% elif r.status == 'Accepted — Awaiting Onboarding' %}
+    <span class="bg-amber-100 text-amber-800 text-[10px] px-2 py-0.5 rounded font-bold uppercase inline-flex items-center">Offer Extended</span>
+  {% elif r.status == 'Confirmed — Onboarding' %}
+    <span class="bg-indigo-100 text-indigo-800 text-[10px] px-2 py-0.5 rounded font-bold uppercase inline-flex items-center">Onboarding Review</span>
+  {% elif r.status == 'Hired — Probationary' %}
+    <span class="bg-green-100 text-green-800 text-[10px] px-2 py-0.5 rounded font-bold uppercase inline-flex items-center">Hired (Probation)</span>
+  {% elif r.status == 'Hired — Regular' or r.status == 'Regularly Employed' %}
+    <span class="bg-green-100 text-green-800 text-[10px] px-2 py-0.5 rounded font-bold uppercase inline-flex items-center">Hired (Regular)</span>
+  {% elif r.status == 'No Show' %}
+    <span class="bg-red-100 text-red-800 text-[10px] px-2 py-0.5 rounded font-bold uppercase inline-flex items-center animate-pulse">No Show (Alert)</span>
+  {% elif r.status == 'Declined' %}
+    <span class="bg-red-100 text-red-800 text-[10px] px-2 py-0.5 rounded font-bold uppercase inline-flex items-center">Declined</span>
+  {% elif r.status == 'Separated — End of Probation' %}
+    <span class="bg-gray-200 text-gray-800 text-[10px] px-2 py-0.5 rounded font-bold uppercase inline-flex items-center">Separated</span>
+  {% else %}
+    <span class="bg-gray-100 text-gray-700 text-[10px] px-2 py-0.5 rounded font-bold uppercase inline-flex items-center">{{ r.status }}</span>
+  {% endif %}
+</td>
+<td class="px-6 py-4 text-right">
+  <div class="flex items-center justify-end gap-3 flex-wrap lg:flex-nowrap">
+    {% if r.key_gaps_list %}
+      <div class="text-[10px] text-error font-medium bg-error-container/20 px-2 py-0.5 rounded truncate max-w-[150px]" title="Gaps: {{ r.key_gaps }}">Gaps: {{ r.key_gaps }}</div>
+    {% else %}
+      <div class="text-[10px] text-green-700 font-medium bg-green-50 px-2 py-0.5 rounded">No Gaps</div>
+    {% endif %}
+    
+    <div id="attempts_data_{{ r.id }}" class="hidden">
+      {% for attempt in r.contact_attempts %}
+        <div class="p-2 border-b border-outline-variant/30 text-left">
+          <div class="flex justify-between font-semibold text-[11px]">
+            <span class="text-secondary">{{ attempt.method }}</span>
+            <span class="text-outline text-[10px]">{{ attempt.date }}</span>
+          </div>
+          <div class="text-on-surface-variant text-[11px] mt-0.5">{{ attempt.notes }}</div>
+        </div>
+      {% empty %}
+        <div class="text-xs text-outline italic p-2 text-left">No contact attempts logged yet.</div>
+      {% endfor %}
+    </div>
+
+    <div class="flex items-center gap-2">
+      {% if r.status == 'Confirmed — Onboarding' or r.status == 'Accepted — Awaiting Onboarding' or r.status == 'No Show' %}
+        <button type="button" 
+                data-id="{{ r.id }}" 
+                data-name="{{ r.applicant.user.get_full_name|escapejs }}" 
+                data-position="{{ r.job_vacancy.title|escapejs }}" 
+                data-status="{{ r.pre_employment_status }}" 
+                data-notes="{{ r.coordination_notes|escapejs }}" 
+                data-reporting-date="{{ r.reporting_date|date:'Y-m-d' }}" 
+                data-nbi="{{ r.nbi_clearance.url|default:'' }}" 
+                data-medical="{{ r.medical_certificate.url|default:'' }}" 
+                data-birth="{{ r.birth_certificate.url|default:'' }}" 
+                data-diploma="{{ r.diploma_transcript.url|default:'' }}" 
+                data-prev-employment="{{ r.prev_employment_cert.url|default:'' }}" 
+                data-tesda="{{ r.tesda_cert.url|default:'' }}" 
+                data-sss="{{ r.sss_number|default:'' }}" 
+                data-philhealth="{{ r.philhealth_number|default:'' }}" 
+                data-pagibig="{{ r.pagibig_number|default:'' }}" 
+                data-tin="{{ r.bir_tin|default:'' }}" 
+                onclick="openOnboardingModalFromButton(this)" 
+                class="px-2 py-1 text-[11px] bg-secondary text-white hover:opacity-90 rounded font-semibold transition-all inline-flex items-center gap-1">
+          <span class="material-symbols-outlined text-[13px]">assignment_turned_in</span> Onboarding
+        </button>
+      {% elif r.status != 'Hired' and r.status != 'Regularly Employed' and r.status != 'Hired — Regular' and r.status != 'Hired — Probationary' %}
+        <button type="button" onclick="openLogModal('{{ r.id }}', '{{ r.applicant.user.first_name }} {{ r.applicant.user.last_name }}', '{{ r.job_vacancy.title }}')" class="px-2 py-1 text-[11px] bg-secondary-container/40 hover:bg-secondary-container border border-outline-variant rounded font-semibold text-secondary transition-colors inline-flex items-center gap-1">
+          <span class="material-symbols-outlined text-[13px]">phone_forwarded</span> Log Follow-Up
+        </button>
+      {% else %}
+        <span class="text-[10px] text-outline font-semibold uppercase">Active Placement</span>
+      {% endif %}
+
+      <form method="post" action="{% url 'update_referral_status' r.id %}" class="inline-flex items-center gap-1 bg-surface-container-low border border-outline-variant rounded p-0.5 {% if r.status == 'Hired' or r.status == 'Regularly Employed' %}opacity-60 pointer-events-none{% endif %}">
+        {% csrf_token %}
+        <select name="status" onchange="this.form.submit()" {% if r.status == 'Hired' or r.status == 'Regularly Employed' %}disabled{% endif %} class="text-[11px] bg-transparent border-none py-0.5 pl-2 pr-6 focus:ring-0 cursor-pointer font-body-sm">
+          <option value="Pending" {% if r.status == 'Pending' %}selected{% endif %}>Pending</option>
+          <option value="Accepted — Awaiting Onboarding" {% if r.status == 'Accepted — Awaiting Onboarding' %}selected{% endif %}>Offer Extended</option>
+          <option value="Confirmed — Onboarding" {% if r.status == 'Confirmed — Onboarding' %}selected{% endif %}>Onboarding</option>
+          <option value="Hired — Probationary" {% if r.status == 'Hired — Probationary' %}selected{% endif %}>Hired (Probation)</option>
+          <option value="Hired — Regular" {% if r.status == 'Hired — Regular' %}selected{% endif %}>Hired (Regular)</option>
+          <option value="No Show" {% if r.status == 'No Show' %}selected{% endif %}>No Show</option>
+          <option value="Declined" {% if r.status == 'Declined' %}selected{% endif %}>Declined</option>
+          <option value="Not Hired" {% if r.status == 'Not Hired' %}selected{% endif %}>Not Hired</option>
+        </select>
+      </form>
+    </div>
+  </div>
+</td>
+</tr>
+{% empty %}
+<tr>
+<td colspan="6" class="px-6 py-8 text-center text-on-surface-variant italic">No referrals found in the system.</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-outline-variant flex justify-center bg-surface-container-low">
+<nav class="flex gap-2">
+<button class="w-8 h-8 rounded flex items-center justify-center bg-white border border-outline-variant font-label-md">1</button>
+<button class="w-8 h-8 rounded flex items-center justify-center hover:bg-white transition-colors font-label-md">2</button>
+<button class="w-8 h-8 rounded flex items-center justify-center hover:bg-white transition-colors font-label-md">3</button>
+<span class="flex items-center px-2">...</span>
+<button class="w-8 h-8 rounded flex items-center justify-center hover:bg-white transition-colors font-label-md">12</button>
+</nav>
+</div>
+</section>
+<!-- Secondary Analytics Row -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-margin-desktop">
+<div class="bento-card p-6 rounded-xl flex items-center gap-6">
+<div class="flex-shrink-0">
+<div class="w-20 h-20 rounded-full border-8 border-secondary border-t-outline-variant rotate-45 flex items-center justify-center">
+<span class="text-sm font-bold -rotate-45">72%</span>
+</div>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Training Effectiveness</h4>
+<p class="text-sm text-on-surface-variant mb-2">Candidates who complete SKILLUP paths are 72% more likely to retain employment beyond 18 months.</p>
+<a class="text-secondary font-semibold text-sm flex items-center gap-1 hover:underline" href="#">View correlation report <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+</div>
+</div>
+<div class="bento-card p-6 rounded-xl flex items-center gap-6">
+<div class="flex-shrink-0 w-20 h-20 bg-surface-container-highest rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-4xl">trending_up</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Growth Projection</h4>
+<p class="text-sm text-on-surface-variant mb-2">Based on current pipeline activity, placements are projected to increase by 14% in Q4 2024.</p>
+<a class="text-secondary font-semibold text-sm flex items-center gap-1 hover:underline" href="#">See forecast model <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Log Contact Attempt Modal -->
+<div id="contactModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/50 glass-effect">
+  <div class="bg-white rounded-xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-outline-variant animate-in fade-in duration-200">
+    <div class="flex justify-between items-center border-b pb-3">
+      <h3 class="font-bold text-on-surface flex items-center gap-2">
+        <span class="material-symbols-outlined text-secondary">contact_phone</span>
+        Log Contact Attempt
+      </h3>
+      <button type="button" onclick="closeLogModal()" class="material-symbols-outlined text-outline hover:text-on-surface">close</button>
+    </div>
+    
+    <div class="text-xs text-on-surface-variant space-y-1">
+      <div>Candidate: <span id="modalCandidateName" class="font-bold text-on-surface"></span></div>
+      <div>Vacancy: <span id="modalJobVacancy" class="font-bold text-on-surface"></span></div>
+    </div>
+
+    <!-- Previous Attempts -->
+    <div class="space-y-2">
+      <h4 class="text-xs font-semibold text-on-surface border-b pb-1">Previous Follow-up Logs</h4>
+      <div class="space-y-1 max-h-36 overflow-y-auto pr-1 bg-slate-50 rounded p-1" id="previousAttempts">
+        <!-- populated from hidden content -->
+      </div>
+    </div>
+
+    <form id="contactForm" method="post" action="" class="space-y-3">
+      {% csrf_token %}
+      <div>
+        <label class="block text-xs font-semibold text-on-surface mb-1">Contact Method</label>
+        <select name="method" class="w-full text-xs border-outline-variant rounded-lg focus:ring-secondary focus:border-secondary py-1.5 bg-white">
+          <option value="Call">Phone Call</option>
+          <option value="SMS">SMS / Text Message</option>
+          <option value="Email">Email</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-on-surface mb-1">Observation Notes</label>
+        <textarea name="notes" placeholder="e.g., Left voicemail. Candidate needs to update resume. / Spoke to recruiter, interview scheduled." required class="w-full text-xs border-outline-variant rounded-lg focus:ring-secondary focus:border-secondary h-20 py-1.5 px-2"></textarea>
+      </div>
+      <div class="flex justify-end gap-2 pt-2 border-t">
+        <button type="button" onclick="closeLogModal()" class="px-4 py-2 border border-outline text-on-surface rounded-lg font-semibold hover:bg-slate-50 transition-colors text-xs">Cancel</button>
+        <button type="submit" class="px-4 py-2 bg-secondary text-white rounded-lg font-semibold hover:bg-secondary/95 text-xs shadow-sm">Save Attempt</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- STAGE 3: Onboarding Coordination Modal -->
+<div id="onboardingModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center hidden animate-fade-in">
+  <div class="bg-white border border-outline-variant rounded-xl max-w-2xl w-full p-6 shadow-2xl relative">
+    <div class="flex justify-between items-center border-b pb-3 mb-4">
+      <h3 class="font-headline-md text-headline-md font-bold text-on-surface flex items-center gap-2">
+        <span class="material-symbols-outlined text-secondary text-[24px]">assignment_turned_in</span>
+        Onboarding Review & Requirements Checklist
+      </h3>
+      <button onclick="closeOnboardingModal()" class="material-symbols-outlined text-outline hover:text-on-surface text-lg">close</button>
+    </div>
+    <form method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="update_onboarding">
+      <input type="hidden" name="referral_id" id="onboardReferralId">
+      
+      <div class="space-y-4 max-h-[450px] overflow-y-auto pr-2 custom-scrollbar">
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-on-surface mb-1">Candidate</label>
+            <input type="text" id="onboardCandidateName" readonly class="w-full text-xs bg-surface-container border border-outline-variant rounded px-3 py-2 outline-none cursor-not-allowed">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-on-surface mb-1">Job Title</label>
+            <input type="text" id="onboardJobTitle" readonly class="w-full text-xs bg-surface-container border border-outline-variant rounded px-3 py-2 outline-none cursor-not-allowed">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 bg-slate-50 p-3 rounded-lg border border-slate-100">
+          <div>
+            <h4 class="text-xs font-bold text-slate-700 mb-2">Identification Numbers</h4>
+            <div class="space-y-1 text-xs">
+              <div><strong>SSS:</strong> <span id="valSss">None</span></div>
+              <div><strong>PhilHealth:</strong> <span id="valPhilhealth">None</span></div>
+              <div><strong>Pag-IBIG:</strong> <span id="valPagibig">None</span></div>
+              <div><strong>BIR TIN:</strong> <span id="valTin">None</span></div>
+            </div>
+          </div>
+          <div>
+            <h4 class="text-xs font-bold text-slate-700 mb-2">Uploaded Files Checklist</h4>
+            <div class="space-y-1.5 text-xs" id="fileList">
+              <!-- Dynamically populated links -->
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-on-surface mb-1">Pre-Employment Checklist Status *</label>
+            <select name="pre_employment_status" id="onboardStatusSelect" required class="w-full text-xs border border-outline-variant rounded px-3 py-2 bg-white">
+              <option value="Incomplete">Incomplete / Under Review</option>
+              <option value="Complete">Complete (All requirements checked)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-on-surface mb-1">Confirmed Reporting Date *</label>
+            <input type="date" name="confirmed_reporting_date" id="onboardReportingDate" required class="w-full text-xs border border-outline-variant rounded px-3 py-2 outline-none">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-on-surface mb-1">Onboarding Coordination Notes</label>
+          <textarea name="coordination_notes" id="onboardNotes" placeholder="e.g. SSS is verified. NBI clearance is clear. Candidate confirmed they will report on time." class="w-full text-xs border border-outline-variant rounded px-3 py-2 h-20 outline-none focus:ring-2 focus:ring-secondary"></textarea>
+        </div>
+      </div>
+      
+      <div class="flex justify-end gap-2 border-t pt-4 mt-6">
+        <button type="button" onclick="closeOnboardingModal()" class="px-4 py-2 border border-outline text-on-surface rounded text-xs hover:bg-slate-50 transition-colors">Cancel</button>
+        <button type="submit" class="px-4 py-2 bg-secondary text-white rounded text-xs hover:opacity-90 font-bold transition-all shadow-sm">Save Onboarding Status</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+        function openOnboardingModalFromButton(btn) {
+            openOnboardingModal(
+                btn.getAttribute('data-id'),
+                btn.getAttribute('data-name'),
+                btn.getAttribute('data-position'),
+                btn.getAttribute('data-status'),
+                btn.getAttribute('data-notes'),
+                btn.getAttribute('data-reporting-date'),
+                btn.getAttribute('data-nbi'),
+                btn.getAttribute('data-medical'),
+                btn.getAttribute('data-birth'),
+                btn.getAttribute('data-diploma'),
+                btn.getAttribute('data-prev-employment'),
+                btn.getAttribute('data-tesda'),
+                btn.getAttribute('data-sss'),
+                btn.getAttribute('data-philhealth'),
+                btn.getAttribute('data-pagibig'),
+                btn.getAttribute('data-tin')
+            );
+        }
+
+        function openOnboardingModal(referralId, candidateName, jobTitle, status, notes, reportingDate, nbiUrl, medUrl, birthUrl, dipUrl, prevUrl, tesdaUrl, sss, philhealth, pagibig, tin) {
+            document.getElementById('onboardReferralId').value = referralId;
+            document.getElementById('onboardCandidateName').value = candidateName;
+            document.getElementById('onboardJobTitle').value = jobTitle;
+            document.getElementById('onboardStatusSelect').value = status;
+            document.getElementById('onboardNotes').value = notes;
+            document.getElementById('onboardReportingDate').value = reportingDate;
+            
+            document.getElementById('valSss').textContent = sss || 'Not provided';
+            document.getElementById('valPhilhealth').textContent = philhealth || 'Not provided';
+            document.getElementById('valPagibig').textContent = pagibig || 'Not provided';
+            document.getElementById('valTin').textContent = tin || 'Not provided';
+            
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = '';
+            
+            const docs = [
+                { name: 'NBI Clearance', url: nbiUrl },
+                { name: 'Medical Certificate', url: medUrl },
+                { name: 'Birth Certificate', url: birthUrl },
+                { name: 'Diploma & Transcript', url: dipUrl },
+                { name: 'Prev Employment Cert', url: prevUrl },
+                { name: 'TESDA Cert', url: tesdaUrl },
+            ];
+            
+            docs.forEach(doc => {
+                const row = document.createElement('div');
+                row.className = 'flex justify-between items-center gap-2';
+                if (doc.url) {
+                    row.innerHTML = `<span class="text-slate-600">✓ ${doc.name}</span>
+                                     <a href="${doc.url}" target="_blank" class="text-secondary hover:underline font-bold text-[10px] uppercase">View</a>`;
+                } else {
+                    row.innerHTML = `<span class="text-slate-400">✗ ${doc.name}</span>
+                                     <span class="text-slate-400 italic text-[10px]">Missing</span>`;
+                }
+                fileList.appendChild(row);
+            });
+            
+            document.getElementById('onboardingModal').classList.remove('hidden');
+        }
+        
+        function closeOnboardingModal() {
+            document.getElementById('onboardingModal').classList.add('hidden');
+        }
+</script>
+
+<script>
+        // Set progress bar widths dynamically to avoid inline template validation issues
+        document.querySelectorAll('.progress-bar').forEach(bar => {
+            bar.style.width = (bar.dataset.progress || '0') + '%';
+        });
+
+        // Micro-interaction for funnel bars
+        document.querySelectorAll('.bento-card div[style^="height"]').forEach(bar => {
+            bar.addEventListener('mouseenter', () => {
+                bar.style.filter = 'brightness(1.1)';
+            });
+            bar.addEventListener('mouseleave', () => {
+                bar.style.filter = 'none';
+            });
+        });
+
+        // Simple mock search animation
+        const searchInput = document.querySelector('input[type="text"]');
+        if (searchInput) {
+            searchInput.addEventListener('focus', () => {
+                searchInput.classList.replace('w-64', 'w-80');
+            });
+            searchInput.addEventListener('blur', () => {
+                searchInput.classList.replace('w-80', 'w-64');
+            });
+        }
+
+        // Modal triggers for follow-ups
+        function openLogModal(referralId, candidateName, jobVacancy) {
+            document.getElementById('modalCandidateName').textContent = candidateName;
+            document.getElementById('modalJobVacancy').textContent = jobVacancy;
+            
+            const form = document.getElementById('contactForm');
+            form.action = `/peso-admin/referrals/${referralId}/log-contact/`;
+            
+            const attemptsData = document.getElementById(`attempts_data_${referralId}`);
+            const previousAttemptsContainer = document.getElementById('previousAttempts');
+            if (attemptsData && previousAttemptsContainer) {
+                previousAttemptsContainer.innerHTML = attemptsData.innerHTML;
+            }
+            
+            document.getElementById('contactModal').classList.remove('hidden');
+        }
+
+        function closeLogModal() {
+            document.getElementById('contactModal').classList.add('hidden');
+        }
+</script>
+</body></html>

@@ -1,0 +1,384 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Vacancies | SKILLUP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#0051d5",
+                    "inverse-surface": "#213145",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "outline-variant": "#c6c6cd",
+                    "primary-fixed": "#dae2fd",
+                    "on-error": "#ffffff",
+                    "surface-container": "#e5eeff",
+                    "on-tertiary": "#ffffff",
+                    "surface-tint": "#565e74",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "surface-container-low": "#eff4ff",
+                    "on-surface": "#0b1c30",
+                    "on-secondary-fixed-variant": "#003ea8",
+                    "surface-bright": "#f8f9ff",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-primary-container": "#7c839b",
+                    "primary-fixed-dim": "#bec6e0",
+                    "outline": "#76777d",
+                    "on-secondary-fixed": "#00174b",
+                    "on-secondary": "#ffffff",
+                    "surface-container-highest": "#d3e4fe",
+                    "tertiary-container": "#002113",
+                    "primary-container": "#131b2e",
+                    "tertiary": "#000000",
+                    "on-secondary-container": "#fefcff",
+                    "surface-dim": "#cbdbf5",
+                    "error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "on-background": "#0b1c30",
+                    "on-surface-variant": "#45464d",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed": "#002113",
+                    "inverse-on-surface": "#eaf1ff",
+                    "background": "#f8f9ff",
+                    "secondary-fixed": "#dbe1ff",
+                    "primary": "#000000",
+                    "secondary-container": "#316bf3",
+                    "on-tertiary-container": "#009668",
+                    "surface-variant": "#d3e4fe",
+                    "surface-container-high": "#dce9ff",
+                    "error-container": "#ffdad6",
+                    "on-error-container": "#93000a",
+                    "surface": "#f8f9ff",
+                    "secondary-fixed-dim": "#b4c5ff",
+                    "on-primary-fixed": "#131b2e",
+                    "inverse-primary": "#bec6e0"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "40px",
+                    "container-max": "1440px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["JetBrains Mono"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-md": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+        }
+        .zebra-row:nth-child(even) { background-color: #f8f9ff; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .glass-effect { backdrop-filter: blur(8px); background-color: rgba(255, 255, 255, 0.8); }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen">
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 w-full z-50 bg-surface dark:bg-surface-container-low border-b border-outline-variant dark:border-outline flex items-center justify-between px-margin-desktop h-16 w-full">
+<div class="flex items-center gap-8">
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-inverse-on-surface">SKILLUP</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">help</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">settings</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCn5ndUBvKYHDdfjOtDcuDcmEa-zwbSgM-ZLHNPtfHm7uL9e355N19pHC8c-XBPUwwXHIzoATnKENMDvabjLGF5diSFylP09pwQghoAY0N70mks-GlVv2KmatElbeqz2_5J-gSw4HGwnHnPHYMLeRKflzGezIfmEqF1sJTCsVHaAp-3UBTYmVg6yrq3nRzkltjZyYRqaTWNO9ETM3eG6xeP_aE-PZkbZbeBZvG-dmCW3fgaiDFfFN1v9i2cwj6DH0AUyxyPRP9c4y2t">
+</div>
+</div>
+</header>
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 h-full w-64 pt-20 bg-surface-container-lowest dark:bg-primary-container border-r border-outline-variant dark:border-outline hidden md:flex flex-col p-4 gap-2 z-40">
+<div class="flex items-center gap-3 px-2 py-4 mb-4 border-b border-outline-variant/30">
+<div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center text-white font-black text-xl">P</div>
+<div>
+<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">Enterprise Portal</h2>
+<p class="text-[10px] text-on-surface-variant opacity-70">Talent Management</p>
+</div>
+</div>
+<nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'peso_dashboard_admin' %}">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'applicant_monitoring_admin' %}">
+<span class="material-symbols-outlined">groups</span>
+<span>Talent Bench</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'employer_management_admin' %}">
+<span class="material-symbols-outlined">domain</span>
+<span>Employers</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-surface-container dark:bg-secondary-container text-on-surface dark:text-on-secondary-container font-bold rounded-lg scale-98 active:scale-95 duration-150 transition-all font-label-md text-label-md" href="{% url 'vacancy_management_admin' %}">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">work</span>
+<span>Vacancies</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'employment_tracking_admin' %}">
+<span class="material-symbols-outlined">description</span>
+<span>Reports</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'skill_monitoring_admin' %}">
+<span class="material-symbols-outlined">analytics</span>
+<span>Skill Gaps</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'training_monitoring_admin' %}">
+<span class="material-symbols-outlined">school</span>
+<span>Learning Paths</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'job_matching_analytics_admin' %}">
+<span class="material-symbols-outlined">monitoring</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'peso_profile_admin' %}">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+<span>Support</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'logout' %}">
+<span class="material-symbols-outlined">logout</span>
+<span>Log Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="md:ml-64 pt-20 min-h-screen">
+<div class="p-margin-desktop space-y-gutter">
+<!-- Page Header -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Vacancies</h2>
+<p class="text-on-surface-variant font-body-md max-w-2xl">Review, audit, and curate all job listings across the SKILLUP ecosystem. Maintain high standards for enterprise talent acquisition.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2 border border-outline text-on-surface rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined">download</span> Export CSV
+                </button>
+<button class="px-6 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:opacity-90 transition-opacity flex items-center gap-2">
+<span class="material-symbols-outlined">add_task</span> Bulk Action
+                </button>
+</div>
+</div>
+<!-- Quick Stats Bento -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-8">
+<div class="bg-surface-container-lowest p-6 border border-outline-variant rounded-xl flex items-center justify-between">
+<div>
+<p class="text-on-surface-variant font-label-sm uppercase mb-1">Total Active</p>
+<h3 class="text-headline-md font-bold font-headline-md">{{ vacancies|length }}</h3>
+<div class="flex items-center gap-1 text-on-tertiary-container mt-2">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span class="font-label-sm">+12% this month</span>
+</div>
+</div>
+<div class="p-3 bg-surface-container rounded-lg text-secondary">
+<span class="material-symbols-outlined text-[32px]">work</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 border border-outline-variant rounded-xl flex items-center justify-between">
+<div>
+<p class="text-on-surface-variant font-label-sm uppercase mb-1">Pending Approval</p>
+<h3 class="text-headline-md font-bold font-headline-md">0</h3>
+<p class="text-error font-label-sm mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">priority_high</span>
+<span>None pending</span>
+</p>
+</div>
+<div class="p-3 bg-error-container rounded-lg text-error">
+<span class="material-symbols-outlined text-[32px]">pending_actions</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 border border-outline-variant rounded-xl flex items-center justify-between">
+<div>
+<p class="text-on-surface-variant font-label-sm uppercase mb-1">Featured Slots</p>
+<h3 class="text-headline-md font-bold font-headline-md">4/5</h3>
+<div class="w-24 h-1.5 bg-outline-variant rounded-full mt-3">
+<div class="bg-secondary h-full rounded-full w-[80%]"></div>
+</div>
+</div>
+<div class="p-3 bg-surface-container-highest rounded-lg text-on-surface">
+<span class="material-symbols-outlined text-[32px]">star</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 border border-outline-variant rounded-xl flex items-center justify-between">
+<div>
+<p class="text-on-surface-variant font-label-sm uppercase mb-1">Avg. Salary</p>
+<h3 class="text-headline-md font-bold font-headline-md">$115k</h3>
+<p class="text-on-tertiary-container font-label-sm mt-2">Global aggregate</p>
+</div>
+<div class="p-3 bg-tertiary-fixed rounded-lg text-on-tertiary-fixed">
+<span class="material-symbols-outlined text-[32px]">payments</span>
+</div>
+</div>
+</div>
+<!-- Filter Bar -->
+<div class="bg-surface-container-lowest p-4 border border-outline-variant rounded-xl mb-6 flex flex-wrap items-center gap-4">
+<div class="flex-1 min-w-[300px] relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">filter_list</span>
+<input class="w-full pl-10 pr-4 py-2 border border-outline-variant rounded-lg focus:ring-2 focus:ring-secondary text-body-sm" placeholder="Filter by employer, role, or ID..." type="text">
+</div>
+<select class="border border-outline-variant rounded-lg px-4 py-2 text-body-sm text-on-surface-variant focus:ring-2 focus:ring-secondary">
+<option>Category: All</option>
+<option>Engineering</option>
+<option>Product Management</option>
+<option>Design</option>
+<option>Sales</option>
+</select>
+<select class="border border-outline-variant rounded-lg px-4 py-2 text-body-sm text-on-surface-variant focus:ring-2 focus:ring-secondary">
+<option>Salary: All Ranges</option>
+<option>$50k - $100k</option>
+<option>$100k - $150k</option>
+<option>$150k+</option>
+</select>
+<select class="border border-outline-variant rounded-lg px-4 py-2 text-body-sm text-on-surface-variant focus:ring-2 focus:ring-secondary">
+<option>Status: All</option>
+<option>Active</option>
+<option>Pending</option>
+<option>Archived</option>
+</select>
+<button class="text-secondary font-label-md text-label-md px-4 py-2 hover:bg-surface-container transition-colors rounded-lg">Clear All</button>
+</div>
+<!-- Vacancy Table Container -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low border-b border-outline-variant">
+<tr>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+<div class="flex items-center gap-2">
+                                    Role &amp; Employer <span class="material-symbols-outlined text-[16px]">unfold_more</span>
+</div>
+</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Category</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right">Salary Range</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Status</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Date Posted</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+{% for v in vacancies %}
+<tr class="zebra-row hover:bg-surface-container transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center font-bold text-secondary">
+    {{ v.employer.company_name|slice:":1"|default:"E" }}
+</div>
+<div>
+<a href="{% url 'vacancy_detail_admin' v.id %}" class="hover:underline hover:text-secondary font-semibold font-body-md transition-colors text-on-surface">{{ v.title }}</a>
+<p class="text-on-surface-variant text-body-sm">{{ v.employer.company_name }}</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-surface-container-high rounded text-[11px] font-label-md uppercase tracking-wider text-on-surface-variant">{{ v.category }}</span>
+</td>
+<td class="px-6 py-4 text-right">
+<p class="font-label-md text-label-md font-bold text-on-surface">{{ v.salary_range|default:"Competitive" }}</p>
+<p class="text-on-surface-variant text-[11px] font-label-sm">{{ v.location }}</p>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 {% if v.status == 'Open' %}text-on-tertiary-container{% else %}text-error{% endif %}">
+<div class="w-2 h-2 rounded-full {% if v.status == 'Open' %}bg-on-tertiary-container{% else %}bg-error{% endif %}"></div>
+<span class="text-body-sm font-medium">{{ v.status }}</span>
+</div>
+</td>
+<td class="px-6 py-4 text-on-surface-variant text-body-sm">{{ v.created_at|date:"M d, Y" }}</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<a href="{% url 'vacancy_detail_admin' v.id %}" class="p-2 hover:text-secondary transition-colors" title="View Details"><span class="material-symbols-outlined">visibility</span></a>
+<button class="p-2 hover:text-secondary transition-colors" title="Feature"><span class="material-symbols-outlined">star</span></button>
+<button class="p-2 hover:text-on-surface transition-colors" title="Edit"><span class="material-symbols-outlined">edit</span></button>
+<button class="p-2 hover:text-error transition-colors" title="Archive"><span class="material-symbols-outlined">archive</span></button>
+</div>
+</td>
+</tr>
+{% empty %}
+<tr>
+<td colspan="6" class="px-6 py-4 text-center text-on-surface-variant italic">No vacancies found.</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="bg-surface-container-low px-6 py-4 border-t border-outline-variant flex items-center justify-between">
+<p class="text-on-surface-variant text-body-sm">Showing <span class="font-bold">{{ vacancies|length }}</span> active vacancies</p>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-secondary text-on-secondary font-label-sm">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- System Message / Help Section -->
+<div class="mt-12 p-8 bg-primary-container text-on-primary-fixed rounded-2xl relative overflow-hidden">
+<div class="relative z-10 max-w-2xl">
+<h2 class="font-headline-md text-headline-md mb-3 text-on-secondary-container">Pro Tip: Automated Auditing</h2>
+<p class="opacity-80 font-body-md mb-6">SKILLUP automatically flags listings that contain non-inclusive language or unrealistic skill requirements. Look for the <span class="material-symbols-outlined text-[18px] align-middle">verified_user</span> icon next to pending items to see the AI compliance score.</p>
+<button class="bg-secondary-container text-on-secondary-container px-6 py-2 rounded-lg font-label-md text-label-md font-bold hover:brightness-110 transition-all">Enable Auto-Audit</button>
+</div>
+<!-- Decorative abstract background element -->
+<div class="absolute right-0 top-0 w-64 h-64 bg-secondary opacity-20 blur-[100px] -mr-32 -mt-32"></div>
+<div class="absolute left-1/2 bottom-0 w-96 h-96 bg-tertiary-fixed-dim opacity-10 blur-[120px]"></div>
+</div>
+</div>
+</main>
+<script>
+        // Simple micro-interaction for rows
+        document.querySelectorAll('.zebra-row').forEach(row => {
+            row.addEventListener('click', () => {
+                // Potential expansion logic or navigation
+                console.log('Row clicked');
+            });
+        });
+    </script>
+</body></html>

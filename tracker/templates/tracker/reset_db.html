@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Database Reset Control | SKILLUP</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: "#080B10",
+                            panel: "rgba(17, 22, 34, 0.65)",
+                            border: "rgba(255, 255, 255, 0.08)",
+                            purple: "#8B5CF6",
+                            blue: "#3B82F6",
+                            emerald: "#10B981",
+                            rose: "#F43F5E",
+                            amber: "#F59E0B"
+                        }
+                    },
+                    fontFamily: {
+                        sans: ["Outfit", "sans-serif"],
+                        mono: ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #080B10;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.1) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+        .glass {
+            background: rgba(17, 22, 34, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-hover {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-hover:hover {
+            background: rgba(25, 32, 50, 0.7);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        .card-checked {
+            border-color: rgba(244, 63, 94, 0.4) !important;
+            background: rgba(244, 63, 94, 0.04) !important;
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.06);
+        }
+        .card-checked-lookup {
+            border-color: rgba(245, 158, 11, 0.4) !important;
+            background: rgba(245, 158, 11, 0.04) !important;
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.06);
+        }
+        .animate-glow {
+            animation: pulse-glow 3s infinite alternate;
+        }
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 15px rgba(244, 63, 94, 0.2);
+            }
+            100% {
+                box-shadow: 0 0 30px rgba(244, 63, 94, 0.4);
+            }
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-100 min-h-screen flex items-center justify-center p-4 md:p-8">
+    <div class="w-full max-w-5xl space-y-6">
+        
+        <!-- Header -->
+        <header class="flex items-center justify-between border-b border-brand-border/60 pb-6">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-gradient-to-tr from-brand-purple to-brand-blue rounded-xl flex items-center justify-center shadow-lg shadow-brand-purple/20">
+                    <span class="material-symbols-outlined text-white text-2xl font-bold">layers_clear</span>
+                </div>
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+                        Database Maintenance
+                    </h1>
+                    <p class="text-sm text-slate-400">Purge training, job, and applicant logs while retaining logins</p>
+                </div>
+            </div>
+            <a href="/" class="flex items-center gap-2 text-xs md:text-sm font-semibold bg-brand-panel hover:bg-brand-panel/90 border border-brand-border px-4 py-2 rounded-lg text-slate-300 transition hover:text-white">
+                <span class="material-symbols-outlined text-sm">arrow_back</span> Back to Application
+            </a>
+        </header>
+
+        <!-- Django Messages -->
+        {% if messages %}
+        <div class="space-y-3">
+            {% for message in messages %}
+            <div class="flex items-center justify-between p-4 rounded-xl border border-brand-emerald/30 bg-brand-emerald/10 text-brand-emerald">
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined">check_circle</span>
+                    <span class="text-sm font-medium">{{ message }}</span>
+                </div>
+                <button onclick="this.parentElement.remove()" class="text-brand-emerald/60 hover:text-brand-emerald">
+                    <span class="material-symbols-outlined text-lg">close</span>
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Main Reset Form wrapping all columns -->
+        <form method="POST" id="reset-form" action="" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="reset_data">
+            
+            <!-- Details Panel & Counts -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Info Alert -->
+                <div class="glass p-5 rounded-2xl border-l-4 border-brand-amber bg-brand-amber/5 flex gap-4">
+                    <span class="material-symbols-outlined text-brand-amber text-2xl shrink-0">info</span>
+                    <div>
+                        <h4 class="font-bold text-brand-amber mb-1">Important Safety Notice</h4>
+                        <p class="text-sm text-slate-300 leading-relaxed font-normal">
+                            This panel runs independently of logins. Check the items you want to wipe. User credentials and primary Profiles will always be kept safe.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Database Metrics Grid -->
+                <div class="glass p-6 rounded-2xl space-y-5">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                            <span class="material-symbols-outlined text-brand-blue">database</span>
+                            Select Tables to Clean
+                        </h3>
+                        <div class="flex items-center gap-3 bg-brand-bg/60 border border-brand-border px-3 py-1.5 rounded-lg select-none">
+                            <button type="button" onclick="toggleSelection(true)" class="text-xs text-brand-purple font-semibold hover:text-brand-purple/80 transition">
+                                Select All Purgeable
+                            </button>
+                            <span class="text-slate-600 text-xs">|</span>
+                            <button type="button" onclick="toggleSelection(false)" class="text-xs text-slate-400 font-semibold hover:text-slate-300 transition">
+                                Clear All
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Items Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {% for item in data_options %}
+                            {% if item.purgeable %}
+                                <!-- Purgeable Item Card (Clickable to Toggle) -->
+                                <div class="glass-hover glass p-4 rounded-xl flex items-center justify-between cursor-pointer transition select-none border-brand-border/80 card-item relative"
+                                     data-type="{{ item.badge }}"
+                                     data-id="{{ item.id }}"
+                                     onclick="toggleCard('{{ item.id }}')" 
+                                     id="card-{{ item.id }}">
+                                    
+                                    <div class="flex items-start gap-3 w-full pr-1">
+                                        <!-- Checkbox -->
+                                        <div class="relative flex items-center pt-0.5">
+                                            <input type="checkbox" name="selected_types" value="{{ item.id }}" id="chk-{{ item.id }}"
+                                                   {% if item.default_checked %}checked{% endif %}
+                                                   class="w-4 h-4 rounded border-slate-700 bg-slate-800 focus:ring-brand-purple/30 transition cursor-pointer text-brand-rose {% if item.badge == 'LOOKUP' %}text-brand-amber{% endif %}"
+                                                   onclick="event.stopPropagation(); syncCardBorder('{{ item.id }}'); updateSelectedCount();">
+                                        </div>
+                                        <div class="flex flex-col min-w-0">
+                                            <span class="text-xs text-slate-200 font-bold truncate">{{ item.label }}</span>
+                                            <span class="text-[11px] text-slate-400 leading-normal mt-0.5 h-8 line-clamp-2">{{ item.desc }}</span>
+                                            <span class="text-lg font-black text-white mt-2 font-mono">
+                                                {{ item.count }} 
+                                                <span class="text-[10px] text-slate-500 font-medium font-sans">records</span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="shrink-0 self-start">
+                                        {% if item.badge == 'LOOKUP' %}
+                                            <span class="text-[9px] px-1.5 py-0.5 font-bold rounded bg-brand-amber/15 text-brand-amber border border-brand-amber/30 uppercase tracking-wider">
+                                                LOOKUP
+                                            </span>
+                                        {% else %}
+                                            <span class="text-[9px] px-1.5 py-0.5 font-bold rounded bg-brand-rose/15 text-brand-rose border border-brand-rose/30 uppercase tracking-wider">
+                                                PURGEABLE
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% else %}
+                                <!-- Preserved Item Card (Disabled/No checkbox) -->
+                                <div class="glass p-4 rounded-xl flex items-center justify-between border-brand-border bg-slate-900/30 opacity-70 select-none">
+                                    <div class="flex items-start gap-3 w-full pr-1">
+                                        <div class="w-7 h-7 bg-brand-emerald/15 rounded-lg flex items-center justify-center text-brand-emerald shrink-0">
+                                            <span class="material-symbols-outlined text-md font-bold">shield</span>
+                                        </div>
+                                        <div class="flex flex-col min-w-0">
+                                            <span class="text-xs text-slate-300 font-bold truncate">{{ item.label }}</span>
+                                            <span class="text-[11px] text-slate-500 leading-normal mt-0.5 h-8 line-clamp-2">{{ item.desc }}</span>
+                                            <span class="text-lg font-black text-slate-300 mt-2 font-mono">
+                                                {{ item.count }} 
+                                                <span class="text-[10px] text-slate-500 font-medium font-sans">records</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="shrink-0 self-start">
+                                        <span class="text-[9px] px-1.5 py-0.5 font-bold rounded bg-brand-emerald/15 text-brand-emerald border border-brand-emerald/30 uppercase tracking-wider">
+                                            PRESERVED
+                                        </span>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Danger Zone Action Box -->
+            <div class="lg:col-span-1">
+                <div class="glass p-6 rounded-2xl space-y-6 border border-brand-rose/25 bg-gradient-to-b from-brand-rose/5 to-transparent sticky top-6">
+                    <div class="space-y-2">
+                        <span class="inline-block text-xs font-black uppercase tracking-wider text-brand-rose px-2.5 py-1 rounded bg-brand-rose/10">
+                            Danger Zone
+                        </span>
+                        <h3 class="text-xl font-extrabold text-white">Reset Database</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed">
+                            Selectively clear parts of the database. Check the boxes of the data you want to delete.
+                        </p>
+                    </div>
+
+                    <!-- Summary Selected -->
+                    <div class="p-3.5 bg-brand-bg/85 rounded-xl border border-brand-border/80 text-xs space-y-2 font-semibold">
+                        <div class="flex justify-between text-slate-300">
+                            <span>Selected to purge:</span>
+                            <span id="selected-count-display" class="text-brand-rose font-bold">0 types</span>
+                        </div>
+                        <p class="text-[10px] font-normal text-slate-400 leading-relaxed">
+                            <span class="text-brand-amber font-bold">Cascade notice:</span> Wiping parent data (e.g. Job Vacancies) automatically cascades and cleans dependent items.
+                        </p>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <button type="button" id="execute-btn" onclick="openConfirmationModal()"
+                            class="animate-glow w-full flex items-center justify-center gap-2 bg-brand-rose hover:bg-brand-rose/90 text-white font-bold py-3.5 px-4 rounded-xl transition-all active:scale-[0.98] shadow-lg shadow-brand-rose/25">
+                        <span class="material-symbols-outlined">delete_forever</span>
+                        Execute Reset
+                    </button>
+
+                    <div class="text-[11px] text-slate-400 text-center flex items-center justify-center gap-1.5">
+                        <span class="material-symbols-outlined text-xs">lock_open</span> No credentials required to execute
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <!-- Confirm Modal -->
+    <div id="confirm-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-brand-bg/85 backdrop-blur-sm hidden">
+        <div class="glass w-full max-w-md p-6 rounded-2xl border border-brand-rose/30 space-y-5 animate-in fade-in zoom-in-95 duration-200">
+            <div class="flex items-center gap-3 text-brand-rose">
+                <span class="material-symbols-outlined text-3xl font-black">warning</span>
+                <h3 class="text-xl font-bold text-white">Confirm Data Purge</h3>
+            </div>
+            
+            <div class="text-sm text-slate-300 leading-relaxed space-y-3 font-normal">
+                <p>You are about to permanently delete all checked databases. <strong class="text-white">This action cannot be undone.</strong></p>
+                <div class="p-3 bg-brand-bg/60 rounded-xl border border-brand-border text-xs text-slate-400">
+                    <span class="font-bold text-slate-200">Items to delete:</span>
+                    <ul id="modal-delete-list" class="list-disc list-inside mt-1.5 space-y-1 text-slate-300 font-mono text-[11px]">
+                    </ul>
+                </div>
+            </div>
+
+            <div class="flex gap-3">
+                <button type="button" onclick="closeConfirmationModal()" 
+                        class="flex-1 bg-brand-panel hover:bg-brand-panel/90 border border-brand-border text-slate-300 font-semibold py-2.5 px-4 rounded-xl transition">
+                    Cancel
+                </button>
+                <button type="button" onclick="submitResetForm()" 
+                        class="flex-1 bg-brand-rose hover:bg-brand-rose/90 text-white font-bold py-2.5 px-4 rounded-xl transition shadow-lg shadow-brand-rose/25">
+                    Yes, Reset Data
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Processing Overlay -->
+    <div id="processing-overlay" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-brand-bg/95 hidden">
+        <div class="flex flex-col items-center gap-4 text-center">
+            <div class="w-16 h-16 border-4 border-brand-rose/30 border-t-brand-rose rounded-full animate-spin"></div>
+            <h3 class="text-xl font-bold text-white mt-2">Purging Database Data</h3>
+            <p class="text-sm text-slate-400">Executing selected table deletes...</p>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('confirm-modal');
+        const overlay = document.getElementById('processing-overlay');
+        const form = document.getElementById('reset-form');
+        const executeBtn = document.getElementById('execute-btn');
+        const deleteList = document.getElementById('modal-delete-list');
+
+        // Toggle card visual selection state
+        function syncCardBorder(id) {
+            const chk = document.getElementById('chk-' + id);
+            const card = document.getElementById('card-' + id);
+            if (!chk || !card) return;
+            
+            const badgeType = card.getAttribute('data-type');
+            if (chk.checked) {
+                if (badgeType === 'LOOKUP') {
+                    card.classList.add('card-checked-lookup');
+                } else {
+                    card.classList.add('card-checked');
+                }
+            } else {
+                card.classList.remove('card-checked', 'card-checked-lookup');
+            }
+        }
+
+        function toggleCard(id) {
+            const chk = document.getElementById('chk-' + id);
+            if (chk) {
+                chk.checked = !chk.checked;
+                syncCardBorder(id);
+                updateSelectedCount();
+            }
+        }
+
+        // Initialize board on load
+        document.querySelectorAll('.card-item').forEach(card => {
+            const id = card.getAttribute('data-id');
+            syncCardBorder(id);
+        });
+
+        // Quick action selects
+        function toggleSelection(selectPurgeableOnly) {
+            document.querySelectorAll('.card-item').forEach(card => {
+                const id = card.getAttribute('data-id');
+                const chk = document.getElementById('chk-' + id);
+                const badgeType = card.getAttribute('data-type');
+                if (chk) {
+                    if (selectPurgeableOnly) {
+                        // Check if it is standard purgeable (exclude lookup)
+                        chk.checked = (badgeType === 'PURGEABLE');
+                    } else {
+                        chk.checked = false;
+                    }
+                    syncCardBorder(id);
+                }
+            });
+            updateSelectedCount();
+        }
+
+        function updateSelectedCount() {
+            let count = 0;
+            document.querySelectorAll('.card-item input[type="checkbox"]').forEach(chk => {
+                if (chk.checked) count++;
+            });
+            document.getElementById('selected-count-display').innerText = count + " types";
+            
+            // Disable button if nothing is checked
+            if (count === 0) {
+                executeBtn.disabled = true;
+                executeBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                executeBtn.classList.remove('animate-glow');
+            } else {
+                executeBtn.disabled = false;
+                executeBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                executeBtn.classList.add('animate-glow');
+            }
+        }
+
+        // Call update initially
+        updateSelectedCount();
+
+        function openConfirmationModal() {
+            // Populate list of checked items for safety confirmation
+            deleteList.innerHTML = "";
+            let count = 0;
+            document.querySelectorAll('.card-item').forEach(card => {
+                const id = card.getAttribute('data-id');
+                const chk = document.getElementById('chk-' + id);
+                if (chk && chk.checked) {
+                    count++;
+                    const label = card.querySelector('span.truncate').innerText;
+                    const li = document.createElement('li');
+                    li.innerText = label;
+                    deleteList.appendChild(li);
+                }
+            });
+            
+            if (count > 0) {
+                modal.classList.remove('hidden');
+            }
+        }
+
+        function closeConfirmationModal() {
+            modal.classList.add('hidden');
+        }
+
+        function submitResetForm() {
+            closeConfirmationModal();
+            overlay.classList.remove('hidden');
+            form.submit();
+        }
+    </script>
+</body>
+</html>

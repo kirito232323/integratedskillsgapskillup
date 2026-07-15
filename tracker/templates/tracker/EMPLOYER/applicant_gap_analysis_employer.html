@@ -1,0 +1,393 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Applicant Gap Analysis | SKILLUP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "secondary": "#0051d5",
+                "inverse-surface": "#213145",
+                "on-primary-fixed-variant": "#3f465c",
+                "outline-variant": "#c6c6cd",
+                "primary-fixed": "#dae2fd",
+                "on-error": "#ffffff",
+                "surface-container": "#e5eeff",
+                "on-tertiary": "#ffffff",
+                "surface-tint": "#565e74",
+                "on-tertiary-fixed-variant": "#005236",
+                "surface-container-low": "#eff4ff",
+                "on-surface": "#0b1c30",
+                "on-secondary-fixed-variant": "#003ea8",
+                "surface-bright": "#f8f9ff",
+                "tertiary-fixed": "#6ffbbe",
+                "on-primary-container": "#7c839b",
+                "primary-fixed-dim": "#bec6e0",
+                "outline": "#76777d",
+                "on-secondary-fixed": "#00174b",
+                "on-secondary": "#ffffff",
+                "surface-container-highest": "#d3e4fe",
+                "tertiary-container": "#002113",
+                "primary-container": "#131b2e",
+                "tertiary": "#000000",
+                "on-secondary-container": "#fefcff",
+                "surface-dim": "#cbdbf5",
+                "error": "#ba1a1a",
+                "on-primary": "#ffffff",
+                "tertiary-fixed-dim": "#4edea3",
+                "on-background": "#0b1c30",
+                "on-surface-variant": "#45464d",
+                "surface-container-lowest": "#ffffff",
+                "on-tertiary-fixed": "#002113",
+                "inverse-on-surface": "#eaf1ff",
+                "background": "#f8f9ff",
+                "secondary-fixed": "#dbe1ff",
+                "primary": "#000000",
+                "secondary-container": "#316bf3",
+                "on-tertiary-container": "#009668",
+                "surface-variant": "#d3e4fe",
+                "surface-container-high": "#dce9ff",
+                "error-container": "#ffdad6",
+                "on-error-container": "#93000a",
+                "surface": "#f8f9ff",
+                "secondary-fixed-dim": "#b4c5ff",
+                "on-primary-fixed": "#131b2e",
+                "inverse-primary": "#bec6e0"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+            },
+            "spacing": {
+                "gutter": "24px",
+                "margin-mobile": "16px",
+                "margin-desktop": "40px",
+                "container-max": "1440px",
+                "unit": "4px"
+            },
+            "fontFamily": {
+                "body-md": ["Inter"],
+                "headline-md": ["Inter"],
+                "display-lg": ["Inter"],
+                "body-lg": ["Inter"],
+                "label-sm": ["JetBrains Mono"],
+                "headline-lg-mobile": ["Inter"],
+                "body-sm": ["Inter"],
+                "headline-lg": ["Inter"],
+                "label-md": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                "label-sm": ["12px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .radar-grid {
+            background-image: radial-gradient(circle, #e2e8f0 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .zebra-row:nth-child(even) {
+            background-color: #f8f9ff;
+        }
+        .glass-header {
+            backdrop-filter: blur(12px);
+            background: rgba(248, 249, 255, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-surface dark:bg-surface-container-low border-b border-outline-variant dark:border-outline flex items-center justify-between px-margin-desktop h-16 w-full">
+<div class="flex items-center gap-8">
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-inverse-on-surface">SKILLUP</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative flex items-center justify-center">
+  <a href="{% url 'employer_notifications' %}"
+     class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80 block"
+     {% if unread_match_alerts %}style="color:#0051d5" {% endif %}>notifications</a>
+  {% if unread_match_alerts %}<span
+     class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">{{ unread_match_alerts }}</span>{% endif %}
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">settings</button>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-64 pt-20 bg-surface-container-lowest dark:bg-primary-container border-r border-outline-variant dark:border-outline hidden md:flex flex-col p-4 gap-2 z-40">
+<div class="flex items-center gap-3 px-2 py-4 mb-4 border-b border-outline-variant/30">
+<div class="w-10 h-10 bg-surface border border-outline-variant rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
+  {% if request.user.profile.company_logo %}
+    <img class="w-full h-full object-cover" src="{{ request.user.profile.company_logo.url }}" alt="Company Logo">
+  {% else %}
+    <span class="text-white font-black text-xl bg-secondary w-full h-full flex items-center justify-center">{{ request.user.profile.company_name|slice:":1"|default:"P" }}</span>
+  {% endif %}
+</div>
+<div>
+<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">Enterprise Portal</h2>
+<p class="text-[10px] text-on-surface-variant opacity-70">Talent Management</p>
+</div>
+</div>
+<nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'employer_dashboard' %}"><span class="material-symbols-outlined">dashboard</span><span>Dashboard</span></a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'hiring_tracker_employer' %}"><span class="material-symbols-outlined">developer_board</span><span>Hiring Tracker</span></a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'job_management_employer' %}"><span class="material-symbols-outlined">work</span><span>Job Management</span></a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'company_profile_employer' %}"><span class="material-symbols-outlined">corporate_fare</span><span>Company Profile</span></a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md relative" href="{% url 'employer_notifications' %}"><span class="material-symbols-outlined">notifications</span><span>Match Alerts</span></a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'logout' %}"><span class="material-symbols-outlined">logout</span><span>Log Out</span></a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="ml-64 pt-20 min-h-screen">
+<!-- Content Area -->
+<div class="py-8 px-margin-desktop max-w-[1440px] mx-auto">
+<!-- Analysis Header -->
+<div class="flex justify-between items-end mb-8">
+<div class="space-y-2">
+
+<div class="flex items-center gap-3">
+<a href="{% url 'applicants_employer' %}{% if vacancy %}?job_id={{ vacancy.id }}{% endif %}" class="material-symbols-outlined text-on-surface-variant hover:text-secondary hover:bg-surface-container-low p-2 rounded-full transition-all active:scale-90" title="Back to Talent Bench">arrow_back</a>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Gap Analysis: <span class="text-secondary">{{ candidate.user.first_name }} {{ candidate.user.last_name }}</span></h1>
+</div>
+<p class="text-body-lg text-on-surface-variant">Comparing candidate proficiency against <span class="font-bold text-on-surface">{{ vacancy.title }}</span> role requirements.</p>
+</div>
+
+</div>
+<!-- Bento Grid Dashboard -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Match Score Widget -->
+<div class="col-span-4 bg-surface-container-lowest border border-outline-variant rounded-xl p-8 flex flex-col justify-center items-center relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4">
+<span class="material-symbols-outlined text-outline-variant">info</span>
+</div>
+<div class="relative w-48 h-48 flex items-center justify-center mb-6">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container" cx="96" cy="96" fill="transparent" r="88" stroke="currentColor" stroke-width="12"></circle>
+<circle id="progressCircle" class="text-secondary transition-all duration-1000" cx="96" cy="96" fill="transparent" r="88" stroke="currentColor" stroke-dasharray="552.92" data-score="{{ match_score }}" stroke-width="12"></circle>
+</svg>
+<div class="absolute flex flex-col items-center">
+<span class="font-display-lg text-display-lg leading-none">{{ match_score }}%</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">Core Match</span>
+</div>
+</div>
+<div class="text-center">
+<h3 class="font-bold text-body-lg mb-1">{% if match_score >= 80 %}Excellent Match{% elif match_score >= 60 %}Good Potential{% else %}Gap Identified{% endif %}</h3>
+<p class="text-body-sm text-on-surface-variant">Candidate has a {{ match_score }}% overall match score for the {{ vacancy.title }} role.</p>
+</div>
+</div>
+<!-- Skill Radar Widget -->
+<div class="col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl p-8 radar-grid relative">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-md text-headline-md">Skill Comparison</h3>
+<div class="flex gap-4">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-secondary"></span>
+<span class="text-label-sm">{{ candidate.user.first_name }} {{ candidate.user.last_name }}</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-[#4edea3]"></span>
+<span class="text-label-sm">Role Target</span>
+</div>
+</div>
+</div>
+<!-- Dynamic Radar Chart -->
+<div class="h-64 w-full flex items-center justify-center relative">
+<div class="aspect-square w-full max-w-[220px] mx-auto relative group">
+<svg id="radarSvg" class="w-full h-full transform transition-transform duration-700 group-hover:scale-[1.02]" viewBox="0 0 400 400">
+</svg>
+<div id="radarLabelsContainer" class="absolute inset-0 pointer-events-none text-[8px] sm:text-[10px]"></div>
+</div>
+</div>
+</div>
+<!-- Skill Gaps Table -->
+<div class="col-span-12 bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md">Competency Breakdown</h3>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-surface-container rounded-full text-label-sm font-bold text-secondary">All Skills ({{ gaps|length }})</span>
+<span class="px-3 py-1 bg-error-container rounded-full text-label-sm font-bold text-on-error-container">Gaps Identified ({{ gaps_count }})</span>
+</div>
+</div>
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">
+<tr>
+<th class="px-6 py-4">Skill Dimension</th>
+<th class="px-6 py-4">Gap Analysis</th>
+<th class="px-6 py-4">Action Plan</th>
+</tr>
+</thead>
+<tbody class="text-body-sm font-body-md">
+{% for g in gaps %}
+<tr class="zebra-row">
+<td class="px-6 py-4 font-bold text-on-surface">{{ g.skill }}</td>
+<td class="px-6 py-4">
+  {% if g.gap > 0 %}
+  <span class="flex items-center gap-1 text-error font-bold">
+    <span class="material-symbols-outlined text-sm">warning</span> Missing
+  </span>
+  {% else %}
+  <span class="flex items-center gap-1 text-on-tertiary-container font-bold">
+    <span class="material-symbols-outlined text-sm">check_circle</span> Meets Requirement
+  </span>
+  {% endif %}
+</td>
+<td class="px-6 py-4">
+  {% if g.gap > 0 %}
+  <a href="{% url 'training_recommendations' %}?search={{ g.skill }}" class="text-secondary hover:underline font-bold text-label-sm flex items-center gap-1">
+    Assign Pathway <span class="material-symbols-outlined text-xs">arrow_forward</span>
+  </a>
+  {% else %}
+  <span class="text-on-surface-variant italic">No action needed</span>
+  {% endif %}
+</td>
+</tr>
+{% empty %}
+<tr>
+  <td colspan="3" class="px-6 py-4 text-center text-on-surface-variant italic">No skill gap comparison data available.</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+<!-- End of Dashboard widgets -->
+</div>
+</div>
+</main>
+<!-- FAB for Quick Actions -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-secondary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50 group">
+<span class="material-symbols-outlined text-[28px] group-hover:rotate-90 transition-transform">add</span>
+<div class="absolute bottom-full right-0 mb-4 hidden group-hover:flex flex-col items-end gap-2">
+<span class="bg-inverse-surface text-white px-4 py-2 rounded-lg font-label-md text-label-md shadow-md whitespace-nowrap">Post New Job</span>
+<span class="bg-inverse-surface text-white px-4 py-2 rounded-lg font-label-md text-label-md shadow-md whitespace-nowrap">Bulk Screen</span>
+</div>
+</button>
+{{ labels|json_script:"labels-data" }}
+{{ target_data|json_script:"target-data" }}
+{{ current_data|json_script:"current-data" }}
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Draw progress circle
+            const progressCircle = document.getElementById('progressCircle');
+            if (progressCircle) {
+                const score = parseInt(progressCircle.getAttribute('data-score')) || 0;
+                const r = 88;
+                const c = 2 * Math.PI * r; // 552.92
+                const offset = c - (score / 100) * c;
+                progressCircle.style.strokeDashoffset = offset;
+            }
+
+            // Draw radar chart
+            const radarLabels = JSON.parse(document.getElementById('labels-data').textContent);
+            const radarTargetData = JSON.parse(document.getElementById('target-data').textContent);
+            const radarCurrentData = JSON.parse(document.getElementById('current-data').textContent);
+            const N = radarLabels.length;
+            
+            const svg = document.getElementById('radarSvg');
+            const labelsContainer = document.getElementById('radarLabelsContainer');
+            
+            if (svg && labelsContainer) {
+                labelsContainer.innerHTML = '';
+                if (N === 0) {
+                    svg.innerHTML = `<text x="200" y="200" text-anchor="middle" fill="#76777d" class="font-label-sm">No skill data available</text>`;
+                } else {
+                    let svgContent = '';
+                    
+                    // Draw concentric circles
+                    for (let level = 1; level <= 5; level++) {
+                        const r = (level / 5) * 160;
+                        svgContent += `<circle class="radar-grid stroke-[#e2e8f0] fill-none" cx="200" cy="200" r="${r}"></circle>`;
+                    }
+                    
+                    const targetPoints = [];
+                    const currentPoints = [];
+                    const pointsMarkup = [];
+                    
+                    for (let i = 0; i < N; i++) {
+                        const angle = (2 * Math.PI * i / N) - (Math.PI / 2);
+                        
+                        // Axis line
+                        const xEnd = 200 + 160 * Math.cos(angle);
+                        const yEnd = 200 + 160 * Math.sin(angle);
+                        svgContent += `<line class="radar-axis stroke-[#cbd5e1]" x1="200" y1="200" x2="${xEnd}" y2="${yEnd}"></line>`;
+                        
+                        // Target coordinate (role required level is current target here)
+                        const rTarget = (radarTargetData[i] / 5) * 160;
+                        const xTarget = 200 + rTarget * Math.cos(angle);
+                        const yTarget = 200 + rTarget * Math.sin(angle);
+                        targetPoints.push(`${xTarget},${yTarget}`);
+                        
+                        // Current coordinate (candidate level)
+                        const rCurrent = (radarCurrentData[i] / 5) * 160;
+                        const xCurrent = 200 + rCurrent * Math.cos(angle);
+                        const yCurrent = 200 + rCurrent * Math.sin(angle);
+                        currentPoints.push(`${xCurrent},${yCurrent}`);
+                        
+                        // Points markers
+                        pointsMarkup.push(`<circle class="radar-point fill-[#4edea3] stroke-white stroke-2" cx="${xCurrent}" cy="${yCurrent}" r="5"></circle>`);
+                        pointsMarkup.push(`<circle class="radar-point fill-secondary stroke-white stroke-2" cx="${xTarget}" cy="${yTarget}" r="4"></circle>`);
+                        
+                        // Label positions
+                        const xLabel = 200 + 180 * Math.cos(angle);
+                        const yLabel = 200 + 180 * Math.sin(angle);
+                        
+                        let alignClass = 'text-center -translate-x-1/2';
+                        if (Math.cos(angle) > 0.1) {
+                            alignClass = 'text-left';
+                        } else if (Math.cos(angle) < -0.1) {
+                            alignClass = 'text-right -translate-x-full';
+                        }
+                        
+                        const labelDiv = document.createElement('div');
+                        labelDiv.className = `absolute pointer-events-auto transition-all duration-300 font-bold text-[9px] text-on-surface-variant hover:text-secondary ${alignClass}`;
+                        labelDiv.style.left = `${(xLabel / 400) * 100}%`;
+                        labelDiv.style.top = `${(yLabel / 400) * 100}%`;
+                        labelDiv.textContent = radarLabels[i];
+                        labelsContainer.appendChild(labelDiv);
+                    }
+                    
+                    // Draw polygon areas
+                    svgContent += `<polygon class="radar-area-target fill-secondary/10 stroke-secondary stroke-2" points="${targetPoints.join(' ')}"></polygon>`;
+                    svgContent += `<polygon class="radar-area-current fill-[#4edea3]/30 stroke-[#4edea3] stroke-2" points="${currentPoints.join(' ')}"></polygon>`;
+                    svgContent += pointsMarkup.join('');
+                    
+                    svg.innerHTML = svgContent;
+                }
+            }
+
+            // Zebra row styling hover micro-interaction
+            document.querySelectorAll('.zebra-row').forEach(row => {
+                row.addEventListener('mouseenter', () => {
+                    row.style.boxShadow = 'inset 4px 0 0 #0051d5';
+                    row.style.backgroundColor = '#eff4ff';
+                });
+                row.style.transition = 'all 0.2s';
+                row.addEventListener('mouseleave', () => {
+                    row.style.boxShadow = 'none';
+                    row.style.backgroundColor = '';
+                });
+            });
+        });
+    </script>
+</body></html>

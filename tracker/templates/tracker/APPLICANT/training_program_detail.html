@@ -1,0 +1,182 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>{{ program.title }} | My Learning | SKILLUP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+tailwind.config = { darkMode: "class", theme: { extend: { colors: { "secondary": "#0051d5", "on-secondary": "#ffffff", "surface": "#f8f9ff", "surface-container-lowest": "#ffffff", "surface-container-low": "#eff4ff", "surface-container": "#e5eeff", "surface-container-high": "#dce9ff", "surface-bright": "#f8f9ff", "on-surface": "#0b1c30", "on-surface-variant": "#45464d", "outline": "#76777d", "outline-variant": "#c6c6cd", "background": "#f8f9ff", "error": "#ba1a1a", "primary": "#000000", "on-primary": "#ffffff" }, borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, spacing: { "margin-mobile": "16px", "margin-desktop": "40px" }, fontFamily: { "body-md": ["Inter"], "headline-md": ["Inter"], "headline-lg": ["Inter"], "label-sm": ["JetBrains Mono"], "label-md": ["JetBrains Mono"] }, fontSize: { "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}], "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}], "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}], "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}], "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}] } } } }
+</script>
+<style>
+.material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
+@keyframes slideIn { from { opacity:0; transform:translateY(12px);} to { opacity:1; transform:translateY(0);} }
+.slide-in { animation: slideIn 0.4s ease both; }
+.impact-bar { transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
+</style>
+</head>
+<body class="bg-background text-on-surface font-body-md">
+<header class="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant h-16 flex items-center justify-between px-margin-desktop">
+  <div class="flex items-center gap-8">
+    <a href="{% url 'applicant_dashboard' %}" class="font-headline-md text-headline-md font-bold text-on-surface">SKILLUP</a>
+    <nav class="hidden md:flex items-center gap-6 h-16">
+      <a class="font-body-md text-body-md h-full flex items-center px-2 text-on-surface-variant hover:bg-surface-container-low" href="{% url 'applicant_dashboard' %}">Dashboard</a>
+      <a class="font-body-md text-body-md h-full flex items-center px-2 text-on-surface-variant hover:bg-surface-container-low" href="{% url 'applicant_applications_list' %}">My Applications</a>
+      <a class="font-body-md text-body-md h-full flex items-center px-2 text-secondary font-semibold border-b-2 border-secondary" href="{% url 'training_recommendations' %}">My Learning</a>
+      <a class="font-body-md text-body-md h-full flex items-center px-2 text-on-surface-variant hover:bg-surface-container-low" href="{% url 'job_search' %}">Job Board</a>
+      <a class="font-body-md text-body-md h-full flex items-center px-2 text-on-surface-variant hover:bg-surface-container-low" href="{% url 'applicant_profile' %}">Profile</a>
+    </nav>
+  </div>
+  <div class="flex items-center gap-3">
+    <a href="{% url 'applicant_notifications' %}" class="p-2 rounded-full hover:bg-surface-container-low text-on-surface-variant relative block" title="Notifications">
+      <span class="material-symbols-outlined">notifications</span>
+      {% if unread_notifications_count %}<span class="absolute top-0.5 right-0.5 w-4 h-4 rounded-full bg-red-500 text-white text-[9px] font-black flex items-center justify-center">{{ unread_notifications_count }}</span>{% endif %}
+    </a>
+    <a href="{% url 'applicant_settings' %}" class="p-2 rounded-full hover:bg-surface-container-low text-on-surface-variant"><span class="material-symbols-outlined">settings</span></a>
+    <a href="{% url 'logout' %}" class="p-2 rounded-full hover:bg-surface-container-low text-on-surface-variant"><span class="material-symbols-outlined">logout</span></a>
+  </div>
+</header>
+<main class="mt-16 min-h-screen">
+<div class="bg-surface border-b border-outline-variant">
+  <div class="max-w-[1100px] mx-auto px-margin-mobile md:px-margin-desktop py-3 flex items-center gap-2 text-sm text-on-surface-variant">
+    <a href="{% url 'training_recommendations' %}" class="hover:text-secondary flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">school</span>My Learning</a>
+    <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+    <span class="text-on-surface font-medium">{{ program.title }}</span>
+  </div>
+</div>
+{% if messages %}
+<div class="max-w-[1100px] mx-auto px-margin-mobile md:px-margin-desktop pt-4">
+  {% for message in messages %}
+  <div class="flex items-start gap-3 p-4 rounded-xl mb-3 {% if message.tags == 'success' %}bg-green-50 border border-green-200 text-green-800{% elif message.tags == 'error' %}bg-red-50 border border-red-200 text-red-700{% else %}bg-blue-50 border border-blue-200 text-blue-800{% endif %}">
+    <span class="material-symbols-outlined text-[20px] mt-0.5">{% if message.tags == 'success' %}check_circle{% elif message.tags == 'error' %}error{% else %}info{% endif %}</span>
+    <span class="text-sm">{{ message }}</span>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+<div class="max-w-[1100px] mx-auto px-margin-mobile md:px-margin-desktop py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+  <!-- LEFT: Main Details -->
+  <div class="lg:col-span-2 space-y-6 slide-in">
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-2xl overflow-hidden">
+      <div class="h-3 bg-gradient-to-r from-secondary to-blue-400"></div>
+      <div class="p-6">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2 flex-wrap">
+              <span class="px-2 py-0.5 rounded text-xs font-bold uppercase {% if program.status == 'Open' %}bg-green-100 text-green-800{% elif program.status == 'Full' %}bg-orange-100 text-orange-800{% elif program.status == 'Completed' %}bg-blue-100 text-blue-800{% else %}bg-slate-100 text-slate-600{% endif %}">{{ program.status }}</span>
+              <span class="px-2 py-0.5 bg-surface-container rounded text-xs font-semibold">{{ program.mode }}</span>
+              {% if program.certificate_offered %}<span class="px-2 py-0.5 bg-blue-50 text-blue-700 rounded text-xs font-semibold">&#127891; Certificate</span>{% endif %}
+              {% if not program.cost %}<span class="px-2 py-0.5 bg-green-50 text-green-700 border border-green-200 rounded text-xs font-bold">FREE</span>{% else %}<span class="px-2 py-0.5 bg-amber-50 text-amber-700 border border-amber-200 rounded text-xs font-bold">&#8369;{{ program.cost }}</span>{% endif %}
+            </div>
+            <h1 class="font-headline-lg text-headline-lg text-on-surface">{{ program.title }}</h1>
+            <p class="text-on-surface-variant mt-1">{{ program.provider }}</p>
+          </div>
+          <div class="flex-shrink-0 text-right">
+            <p class="text-xs text-on-surface-variant">Slots Remaining</p>
+            <p class="text-2xl font-bold {% if program.remaining_slots == 0 %}text-error{% else %}text-green-600{% endif %}">{{ program.remaining_slots }}<span class="text-base text-on-surface-variant font-normal">/{{ program.slots }}</span></p>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5 pt-4 border-t border-outline-variant">
+          <div><p class="text-xs text-on-surface-variant uppercase">Skill</p><p class="text-sm font-semibold">{{ program.skill_addressed.name }}</p></div>
+          <div><p class="text-xs text-on-surface-variant uppercase">Duration</p><p class="text-sm font-semibold">{{ program.duration }}</p></div>
+          <div><p class="text-xs text-on-surface-variant uppercase">Start</p><p class="text-sm font-semibold">{{ program.scheduled_date|default:"TBD" }}</p></div>
+          <div><p class="text-xs text-on-surface-variant uppercase">End</p><p class="text-sm font-semibold">{{ program.end_date|default:"TBD" }}</p></div>
+        </div>
+      </div>
+    </div>
+    {% if program.description %}
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-2xl p-6">
+      <h2 class="font-headline-md text-headline-md text-on-surface mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-secondary">info</span>About This Training</h2>
+      <p class="text-on-surface-variant leading-relaxed">{{ program.description }}</p>
+    </div>
+    {% endif %}
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-2xl p-6">
+      <h2 class="font-headline-md text-headline-md text-on-surface mb-4 flex items-center gap-2"><span class="material-symbols-outlined text-secondary">checklist</span>Eligibility Requirements</h2>
+      <ul class="space-y-2">
+        {% if program.min_age or program.max_age %}<li class="flex items-center gap-2 text-sm"><span class="material-symbols-outlined text-[16px] text-on-surface-variant">person</span>Age: {% if program.min_age %}Min {{ program.min_age }}{% endif %}{% if program.min_age and program.max_age %} &mdash; {% endif %}{% if program.max_age %}Max {{ program.max_age }}{% endif %}</li>{% endif %}
+        {% if program.eligibility_notes %}<li class="flex items-start gap-2 text-sm"><span class="material-symbols-outlined text-[16px] text-on-surface-variant mt-0.5">assignment</span>{{ program.eligibility_notes }}</li>{% endif %}
+        {% if not program.min_age and not program.max_age and not program.eligibility_notes %}<li class="text-sm text-on-surface-variant italic">Open to all applicants. No special eligibility requirements.</li>{% endif %}
+      </ul>
+      {% if not eligible %}<div class="mt-4 p-3 bg-red-50 border border-red-200 rounded-xl flex items-start gap-2"><span class="material-symbols-outlined text-red-600 text-[18px] mt-0.5">block</span><p class="text-sm text-red-700">{{ eligibility_reason }}</p></div>{% endif %}
+    </div>
+    {% if impact_jobs %}
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-2xl p-6">
+      <h2 class="font-headline-md text-headline-md text-on-surface mb-1 flex items-center gap-2"><span class="material-symbols-outlined text-secondary">trending_up</span>Your Job Match Impact</h2>
+      <p class="text-sm text-on-surface-variant mb-5">Completing this training improves your match score for these jobs:</p>
+      <div class="space-y-5">
+        {% for item in impact_jobs %}
+        <div class="p-4 bg-surface-container-low rounded-xl border border-outline-variant">
+          <div class="flex items-start justify-between mb-3"><div><p class="font-semibold text-on-surface text-sm">{{ item.vacancy.title }}</p><p class="text-xs text-on-surface-variant">{{ item.vacancy.employer.company_name|default:"Open Position" }}</p></div><span class="px-2 py-0.5 bg-green-100 text-green-800 border border-green-200 rounded text-xs font-bold">+{{ item.gain }}%</span></div>
+          <div class="flex justify-between text-xs text-on-surface-variant mb-0.5"><span>Current Match</span><span class="font-semibold">{{ item.before }}%</span></div>
+          <div class="h-2 bg-surface-container rounded-full overflow-hidden"><div class="h-full bg-outline/40 rounded-full impact-bar" style="width: {{ item.before }}%"></div></div>
+          <div class="flex justify-between text-xs text-on-surface-variant mt-2 mb-0.5"><span>After Training</span><span class="font-bold text-green-700">{{ item.after }}%</span></div>
+          <div class="h-2.5 bg-surface-container rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-secondary to-green-500 rounded-full impact-bar" style="width: {{ item.after }}%"></div></div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% else %}
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-2xl p-6">
+      <h2 class="font-headline-md text-headline-md text-on-surface mb-2 flex items-center gap-2"><span class="material-symbols-outlined text-secondary">trending_up</span>Your Job Match Impact</h2>
+      <p class="text-sm text-on-surface-variant">Completing this training on <strong>{{ program.skill_addressed.name }}</strong> will add this skill to your profile and improve your match scores.</p>
+    </div>
+    {% endif %}
+  </div>
+  <!-- RIGHT: Apply/Status Sidebar -->
+  <div class="space-y-5">
+    {% if enrollment %}
+    <div class="bg-surface-container-lowest border-2 {% if enrollment.status == 'Attended' %}border-green-500{% else %}border-secondary{% endif %} rounded-2xl p-6 slide-in">
+      <div class="flex items-center gap-3 mb-3"><span class="material-symbols-outlined {% if enrollment.status == 'Attended' %}text-green-600{% else %}text-secondary{% endif %}" style="font-variation-settings: 'FILL' 1; font-size: 32px;">{% if enrollment.status == 'Attended' %}task_alt{% else %}how_to_reg{% endif %}</span><div><p class="font-bold text-on-surface">{% if enrollment.status == 'Attended' %}Completed!{% else %}Enrolled{% endif %}</p><p class="text-xs text-on-surface-variant">{{ enrollment.status }}</p></div></div>
+      {% if enrollment.status == 'Attended' %}<p class="text-sm text-green-700 bg-green-50 border border-green-100 rounded-lg p-3">Congratulations! <strong>{{ program.skill_addressed.name }}</strong> has been added to your profile.</p>{% else %}<p class="text-sm text-on-surface-variant">You are confirmed. Check notifications for reporting details.</p>{% endif %}
+      <a href="{% url 'training_recommendations' %}" class="mt-4 flex items-center justify-center gap-2 w-full py-2.5 border border-secondary text-secondary rounded-xl text-sm font-bold hover:bg-secondary/5 transition-colors"><span class="material-symbols-outlined text-[16px]">arrow_back</span>Back to My Learning</a>
+    </div>
+    {% elif application %}
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-2xl p-6 slide-in">
+      <p class="text-xs text-on-surface-variant uppercase tracking-wider font-bold mb-3">Application Status</p>
+      <div class="flex items-center gap-3 p-4 rounded-xl border-2 {% if application.status == 'Approved' %}border-green-500 bg-green-50{% elif application.status == 'Rejected' %}border-red-400 bg-red-50{% elif application.status == 'Waitlisted' %}border-amber-400 bg-amber-50{% else %}border-secondary bg-secondary/5{% endif %}">
+        <span class="material-symbols-outlined {% if application.status == 'Approved' %}text-green-600{% elif application.status == 'Rejected' %}text-red-600{% elif application.status == 'Waitlisted' %}text-amber-600{% else %}text-secondary{% endif %}" style="font-variation-settings: 'FILL' 1; font-size: 28px;">{% if application.status == 'Approved' %}check_circle{% elif application.status == 'Rejected' %}cancel{% elif application.status == 'Waitlisted' %}schedule{% else %}pending{% endif %}</span>
+        <div><p class="font-bold text-on-surface">{{ application.status }}</p><p class="text-xs text-on-surface-variant">Submitted {{ application.submitted_at|date:"M d, Y" }}</p></div>
+      </div>
+      {% if application.admin_notes %}<div class="mt-3 p-3 bg-surface-container rounded-lg"><p class="text-xs text-on-surface-variant font-bold">Message from Coordinator:</p><p class="text-sm text-on-surface mt-1">{{ application.admin_notes }}</p></div>{% endif %}
+      <a href="{% url 'training_recommendations' %}" class="mt-4 flex items-center justify-center gap-2 w-full py-2.5 border border-secondary text-secondary rounded-xl text-sm font-bold hover:bg-secondary/5 transition-colors"><span class="material-symbols-outlined text-[16px]">arrow_back</span>Back to My Learning</a>
+    </div>
+    {% elif eligible %}
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-2xl p-6 slide-in">
+      <p class="text-xs text-on-surface-variant uppercase tracking-wider font-bold mb-4">Apply for This Training</p>
+      <form method="POST" action="{% url 'applicant_apply_training' program.id %}">
+        {% csrf_token %}
+        <div class="mb-4">
+          <label class="block text-sm font-bold text-on-surface mb-2">Schedule Preference</label>
+          <div class="space-y-2">
+            <label class="flex items-center gap-3 p-3 border border-outline-variant rounded-xl cursor-pointer hover:bg-surface-container-low has-[:checked]:border-secondary has-[:checked]:bg-secondary/5"><input type="radio" name="schedule_preference" value="Morning" class="text-secondary"><div><p class="text-sm font-semibold">Morning Session</p><p class="text-xs text-on-surface-variant">8:00 AM &ndash; 12:00 PM</p></div></label>
+            <label class="flex items-center gap-3 p-3 border border-outline-variant rounded-xl cursor-pointer hover:bg-surface-container-low has-[:checked]:border-secondary has-[:checked]:bg-secondary/5"><input type="radio" name="schedule_preference" value="Afternoon" class="text-secondary"><div><p class="text-sm font-semibold">Afternoon Session</p><p class="text-xs text-on-surface-variant">1:00 PM &ndash; 5:00 PM</p></div></label>
+            <label class="flex items-center gap-3 p-3 border border-outline-variant rounded-xl cursor-pointer hover:bg-surface-container-low has-[:checked]:border-secondary has-[:checked]:bg-secondary/5"><input type="radio" name="schedule_preference" value="Flexible" checked class="text-secondary"><div><p class="text-sm font-semibold">Flexible</p><p class="text-xs text-on-surface-variant">Any available schedule</p></div></label>
+          </div>
+        </div>
+        <p class="text-xs text-on-surface-variant mb-4 bg-surface-container p-3 rounded-lg">Your application will be reviewed by the PESO coordinator. You will receive a notification when a decision is made.</p>
+        <button type="submit" class="w-full py-3 bg-secondary text-white font-bold rounded-xl hover:opacity-90 flex items-center justify-center gap-2 text-sm"><span class="material-symbols-outlined text-[18px]">send</span>Submit Application</button>
+      </form>
+      <a href="{% url 'training_recommendations' %}" class="mt-3 flex items-center justify-center gap-1 w-full text-xs text-on-surface-variant hover:text-secondary transition-colors"><span class="material-symbols-outlined text-[14px]">arrow_back</span>Back to catalog</a>
+    </div>
+    {% else %}
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-2xl p-6 slide-in">
+      <div class="flex items-center gap-2 mb-3"><span class="material-symbols-outlined text-error">block</span><p class="font-bold text-on-surface">Not Eligible / Unavailable</p></div>
+      <p class="text-sm text-on-surface-variant">{{ eligibility_reason }}</p>
+      <a href="{% url 'training_recommendations' %}" class="mt-4 flex items-center justify-center gap-2 w-full py-2.5 border border-secondary text-secondary rounded-xl text-sm font-bold hover:bg-secondary/5 transition-colors"><span class="material-symbols-outlined text-[16px]">arrow_back</span>Explore Other Trainings</a>
+    </div>
+    {% endif %}
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-2xl p-5 slide-in">
+      <p class="text-xs text-on-surface-variant uppercase tracking-wider font-bold mb-3">Quick Summary</p>
+      <ul class="space-y-2.5 text-sm">
+        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-[18px]">business</span><span class="text-on-surface-variant">Provider:</span><span class="font-semibold text-on-surface ml-1">{{ program.provider }}</span></li>
+        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-[18px]">school</span><span class="text-on-surface-variant">Skill:</span><span class="font-semibold text-on-surface ml-1">{{ program.skill_addressed.name }}</span></li>
+        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-[18px]">timer</span><span class="text-on-surface-variant">Duration:</span><span class="font-semibold text-on-surface ml-1">{{ program.duration }}</span></li>
+        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-[18px]">location_on</span><span class="text-on-surface-variant">Mode:</span><span class="font-semibold text-on-surface ml-1">{{ program.mode }}</span></li>
+        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-[18px]">payments</span><span class="text-on-surface-variant">Cost:</span><span class="font-semibold text-on-surface ml-1">{% if program.cost %}&#8369;{{ program.cost }}{% else %}FREE{% endif %}</span></li>
+        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-[18px]">workspace_premium</span><span class="text-on-surface-variant">Certificate:</span><span class="font-semibold text-on-surface ml-1">{% if program.certificate_offered %}Yes{% else %}None{% endif %}</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+</main>
+</body></html>

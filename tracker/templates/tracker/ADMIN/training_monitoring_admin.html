@@ -1,0 +1,792 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Learning Paths | SKILLUP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#0051d5",
+                    "inverse-surface": "#213145",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "outline-variant": "#c6c6cd",
+                    "primary-fixed": "#dae2fd",
+                    "on-error": "#ffffff",
+                    "surface-container": "#e5eeff",
+                    "on-tertiary": "#ffffff",
+                    "surface-tint": "#565e74",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "surface-container-low": "#eff4ff",
+                    "on-surface": "#0b1c30",
+                    "on-secondary-fixed-variant": "#003ea8",
+                    "surface-bright": "#f8f9ff",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-primary-container": "#7c839b",
+                    "primary-fixed-dim": "#bec6e0",
+                    "outline": "#76777d",
+                    "on-secondary-fixed": "#00174b",
+                    "on-secondary": "#ffffff",
+                    "surface-container-highest": "#d3e4fe",
+                    "tertiary-container": "#002113",
+                    "primary-container": "#131b2e",
+                    "tertiary": "#000000",
+                    "on-secondary-container": "#fefcff",
+                    "surface-dim": "#cbdbf5",
+                    "error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "on-background": "#0b1c30",
+                    "on-surface-variant": "#45464d",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed": "#002113",
+                    "inverse-on-surface": "#eaf1ff",
+                    "background": "#f8f9ff",
+                    "secondary-fixed": "#dbe1ff",
+                    "primary": "#000000",
+                    "secondary-container": "#316bf3",
+                    "on-tertiary-container": "#009668",
+                    "surface-variant": "#d3e4fe",
+                    "surface-container-high": "#dce9ff",
+                    "error-container": "#ffdad6",
+                    "on-error-container": "#93000a",
+                    "surface": "#f8f9ff",
+                    "secondary-fixed-dim": "#b4c5ff",
+                    "on-primary-fixed": "#131b2e",
+                    "inverse-primary": "#bec6e0"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "40px",
+                    "container-max": "1440px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["JetBrains Mono"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-md": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #F8FAFC;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+        .glass-header {
+            backdrop-filter: blur(8px);
+            background: rgba(248, 250, 255, 0.8);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #F1F5F9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 10px;
+        }
+        .card-shadow {
+            box-shadow: 0px 4px 20px rgba(15, 23, 42, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen">
+{% if messages %}
+<div class="fixed top-20 right-4 z-50 flex flex-col gap-2 max-w-sm w-full">
+    {% for message in messages %}
+    <div class="toast-notification flex items-center gap-3 p-4 rounded-xl border border-outline-variant bg-surface-container-lowest/80 backdrop-blur-md shadow-lg transition-all duration-300 transform translate-x-12 opacity-0" data-type="{{ message.tags }}">
+        {% if message.tags == 'success' %}
+        <span class="material-symbols-outlined text-[20px] text-green-600 bg-green-50 p-1.5 rounded-full" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+        {% elif message.tags == 'error' %}
+        <span class="material-symbols-outlined text-[20px] text-error bg-error-container/10 p-1.5 rounded-full">error</span>
+        {% else %}
+        <span class="material-symbols-outlined text-[20px] text-secondary bg-secondary/10 p-1.5 rounded-full">info</span>
+        {% endif %}
+        <div class="flex-grow">
+            <p class="font-body-sm text-body-sm font-semibold text-on-surface">{{ message }}</p>
+        </div>
+        <button onclick="this.parentElement.remove()" class="material-symbols-outlined text-on-surface-variant hover:text-on-surface text-sm">close</button>
+    </div>
+    {% endfor %}
+</div>
+<script id="toast-script">
+    document.addEventListener('DOMContentLoaded', () => {
+        const toasts = document.querySelectorAll('.toast-notification');
+        toasts.forEach((toast, index) => {
+            setTimeout(() => {
+                toast.classList.remove('translate-x-12', 'opacity-0');
+            }, index * 150);
+            
+            setTimeout(() => {
+                toast.classList.add('translate-x-12', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000 + (index * 150));
+        });
+    });
+</script>
+{% endif %}
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 w-full z-50 bg-surface dark:bg-surface-container-low border-b border-outline-variant dark:border-outline flex items-center justify-between px-margin-desktop h-16 w-full">
+<div class="flex items-center gap-8">
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-inverse-on-surface">SKILLUP</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">settings</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCn5ndUBvKYHDdfjOtDcuDcmEa-zwbSgM-ZLHNPtfHm7uL9e355N19pHC8c-XBPUwwXHIzoATnKENMDvabjLGF5diSFylP09pwQghoAY0N70mks-GlVv2KmatElbeqz2_5J-gSw4HGwnHnPHYMLeRKflzGezIfmEqF1sJTCsVHaAp-3UBTYmVg6yrq3nRzkltjZyYRqaTWNO9ETM3eG6xeP_aE-PZkbZbeBZvG-dmCW3fgaiDFfFN1v9i2cwj6DH0AUyxyPRP9c4y2t">
+</div>
+</div>
+</header>
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 h-full w-64 pt-20 bg-surface-container-lowest dark:bg-primary-container border-r border-outline-variant dark:border-outline hidden md:flex flex-col p-4 gap-2 z-40">
+<div class="flex items-center gap-3 px-2 py-4 mb-4 border-b border-outline-variant/30">
+<div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center text-white font-black text-xl">P</div>
+<div>
+<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">Enterprise Portal</h2>
+<p class="text-[10px] text-on-surface-variant opacity-70">Talent Management</p>
+</div>
+</div>
+<nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'peso_dashboard_admin' %}">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'applicant_monitoring_admin' %}">
+<span class="material-symbols-outlined">groups</span>
+<span>Talent Bench</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'employer_management_admin' %}">
+<span class="material-symbols-outlined">domain</span>
+<span>Employers</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'vacancy_management_admin' %}">
+<span class="material-symbols-outlined">work</span>
+<span>Vacancies</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'employment_tracking_admin' %}">
+<span class="material-symbols-outlined">description</span>
+<span>Reports</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'skill_monitoring_admin' %}">
+<span class="material-symbols-outlined">analytics</span>
+<span>Skill Gaps</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-surface-container dark:bg-secondary-container text-on-surface dark:text-on-secondary-container font-bold rounded-lg scale-98 active:scale-95 duration-150 transition-all font-label-md text-label-md" href="{% url 'training_monitoring_admin' %}">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">school</span>
+<span>Learning Paths</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'job_matching_analytics_admin' %}">
+<span class="material-symbols-outlined">monitoring</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'peso_profile_admin' %}">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'logout' %}">
+<span class="material-symbols-outlined">logout</span>
+<span>Log Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="md:ml-64 pt-20 min-h-screen">
+<div class="p-margin-desktop space-y-gutter">
+<!-- Page Header -->
+<header class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Learning Paths</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Real-time oversight of organizational growth and provider performance.</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">calendar_today</span>
+<span class="font-label-md text-label-md">Last 30 Days</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">expand_more</span>
+</div>
+<button id="openModalBtn" class="bg-primary text-on-primary px-6 py-2 rounded-lg font-label-md text-label-md hover:opacity-90 transition-opacity flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">add</span>
+                    New Program
+                </button>
+</div>
+</header>
+<!-- KPI Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant card-shadow">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">groups</span>
+<span class="text-on-tertiary-container bg-tertiary-fixed-dim/20 px-2 py-0.5 rounded text-[10px] font-bold">+12%</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant">Active Enrolled</p>
+<h2 class="font-display-lg text-display-lg text-on-surface mt-1">1,284</h2>
+<div class="w-full h-1 bg-surface-container-low rounded-full mt-4 overflow-hidden">
+<div class="h-full bg-secondary w-3/4 rounded-full"></div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant card-shadow">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+<span class="text-on-tertiary-container bg-tertiary-fixed-dim/20 px-2 py-0.5 rounded text-[10px] font-bold">Stable</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant">Completion Rate</p>
+<h2 class="font-display-lg text-display-lg text-on-surface mt-1">84.2<span class="text-headline-md">%</span></h2>
+<div class="w-full h-1 bg-surface-container-low rounded-full mt-4 overflow-hidden">
+<div class="h-full bg-secondary w-[84%] rounded-full"></div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant card-shadow">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-on-tertiary-container" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+<span class="text-on-tertiary-container bg-tertiary-fixed-dim/20 px-2 py-0.5 rounded text-[10px] font-bold">+5.4%</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant">Effectiveness Score</p>
+<h2 class="font-display-lg text-display-lg text-on-surface mt-1">4.8<span class="text-headline-md">/5</span></h2>
+<div class="w-full h-1 bg-surface-container-low rounded-full mt-4 overflow-hidden">
+<div class="h-full bg-on-tertiary-container w-[92%] rounded-full"></div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant card-shadow">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-on-error-container" style="font-variation-settings: 'FILL' 1;">timer</span>
+<span class="text-on-error-container bg-error-container px-2 py-0.5 rounded text-[10px] font-bold">-2d</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant">Avg. Time to Finish</p>
+<h2 class="font-display-lg text-display-lg text-on-surface mt-1">18<span class="text-headline-md">days</span></h2>
+<div class="w-full h-1 bg-surface-container-low rounded-full mt-4 overflow-hidden">
+<div class="h-full bg-error w-1/2 rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Main Analytics Section -->
+<div class="bento-grid">
+<!-- Effectiveness Comparison (Radar Chart Visualization Mock) -->
+<div class="col-span-12 bg-surface-container-lowest p-6 rounded-xl border border-outline-variant card-shadow flex flex-col">
+<div class="flex items-center justify-between mb-6">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Skill Acquisition</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Target vs. Actual Proficiency</p>
+</div>
+<button class="p-2 hover:bg-surface-container-low rounded-lg transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">more_vert</span>
+</button>
+</div>
+<div class="flex-1 relative flex items-center justify-center p-4">
+<!-- Radar Chart Mock-up with SVG -->
+<svg class="w-full h-full max-w-[280px]" viewBox="0 0 200 200">
+<!-- Web structure -->
+<polygon fill="none" points="100,20 176,75 147,165 53,165 24,75" stroke="#E2E8F0" stroke-width="1"></polygon>
+<polygon fill="none" points="100,50 148,85 130,140 70,140 52,85" stroke="#E2E8F0" stroke-width="1"></polygon>
+<polygon fill="none" points="100,80 119,94 112,116 88,116 81,94" stroke="#E2E8F0" stroke-width="1"></polygon>
+<!-- Target (Outline) -->
+<polygon fill="none" points="100,20 176,75 147,165 53,165 24,75" stroke="#0051d5" stroke-dasharray="4" stroke-width="2"></polygon>
+<!-- Actual (Filled) -->
+<polygon fill="rgba(49, 107, 243, 0.2)" points="100,40 160,85 135,150 65,155 40,80" stroke="#316bf3" stroke-width="2"></polygon>
+<!-- Points -->
+<text class="font-label-sm text-[8px]" fill="#45464d" text-anchor="middle" x="100" y="15">Product</text>
+<text class="font-label-sm text-[8px]" fill="#45464d" text-anchor="start" x="185" y="75">Engineering</text>
+<text class="font-label-sm text-[8px]" fill="#45464d" text-anchor="start" x="155" y="175">Design</text>
+<text class="font-label-sm text-[8px]" fill="#45464d" text-anchor="end" x="45" y="175">Data</text>
+<text class="font-label-sm text-[8px]" fill="#45464d" text-anchor="end" x="15" y="75">Leadership</text>
+</svg>
+</div>
+<div class="mt-4 grid grid-cols-2 gap-4">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full border border-secondary border-dashed"></div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Benchmark</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-secondary/30 border border-secondary"></div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Current Org Average</span>
+</div>
+</div>
+</div>
+<!-- Program Status Table -->
+<div class="col-span-12 bg-surface-container-lowest rounded-xl border border-outline-variant card-shadow flex flex-col">
+<div class="p-6 border-b border-outline-variant flex items-center justify-between sticky top-0 bg-surface-container-lowest z-10 rounded-t-xl">
+<h3 class="font-headline-md text-headline-md text-on-surface">Ongoing Programs</h3>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 border border-outline-variant rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-colors">Filters</button>
+<button class="px-3 py-1.5 bg-surface-container-high rounded-lg font-label-md text-label-md">View All</button>
+</div>
+</div>
+<div class="overflow-y-auto flex-1 custom-scrollbar">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Program Name</th>
+<th class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Enrolled</th>
+<th class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Progress</th>
+<th class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+{% for prog in programs %}
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-body-md font-semibold text-on-surface">{{ prog.title }}</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Addresses: {{ prog.skill_addressed.name }} • Provider: {{ prog.provider }}</span>
+</div>
+</td>
+<td class="px-6 py-4">
+  <div class="flex flex-col">
+    <span class="font-label-md text-label-md font-medium text-on-surface">{{ prog.enrollments.count }} Enrolled</span>
+    <span class="text-[10px] text-outline">Date: {{ prog.scheduled_date|default:"TBD" }}</span>
+  </div>
+</td>
+<td class="px-6 py-4">
+  <div class="space-y-1.5 max-w-[220px]">
+    {% if prog.status == 'Completed' %}
+      <div class="flex flex-wrap gap-1.5 text-[11px]">
+        {% for enroll in prog.enrollments.all %}
+          {% if enroll.status == 'Attended' %}
+            <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-green-100 text-green-800 font-semibold border border-green-200">
+              <span class="material-symbols-outlined text-[10px] font-bold" style="font-variation-settings: 'FILL' 1;">check</span>
+              {{ enroll.profile.user.first_name }}
+            </span>
+          {% else %}
+            <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-slate-100 text-slate-400 border border-slate-200 line-through" title="No Show">
+              {{ enroll.profile.user.first_name }}
+            </span>
+          {% endif %}
+        {% empty %}
+          <span class="italic text-outline text-[11px]">None enrolled</span>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="text-[11px] text-on-surface-variant font-medium truncate">
+        {% for enroll in prog.enrollments.all %}
+          {{ enroll.profile.user.first_name }}{% if not forloop.last %}, {% endif %}
+        {% empty %}
+          <span class="italic text-outline">None enrolled</span>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</td>
+<td class="px-6 py-4 flex items-center gap-2">
+  <span class="px-2 py-1 rounded text-[10px] font-bold uppercase
+    {% if prog.status == 'Completed' %}bg-green-100 text-green-800
+    {% else %}bg-blue-100 text-blue-800{% endif %}">
+    {{ prog.status }}
+  </span>
+  {% if prog.status == 'Scheduled' %}
+    <button type="button" onclick="openEnrollModal('{{ prog.id }}', '{{ prog.title|escapejs }}')" class="px-2 py-1 bg-secondary text-white text-[10px] rounded hover:opacity-90 font-bold" title="Enroll Candidate">Enroll</button>
+    {% if prog.enrollments.exists %}
+      <button type="button" 
+        data-enrolled='[{% for enroll in prog.enrollments.all %}{"id": {{ enroll.profile.id }}, "name": "{{ enroll.profile.user.get_full_name|escapejs }}"}{% if not forloop.last %},{% endif %}{% endfor %}]'
+        onclick="openCompleteModal('{{ prog.id }}', '{{ prog.title|escapejs }}', JSON.parse(this.dataset.enrolled || '[]'))" 
+        class="px-2 py-1 bg-green-600 text-white text-[10px] rounded hover:opacity-90 font-bold" 
+        title="Confirm Completion">Finish</button>
+    {% endif %}
+  {% endif %}
+</td>
+</tr>
+{% empty %}
+<tr>
+  <td colspan="4" class="px-6 py-10 text-center italic text-outline">No training programs scheduled.</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+<!-- Provider Performance -->
+<div class="col-span-12 bg-surface-container-lowest p-6 rounded-xl border border-outline-variant card-shadow mb-8">
+<div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Provider Performance Registry</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Auditing course quality and enrollment ROI.</p>
+</div>
+<div class="flex gap-2">
+<div class="flex -space-x-2">
+<img class="w-8 h-8 rounded-full border-2 border-white" data-alt="Corporate training provider representative avatar in a minimalist circle. The lighting is clean and the background is a soft blue-grey tonal shift." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5cUZPI-L_fvplFjm5EiKe1yb2yTn1ljCaXO84BiW_LQWy_0WRGgU6gkM-cPLoggjEiAisJvZjv7vmLlatkSLePjMMN46MGVV42EflHHUIG4EoNC5CL0Jy6NDe5YQH34EXNFhmx4yQy1ljEL9isQASb1FfZYOYiti1bfzaQgX28chr10fmHBPOVzHnbZtdPq-3BHXAknJa4nXminQSOtqbGJ4cUOuisG4YX_jAYB7w01beBncDN73n5DrxpCpCRjiQvcTqU9J2USS_">
+<img class="w-8 h-8 rounded-full border-2 border-white" data-alt="Corporate training provider representative avatar in a minimalist circle. The lighting is clean and the background is a soft blue-grey tonal shift." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQs5mSMhfOQmeIH-uT9aWgsc14xMwI2qNX0G4n46P3K6TmdmhTw2WYkv8WaScCsZszr7PrWMr2PaH6-LAkFz_uDTyZtcss64gYelV1c3Vgw72n0Y4S9vaWf7ZOU6Nb6ubM1XhgnHNaSQFQRdaoeB_KsAl7NhmtkWsrV8g5nnSRm-HyvoAkmv-EBE3IRfmBbX0DKziZhAW5shbgBYtZPZJ29Chx2VFq2z_H7mbeFjIUHG00CwDlQFaCU2U68rPmUy_3quYlbMvGJwcm">
+<div class="w-8 h-8 rounded-full bg-surface-container-high border-2 border-white flex items-center justify-center text-[10px] font-bold">+8</div>
+</div>
+<button class="px-4 py-2 border border-outline-variant rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-colors">Manage Providers</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Provider Card 1 -->
+<div class="flex flex-col gap-4 group cursor-pointer">
+<div class="relative overflow-hidden rounded-xl aspect-[16/9]">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A modern, high-tech corporate training facility with glass walls, ergonomic furniture, and large screens displaying data analytics. The space is illuminated by bright, cool-white lighting, creating a professional and forward-thinking environment. The color palette is dominated by whites, greys, and corporate blues." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuLAi3yby3IxCivi5lOBHSq7-z9HEVqdzzLaA8eXGKBS8qka5AeV95-Z_D7dJHywMLx1Sf_vwAuAKPTvPVLdgBLPsavbRFQZMQEvqxrLoG2uBccbMHPZEsSschawogOXdenuZ4XnZkLR2SDwHPOHfRYxXILiweoDGF9UH0Uh5O0aVjSN01ui-EuPWLwqKXCgRQrj6S9zspJGAvUFu2f49TWYdjW1K9oY4i3MzOSX5tOaNJCVg3rQ1fBN0oVKcgCZ19St5gt0AD7mYp">
+<div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded text-[10px] font-bold font-label-sm uppercase">Premier Partner</div>
+</div>
+<div>
+<div class="flex items-center justify-between mb-1">
+<h4 class="font-headline-md text-headline-md text-on-surface">SkillSprint Academy</h4>
+<div class="flex items-center gap-1 text-on-tertiary-container">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md">4.9</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-4 line-clamp-2">Specializing in cloud infrastructure and DevOps pipelines with a focus on enterprise-scale hands-on labs.</p>
+<div class="flex items-center gap-6">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">ROI</span>
+<span class="font-label-md text-label-md text-on-surface">3.2x</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Students</span>
+<span class="font-label-md text-label-md text-on-surface">840+</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Uptime</span>
+<span class="font-label-md text-label-md text-on-surface">99.9%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Provider Card 2 -->
+<div class="flex flex-col gap-4 group cursor-pointer">
+<div class="relative overflow-hidden rounded-xl aspect-[16/9]">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A collaborative workshop environment featuring diverse professionals working together around a minimalist table with high-end tech gadgets. The atmosphere is energetic and focused, with soft natural light streaming through large windows. The interior design is modern-minimalist with a neutral color scheme and blue accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnB4YizdYCtr3kADVEuxyKnvwj1cA3zR02zRov-F1vFsJsDWpcgtdI1yXFXh2kA0uF2xWySrIH807CKjf-I7cQrk4xxduOVwEqWHBi0sgmDiEcI27adLk3am42zSNuuUQ1IZOZiTQqLPgM1J-nXYPnppgtjC1jy2ZJ66Q8-ckRU04iubnAkd91s7JEfxS5qyfhdUTaZwTokdajfBfDNjiUzhOtOU5te5lxirpS57mus92BTZSN2l-NzFeADVhLLdIf4vhJeCgjMEd0">
+<div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded text-[10px] font-bold font-label-sm uppercase">Growth Leader</div>
+</div>
+<div>
+<div class="flex items-center justify-between mb-1">
+<h4 class="font-headline-md text-headline-md text-on-surface">LeadEdge Consult</h4>
+<div class="flex items-center gap-1 text-on-tertiary-container">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md">4.7</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-4 line-clamp-2">Executive coaching and managerial development frameworks designed for rapid organizational scaling.</p>
+<div class="flex items-center gap-6">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">ROI</span>
+<span class="font-label-md text-label-md text-on-surface">2.8x</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Students</span>
+<span class="font-label-md text-label-md text-on-surface">320+</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Uptime</span>
+<span class="font-label-md text-label-md text-on-surface">98.5%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Provider Card 3 -->
+<div class="flex flex-col gap-4 group cursor-pointer">
+<div class="relative overflow-hidden rounded-xl aspect-[16/9]">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A futuristic data visualization displayed on a large high-resolution screen in a darkened control room. The graphics are sharp, intricate, and rely on a palette of electric blues and deep charcoal. The scene represents cutting-edge information technology and analytical precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcDp9hvyWfic0EXik2QcxeQWNL94nWPlPALaCZ3EdA7m68XmAYMEV45kj4UO2q3ko7QBJg2EyVe7weoSfD7uo3TiBhBnAuCyiwzaLTSkk-BABKOK16n3DQpzZ9YVx1wzM8bpD00TKawFGq4kVTTq2MiDvzMurxyUVInKNMzCnPWxiWIiStuAzhIB_Tww7lAohL6PR08S1CqhPXpT9F7IJcMk_XoYPbrZuO4H3JogBR3qI4bCTOMFuUy-8J62lRVGnDmR_i64jotU_G">
+<div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded text-[10px] font-bold font-label-sm uppercase">Data Specialist</div>
+</div>
+<div>
+<div class="flex items-center justify-between mb-1">
+<h4 class="font-headline-md text-headline-md text-on-surface">Vector Analytics</h4>
+<div class="flex items-center gap-1 text-on-tertiary-container">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md">4.8</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-4 line-clamp-2">Deep-dive technical training for data scientists, covering machine learning models and big data architecture.</p>
+<div class="flex items-center gap-6">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">ROI</span>
+<span class="font-label-md text-label-md text-on-surface">4.1x</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Students</span>
+<span class="font-label-md text-label-md text-on-surface">510+</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Uptime</span>
+<span class="font-label-md text-label-md text-on-surface">100%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+<!-- New Program Modal -->
+<div id="newProgramModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+  <div class="bg-surface-bright border border-outline-variant rounded-2xl max-w-md w-full p-6 shadow-2xl transform transition-all duration-300 scale-95 opacity-0" id="modalContainer">
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="font-headline-md text-headline-md text-on-surface">Add New Program</h3>
+      <button id="closeModalBtn" class="p-1 rounded-full hover:bg-surface-container-low transition-colors text-outline">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    
+    <form method="POST" class="space-y-4">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="create">
+      <div>
+        <label for="title" class="block text-label-md font-bold mb-1.5 text-on-surface">Program Title</label>
+        <input type="text" id="title" name="title" required class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:border-secondary focus:outline-none" placeholder="e.g., Advanced React Patterns">
+      </div>
+      
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label for="provider" class="block text-label-md font-bold mb-1.5 text-on-surface">Provider</label>
+          <input type="text" id="provider" name="provider" required class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:border-secondary focus:outline-none" placeholder="e.g., TESDA">
+        </div>
+        <div>
+          <label for="duration" class="block text-label-md font-bold mb-1.5 text-on-surface">Duration</label>
+          <input type="text" id="duration" name="duration" required class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:border-secondary focus:outline-none" placeholder="e.g., 40 Hours">
+        </div>
+      </div>
+      
+      <div>
+        <label for="scheduled_date" class="block text-label-md font-bold mb-1.5 text-on-surface">Scheduled Start Date</label>
+        <input type="date" id="scheduled_date" name="scheduled_date" required class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:border-secondary focus:outline-none">
+      </div>
+      
+      <div>
+        <label for="skill_addressed" class="block text-label-md font-bold mb-1.5 text-on-surface">Addresses Skill</label>
+        <select id="skill_addressed" name="skill_addressed" required class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:border-secondary focus:outline-none">
+          <option value="" disabled selected>Select a target skill</option>
+          {% for skill in skills %}
+            <option value="{{ skill.id }}">{{ skill.name }} ({{ skill.category }})</option>
+          {% endfor %}
+        </select>
+      </div>
+      
+      <div>
+        <label for="description" class="block text-label-md font-bold mb-1.5 text-on-surface">Description</label>
+        <textarea id="description" name="description" rows="3" class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:border-secondary focus:outline-none" placeholder="Briefly describe the program contents..."></textarea>
+      </div>
+      
+      <div class="pt-4 border-t border-outline-variant flex justify-end gap-3">
+        <button type="button" id="cancelModalBtn" class="px-4 py-2 border border-outline-variant rounded-lg text-label-md font-label-md hover:bg-surface-container-low transition-colors">Cancel</button>
+        <button type="submit" class="px-6 py-2 bg-primary text-on-primary rounded-lg text-label-md font-label-md hover:opacity-90 transition-opacity">Save Program</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Enroll Candidate Modal -->
+<div id="enrollModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+  <div class="bg-surface-bright border border-outline-variant rounded-2xl max-w-md w-full p-6 shadow-2xl">
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="font-headline-md text-headline-md text-on-surface">Enroll Applicant in Training</h3>
+      <button onclick="closeEnrollModal()" class="p-1 rounded-full hover:bg-surface-container-low transition-colors text-outline">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    
+    <form method="POST" class="space-y-4">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="enroll">
+      <input type="hidden" name="training_program_id" id="enrollProgramId">
+      
+      <div>
+        <label class="block text-label-md font-bold mb-1.5 text-on-surface">Training Program</label>
+        <input type="text" id="enrollProgramTitle" readonly class="w-full bg-surface-container border border-outline-variant rounded-lg px-3 py-2 text-body-md cursor-not-allowed">
+      </div>
+      
+      <div>
+        <label for="applicant_id" class="block text-label-md font-bold mb-1.5 text-on-surface">Select Applicant</label>
+        <select id="applicant_id" name="applicant_id" required class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:border-secondary focus:outline-none">
+          <option value="" disabled selected>Select an applicant</option>
+          {% for app in applicants %}
+            <option value="{{ app.id }}">{{ app.user.get_full_name }} (Preferred Job: {{ app.preferred_job|default:"Any" }})</option>
+          {% endfor %}
+        </select>
+      </div>
+      
+      <div class="pt-4 border-t border-outline-variant flex justify-end gap-3">
+        <button type="button" onclick="closeEnrollModal()" class="px-4 py-2 border border-outline-variant rounded-lg text-label-md font-label-md hover:bg-surface-container-low transition-colors">Cancel</button>
+        <button type="submit" class="px-6 py-2 bg-secondary text-white rounded-lg text-label-md font-label-md hover:opacity-90 transition-opacity font-bold">Enroll Applicant</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Confirm Completion Modal -->
+<div id="completeModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+  <div class="bg-surface-bright border border-outline-variant rounded-2xl max-w-md w-full p-6 shadow-2xl">
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="font-headline-md text-headline-md text-on-surface">Confirm Training Completion</h3>
+      <button onclick="closeCompleteModal()" class="p-1 rounded-full hover:bg-surface-container-low transition-colors text-outline">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    
+    <form method="POST" class="space-y-4">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="confirm_finish">
+      <input type="hidden" name="training_program_id" id="completeProgramId">
+      
+      <div>
+        <label class="block text-label-md font-bold mb-1.5 text-on-surface">Training Program</label>
+        <input type="text" id="completeProgramTitle" readonly class="w-full bg-surface-container border border-outline-variant rounded-lg px-3 py-2 text-body-md cursor-not-allowed">
+      </div>
+      
+      <div>
+        <label class="block text-label-md font-bold mb-2 text-on-surface">Select Applicants Who Completed & Attended</label>
+        <div id="enrolledChecklist" class="space-y-2 max-h-48 overflow-y-auto p-2 bg-surface-container rounded-lg border border-outline-variant/30">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+      
+      <p class="text-xs text-on-surface-variant leading-relaxed italic">Checked applicants will receive status "Attended & Completed" and have the corresponding skill added to their profile at Level 3. Unchecked applicants will be marked as "No Show".</p>
+      
+      <div class="pt-4 border-t border-outline-variant flex justify-end gap-3">
+        <button type="button" onclick="closeCompleteModal()" class="px-4 py-2 border border-outline-variant rounded-lg text-label-md font-label-md hover:bg-surface-container-low transition-colors">Cancel</button>
+        <button type="submit" class="px-6 py-2 bg-green-600 text-white rounded-lg text-label-md font-label-md hover:opacity-90 transition-opacity font-bold">Confirm Finish</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- FAB for Quick Insights (Suppressed on details, shown on dashboard) -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-secondary text-on-secondary rounded-full flex items-center justify-center shadow-xl hover:scale-110 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined">auto_awesome</span>
+</button>
+<script>
+        // Micro-interactions for table rows
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                row.style.cursor = 'pointer';
+            });
+        });
+
+        // Simple mock search functionality
+        const searchInput = document.querySelector('input[type="text"]');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                console.log('Searching for:', e.target.value);
+                // Integration logic would go here
+            });
+        }
+
+        // Modal Controls
+        const modal = document.getElementById('newProgramModal');
+        const modalContainer = document.getElementById('modalContainer');
+        const openBtn = document.getElementById('openModalBtn');
+        const closeBtn = document.getElementById('closeModalBtn');
+        const cancelBtn = document.getElementById('cancelModalBtn');
+
+        function showModal() {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                modalContainer.classList.remove('scale-95', 'opacity-0');
+                modalContainer.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function hideModal() {
+            modalContainer.classList.remove('scale-100', 'opacity-100');
+            modalContainer.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
+
+        if (openBtn) openBtn.addEventListener('click', showModal);
+        if (closeBtn) closeBtn.addEventListener('click', hideModal);
+        if (cancelBtn) cancelBtn.addEventListener('click', hideModal);
+
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    hideModal();
+                }
+            });
+        }
+
+        // Enroll Modal helpers
+        function openEnrollModal(id, title) {
+            document.getElementById('enrollProgramId').value = id;
+            document.getElementById('enrollProgramTitle').value = title;
+            const enrollModal = document.getElementById('enrollModal');
+            enrollModal.classList.remove('hidden');
+            enrollModal.classList.add('flex');
+        }
+        function closeEnrollModal() {
+            const enrollModal = document.getElementById('enrollModal');
+            enrollModal.classList.add('hidden');
+            enrollModal.classList.remove('flex');
+        }
+
+        // Complete Modal helpers
+        function openCompleteModal(id, title, enrolledList) {
+            document.getElementById('completeProgramId').value = id;
+            document.getElementById('completeProgramTitle').value = title;
+            
+            const container = document.getElementById('enrolledChecklist');
+            container.innerHTML = '';
+            
+            if (enrolledList.length === 0) {
+                container.innerHTML = '<p class="text-xs text-outline italic">No applicants enrolled.</p>';
+            } else {
+                enrolledList.forEach(app => {
+                    const div = document.createElement('div');
+                    div.className = 'flex items-center gap-2 py-1';
+                    div.innerHTML = `
+                        <input type="checkbox" name="completed_applicants" value="${app.id}" id="complete_app_${app.id}" class="rounded border-outline-variant text-secondary focus:ring-secondary">
+                        <label for="complete_app_${app.id}" class="text-sm text-on-surface cursor-pointer select-none">${app.name}</label>
+                    `;
+                    container.appendChild(div);
+                });
+            }
+            
+            const completeModal = document.getElementById('completeModal');
+            completeModal.classList.remove('hidden');
+            completeModal.classList.add('flex');
+        }
+        function closeCompleteModal() {
+            const completeModal = document.getElementById('completeModal');
+            completeModal.classList.add('hidden');
+            completeModal.classList.remove('flex');
+        }
+    </script>
+</body></html>
