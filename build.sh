@@ -10,3 +10,6 @@ python manage.py collectstatic --no-input
 
 # Run database migrations
 python manage.py migrate
+
+# Temporary database seed (will remove after database is seeded)
+python reset_database_data.py
