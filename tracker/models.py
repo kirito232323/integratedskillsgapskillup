@@ -234,11 +234,36 @@ class JobSkillRequirement(models.Model):
 class TrainingProgram(models.Model):
     title = models.CharField(max_length=200)
     provider = models.CharField(max_length=200, default='TESDA')
-    skill_addressed = models.ForeignKey(CentralizedSkill, on_delete=models.CASCADE)
+    skill_addressed = models.ForeignKey(CentralizedSkill, on_delete=models.SET_NULL, null=True, blank=True)
+    skills_addressed = models.ManyToManyField(CentralizedSkill, blank=True, related_name='training_programs')
     description = models.TextField(blank=True, null=True)
+    location = models.CharField(max_length=255, default='PESO Training Center', blank=True, null=True)
     duration = models.CharField(max_length=100, default='40 Hours')
     scheduled_date = models.DateField(blank=True, null=True)
     status = models.CharField(max_length=20, default='Scheduled') # Scheduled, In Progress, Completed
+    slots = models.PositiveIntegerField(default=30)
+    remaining_slots = models.PositiveIntegerField(default=30)
+
+    @property
+    def available_slots(self):
+        enrolled_count = self.enrollments.count()
+        return max(0, self.slots - enrolled_count)
+
+    @property
+    def all_skills(self):
+        m2m = list(self.skills_addressed.all())
+        if m2m:
+            return m2m
+        if self.skill_addressed:
+            return [self.skill_addressed]
+        return []
+
+    @property
+    def skills_display(self):
+        skills = self.all_skills
+        if skills:
+            return ", ".join(s.name for s in skills)
+        return "None"
 
     def __str__(self):
         return self.title

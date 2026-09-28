@@ -120,20 +120,29 @@
 </div>
 <div class="flex items-center gap-4">
 <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">notifications</button>
-<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">help</button>
-<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">settings</button>
-<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
-<img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCn5ndUBvKYHDdfjOtDcuDcmEa-zwbSgM-ZLHNPtfHm7uL9e355N19pHC8c-XBPUwwXHIzoATnKENMDvabjLGF5diSFylP09pwQghoAY0N70mks-GlVv2KmatElbeqz2_5J-gSw4HGwnHnPHYMLeRKflzGezIfmEqF1sJTCsVHaAp-3UBTYmVg6yrq3nRzkltjZyYRqaTWNO9ETM3eG6xeP_aE-PZkbZbeBZvG-dmCW3fgaiDFfFN1v9i2cwj6DH0AUyxyPRP9c4y2t">
-</div>
+<a href="{% url 'peso_profile_admin' %}" class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80" title="Settings">settings</a>
+<a href="{% url 'peso_profile_admin' %}" class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant bg-secondary/15 flex items-center justify-center font-bold text-xs text-secondary shrink-0 hover:ring-2 hover:ring-secondary transition-all" title="{{ request.user.get_full_name }}">
+{% if request.user.profile.profile_picture %}
+<img alt="{{ request.user.get_full_name }}" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+{% else %}
+{{ request.user.first_name|slice:":1"|upper }}{{ request.user.last_name|slice:":1"|upper|default:"P" }}
+{% endif %}
+</a>
 </div>
 </header>
 <!-- SideNavBar Shell -->
 <aside class="fixed left-0 top-0 h-full w-64 pt-20 bg-surface-container-lowest dark:bg-primary-container border-r border-outline-variant dark:border-outline hidden md:flex flex-col p-4 gap-2 z-40">
 <div class="flex items-center gap-3 px-2 py-4 mb-4 border-b border-outline-variant/30">
-<div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center text-white font-black text-xl">P</div>
+{% if request.user.profile.profile_picture %}
+<div class="w-10 h-10 rounded-lg overflow-hidden border border-outline-variant shrink-0">
+  <img alt="Office Logo" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+</div>
+{% else %}
+<div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center text-white font-black text-xl shrink-0">P</div>
+{% endif %}
 <div>
-<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">Enterprise Portal</h2>
-<p class="text-[10px] text-on-surface-variant opacity-70">Talent Management</p>
+<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">SKILLUP Portal</h2>
+<p class="text-[10px] text-on-surface-variant opacity-70">Public Employment Service</p>
 </div>
 </div>
 <nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
@@ -163,7 +172,7 @@
 </a>
 <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'training_monitoring_admin' %}">
 <span class="material-symbols-outlined">school</span>
-<span>Learning Paths</span>
+<span>Training Programs</span>
 </a>
 <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'job_matching_analytics_admin' %}">
 <span class="material-symbols-outlined">monitoring</span>
@@ -175,10 +184,6 @@
 </a>
 </nav>
 <div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-1">
-<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="#">
-<span class="material-symbols-outlined">support_agent</span>
-<span>Support</span>
-</a>
 <a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'logout' %}">
 <span class="material-symbols-outlined">logout</span>
 <span>Log Out</span>
@@ -194,12 +199,23 @@
 <h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Reports</h2>
 <p class="font-body-md text-on-surface-variant max-w-2xl">Visualizing the full talent lifecycle from initial application through successful placement and long-term retention.</p>
 </div>
-<div class="flex gap-3">
-<div class="flex items-center bg-white border border-outline-variant px-3 py-1.5 rounded-lg text-sm font-medium">
-<span class="material-symbols-outlined text-[18px] mr-2">calendar_today</span>
-                    Last 90 Days
-                </div>
-<a href="{% url 'export_analytics_csv' %}?report=all" class="bg-secondary text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-2 hover:opacity-90 transition-opacity">
+<div class="flex items-center gap-3 flex-wrap">
+<!-- Timeframe Dropdown Filter -->
+<form method="GET" class="inline-flex items-center">
+  <div class="flex items-center bg-white border border-outline-variant px-3 py-1.5 rounded-lg text-sm font-medium shadow-sm hover:border-secondary transition-colors">
+    <span class="material-symbols-outlined text-[18px] mr-2 text-on-surface-variant">calendar_today</span>
+    <select name="timeframe" onchange="this.form.submit()" class="bg-transparent border-none text-xs font-semibold text-on-surface focus:ring-0 cursor-pointer pr-4">
+      <option value="all" {% if timeframe == 'all' or not timeframe %}selected{% endif %}>All Time</option>
+      <option value="30" {% if timeframe == '30' %}selected{% endif %}>Last 30 Days</option>
+      <option value="60" {% if timeframe == '60' %}selected{% endif %}>Last 60 Days</option>
+      <option value="90" {% if timeframe == '90' %}selected{% endif %}>Last 90 Days</option>
+      <option value="365" {% if timeframe == '365' %}selected{% endif %}>This Year</option>
+    </select>
+  </div>
+</form>
+
+<!-- Export Data CSV Button -->
+<a href="{% url 'export_analytics_csv' %}?report=referrals" class="bg-secondary text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-2 hover:opacity-90 transition-opacity shadow-sm text-sm">
 <span class="material-symbols-outlined text-[18px]">download</span> Export Data
 </a>
 </div>
@@ -209,156 +225,220 @@
 <div class="bento-card p-6 rounded-xl relative overflow-hidden">
 <div class="flex justify-between items-start mb-4">
 <span class="text-on-surface-variant font-label-md">PLACEMENT RATE</span>
-<span class="text-on-tertiary-container bg-tertiary-fixed text-[10px] px-2 py-0.5 rounded-full">+4.2%</span>
+<span class="text-on-tertiary-container bg-tertiary-fixed text-[10px] px-2 py-0.5 rounded-full font-bold">{% if conversion_rate > 0 %}+{{ conversion_rate|floatformat:1 }}%{% else %}0.0%{% endif %}</span>
 </div>
 <div class="flex items-baseline gap-2">
 <span class="font-display-lg text-display-lg text-on-surface">{{ conversion_rate|floatformat:1 }}%</span>
 <span class="font-label-sm text-outline">AVG</span>
 </div>
-<div class="w-full h-1 bg-surface-container mt-4 rounded-full overflow-hidden">
-<div class="h-full bg-secondary progress-bar" data-progress="{{ conversion_rate }}"></div>
+<div class="w-full h-1.5 bg-surface-container mt-4 rounded-full overflow-hidden">
+<div class="h-full bg-secondary progress-bar" data-progress="{{ conversion_rate }}" style="width: {{ conversion_rate }}%"></div>
 </div>
-<p class="text-xs text-on-surface-variant mt-2">Referral to Placement</p>
+<p class="text-xs text-on-surface-variant mt-2"><strong class="text-on-surface font-semibold">{{ hired_count }}</strong> of {{ total_referrals }} Candidates Hired</p>
 </div>
 <div class="bento-card p-6 rounded-xl">
 <div class="flex justify-between items-start mb-4">
 <span class="text-on-surface-variant font-label-md">NO FEEDBACK GAP</span>
-<span class="text-on-tertiary-container bg-tertiary-fixed text-[10px] px-2 py-0.5 rounded-full">Gap rate</span>
+<span class="text-on-tertiary-container bg-tertiary-fixed text-[10px] px-2 py-0.5 rounded-full font-bold">Gap rate</span>
 </div>
 <div class="flex items-baseline gap-2">
 <span class="font-display-lg text-display-lg text-on-surface">{{ no_response_rate|floatformat:1 }}%</span>
 <span class="font-label-sm text-outline">TARGET 0%</span>
 </div>
-<div class="w-full h-1 bg-surface-container mt-4 rounded-full overflow-hidden">
-<div class="h-full bg-error progress-bar" data-progress="{{ no_response_rate }}"></div>
+<div class="w-full h-1.5 bg-surface-container mt-4 rounded-full overflow-hidden">
+<div class="h-full bg-error progress-bar" data-progress="{{ no_response_rate }}" style="width: {{ no_response_rate }}%"></div>
 </div>
-<p class="text-xs text-on-surface-variant mt-2">Referrals with no employer feedback</p>
+<p class="text-xs text-on-surface-variant mt-2"><strong class="text-on-surface font-semibold">{{ no_response_count }}</strong> awaiting employer response</p>
 </div>
 <div class="bento-card p-6 rounded-xl">
 <div class="flex justify-between items-start mb-4">
 <span class="text-on-surface-variant font-label-md">MISMATCH RATE</span>
-<span class="text-error bg-error-container text-[10px] px-2 py-0.5 rounded-full">Education</span>
+<span class="text-error bg-error-container text-[10px] px-2 py-0.5 rounded-full font-bold">Education</span>
 </div>
 <div class="flex items-baseline gap-2">
 <span class="font-display-lg text-display-lg text-on-surface">{{ mismatch_rate|floatformat:1 }}%</span>
 <span class="font-label-sm text-outline">MISMATCH</span>
 </div>
-<div class="w-full h-1 bg-surface-container mt-4 rounded-full overflow-hidden">
-<div class="h-full bg-secondary progress-bar" data-progress="{{ mismatch_rate }}"></div>
+<div class="w-full h-1.5 bg-surface-container mt-4 rounded-full overflow-hidden">
+<div class="h-full bg-amber-500 progress-bar" data-progress="{{ mismatch_rate }}" style="width: {{ mismatch_rate }}%"></div>
 </div>
-<p class="text-xs text-on-surface-variant mt-2">Placed outside field of study</p>
+<p class="text-xs text-on-surface-variant mt-2"><strong class="text-on-surface font-semibold">{{ mismatched_count }}</strong> outside candidate field of study</p>
 </div>
 <div class="bento-card p-6 rounded-xl">
 <div class="flex justify-between items-start mb-4">
 <span class="text-on-surface-variant font-label-md">TOTAL REFERRALS</span>
-<span class="text-on-tertiary-container bg-tertiary-fixed text-[10px] px-2 py-0.5 rounded-full">Active</span>
+<span class="text-on-tertiary-container bg-tertiary-fixed text-[10px] px-2 py-0.5 rounded-full font-bold">Active</span>
 </div>
 <div class="flex items-baseline gap-2">
 <span class="font-display-lg text-display-lg text-on-surface">{{ total_referrals }}</span>
 <span class="font-label-sm text-outline">LOGGED</span>
 </div>
-<div class="w-full h-1 bg-surface-container mt-4 rounded-full overflow-hidden">
+<div class="w-full h-1.5 bg-surface-container mt-4 rounded-full overflow-hidden">
 <div class="h-full bg-secondary" style="width: 100%"></div>
 </div>
-<p class="text-xs text-on-surface-variant mt-2">Referrals in system</p>
+<p class="text-xs text-on-surface-variant mt-2">Active across <strong class="text-on-surface font-semibold">{{ total_vacancies }}</strong> job vacancies</p>
 </div>
 </section>
 <!-- Visualization Row 1 -->
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-<!-- Transition Flow -->
-<div class="lg:col-span-2 bento-card rounded-xl p-6">
-<h3 class="font-headline-md text-[18px] text-on-surface mb-6">Candidate Transition Funnel</h3>
-<div class="relative h-64 flex items-end justify-between gap-4 px-4">
-<!-- Funnel Steps -->
-<div class="flex flex-col items-center flex-1">
-<span class="font-label-sm text-outline mb-2">12,400</span>
-<div class="w-full bg-surface-container-high rounded-t-lg transition-all duration-500 hover:bg-secondary/20" style="height: 100%"></div>
-<span class="mt-2 text-xs font-semibold text-on-surface-variant">Applied</span>
-</div>
-<div class="flex flex-col items-center flex-1">
-<span class="font-label-sm text-outline mb-2">4,820</span>
-<div class="w-full bg-surface-container-highest rounded-t-lg transition-all duration-500 hover:bg-secondary/40" style="height: 38%"></div>
-<span class="mt-2 text-xs font-semibold text-on-surface-variant">Vetted</span>
-</div>
-<div class="flex flex-col items-center flex-1">
-<span class="font-label-sm text-outline mb-2">2,150</span>
-<div class="w-full bg-secondary-fixed rounded-t-lg transition-all duration-500 hover:bg-secondary/60" style="height: 17%"></div>
-<span class="mt-2 text-xs font-semibold text-on-surface-variant">Interviewed</span>
-</div>
-<div class="flex flex-col items-center flex-1">
-<span class="font-label-sm text-outline mb-2">840</span>
-<div class="w-full bg-secondary-container rounded-t-lg transition-all duration-500 hover:opacity-80" style="height: 7%"></div>
-<span class="mt-2 text-xs font-semibold text-on-surface-variant">Offered</span>
-</div>
-<div class="flex flex-col items-center flex-1">
-<span class="font-label-sm text-outline mb-2">712</span>
-<div class="w-full bg-secondary rounded-t-lg transition-all duration-500" style="height: 6%"></div>
-<span class="mt-2 text-xs font-semibold text-on-surface-variant">Placed</span>
-</div>
-</div>
-</div>
-<!-- Industry Distribution (Radar-like vibe) -->
-<div class="bento-card rounded-xl p-6">
-<h3 class="font-headline-md text-[18px] text-on-surface mb-6">Industry Distribution</h3>
-<div class="space-y-4">
+<!-- Dynamic Candidate Transition Funnel -->
+<div class="lg:col-span-2 bento-card rounded-xl p-6 flex flex-col justify-between">
 <div>
-<div class="flex justify-between text-xs mb-1">
-<span>FinTech</span>
-<span class="font-label-md">32%</span>
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <h3 class="font-headline-md text-[18px] text-on-surface">Candidate Transition Funnel</h3>
+      <p class="text-xs text-on-surface-variant mt-0.5">Real-time candidate conversion through employment stages</p>
+    </div>
+    <span class="text-xs font-bold text-secondary bg-secondary/10 px-2.5 py-1 rounded-full border border-secondary/20 flex items-center gap-1">
+      <span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span> Live Pipeline
+    </span>
+  </div>
+  <div class="relative h-64 flex items-end justify-between gap-3 sm:gap-4 px-2 sm:px-4">
+    <!-- Funnel Step: Applied -->
+    <div class="flex flex-col items-center flex-1 h-full justify-end group">
+      <div class="flex flex-col items-center mb-2">
+        <span class="font-label-sm font-bold text-on-surface text-sm">{{ funnel.applied }}</span>
+        <span class="text-[10px] text-on-surface-variant font-semibold">100%</span>
+      </div>
+      <div class="w-full bg-blue-100 border-2 border-blue-200 rounded-t-lg transition-all duration-500 group-hover:bg-blue-200" style="height: {{ funnel.applied_h }}%"></div>
+      <span class="mt-2 text-xs font-semibold text-on-surface-variant">Applied</span>
+    </div>
+    <!-- Funnel Step: Vetted -->
+    <div class="flex flex-col items-center flex-1 h-full justify-end group">
+      <div class="flex flex-col items-center mb-2">
+        <span class="font-label-sm font-bold text-on-surface text-sm">{{ funnel.vetted }}</span>
+        <span class="text-[10px] text-on-surface-variant font-semibold">{{ funnel.vetted_conv }}%</span>
+      </div>
+      <div class="w-full bg-blue-200 border-2 border-blue-300 rounded-t-lg transition-all duration-500 group-hover:bg-blue-300" style="height: {{ funnel.vetted_h }}%"></div>
+      <span class="mt-2 text-xs font-semibold text-on-surface-variant">Vetted</span>
+    </div>
+    <!-- Funnel Step: Interviewed -->
+    <div class="flex flex-col items-center flex-1 h-full justify-end group">
+      <div class="flex flex-col items-center mb-2">
+        <span class="font-label-sm font-bold text-on-surface text-sm">{{ funnel.interviewed }}</span>
+        <span class="text-[10px] text-on-surface-variant font-semibold">{{ funnel.interview_conv }}%</span>
+      </div>
+      <div class="w-full bg-blue-300 border-2 border-blue-400 rounded-t-lg transition-all duration-500 group-hover:bg-blue-400" style="height: {{ funnel.interviewed_h }}%"></div>
+      <span class="mt-2 text-xs font-semibold text-on-surface-variant">Interviewed</span>
+    </div>
+    <!-- Funnel Step: Offered -->
+    <div class="flex flex-col items-center flex-1 h-full justify-end group">
+      <div class="flex flex-col items-center mb-2">
+        <span class="font-label-sm font-bold text-on-surface text-sm">{{ funnel.offered }}</span>
+        <span class="text-[10px] text-on-surface-variant font-semibold">{{ funnel.offer_conv }}%</span>
+      </div>
+      <div class="w-full bg-blue-400 border-2 border-blue-500 rounded-t-lg transition-all duration-500 group-hover:bg-blue-500" style="height: {{ funnel.offered_h }}%"></div>
+      <span class="mt-2 text-xs font-semibold text-on-surface-variant">Offered</span>
+    </div>
+    <!-- Funnel Step: Placed -->
+    <div class="flex flex-col items-center flex-1 h-full justify-end group">
+      <div class="flex flex-col items-center mb-2">
+        <span class="font-label-sm font-bold text-blue-700 text-sm">{{ funnel.placed }}</span>
+        <span class="text-[10px] text-blue-700 font-bold">{{ funnel.placed_conv }}%</span>
+      </div>
+      <div class="w-full bg-blue-600 border-2 border-blue-700 rounded-t-lg transition-all duration-500 group-hover:bg-blue-700 shadow-sm" style="height: {{ funnel.placed_h }}%"></div>
+      <span class="mt-2 text-xs font-bold text-blue-700">Placed</span>
+    </div>
+  </div>
 </div>
-<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
-<div class="h-full bg-secondary" style="width: 32%"></div>
 </div>
-</div>
+<!-- Dynamic Industry Distribution -->
+<div class="bento-card rounded-xl p-6 flex flex-col justify-between">
 <div>
-<div class="flex justify-between text-xs mb-1">
-<span>HealthCare</span>
-<span class="font-label-md">24%</span>
+  <div class="flex justify-between items-center mb-6">
+    <h3 class="font-headline-md text-[18px] text-on-surface">Industry Distribution</h3>
+    <span class="text-[10px] uppercase font-bold text-on-surface-variant tracking-wider bg-surface-container px-2 py-0.5 rounded border border-outline-variant/40">Active Sectors</span>
+  </div>
+  <div class="space-y-4">
+    {% for item in industry_distribution %}
+      <div>
+        <div class="flex justify-between text-xs mb-1">
+          <span class="font-medium text-on-surface">{{ item.name }}</span>
+          <span class="font-label-md font-bold text-secondary">{{ item.percent }}%</span>
+        </div>
+        <div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+          <div class="h-full bg-secondary rounded-full" style="width: {{ item.percent }}%"></div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="text-xs text-outline italic py-4 text-center">No industry distributions available.</div>
+    {% endfor %}
+  </div>
 </div>
-<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
-<div class="h-full bg-secondary" style="width: 24%"></div>
-</div>
-</div>
-<div>
-<div class="flex justify-between text-xs mb-1">
-<span>E-Commerce</span>
-<span class="font-label-md">18%</span>
-</div>
-<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
-<div class="h-full bg-secondary" style="width: 18%"></div>
-</div>
-</div>
-<div>
-<div class="flex justify-between text-xs mb-1">
-<span>Cybersecurity</span>
-<span class="font-label-md">14%</span>
-</div>
-<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
-<div class="h-full bg-secondary" style="width: 14%"></div>
-</div>
-</div>
-<div>
-<div class="flex justify-between text-xs mb-1">
-<span>AI &amp; Robotics</span>
-<span class="font-label-md">12%</span>
-</div>
-<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
-<div class="h-full bg-secondary" style="width: 12%"></div>
-</div>
-</div>
-</div>
-<div class="mt-8 pt-6 border-t border-outline-variant flex justify-center">
-<img alt="Chart Background" class="w-24 h-24 opacity-10 grayscale" data-alt="A subtle, minimalist illustrative icon representing global industry connections and data points in a monochromatic gray style. The aesthetic is clean and professional, designed to sit as a faint background element in a corporate talent dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzRbBpmq-m1s2qXEquenyI-Dvu5uzXUELf3xGQo__bami8tLXdWT0K7n3dBADM-JK7UEplWE8yuDJZs7AwuprQaj7Ix4FLEIYvRSnt-v937VSuNe9APVEqU5Ikq8-hKGWsHshmmPmcVHv6Kek0-lGUvb7FC82HTrmlcztp7ENCmey574VOLxIT1tMHIJ9EiYsgJcDm5SVYJbgADjC76wjygPimH3Wigh-yBXI9nhiLSWH5_Vm4RCuIg54rrta-oFmUDykgS1T_u2lr">
+<div class="mt-8 pt-4 border-t border-outline-variant flex justify-between items-center text-xs text-on-surface-variant">
+  <span>Calculated from active job vacancies & referrals</span>
+  <span class="material-symbols-outlined text-sm text-secondary">domain</span>
 </div>
 </div>
 </div>
 <!-- High Density Data Table -->
 <section class="bento-card rounded-xl overflow-hidden mb-8">
-<div class="p-6 border-b border-outline-variant flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-<h3 class="font-headline-md text-[18px] text-on-surface">Referral & Placement Logs</h3>
+<div class="p-6 border-b border-outline-variant flex flex-col gap-4">
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+    <div>
+      <h3 class="font-headline-md text-[18px] text-on-surface">Referral & Placement Logs</h3>
+      <p class="text-xs text-on-surface-variant mt-0.5">Filter and track candidate transition through the employment pipeline</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <span id="logCountBadge" class="px-2.5 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-lg border border-secondary/20">
+        {{ referrals|length }} Records
+      </span>
+      <button type="button" id="resetFiltersBtn" onclick="resetLogFilters()" class="hidden px-3 py-1.5 border border-outline-variant hover:bg-surface-container-low text-xs font-semibold rounded-lg text-on-surface-variant transition-colors flex items-center gap-1">
+        <span class="material-symbols-outlined text-sm">restart_alt</span> Reset Filters
+      </button>
+    </div>
+  </div>
+
+  <!-- Filter Controls Toolbar -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 pt-2">
+    <!-- Search Input -->
+    <div class="relative flex items-center">
+      <span class="material-symbols-outlined absolute left-3 text-on-surface-variant pointer-events-none text-base">search</span>
+      <input type="text" id="logSearchInput" placeholder="Search applicant, job, employer..." autocomplete="off"
+             class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-9 pr-8 py-2 text-xs text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary focus:outline-none placeholder:text-outline/70">
+      <button type="button" id="clearLogSearchBtn" onclick="clearLogSearch()" class="absolute right-2.5 text-on-surface-variant hover:text-on-surface p-0.5 rounded hidden" title="Clear search">
+        <span class="material-symbols-outlined text-sm">close</span>
+      </button>
+    </div>
+
+    <!-- Status Filter Dropdown -->
+    <div>
+      <select id="logStatusFilter" onchange="filterLogRows()" class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-xs text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary focus:outline-none font-medium">
+        <option value="all">All Statuses</option>
+        <option value="pending">Pending</option>
+        <option value="stale">⚠️ Follow-up Required</option>
+        <option value="offer">Offer Extended</option>
+        <option value="onboarding">Onboarding Review</option>
+        <option value="hired">Hired (Probation / Regular)</option>
+        <option value="noshow">No Show (Alert)</option>
+        <option value="declined">Declined</option>
+        <option value="separated">Separated / Not Hired</option>
+      </select>
+    </div>
+
+    <!-- Field of Study Filter Dropdown -->
+    <div>
+      <select id="logFieldFilter" onchange="filterLogRows()" class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-xs text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary focus:outline-none font-medium">
+        <option value="all">All Fields of Study</option>
+        {% for fos in fields_of_study %}
+          <option value="{{ fos|lower }}">{{ fos }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- Skill Gaps Filter Dropdown -->
+    <div>
+      <select id="logGapFilter" onchange="filterLogRows()" class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-xs text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary focus:outline-none font-medium">
+        <option value="all">All Skill Gaps</option>
+        <option value="has_gaps">Candidates with Gaps</option>
+        <option value="no_gaps">No Gaps (100% Match)</option>
+      </select>
+    </div>
+  </div>
 </div>
+
 <div class="overflow-x-auto">
-<table class="w-full text-left">
+<table class="w-full text-left" id="referralLogsTable">
 <thead class="bg-surface-container-low text-on-surface-variant font-label-md text-[12px] uppercase tracking-wider">
 <tr>
 <th class="px-6 py-4">Applicant</th>
@@ -366,12 +446,18 @@
 <th class="px-6 py-4">Field of study</th>
 <th class="px-6 py-4">Date referred</th>
 <th class="px-6 py-4">Status</th>
-<th class="px-6 py-4 text-right">Gaps & Actions</th>
+<th class="px-6 py-4 text-right whitespace-nowrap min-w-[350px]">Gaps & Actions</th>
 </tr>
 </thead>
 <tbody class="divide-y divide-outline-variant">
 {% for r in referrals %}
-<tr class="zebra-row hover:bg-surface-container transition-colors cursor-pointer group">
+<tr class="zebra-row log-row hover:bg-surface-container transition-colors cursor-pointer group"
+    data-applicant="{{ r.applicant.user.get_full_name|lower }} {{ r.applicant.user.email|lower }}"
+    data-job="{{ r.job_vacancy.title|lower }} {{ r.job_vacancy.employer.user.first_name|lower }}"
+    data-field="{{ r.field_of_study|lower }}"
+    data-status="{{ r.status|lower }}"
+    data-stale="{% if r.is_stale %}true{% else %}false{% endif %}"
+    data-has-gaps="{% if r.key_gaps %}true{% else %}false{% endif %}">
 <td class="px-6 py-4">
 <div class="flex items-center gap-3">
 <div class="w-8 h-8 rounded-full bg-secondary-container/30 flex items-center justify-center text-secondary font-bold text-xs">
@@ -387,25 +473,25 @@
   {{ r.job_vacancy.title }}
   <div class="text-xs text-on-surface-variant">at {{ r.job_vacancy.employer.user.first_name }}</div>
 </td>
-<td class="px-6 py-4 text-sm font-semibold">
-  {{ r.field_of_study }}
-</td>
-<td class="px-6 py-4 text-sm font-label-md">
-  {{ r.date_referred|date:"M d, Y" }}
-</td>
-<td class="px-6 py-4">
+<td class="px-6 py-4 text-sm text-on-surface-variant font-medium">{{ r.field_of_study|default:"Not Specified" }}</td>
+<td class="px-6 py-4 font-label-md text-xs text-on-surface-variant whitespace-nowrap">{{ r.date_referred|date:"M d, Y" }}</td>
+<td class="px-6 py-4 whitespace-nowrap">
   {% if r.status == 'Pending' %}
-    <span class="bg-gray-100 text-gray-700 text-[10px] px-2 py-0.5 rounded font-bold uppercase inline-flex items-center">Pending</span>
     {% if r.is_stale %}
-      <span class="bg-amber-100 text-amber-800 text-[10px] px-2 py-0.5 rounded font-bold uppercase ml-1 flex items-center gap-1 inline-flex animate-pulse">
-        <span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">warning</span> Follow-up Required
-      </span>
+      <div class="inline-flex flex-col">
+        <span class="bg-amber-100 text-amber-900 border border-amber-300 text-[10px] px-2 py-0.5 rounded font-bold uppercase inline-flex items-center gap-1">
+          <span class="material-symbols-outlined text-[12px]">warning</span> Follow-Up Required
+        </span>
+        <span class="text-[9px] text-amber-700 font-semibold mt-0.5">&gt; 7 days without response</span>
+      </div>
+    {% else %}
+      <span class="bg-blue-100 text-blue-800 text-[10px] px-2 py-0.5 rounded font-bold uppercase inline-flex items-center">Pending</span>
     {% endif %}
   {% elif r.status == 'Accepted — Awaiting Onboarding' %}
-    <span class="bg-amber-100 text-amber-800 text-[10px] px-2 py-0.5 rounded font-bold uppercase inline-flex items-center">Offer Extended</span>
+    <span class="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded font-bold uppercase inline-flex items-center">Offer Extended</span>
   {% elif r.status == 'Confirmed — Onboarding' %}
-    <span class="bg-indigo-100 text-indigo-800 text-[10px] px-2 py-0.5 rounded font-bold uppercase inline-flex items-center">Onboarding Review</span>
-  {% elif r.status == 'Hired — Probationary' %}
+    <span class="bg-indigo-100 text-indigo-800 text-[10px] px-2 py-0.5 rounded font-bold uppercase inline-flex items-center">Onboarding</span>
+  {% elif r.status == 'Hired' or r.status == 'Hired — Probationary' %}
     <span class="bg-green-100 text-green-800 text-[10px] px-2 py-0.5 rounded font-bold uppercase inline-flex items-center">Hired (Probation)</span>
   {% elif r.status == 'Hired — Regular' or r.status == 'Regularly Employed' %}
     <span class="bg-green-100 text-green-800 text-[10px] px-2 py-0.5 rounded font-bold uppercase inline-flex items-center">Hired (Regular)</span>
@@ -419,12 +505,12 @@
     <span class="bg-gray-100 text-gray-700 text-[10px] px-2 py-0.5 rounded font-bold uppercase inline-flex items-center">{{ r.status }}</span>
   {% endif %}
 </td>
-<td class="px-6 py-4 text-right">
-  <div class="flex items-center justify-end gap-3 flex-wrap lg:flex-nowrap">
+<td class="px-6 py-4 text-right whitespace-nowrap">
+  <div class="inline-flex items-center justify-end gap-2 whitespace-nowrap">
     {% if r.key_gaps_list %}
-      <div class="text-[10px] text-error font-medium bg-error-container/20 px-2 py-0.5 rounded truncate max-w-[150px]" title="Gaps: {{ r.key_gaps }}">Gaps: {{ r.key_gaps }}</div>
+      <span class="text-[11px] text-error font-bold bg-error-container/25 border border-error-container px-2.5 py-1 rounded-lg truncate max-w-[120px] whitespace-nowrap" title="Gaps: {{ r.key_gaps }}">Gaps</span>
     {% else %}
-      <div class="text-[10px] text-green-700 font-medium bg-green-50 px-2 py-0.5 rounded">No Gaps</div>
+      <span class="text-[11px] text-green-700 font-bold bg-green-50 border border-green-200 px-2.5 py-1 rounded-lg whitespace-nowrap">No Gaps</span>
     {% endif %}
     
     <div id="attempts_data_{{ r.id }}" class="hidden">
@@ -441,7 +527,8 @@
       {% endfor %}
     </div>
 
-    <div class="flex items-center gap-2">
+    <!-- Action Buttons Row -->
+    <div class="inline-flex items-center gap-1.5 whitespace-nowrap">
       {% if r.status == 'Confirmed — Onboarding' or r.status == 'Accepted — Awaiting Onboarding' or r.status == 'No Show' %}
         <button type="button" 
                 data-id="{{ r.id }}" 
@@ -450,31 +537,38 @@
                 data-status="{{ r.pre_employment_status }}" 
                 data-notes="{{ r.coordination_notes|escapejs }}" 
                 data-reporting-date="{{ r.reporting_date|date:'Y-m-d' }}" 
-                data-nbi="{{ r.nbi_clearance.url|default:'' }}" 
-                data-medical="{{ r.medical_certificate.url|default:'' }}" 
-                data-birth="{{ r.birth_certificate.url|default:'' }}" 
-                data-diploma="{{ r.diploma_transcript.url|default:'' }}" 
-                data-prev-employment="{{ r.prev_employment_cert.url|default:'' }}" 
-                data-tesda="{{ r.tesda_cert.url|default:'' }}" 
+                data-nbi="{% if r.nbi_clearance %}{{ r.nbi_clearance.url }}{% endif %}" 
+                data-medical="{% if r.medical_certificate %}{{ r.medical_certificate.url }}{% endif %}" 
+                data-birth="{% if r.birth_certificate %}{{ r.birth_certificate.url }}{% endif %}" 
+                data-diploma="{% if r.diploma_transcript %}{{ r.diploma_transcript.url }}{% endif %}" 
+                data-prev-employment="{% if r.prev_employment_cert %}{{ r.prev_employment_cert.url }}{% endif %}" 
+                data-tesda="{% if r.tesda_cert %}{{ r.tesda_cert.url }}{% endif %}" 
                 data-sss="{{ r.sss_number|default:'' }}" 
                 data-philhealth="{{ r.philhealth_number|default:'' }}" 
                 data-pagibig="{{ r.pagibig_number|default:'' }}" 
                 data-tin="{{ r.bir_tin|default:'' }}" 
                 onclick="openOnboardingModalFromButton(this)" 
-                class="px-2 py-1 text-[11px] bg-secondary text-white hover:opacity-90 rounded font-semibold transition-all inline-flex items-center gap-1">
-          <span class="material-symbols-outlined text-[13px]">assignment_turned_in</span> Onboarding
+                class="px-2.5 py-1.5 text-xs bg-secondary text-white hover:bg-secondary/90 rounded-lg font-bold transition-all inline-flex items-center gap-1 shadow-2xs whitespace-nowrap shrink-0">
+          <span class="material-symbols-outlined text-[15px]">assignment_turned_in</span>
+          <span>Onboarding</span>
         </button>
       {% elif r.status != 'Hired' and r.status != 'Regularly Employed' and r.status != 'Hired — Regular' and r.status != 'Hired — Probationary' %}
-        <button type="button" onclick="openLogModal('{{ r.id }}', '{{ r.applicant.user.first_name }} {{ r.applicant.user.last_name }}', '{{ r.job_vacancy.title }}')" class="px-2 py-1 text-[11px] bg-secondary-container/40 hover:bg-secondary-container border border-outline-variant rounded font-semibold text-secondary transition-colors inline-flex items-center gap-1">
-          <span class="material-symbols-outlined text-[13px]">phone_forwarded</span> Log Follow-Up
+        <button type="button" onclick="openLogModal('{{ r.id }}', '{{ r.applicant.user.first_name }} {{ r.applicant.user.last_name }}', '{{ r.job_vacancy.title }}')" class="px-2.5 py-1.5 text-xs bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg font-bold text-secondary transition-colors inline-flex items-center gap-1 whitespace-nowrap shrink-0">
+          <span class="material-symbols-outlined text-[15px]">phone_forwarded</span>
+          <span>Log Follow-Up</span>
         </button>
       {% else %}
-        <span class="text-[10px] text-outline font-semibold uppercase">Active Placement</span>
+        <span class="text-[11px] text-emerald-700 bg-emerald-50 border border-emerald-200 font-bold uppercase px-2.5 py-1 rounded-lg whitespace-nowrap">Active Placement</span>
       {% endif %}
 
-      <form method="post" action="{% url 'update_referral_status' r.id %}" class="inline-flex items-center gap-1 bg-surface-container-low border border-outline-variant rounded p-0.5 {% if r.status == 'Hired' or r.status == 'Regularly Employed' %}opacity-60 pointer-events-none{% endif %}">
+      <a href="{% url 'applicant_employment_report' r.applicant.id %}" class="px-2.5 py-1.5 text-xs bg-white hover:bg-surface-container border border-outline-variant rounded-lg font-bold text-on-surface transition-all inline-flex items-center gap-1 shadow-2xs whitespace-nowrap shrink-0" title="View Full Applicant Employment Dossier">
+        <span class="material-symbols-outlined text-[15px]">description</span>
+        <span>Dossier</span>
+      </a>
+
+      <form method="post" action="{% url 'update_referral_status' r.id %}" class="inline-flex items-center bg-surface-container-low border border-outline-variant rounded-lg p-0.5 whitespace-nowrap shrink-0 {% if r.status == 'Hired' or r.status == 'Regularly Employed' %}opacity-60 pointer-events-none{% endif %}">
         {% csrf_token %}
-        <select name="status" onchange="this.form.submit()" {% if r.status == 'Hired' or r.status == 'Regularly Employed' %}disabled{% endif %} class="text-[11px] bg-transparent border-none py-0.5 pl-2 pr-6 focus:ring-0 cursor-pointer font-body-sm">
+        <select name="status" onchange="this.form.submit()" {% if r.status == 'Hired' or r.status == 'Regularly Employed' %}disabled{% endif %} class="text-xs bg-transparent border-none py-1 pl-2 pr-6 focus:ring-0 cursor-pointer font-semibold text-on-surface">
           <option value="Pending" {% if r.status == 'Pending' %}selected{% endif %}>Pending</option>
           <option value="Accepted — Awaiting Onboarding" {% if r.status == 'Accepted — Awaiting Onboarding' %}selected{% endif %}>Offer Extended</option>
           <option value="Confirmed — Onboarding" {% if r.status == 'Confirmed — Onboarding' %}selected{% endif %}>Onboarding</option>
@@ -490,10 +584,16 @@
 </td>
 </tr>
 {% empty %}
-<tr>
+<tr id="emptyLogsRow">
 <td colspan="6" class="px-6 py-8 text-center text-on-surface-variant italic">No referrals found in the system.</td>
 </tr>
 {% endfor %}
+<tr id="noMatchingLogsRow" class="hidden">
+  <td colspan="6" class="px-6 py-12 text-center text-on-surface-variant italic">
+    <span class="material-symbols-outlined text-outline text-3xl mb-1 block">filter_alt_off</span>
+    No referral records match the selected filters.
+  </td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -507,31 +607,6 @@
 </nav>
 </div>
 </section>
-<!-- Secondary Analytics Row -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-margin-desktop">
-<div class="bento-card p-6 rounded-xl flex items-center gap-6">
-<div class="flex-shrink-0">
-<div class="w-20 h-20 rounded-full border-8 border-secondary border-t-outline-variant rotate-45 flex items-center justify-center">
-<span class="text-sm font-bold -rotate-45">72%</span>
-</div>
-</div>
-<div>
-<h4 class="font-bold text-on-surface">Training Effectiveness</h4>
-<p class="text-sm text-on-surface-variant mb-2">Candidates who complete SKILLUP paths are 72% more likely to retain employment beyond 18 months.</p>
-<a class="text-secondary font-semibold text-sm flex items-center gap-1 hover:underline" href="#">View correlation report <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
-</div>
-</div>
-<div class="bento-card p-6 rounded-xl flex items-center gap-6">
-<div class="flex-shrink-0 w-20 h-20 bg-surface-container-highest rounded-xl flex items-center justify-center">
-<span class="material-symbols-outlined text-secondary text-4xl">trending_up</span>
-</div>
-<div>
-<h4 class="font-bold text-on-surface">Growth Projection</h4>
-<p class="text-sm text-on-surface-variant mb-2">Based on current pipeline activity, placements are projected to increase by 14% in Q4 2024.</p>
-<a class="text-secondary font-semibold text-sm flex items-center gap-1 hover:underline" href="#">See forecast model <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
-</div>
-</div>
-</div>
 </div>
 </main>
 <!-- Log Contact Attempt Modal -->
@@ -768,5 +843,131 @@
         function closeLogModal() {
             document.getElementById('contactModal').classList.add('hidden');
         }
-</script>
+
+        // ================= REFERRAL LOGS FILTERING LOGIC =================
+        const logSearchInput = document.getElementById('logSearchInput');
+        const clearLogSearchBtn = document.getElementById('clearLogSearchBtn');
+        const logStatusFilter = document.getElementById('logStatusFilter');
+        const logFieldFilter = document.getElementById('logFieldFilter');
+        const logGapFilter = document.getElementById('logGapFilter');
+        const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+        const logCountBadge = document.getElementById('logCountBadge');
+        const noMatchingLogsRow = document.getElementById('noMatchingLogsRow');
+
+        function filterLogRows() {
+            const searchVal = (logSearchInput.value || '').toLowerCase().trim();
+            const statusVal = logStatusFilter.value;
+            const fieldVal = logFieldFilter.value;
+            const gapVal = logGapFilter.value;
+
+            const isFiltered = searchVal !== '' || statusVal !== 'all' || fieldVal !== 'all' || gapVal !== 'all';
+            if (resetFiltersBtn) {
+                if (isFiltered) {
+                    resetFiltersBtn.classList.remove('hidden');
+                } else {
+                    resetFiltersBtn.classList.add('hidden');
+                }
+            }
+
+            const rows = document.querySelectorAll('.log-row');
+            let visibleCount = 0;
+
+            rows.forEach(row => {
+                const applicantText = row.dataset.applicant || '';
+                const jobText = row.dataset.job || '';
+                const fieldText = row.dataset.field || '';
+                const statusText = row.dataset.status || '';
+                const isStale = row.dataset.stale === 'true';
+                const hasGaps = row.dataset.hasGaps === 'true';
+
+                // 1. Text Search Match
+                let matchSearch = true;
+                if (searchVal) {
+                    matchSearch = applicantText.includes(searchVal) || jobText.includes(searchVal) || fieldText.includes(searchVal);
+                }
+
+                // 2. Status Match
+                let matchStatus = true;
+                if (statusVal === 'pending') {
+                    matchStatus = statusText.includes('pending');
+                } else if (statusVal === 'stale') {
+                    matchStatus = isStale;
+                } else if (statusVal === 'offer') {
+                    matchStatus = statusText.includes('accepted') || statusText.includes('offer');
+                } else if (statusVal === 'onboarding') {
+                    matchStatus = statusText.includes('onboarding') || statusText.includes('confirmed');
+                } else if (statusVal === 'hired') {
+                    matchStatus = statusText.includes('hired') || statusText.includes('regular');
+                } else if (statusVal === 'noshow') {
+                    matchStatus = statusText.includes('no show');
+                } else if (statusVal === 'declined') {
+                    matchStatus = statusText.includes('declined');
+                } else if (statusVal === 'separated') {
+                    matchStatus = statusText.includes('separated') || statusText.includes('not hired');
+                }
+
+                // 3. Field of Study Match
+                let matchField = true;
+                if (fieldVal !== 'all') {
+                    matchField = fieldText === fieldVal || fieldText.includes(fieldVal);
+                }
+
+                // 4. Gap Match
+                let matchGap = true;
+                if (gapVal === 'has_gaps') {
+                    matchGap = hasGaps;
+                } else if (gapVal === 'no_gaps') {
+                    matchGap = !hasGaps;
+                }
+
+                if (matchSearch && matchStatus && matchField && matchGap) {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            if (logCountBadge) {
+                logCountBadge.textContent = `${visibleCount} Records`;
+            }
+
+            if (noMatchingLogsRow) {
+                if (visibleCount === 0 && rows.length > 0) {
+                    noMatchingLogsRow.classList.remove('hidden');
+                } else {
+                    noMatchingLogsRow.classList.add('hidden');
+                }
+            }
+        }
+
+        function clearLogSearch() {
+            if (logSearchInput) {
+                logSearchInput.value = '';
+                if (clearLogSearchBtn) clearLogSearchBtn.classList.add('hidden');
+                filterLogRows();
+                logSearchInput.focus();
+            }
+        }
+
+        function resetLogFilters() {
+            if (logSearchInput) logSearchInput.value = '';
+            if (clearLogSearchBtn) clearLogSearchBtn.classList.add('hidden');
+            if (logStatusFilter) logStatusFilter.value = 'all';
+            if (logFieldFilter) logFieldFilter.value = 'all';
+            if (logGapFilter) logGapFilter.value = 'all';
+            filterLogRows();
+        }
+
+        if (logSearchInput) {
+            logSearchInput.addEventListener('input', (e) => {
+                if (e.target.value) {
+                    if (clearLogSearchBtn) clearLogSearchBtn.classList.remove('hidden');
+                } else {
+                    if (clearLogSearchBtn) clearLogSearchBtn.classList.add('hidden');
+                }
+                filterLogRows();
+            });
+        }
+    </script>
 </body></html>

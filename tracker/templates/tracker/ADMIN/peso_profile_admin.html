@@ -143,20 +143,29 @@
 </div>
 <div class="flex items-center gap-4">
 <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">notifications</button>
-<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">help</button>
-<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">settings</button>
-<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
-<img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCn5ndUBvKYHDdfjOtDcuDcmEa-zwbSgM-ZLHNPtfHm7uL9e355N19pHC8c-XBPUwwXHIzoATnKENMDvabjLGF5diSFylP09pwQghoAY0N70mks-GlVv2KmatElbeqz2_5J-gSw4HGwnHnPHYMLeRKflzGezIfmEqF1sJTCsVHaAp-3UBTYmVg6yrq3nRzkltjZyYRqaTWNO9ETM3eG6xeP_aE-PZkbZbeBZvG-dmCW3fgaiDFfFN1v9i2cwj6DH0AUyxyPRP9c4y2t">
-</div>
+<a href="{% url 'peso_profile_admin' %}" class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80" title="Settings">settings</a>
+<a href="{% url 'peso_profile_admin' %}" class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant bg-secondary/15 flex items-center justify-center font-bold text-xs text-secondary shrink-0 hover:ring-2 hover:ring-secondary transition-all" title="{{ request.user.get_full_name }}">
+{% if request.user.profile.profile_picture %}
+<img alt="{{ request.user.get_full_name }}" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+{% else %}
+{{ request.user.first_name|slice:":1"|upper }}{{ request.user.last_name|slice:":1"|upper|default:"P" }}
+{% endif %}
+</a>
 </div>
 </header>
 <!-- SideNavBar Shell -->
 <aside class="fixed left-0 top-0 h-full w-64 pt-20 bg-surface-container-lowest dark:bg-primary-container border-r border-outline-variant dark:border-outline hidden md:flex flex-col p-4 gap-2 z-40">
 <div class="flex items-center gap-3 px-2 py-4 mb-4 border-b border-outline-variant/30">
-<div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center text-white font-black text-xl">P</div>
+{% if request.user.profile.profile_picture %}
+<div class="w-10 h-10 rounded-lg overflow-hidden border border-outline-variant shrink-0">
+  <img alt="Office Logo" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+</div>
+{% else %}
+<div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center text-white font-black text-xl shrink-0">P</div>
+{% endif %}
 <div>
-<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">Enterprise Portal</h2>
-<p class="text-[10px] text-on-surface-variant opacity-70">Talent Management</p>
+<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">SKILLUP Portal</h2>
+<p class="text-[10px] text-on-surface-variant opacity-70">Public Employment Service</p>
 </div>
 </div>
 <nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
@@ -186,7 +195,7 @@
 </a>
 <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'training_monitoring_admin' %}">
 <span class="material-symbols-outlined">school</span>
-<span>Learning Paths</span>
+<span>Training Programs</span>
 </a>
 <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'job_matching_analytics_admin' %}">
 <span class="material-symbols-outlined">monitoring</span>
@@ -198,10 +207,6 @@
 </a>
 </nav>
 <div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-1">
-<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="#">
-<span class="material-symbols-outlined">support_agent</span>
-<span>Support</span>
-</a>
 <a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'logout' %}">
 <span class="material-symbols-outlined">logout</span>
 <span>Log Out</span>
@@ -211,42 +216,56 @@
 <!-- Main Canvas -->
 <main class="md:ml-64 pt-20 min-h-screen">
 <div class="p-margin-desktop space-y-gutter">
+<form method="POST" action="{% url 'peso_profile_admin' %}" enctype="multipart/form-data" id="profileSettingsForm">
+{% csrf_token %}
+<!-- Hidden File Input for Profile/Office Photo -->
+<input type="file" name="profile_picture" id="officePhotoInput" accept="image/*" class="hidden" onchange="previewOfficePhoto(this)">
+
 <!-- Header Section -->
-<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
 <div>
 <h2 class="font-headline-lg text-headline-lg text-on-surface mb-1">Settings</h2>
 <p class="text-body-lg text-on-surface-variant max-w-2xl">Configure global employment service parameters, office identifiers, and system-wide talent management logic.</p>
 </div>
 <div class="flex gap-3">
-<button class="px-6 py-2 border border-outline text-on-surface font-semibold rounded-lg hover:bg-surface-container transition-colors">Discard Changes</button>
-<button class="px-6 py-2 bg-secondary text-white font-semibold rounded-lg hover:shadow-lg transition-all">Save Profile</button>
+<button type="reset" class="px-6 py-2 border border-outline text-on-surface font-semibold rounded-lg hover:bg-surface-container transition-colors">Discard Changes</button>
+<button type="submit" class="px-6 py-2 bg-secondary text-white font-semibold rounded-lg hover:shadow-lg transition-all flex items-center gap-2">
+  <span class="material-symbols-outlined text-sm">save</span>
+  Save Profile
+</button>
 </div>
 </div>
+
 <!-- Bento Grid Settings Layout -->
 <div class="bento-grid">
-<!-- Primary Office Details (Large Card) -->
-<div class="bento-card col-span-12 lg:col-span-8 p-6 flex flex-col md:flex-row gap-8">
+<!-- Primary Office Details (Full Width Card) -->
+<div class="bento-card col-span-12 p-6 flex flex-col md:flex-row gap-8 shadow-sm">
 <div class="flex-shrink-0">
-<div class="relative w-32 h-32 rounded-2xl bg-surface-container-highest overflow-hidden group">
-<img class="w-full h-full object-cover" data-alt="A professional architectural photograph of a modern government office building interior with clean lines, large glass windows, and a warm wooden accent wall representing the Public Employment Service Office. The lighting is natural and bright, conveying a sense of transparency and modern public service efficiency." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBea5w49Spg7MbFlWoJHbGEagggpOyyZBVgmk28Azt4uuyOP5X8n5bf2AZUyBTy1lcslNTi9Y8YBC1zQZ62xwVTInqn5ScyF6L6dtdceH6Fik78oB5dC90gf5t6hqJyclAuFF6EOQg4aYJMBk3sMw7t4faDfGSNKzF0K1Hbb_1Z-XfwgWd836cdECn0R3VsTDgpUZNXxwP84HrnIXflcbHABUz1RTkrKSlXm7S36odw7yUEj5Vq8slZ_ZQHD7MowZ_XNrE8G3Nxfr_K">
-<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer">
-<span class="material-symbols-outlined text-white">photo_camera</span>
+<div class="relative w-36 h-36 rounded-2xl bg-surface-container-highest overflow-hidden group cursor-pointer border-2 border-dashed border-outline-variant hover:border-secondary transition-all" onclick="document.getElementById('officePhotoInput').click()" title="Click to upload office/profile picture">
+{% if profile.profile_picture %}
+<img id="officePhotoPreview" class="w-full h-full object-cover" src="{{ profile.profile_picture.url }}" alt="Office Photo">
+{% else %}
+<img id="officePhotoPreview" class="w-full h-full object-cover" data-alt="Office Photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBea5w49Spg7MbFlWoJHbGEagggpOyyZBVgmk28Azt4uuyOP5X8n5bf2AZUyBTy1lcslNTi9Y8YBC1zQZ62xwVTInqn5ScyF6L6dtdceH6Fik78oB5dC90gf5t6hqJyclAuFF6EOQg4aYJMBk3sMw7t4faDfGSNKzF0K1Hbb_1Z-XfwgWd836cdECn0R3VsTDgpUZNXxwP84HrnIXflcbHABUz1RTkrKSlXm7S36odw7yUEj5Vq8slZ_ZQHD7MowZ_XNrE8G3Nxfr_K">
+{% endif %}
+<div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition-opacity text-white text-xs font-semibold gap-1">
+<span class="material-symbols-outlined text-2xl">photo_camera</span>
+<span>Change Photo</span>
 </div>
 </div>
+<button type="button" onclick="document.getElementById('officePhotoInput').click()" class="mt-2 text-xs text-secondary font-bold flex items-center justify-center gap-1 w-full hover:underline">
+  <span class="material-symbols-outlined text-sm">upload</span>
+  Upload Image
+</button>
 </div>
 <div class="flex-1 space-y-4">
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="space-y-4">
 <div class="space-y-1">
-<label class="text-label-sm text-on-surface-variant">OFFICE NAME</label>
-<input class="w-full border-outline-variant focus:border-secondary rounded px-3 py-2 text-body-md" type="text" value="Regional PESO Headquarters - Central">
+<label class="text-label-sm text-on-surface-variant font-semibold">OFFICE NAME</label>
+<input name="office_name" class="w-full border border-outline-variant focus:border-secondary rounded px-3 py-2 text-body-md text-on-surface" type="text" value="{{ profile.company_name|default:'Regional PESO Headquarters - Central' }}">
 </div>
 <div class="space-y-1">
-<label class="text-label-sm text-on-surface-variant">OFFICE CODE</label>
-<input class="w-full border-outline-variant focus:border-secondary rounded px-3 py-2 text-body-md font-label-md" type="text" value="REG-CENTRAL-001">
-</div>
-<div class="space-y-1 col-span-full">
-<label class="text-label-sm text-on-surface-variant">PRIMARY ADDRESS</label>
-<input class="w-full border-outline-variant focus:border-secondary rounded px-3 py-2 text-body-md" type="text" value="122 Government Plaza, Suite 400, Metro Manila">
+<label class="text-label-sm text-on-surface-variant font-semibold">PRIMARY ADDRESS</label>
+<input name="address" class="w-full border border-outline-variant focus:border-secondary rounded px-3 py-2 text-body-md text-on-surface" type="text" value="{{ profile.address|default:'122 Government Plaza, Suite 400, Metro Manila' }}">
 </div>
 </div>
 <div class="pt-2">
@@ -257,27 +276,9 @@
 </div>
 </div>
 </div>
-<!-- KPI Quick Stats (Small Card) -->
-<div class="bento-card col-span-12 lg:col-span-4 p-6 bg-primary-container text-on-primary-fixed flex flex-col justify-between">
-<div class="flex justify-between items-start">
-<span class="material-symbols-outlined text-secondary-fixed text-4xl">hub</span>
-<div class="text-right">
-<div class="text-display-lg font-display-lg leading-none">24</div>
-<div class="text-label-sm opacity-70">ACTIVE SUB-OFFICES</div>
-</div>
-</div>
-<div class="mt-4 pt-4 border-t border-on-primary-container/20">
-<div class="flex justify-between text-body-sm">
-<span>System Uptime</span>
-<span class="font-label-md">99.98%</span>
-</div>
-<div class="w-full bg-on-primary-container/20 h-1.5 rounded-full mt-2 overflow-hidden">
-<div class="bg-tertiary-fixed-dim h-full w-[99.98%]"></div>
-</div>
-</div>
-</div>
-<!-- Global Parameters Configuration -->
-<div class="bento-card col-span-12 lg:col-span-7 p-6">
+
+<!-- Global Parameters Configuration (Full Width Card) -->
+<div class="bento-card col-span-12 p-6">
 <div class="flex items-center justify-between mb-6">
 <h3 class="font-headline-md text-headline-md">Service Parameters</h3>
 <span class="material-symbols-outlined text-on-surface-variant">tune</span>
@@ -320,44 +321,6 @@
 <option>Weekly Sync</option>
 </select>
 </div>
-</div>
-</div>
-</div>
-<!-- Talent Bench Health Visual -->
-<div class="bento-card col-span-12 lg:col-span-5 p-6 overflow-hidden relative">
-<h3 class="font-headline-md text-headline-md mb-2">Regional Talent Health</h3>
-<p class="text-body-sm text-on-surface-variant mb-6">Aggregate skill distribution across administrative zones.</p>
-<div class="relative h-48 w-full flex items-center justify-center">
-<!-- Simulated Skill Radar Chart -->
-<div class="absolute inset-0 flex items-center justify-center">
-<svg class="w-full h-full transform scale-110" viewBox="0 0 200 200">
-<!-- Radar Axes -->
-<circle cx="100" cy="100" fill="none" r="80" stroke="#E2E8F0" stroke-width="1"></circle>
-<circle cx="100" cy="100" fill="none" r="60" stroke="#E2E8F0" stroke-width="1"></circle>
-<circle cx="100" cy="100" fill="none" r="40" stroke="#E2E8F0" stroke-width="1"></circle>
-<line stroke="#E2E8F0" x1="100" x2="100" y1="20" y2="180"></line>
-<line stroke="#E2E8F0" x1="20" x2="180" y1="100" y2="100"></line>
-<!-- Data Area -->
-<path d="M100 40 L160 80 L130 150 L60 140 L40 90 Z" fill="#0051d5" fill-opacity="0.1" stroke="#0051d5" stroke-width="2"></path>
-</svg>
-</div>
-</div>
-<div class="mt-4 grid grid-cols-2 gap-2">
-<div class="flex items-center gap-2">
-<div class="w-2 h-2 rounded-full bg-secondary"></div>
-<span class="text-label-sm">IT &amp; Tech</span>
-</div>
-<div class="flex items-center gap-2">
-<div class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></div>
-<span class="text-label-sm">Logistics</span>
-</div>
-<div class="flex items-center gap-2">
-<div class="w-2 h-2 rounded-full bg-surface-dim"></div>
-<span class="text-label-sm">Admin</span>
-</div>
-<div class="flex items-center gap-2">
-<div class="w-2 h-2 rounded-full bg-primary"></div>
-<span class="text-label-sm">Service</span>
 </div>
 </div>
 </div>
@@ -418,6 +381,8 @@
 </div>
 </div>
 </div>
+</form>
+</div>
 </main>
 <!-- Footer for Mobile/Quick Info -->
 <footer class="md:ml-64 px-margin-desktop py-6 border-t border-outline-variant bg-surface flex flex-col md:flex-row justify-between items-center text-label-sm text-on-surface-variant gap-4">
@@ -428,39 +393,29 @@
 <a class="hover:text-secondary" href="#">System Status</a>
 </div>
 </footer>
-<!-- Interactive Layer: Notification Toast (Hidden by default) -->
-<div class="fixed bottom-8 right-8 bg-inverse-surface text-inverse-on-surface px-6 py-3 rounded-lg shadow-2xl transform translate-y-24 transition-transform duration-300 flex items-center gap-3" id="saveToast">
-<span class="material-symbols-outlined text-tertiary-fixed-dim">check_circle</span>
-<span>Administrative settings updated successfully.</span>
-</div>
+
 <script>
-        // Simple micro-interaction for the "Save" button
-        const saveBtn = document.querySelector('button.bg-secondary');
-        const toast = document.getElementById('saveToast');
+    function previewOfficePhoto(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = document.getElementById('officePhotoPreview');
+                if (preview) {
+                    preview.src = e.target.result;
+                }
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 
-        saveBtn.addEventListener('click', () => {
-            saveBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Saving...';
-            saveBtn.disabled = true;
-            
-            setTimeout(() => {
-                saveBtn.innerHTML = 'Save Profile';
-                saveBtn.disabled = false;
-                toast.classList.remove('translate-y-24');
-                
-                setTimeout(() => {
-                    toast.classList.add('translate-y-24');
-                }, 3000);
-            }, 1500);
+    // Hover effects for data table rows
+    document.querySelectorAll('tbody tr').forEach(row => {
+        row.addEventListener('mouseenter', () => {
+            row.classList.add('scale-[1.002]');
         });
-
-        // Hover effects for data table rows
-        document.querySelectorAll('tbody tr').forEach(row => {
-            row.addEventListener('mouseenter', () => {
-                row.classList.add('scale-[1.002]');
-            });
-            row.addEventListener('mouseleave', () => {
-                row.classList.remove('scale-[1.002]');
-            });
+        row.addEventListener('mouseleave', () => {
+            row.classList.remove('scale-[1.002]');
         });
-    </script>
+    });
+</script>
 </body></html>

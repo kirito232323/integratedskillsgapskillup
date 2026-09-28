@@ -154,6 +154,15 @@
       </div>
       <button
         class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">settings</button>
+      <a href="{% url 'company_profile_employer' %}" class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant bg-secondary/15 flex items-center justify-center font-bold text-xs text-secondary shrink-0 hover:ring-2 hover:ring-secondary transition-all" title="{{ request.user.profile.company_name|default:request.user.get_full_name }}">
+        {% if request.user.profile.company_logo %}
+          <img alt="{{ request.user.profile.company_name }}" class="w-full h-full object-cover" src="{{ request.user.profile.company_logo.url }}">
+        {% elif request.user.profile.profile_picture %}
+          <img alt="{{ request.user.get_full_name }}" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+        {% else %}
+          {{ request.user.profile.company_name|slice:":1"|upper|default:request.user.first_name|slice:":1"|upper|default:"E" }}
+        {% endif %}
+      </a>
     </div>
   </header>
   <!-- SideNavBar -->
@@ -167,8 +176,8 @@
         {% endif %}
       </div>
       <div>
-        <h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">Enterprise Portal</h2>
-        <p class="text-[10px] text-on-surface-variant opacity-70">Talent Management</p>
+        <h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">SKILLUP Portal</h2>
+        <p class="text-[10px] text-on-surface-variant opacity-70">Enterprise Talent Network</p>
       </div>
     </div>
     <nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
@@ -303,6 +312,7 @@
               <tr class="bg-surface-container-low border-b border-outline-variant">
                 <th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">Job Title</th>
                 <th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">Status</th>
+                <th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant text-center">Available Slots</th>
                 <th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">Applicants</th>
                 <th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant text-right">Actions</th>
               </tr>
@@ -314,16 +324,36 @@
                 data-location="{{ item.vacancy.location|lower }}" data-date="{{ item.vacancy.created_at|date:'U' }}"
                 data-status="{{ item.vacancy.status|lower }}">
                 <td class="px-6 py-5">
-                  <div>
-                    <p class="font-body-md text-body-md font-semibold text-on-surface">{{ item.vacancy.title }}</p>
-                    <p class="font-body-sm text-body-sm text-on-surface-variant">{{ item.vacancy.category_display }} •
-                      {{ item.vacancy.location }}</p>
-                    <p
-                      class="font-label-sm text-label-sm text-on-surface-variant opacity-60 flex items-center gap-1 mt-0.5">
+                  <button type="button" 
+                    onclick="openJobDetailModal(this)"
+                    data-vacancy-id="{{ item.vacancy.id }}"
+                    data-title="{{ item.vacancy.title|escapejs }}"
+                    data-category="{{ item.vacancy.category_display|escapejs }}"
+                    data-location="{{ item.vacancy.location|escapejs }}"
+                    data-salary="{{ item.vacancy.salary_range|default:'Competitive / Not Disclosed'|escapejs }}"
+                    data-slots="{{ item.vacancy.slots }}"
+                    data-remaining-slots="{{ item.vacancy.remaining_slots|default:item.vacancy.slots }}"
+                    data-experience="{{ item.vacancy.required_experience_years }}"
+                    data-education="{{ item.vacancy.min_education|default:'Open to all education levels'|escapejs }}"
+                    data-certs="{{ item.vacancy.required_certifications|default:'None required'|escapejs }}"
+                    data-description="{{ item.vacancy.description|default:'No specific description provided.'|escapejs }}"
+                    data-remarks="{{ item.vacancy.remarks|default:'None'|escapejs }}"
+                    data-status="{{ item.vacancy.status|escapejs }}"
+                    data-posted="Posted {{ item.vacancy.created_at|date:'M d, Y' }} at {{ item.vacancy.created_at|time:'g:i A' }}"
+                    data-candidates-count="{{ item.candidates_count }}"
+                    data-pipeline-url="{% url 'hiring_tracker_employer' %}?job_id={{ item.vacancy.id }}"
+                    data-skills='[{% for req in item.requirements %}{"id":"{{ req.skill.id }}","name":"{{ req.skill.name|escapejs }}","category":"{{ req.skill.category|escapejs }}","prof":"{{ req.required_proficiency }}"}{% if not forloop.last %},{% endif %}{% endfor %}]'
+                    class="text-left group/title block focus:outline-none">
+                    <p class="font-body-md text-body-md font-bold text-on-surface group-hover/title:text-secondary group-hover/title:underline transition-colors flex items-center gap-1.5 cursor-pointer">
+                      <span>{{ item.vacancy.title }}</span>
+                      <span class="material-symbols-outlined text-[16px] text-secondary opacity-0 group-hover/title:opacity-100 transition-opacity">info</span>
+                    </p>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant">{{ item.vacancy.category_display }} • {{ item.vacancy.location }}</p>
+                    <p class="font-label-sm text-label-sm text-on-surface-variant opacity-60 flex items-center gap-1 mt-0.5">
                       <span class="material-symbols-outlined text-[13px]">schedule</span>
                       Posted {{ item.vacancy.created_at|date:"M d, Y" }} at {{ item.vacancy.created_at|time:"g:i A" }}
                     </p>
-                  </div>
+                  </button>
                 </td>
                 <td class="px-6 py-5">
                   <form method="POST" action="{% url 'job_status_update' item.vacancy.id %}" class="flex items-center">
@@ -340,6 +370,21 @@
                       <option value="On Hold" {% if item.vacancy.status == 'On Hold' %}selected{% endif %}>On Hold</option>
                     </select>
                   </form>
+                </td>
+                <td class="px-6 py-5 text-center whitespace-nowrap">
+                  <div class="inline-flex flex-col items-center">
+                    <div class="flex items-center gap-1.5 font-bold text-xs {% if item.vacancy.remaining_slots > 0 %}text-emerald-800 bg-emerald-100 border border-emerald-300{% else %}text-red-700 bg-red-50 border border-red-200{% endif %} px-3 py-1 rounded-full shadow-xs">
+                      <span class="material-symbols-outlined text-[15px]" style="font-variation-settings:'FILL' 1;">event_seat</span>
+                      <span>{{ item.vacancy.remaining_slots|default:item.vacancy.slots }} / {{ item.vacancy.slots }} Slots</span>
+                    </div>
+                    <span class="text-[10px] text-outline mt-0.5 font-medium">
+                      {% if item.vacancy.remaining_slots > 0 %}
+                        {{ item.vacancy.remaining_slots|default:item.vacancy.slots }} open slots
+                      {% else %}
+                        All slots filled
+                      {% endif %}
+                    </span>
+                  </div>
                 </td>
                 <td class="px-6 py-5">
                   <div class="flex items-center gap-2">
@@ -361,41 +406,42 @@
                     </div>
                   </div>
                 </td>
-                <td class="px-6 py-5 text-right">
-                  <div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <td class="px-6 py-5 text-right whitespace-nowrap">
+                  <div class="inline-flex items-center justify-end gap-1.5">
                     <button type="button" data-vacancy-id="{{ item.vacancy.id }}"
                       data-title="{{ item.vacancy.title|escapejs }}"
                       data-location="{{ item.vacancy.location|escapejs }}"
                       data-salary="{{ item.vacancy.salary_range|escapejs }}"
                       data-category="{{ item.vacancy.category|escapejs }}"
+                      data-slots="{{ item.vacancy.slots }}"
                       data-experience="{{ item.vacancy.required_experience_years }}"
                       data-education="{{ item.vacancy.min_education|escapejs }}"
                       data-certs="{{ item.vacancy.required_certifications|escapejs }}"
                       data-description="{{ item.vacancy.description|escapejs }}"
                       data-remarks="{{ item.vacancy.remarks|escapejs }}"
                       data-status="{{ item.vacancy.status|escapejs }}"
-                      data-skills='[{% for req in item.requirements %}{"id":"{{ req.skill.id }}","prof":"{{ req.required_proficiency }}"}{% if not forloop.last %},{% endif %}{% endfor %}]'
-                      onclick="openEditModalFromBtn(this)" class="p-2 text-outline hover:text-secondary"
-                      title="Edit Job"><span class="material-symbols-outlined">edit</span></button>
+                      data-skills='[{% for req in item.requirements %}{"id":"{{ req.skill.id }}","name":"{{ req.skill.name|escapejs }}","category":"{{ req.skill.category|escapejs }}","prof":"{{ req.required_proficiency }}"}{% if not forloop.last %},{% endif %}{% endfor %}]'
+                      onclick="openEditModalFromBtn(this)" class="w-8 h-8 rounded-lg border border-outline-variant bg-surface-container-low hover:bg-surface-container hover:text-secondary text-on-surface-variant flex items-center justify-center transition-all shadow-2xs active:scale-95"
+                      title="Edit Job Posting"><span class="material-symbols-outlined text-[18px]">edit</span></button>
                     <a href="{% url 'applicants_employer' %}?job_id={{ item.vacancy.id }}"
-                      class="p-2 text-outline hover:text-secondary" title="View Applicants"><span
-                        class="material-symbols-outlined">groups</span></a>
+                      class="w-8 h-8 rounded-lg border border-outline-variant bg-surface-container-low hover:bg-surface-container hover:text-secondary text-secondary flex items-center justify-center transition-all shadow-2xs active:scale-95" title="View Applicants Pipeline"><span
+                        class="material-symbols-outlined text-[18px]">groups</span></a>
                     <button type="button" data-vacancy-id="{{ item.vacancy.id }}"
                       data-vacancy-title="{{ item.vacancy.title|escapejs }}" onclick="openDeleteModal(this)"
-                      class="p-2 text-outline hover:text-error transition-colors" title="Delete Job">
-                      <span class="material-symbols-outlined">delete</span>
+                      class="w-8 h-8 rounded-lg border border-outline-variant bg-surface-container-low hover:bg-error-container/30 hover:text-error text-on-surface-variant flex items-center justify-center transition-all shadow-2xs active:scale-95" title="Delete Job">
+                      <span class="material-symbols-outlined text-[18px]">delete</span>
                     </button>
                   </div>
                 </td>
               </tr>
               {% empty %}
               <tr id="emptyInventoryRow">
-                <td colspan="4" class="px-6 py-10 text-center text-on-surface-variant opacity-60">No vacancies posted
+                <td colspan="5" class="px-6 py-10 text-center text-on-surface-variant opacity-60">No vacancies posted
                   yet.</td>
               </tr>
               {% endfor %}
               <tr id="noResultsRow" class="hidden">
-                <td colspan="4" class="px-6 py-10 text-center text-on-surface-variant opacity-60">No matching vacancies
+                <td colspan="5" class="px-6 py-10 text-center text-on-surface-variant opacity-60">No matching vacancies
                   found.</td>
               </tr>
             </tbody>
@@ -491,10 +537,15 @@
                 </div>
               </div>
 
-              <div class="grid grid-cols-3 gap-4">
+              <div class="grid grid-cols-4 gap-3">
                 <div>
-                  <label class="block text-label-sm font-label-sm text-on-surface-variant mb-2">MINIMUM EDUCATION
-                    REQUIREMENT</label>
+                  <label class="block text-label-sm font-label-sm text-on-surface-variant mb-2">TARGET SLOTS *</label>
+                  <input type="number" name="slots" id="modalSlots" min="1" value="1" required
+                    class="w-full bg-white border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent outline-none"
+                    placeholder="e.g. 5">
+                </div>
+                <div>
+                  <label class="block text-label-sm font-label-sm text-on-surface-variant mb-2">MIN EDUCATION</label>
                   <select name="min_education" id="modalEducation"
                     class="w-full bg-white border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent outline-none">
                     <option value="College graduate">College graduate</option>
@@ -504,11 +555,10 @@
                   </select>
                 </div>
                 <div>
-                  <label class="block text-label-sm font-label-sm text-on-surface-variant mb-2">REQUIRED
-                    CERTIFICATIONS</label>
+                  <label class="block text-label-sm font-label-sm text-on-surface-variant mb-2">CERTIFICATIONS</label>
                   <input type="text" name="required_certifications" id="modalCertifications"
                     class="w-full bg-white border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent outline-none"
-                    placeholder="e.g. TESDA NC II Welding">
+                    placeholder="e.g. TESDA NC II">
                 </div>
                 <div>
                   <label class="block text-label-sm font-label-sm text-on-surface-variant mb-2">JOB STATUS *</label>
@@ -601,11 +651,12 @@
       document.getElementById('formAction').value = 'create';
       document.getElementById('formVacancyId').value = '';
 
-      // Reset text / input fields
+      // Reset basic fields
       document.getElementById('modalTitle').value = '';
       document.getElementById('modalLocation').value = '';
       document.getElementById('modalSalary').value = '';
       document.getElementById('modalCategory').value = 'IT';
+      document.getElementById('modalSlots').value = '1';
       document.getElementById('modalExperience').value = '0';
       document.getElementById('modalEducation').value = 'College graduate';
       document.getElementById('modalCertifications').value = '';
@@ -613,7 +664,7 @@
       document.getElementById('modalRemarks').value = '';
       document.getElementById('modalStatus').value = 'Open';
 
-      // Uncheck skills and disable selections
+      // Uncheck skills first
       document.querySelectorAll('#modalSkillsList input[type="checkbox"]').forEach(cb => {
         cb.checked = false;
         const skillId = cb.value;
@@ -635,7 +686,7 @@
 
       document.getElementById('postJobModal').classList.remove('hidden');
     }
-    function openEditModal(id, title, location, salary, category, experience, education, certifications, description, remarks, status, requirements) {
+    function openEditModal(id, title, location, salary, category, slots, experience, education, certifications, description, remarks, status, requirements) {
       // Set form action and hidden fields
       document.getElementById('formAction').value = 'edit';
       document.getElementById('formVacancyId').value = id;
@@ -645,6 +696,7 @@
       document.getElementById('modalLocation').value = location;
       document.getElementById('modalSalary').value = salary;
       document.getElementById('modalCategory').value = category;
+      document.getElementById('modalSlots').value = slots || '1';
       document.getElementById('modalExperience').value = experience;
       document.getElementById('modalEducation').value = education;
       document.getElementById('modalCertifications').value = certifications;
@@ -805,6 +857,7 @@
         btn.dataset.location,
         btn.dataset.salary,
         btn.dataset.category,
+        btn.dataset.slots,
         btn.dataset.experience,
         btn.dataset.education,
         btn.dataset.certs,
@@ -815,10 +868,225 @@
       );
     }
 
+    // Job Detail Modal Logic
+    let currentDetailData = null;
+
+    function openJobDetailModal(btn) {
+      const dataset = btn.dataset;
+      currentDetailData = dataset;
+
+      document.getElementById('detailJobTitle').textContent = dataset.title || 'Job Details';
+      document.getElementById('detailJobCategory').textContent = dataset.category || 'General';
+      document.getElementById('detailJobLocation').textContent = dataset.location || 'Location Not Specified';
+      document.getElementById('detailJobSalary').textContent = dataset.salary || 'Competitive / Not Disclosed';
+      document.getElementById('detailJobSlots').textContent = (dataset.remainingSlots || dataset.slots) + ' / ' + dataset.slots + ' Available Slots';
+      document.getElementById('detailJobExperience').textContent = (dataset.experience && parseInt(dataset.experience) > 0) ? (dataset.experience + ' Year(s) Required') : 'No Prior Experience Required';
+      document.getElementById('detailJobEducation').textContent = dataset.education || 'Open to all education levels';
+      document.getElementById('detailJobCerts').textContent = dataset.certs || 'None required';
+      document.getElementById('detailJobDescription').textContent = dataset.description || 'No detailed description provided.';
+      document.getElementById('detailJobPosted').textContent = dataset.posted || '';
+      
+      const remarks = dataset.remarks && dataset.remarks !== 'None' ? dataset.remarks : '';
+      const remarksContainer = document.getElementById('detailJobRemarksContainer');
+      if (remarks) {
+        document.getElementById('detailJobRemarks').textContent = remarks;
+        remarksContainer.classList.remove('hidden');
+      } else {
+        remarksContainer.classList.add('hidden');
+      }
+
+      // Status Badge
+      const statusBadge = document.getElementById('detailJobStatus');
+      const status = dataset.status || 'Open';
+      statusBadge.textContent = status;
+      statusBadge.className = 'px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ';
+      if (status === 'Open') {
+        statusBadge.className += 'bg-emerald-100 text-emerald-800 border border-emerald-300';
+      } else if (status === 'Closed') {
+        statusBadge.className += 'bg-rose-100 text-rose-800 border border-rose-300';
+      } else if (status === 'On Hold') {
+        statusBadge.className += 'bg-amber-100 text-amber-800 border border-amber-300';
+      } else {
+        statusBadge.className += 'bg-slate-100 text-slate-700 border border-slate-300';
+      }
+
+      // Candidates count & Pipeline link
+      const candCount = parseInt(dataset.candidatesCount || '0');
+      document.getElementById('detailJobCandidatesCount').textContent = candCount + ' Candidate' + (candCount === 1 ? '' : 's');
+      const pipelineBtn = document.getElementById('detailJobPipelineBtn');
+      pipelineBtn.href = dataset.pipelineUrl || "{% url 'hiring_tracker_employer' %}";
+
+      // Skills Rendering
+      const skillsContainer = document.getElementById('detailJobSkillsList');
+      skillsContainer.innerHTML = '';
+      const skills = JSON.parse(dataset.skills || '[]');
+      
+      if (skills.length === 0) {
+        skillsContainer.innerHTML = '<span class="text-xs text-on-surface-variant italic">No specific skill requirements specified.</span>';
+      } else {
+        const profMap = {
+          '1': { label: 'Level 1: Novice', color: 'bg-slate-100 text-slate-700 border-slate-300' },
+          '2': { label: 'Level 2: Beginner', color: 'bg-blue-50 text-blue-700 border-blue-200' },
+          '3': { label: 'Level 3: Intermediate', color: 'bg-emerald-50 text-emerald-700 border-emerald-300' },
+          '4': { label: 'Level 4: Advanced', color: 'bg-purple-50 text-purple-700 border-purple-300' },
+          '5': { label: 'Level 5: Expert', color: 'bg-amber-50 text-amber-800 border-amber-300' }
+        };
+
+        skills.forEach(sk => {
+          const profInfo = profMap[sk.prof] || { label: 'Proficiency ' + sk.prof, color: 'bg-surface-container text-on-surface' };
+          const tag = document.createElement('div');
+          tag.className = 'inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-low border border-outline-variant/60 shadow-2xs';
+          tag.innerHTML = `
+            <span class="font-bold text-sm text-on-surface">${sk.name || 'Skill #' + sk.id}</span>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border ${profInfo.color}">${profInfo.label}</span>
+          `;
+          skillsContainer.appendChild(tag);
+        });
+      }
+
+      document.getElementById('jobDetailModal').classList.remove('hidden');
+    }
+
+    function closeJobDetailModal() {
+      document.getElementById('jobDetailModal').classList.add('hidden');
+    }
+
+    function editFromDetailModal() {
+      if (!currentDetailData) return;
+      closeJobDetailModal();
+      const skills = JSON.parse(currentDetailData.skills || '[]');
+      openEditModal(
+        currentDetailData.vacancyId,
+        currentDetailData.title,
+        currentDetailData.location,
+        currentDetailData.salary,
+        currentDetailData.category,
+        currentDetailData.slots,
+        currentDetailData.experience,
+        currentDetailData.education,
+        currentDetailData.certs,
+        currentDetailData.description,
+        currentDetailData.remarks,
+        currentDetailData.status,
+        skills
+      );
+    }
+
     // Run default sort on page load (Newest First)
     document.addEventListener('DOMContentLoaded', filterAndSortJobs);
   </script>
   <script src="{% static 'tracker/js/job_titles.js' %}"></script>
+
+  <!-- Job Details Modal -->
+  <div id="jobDetailModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-surface-container-lowest rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden border border-outline-variant/60 my-8 animate-in fade-in zoom-in-95 duration-150">
+      <!-- Modal Header -->
+      <div class="px-6 py-5 bg-surface-container-low border-b border-outline-variant flex items-start justify-between gap-4">
+        <div class="space-y-1.5">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span id="detailJobCategory" class="px-2.5 py-0.5 rounded-md bg-secondary/10 text-secondary text-xs font-bold uppercase tracking-wider"></span>
+            <span id="detailJobStatus"></span>
+          </div>
+          <h3 id="detailJobTitle" class="font-headline-md text-headline-md font-bold text-on-surface"></h3>
+          <p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-2 flex-wrap">
+            <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[15px]">location_on</span><span id="detailJobLocation"></span></span>
+            <span>&bull;</span>
+            <span id="detailJobPosted" class="opacity-70 text-xs"></span>
+          </p>
+        </div>
+        <button type="button" onclick="closeJobDetailModal()" class="w-9 h-9 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface-variant flex items-center justify-center transition-colors">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6 space-y-6 max-h-[70vh] overflow-y-auto custom-scrollbar">
+        <!-- Quick Specs Cards Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <div class="p-3 bg-surface-container-low rounded-xl border border-outline-variant/40">
+            <p class="text-[11px] font-bold uppercase text-on-surface-variant tracking-wider flex items-center gap-1">
+              <span class="material-symbols-outlined text-[15px] text-secondary">payments</span> Salary Range
+            </p>
+            <p id="detailJobSalary" class="font-bold text-sm text-on-surface mt-1 truncate"></p>
+          </div>
+          <div class="p-3 bg-surface-container-low rounded-xl border border-outline-variant/40">
+            <p class="text-[11px] font-bold uppercase text-on-surface-variant tracking-wider flex items-center gap-1">
+              <span class="material-symbols-outlined text-[15px] text-secondary">event_seat</span> Available Slots
+            </p>
+            <p id="detailJobSlots" class="font-bold text-sm text-on-surface mt-1 truncate"></p>
+          </div>
+          <div class="p-3 bg-surface-container-low rounded-xl border border-outline-variant/40">
+            <p class="text-[11px] font-bold uppercase text-on-surface-variant tracking-wider flex items-center gap-1">
+              <span class="material-symbols-outlined text-[15px] text-secondary">history_edu</span> Experience
+            </p>
+            <p id="detailJobExperience" class="font-bold text-sm text-on-surface mt-1 truncate"></p>
+          </div>
+          <div class="p-3 bg-surface-container-low rounded-xl border border-outline-variant/40">
+            <p class="text-[11px] font-bold uppercase text-on-surface-variant tracking-wider flex items-center gap-1">
+              <span class="material-symbols-outlined text-[15px] text-secondary">school</span> Education
+            </p>
+            <p id="detailJobEducation" class="font-bold text-sm text-on-surface mt-1 truncate"></p>
+          </div>
+          <div class="p-3 bg-surface-container-low rounded-xl border border-outline-variant/40">
+            <p class="text-[11px] font-bold uppercase text-on-surface-variant tracking-wider flex items-center gap-1">
+              <span class="material-symbols-outlined text-[15px] text-secondary">verified</span> Certifications
+            </p>
+            <p id="detailJobCerts" class="font-bold text-sm text-on-surface mt-1 truncate"></p>
+          </div>
+          <div class="p-3 bg-surface-container-low rounded-xl border border-outline-variant/40">
+            <p class="text-[11px] font-bold uppercase text-on-surface-variant tracking-wider flex items-center gap-1">
+              <span class="material-symbols-outlined text-[15px] text-secondary">groups</span> Pipeline
+            </p>
+            <p id="detailJobCandidatesCount" class="font-bold text-sm text-secondary mt-1 truncate"></p>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="space-y-2">
+          <h4 class="font-label-md text-label-md font-bold uppercase text-on-surface tracking-wider flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-secondary text-[18px]">description</span>
+            Job Description & Responsibilities
+          </h4>
+          <div class="p-4 bg-surface-container-lowest rounded-xl border border-outline-variant/60 text-body-sm text-on-surface leading-relaxed whitespace-pre-line" id="detailJobDescription"></div>
+        </div>
+
+        <!-- Required Skills -->
+        <div class="space-y-2">
+          <h4 class="font-label-md text-label-md font-bold uppercase text-on-surface tracking-wider flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-secondary text-[18px]">psychology</span>
+            Required Skills & Proficiency Benchmarks
+          </h4>
+          <div id="detailJobSkillsList" class="flex flex-wrap gap-2 p-3 bg-surface-container-lowest rounded-xl border border-outline-variant/60"></div>
+        </div>
+
+        <!-- Remarks (Optional) -->
+        <div id="detailJobRemarksContainer" class="space-y-2 hidden">
+          <h4 class="font-label-md text-label-md font-bold uppercase text-on-surface tracking-wider flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-secondary text-[18px]">notes</span>
+            Internal Remarks & Instructions
+          </h4>
+          <div class="p-3 bg-surface-container-lowest rounded-xl border border-outline-variant/60 text-body-sm text-on-surface-variant" id="detailJobRemarks"></div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-4 bg-surface-container-low border-t border-outline-variant flex items-center justify-between gap-3">
+        <button type="button" onclick="closeJobDetailModal()" class="px-4 py-2 font-label-md text-label-md text-on-surface-variant hover:bg-surface-container rounded-lg transition-colors font-medium">
+          Close
+        </button>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="editFromDetailModal()" class="px-4 py-2 bg-surface-container hover:bg-surface-container-high border border-outline-variant text-on-surface rounded-lg font-label-md text-label-md font-bold flex items-center gap-1.5 transition-all shadow-2xs">
+            <span class="material-symbols-outlined text-[16px]">edit</span>
+            <span>Edit Job</span>
+          </button>
+          <a id="detailJobPipelineBtn" href="#" class="px-4 py-2 bg-secondary hover:bg-secondary/90 text-white rounded-lg font-label-md text-label-md font-bold flex items-center gap-1.5 transition-all shadow-xs">
+            <span class="material-symbols-outlined text-[16px]">developer_board</span>
+            <span>View in Pipeline</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Delete Confirmation Modal -->
   <div id="deleteJobModal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
@@ -859,6 +1127,15 @@
     }
     document.getElementById('deleteJobModal').addEventListener('click', function (e) {
       if (e.target === this) closeDeleteModal();
+    });
+    document.getElementById('jobDetailModal').addEventListener('click', function (e) {
+      if (e.target === this) closeJobDetailModal();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeJobDetailModal();
+        closeDeleteModal();
+      }
     });
   </script>
 </body>

@@ -63,8 +63,7 @@
             "borderRadius": {
                     "DEFAULT": "0.125rem",
                     "lg": "0.25rem",
-                    "xl": "0.5rem",
-                    "full": "0.75rem"
+                    "xl": "0.5rem"
             },
             "spacing": {
                     "gutter": "24px",
@@ -153,8 +152,82 @@
      class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">{{ unread_match_alerts }}</span>{% endif %}
 </div>
 <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">settings</button>
+<a href="{% url 'company_profile_employer' %}" class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant bg-secondary/15 flex items-center justify-center font-bold text-xs text-secondary shrink-0 hover:ring-2 hover:ring-secondary transition-all" title="{{ request.user.profile.company_name|default:request.user.get_full_name }}">
+  {% if request.user.profile.company_logo %}
+    <img alt="{{ request.user.profile.company_name }}" class="w-full h-full object-cover" src="{{ request.user.profile.company_logo.url }}">
+  {% elif request.user.profile.profile_picture %}
+    <img alt="{{ request.user.get_full_name }}" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+  {% else %}
+    {{ request.user.profile.company_name|slice:":1"|upper|default:request.user.first_name|slice:":1"|upper|default:"E" }}
+  {% endif %}
+</a>
 </div>
 </header>
+{% if request.user.profile.role == 'admin' %}
+<aside class="fixed left-0 top-0 h-full w-64 pt-20 bg-surface-container-lowest dark:bg-primary-container border-r border-outline-variant dark:border-outline hidden md:flex flex-col p-4 gap-2 z-40">
+<div class="flex items-center gap-3 px-2 py-4 mb-4 border-b border-outline-variant/30">
+{% if request.user.profile.profile_picture %}
+<div class="w-10 h-10 rounded-lg overflow-hidden border border-outline-variant shrink-0">
+  <img alt="Office Logo" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+</div>
+{% else %}
+<div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center text-white font-black text-xl shrink-0">P</div>
+{% endif %}
+<div>
+<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">SKILLUP Portal</h2>
+<p class="text-[10px] text-on-surface-variant opacity-70">Public Employment Service</p>
+</div>
+</div>
+<nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'peso_dashboard_admin' %}">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 {% if from_section == 'talent_bench' or not from_section %}bg-surface-container dark:bg-secondary-container text-on-surface dark:text-on-secondary-container font-bold{% else %}text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface{% endif %} rounded-lg scale-98 active:scale-95 duration-150 transition-all font-label-md text-label-md" href="{% url 'applicant_monitoring_admin' %}">
+<span class="material-symbols-outlined" {% if from_section == 'talent_bench' or not from_section %}style="font-variation-settings: 'FILL' 1;"{% endif %}>groups</span>
+<span>Talent Bench</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'employer_management_admin' %}">
+<span class="material-symbols-outlined">domain</span>
+<span>Employers</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 {% if from_section == 'vacancies' %}bg-surface-container dark:bg-secondary-container text-on-surface dark:text-on-secondary-container font-bold{% else %}text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface{% endif %} transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'vacancy_management_admin' %}">
+<span class="material-symbols-outlined" {% if from_section == 'vacancies' %}style="font-variation-settings: 'FILL' 1;"{% endif %}>work</span>
+<span>Vacancies</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'employment_tracking_admin' %}">
+<span class="material-symbols-outlined">description</span>
+<span>Reports</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'skill_monitoring_admin' %}">
+<span class="material-symbols-outlined">analytics</span>
+<span>Skill Gaps</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 {% if from_section == 'training' %}bg-surface-container dark:bg-secondary-container text-on-surface dark:text-on-secondary-container font-bold{% else %}text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface{% endif %} transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'training_monitoring_admin' %}">
+<span class="material-symbols-outlined" {% if from_section == 'training' %}style="font-variation-settings: 'FILL' 1;"{% endif %}>school</span>
+<span>Training Programs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'job_matching_analytics_admin' %}">
+<span class="material-symbols-outlined">monitoring</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'peso_profile_admin' %}">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+<span>Support</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'logout' %}">
+<span class="material-symbols-outlined">logout</span>
+<span>Log Out</span>
+</a>
+</div>
+</aside>
+{% else %}
 <!-- SideNavBar -->
 <aside class="fixed left-0 top-0 h-full w-64 pt-20 bg-surface-container-lowest dark:bg-primary-container border-r border-outline-variant dark:border-outline hidden md:flex flex-col p-4 gap-2 z-40">
 <div class="flex items-center gap-3 px-2 py-4 mb-4 border-b border-outline-variant/30">
@@ -166,285 +239,428 @@
   {% endif %}
 </div>
 <div>
-<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">Enterprise Portal</h2>
-<p class="text-[10px] text-on-surface-variant opacity-70">Talent Management</p>
+<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">SKILLUP Portal</h2>
+<p class="text-[10px] text-on-surface-variant opacity-70">Enterprise Talent Network</p>
 </div>
 </div>
 <nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
-<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'employer_dashboard' %}"><span class="material-symbols-outlined">dashboard</span><span>Dashboard</span></a>
-<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'hiring_tracker_employer' %}"><span class="material-symbols-outlined">developer_board</span><span>Hiring Tracker</span></a>
-<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'job_management_employer' %}"><span class="material-symbols-outlined">work</span><span>Job Management</span></a>
-<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'company_profile_employer' %}"><span class="material-symbols-outlined">corporate_fare</span><span>Company Profile</span></a>
-<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md relative" href="{% url 'employer_notifications' %}"><span class="material-symbols-outlined">notifications</span><span>Match Alerts</span></a>
+<a class="flex items-center gap-3 px-3 py-2 {% if from_section == 'employer_dashboard' %}bg-surface-container dark:bg-secondary-container text-on-surface dark:text-on-secondary-container font-bold{% else %}text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface{% endif %} transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'employer_dashboard' %}">
+  <span class="material-symbols-outlined" {% if from_section == 'employer_dashboard' %}style="font-variation-settings: 'FILL' 1;"{% endif %}>dashboard</span>
+  <span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 {% if from_section == 'hiring_tracker' or not from_section and request.user.profile.role == 'employer' %}bg-surface-container dark:bg-secondary-container text-on-surface dark:text-on-secondary-container font-bold{% else %}text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface{% endif %} transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'hiring_tracker_employer' %}">
+  <span class="material-symbols-outlined" {% if from_section == 'hiring_tracker' or not from_section and request.user.profile.role == 'employer' %}style="font-variation-settings: 'FILL' 1;"{% endif %}>developer_board</span>
+  <span>Hiring Tracker</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 {% if from_section == 'job_management' %}bg-surface-container dark:bg-secondary-container text-on-surface dark:text-on-secondary-container font-bold{% else %}text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface{% endif %} transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'job_management_employer' %}">
+  <span class="material-symbols-outlined" {% if from_section == 'job_management' %}style="font-variation-settings: 'FILL' 1;"{% endif %}>work</span>
+  <span>Job Management</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'company_profile_employer' %}">
+  <span class="material-symbols-outlined">corporate_fare</span>
+  <span>Company Profile</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 {% if from_section == 'notifications' or from_section == 'match_alerts' %}bg-surface-container dark:bg-secondary-container text-on-surface dark:text-on-secondary-container font-bold{% else %}text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface{% endif %} transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md relative" href="{% url 'employer_notifications' %}">
+  <span class="material-symbols-outlined" {% if from_section == 'notifications' or from_section == 'match_alerts' %}style="font-variation-settings: 'FILL' 1;"{% endif %}>notifications</span>
+  <span>Match Alerts</span>
+</a>
 </nav>
 <div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-1">
 <a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'logout' %}"><span class="material-symbols-outlined">logout</span><span>Log Out</span></a>
 </div>
 </aside>
+{% endif %}
 <!-- Main Content Canvas -->
 <main class="md:ml-64 pt-20 min-h-screen">
-<div class="max-w-7xl mx-auto space-y-6">
+<div class="px-6 md:px-8 py-6 space-y-6">
 <!-- Breadcrumbs & Actions -->
-<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-<div>
-<div class="flex items-center gap-3">
-<a href="{% url 'applicants_employer' %}{% if best_job %}?job_id={{ best_job.id }}{% endif %}" class="material-symbols-outlined text-on-surface-variant hover:text-secondary hover:bg-surface-container-low p-2 rounded-full transition-all active:scale-90" title="Back to Talent Bench">arrow_back</a>
-<h2 class="font-headline-lg text-headline-lg text-on-surface">Applicant Profile</h2>
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-3 border-b border-outline-variant">
+  <div class="flex items-center gap-3.5">
+    {% if from_section == 'vacancies' and from_vacancy %}
+      <a href="{% url 'vacancy_detail_admin' from_vacancy.id %}" class="w-10 h-10 rounded-full border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low hover:text-secondary flex items-center justify-center text-on-surface-variant transition-all shadow-xs active:scale-95 shrink-0" title="Back to Vacancy Details">
+        <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+      </a>
+      <div>
+        <div class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant mb-0.5">
+          <a href="{% url 'vacancy_management_admin' %}" class="hover:text-secondary font-medium">Vacancies</a>
+          <span class="material-symbols-outlined text-xs">chevron_right</span>
+          <a href="{% url 'vacancy_detail_admin' from_vacancy.id %}" class="hover:text-secondary font-medium">{{ from_vacancy.title|truncatechars:30 }}</a>
+          <span class="material-symbols-outlined text-xs">chevron_right</span>
+          <span class="font-bold text-on-surface">Applicant Profile</span>
+        </div>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface">{{ profile.user.get_full_name }}</h2>
+      </div>
+    {% elif from_section == 'training' and from_training %}
+      <a href="{% url 'training_program_detail_admin' from_training.id %}" class="w-10 h-10 rounded-full border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low hover:text-secondary flex items-center justify-center text-on-surface-variant transition-all shadow-xs active:scale-95 shrink-0" title="Back to Training Program">
+        <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+      </a>
+      <div>
+        <div class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant mb-0.5">
+          <a href="{% url 'training_monitoring_admin' %}" class="hover:text-secondary font-medium">Training Programs</a>
+          <span class="material-symbols-outlined text-xs">chevron_right</span>
+          <a href="{% url 'training_program_detail_admin' from_training.id %}" class="hover:text-secondary font-medium">{{ from_training.title|truncatechars:30 }}</a>
+          <span class="material-symbols-outlined text-xs">chevron_right</span>
+          <span class="font-bold text-on-surface">Applicant Profile</span>
+        </div>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface">{{ profile.user.get_full_name }}</h2>
+      </div>
+    {% elif from_section == 'talent_bench' %}
+      <a href="{% url 'applicant_monitoring_admin' %}" class="w-10 h-10 rounded-full border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low hover:text-secondary flex items-center justify-center text-on-surface-variant transition-all shadow-xs active:scale-95 shrink-0" title="Back to Talent Bench">
+        <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+      </a>
+      <div>
+        <div class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant mb-0.5">
+          <a href="{% url 'applicant_monitoring_admin' %}" class="hover:text-secondary font-medium">Talent Bench</a>
+          <span class="material-symbols-outlined text-xs">chevron_right</span>
+          <span class="font-bold text-on-surface">Applicant Profile</span>
+        </div>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface">{{ profile.user.get_full_name }}</h2>
+      </div>
+    {% elif from_section == 'notifications' or from_section == 'match_alerts' %}
+      <a href="{% url 'employer_notifications' %}" class="w-10 h-10 rounded-full border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low hover:text-secondary flex items-center justify-center text-on-surface-variant transition-all shadow-xs active:scale-95 shrink-0" title="Back to Match Alerts">
+        <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+      </a>
+      <div>
+        <div class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant mb-0.5">
+          <a href="{% url 'employer_notifications' %}" class="hover:text-secondary font-medium">Match Alerts</a>
+          <span class="material-symbols-outlined text-xs">chevron_right</span>
+          <span class="font-bold text-on-surface">Applicant Profile</span>
+        </div>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface">{{ profile.user.get_full_name }}</h2>
+      </div>
+    {% elif from_section == 'hiring_tracker' or request.user.profile.role == 'employer' and not from_section %}
+      <a href="{% url 'hiring_tracker_employer' %}" class="w-10 h-10 rounded-full border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low hover:text-secondary flex items-center justify-center text-on-surface-variant transition-all shadow-xs active:scale-95 shrink-0" title="Back to Hiring Tracker">
+        <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+      </a>
+      <div>
+        <div class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant mb-0.5">
+          <a href="{% url 'hiring_tracker_employer' %}" class="hover:text-secondary font-medium">Hiring Tracker</a>
+          <span class="material-symbols-outlined text-xs">chevron_right</span>
+          <span class="font-bold text-on-surface">Applicant Profile</span>
+        </div>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface">{{ profile.user.get_full_name }}</h2>
+      </div>
+    {% elif from_section == 'job_management' %}
+      <a href="{% url 'job_management_employer' %}" class="w-10 h-10 rounded-full border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low hover:text-secondary flex items-center justify-center text-on-surface-variant transition-all shadow-xs active:scale-95 shrink-0" title="Back to Job Management">
+        <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+      </a>
+      <div>
+        <div class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant mb-0.5">
+          <a href="{% url 'job_management_employer' %}" class="hover:text-secondary font-medium">Job Management</a>
+          <span class="material-symbols-outlined text-xs">chevron_right</span>
+          <span class="font-bold text-on-surface">Applicant Profile</span>
+        </div>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface">{{ profile.user.get_full_name }}</h2>
+      </div>
+    {% elif from_section == 'employer_dashboard' %}
+      <a href="{% url 'employer_dashboard' %}" class="w-10 h-10 rounded-full border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low hover:text-secondary flex items-center justify-center text-on-surface-variant transition-all shadow-xs active:scale-95 shrink-0" title="Back to Dashboard">
+        <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+      </a>
+      <div>
+        <div class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant mb-0.5">
+          <a href="{% url 'employer_dashboard' %}" class="hover:text-secondary font-medium">Dashboard</a>
+          <span class="material-symbols-outlined text-xs">chevron_right</span>
+          <span class="font-bold text-on-surface">Applicant Profile</span>
+        </div>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface">{{ profile.user.get_full_name }}</h2>
+      </div>
+    {% else %}
+      <a href="javascript:history.back()" class="w-10 h-10 rounded-full border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low hover:text-secondary flex items-center justify-center text-on-surface-variant transition-all shadow-xs active:scale-95 shrink-0" title="Go Back">
+        <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+      </a>
+      <div>
+        <div class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant mb-0.5">
+          <a href="javascript:history.back()" class="hover:text-secondary font-medium">Directory</a>
+          <span class="material-symbols-outlined text-xs">chevron_right</span>
+          <span class="font-bold text-on-surface">Applicant Profile</span>
+        </div>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface">{{ profile.user.get_full_name }}</h2>
+      </div>
+    {% endif %}
+  </div>
+  <div class="flex items-center gap-3">
+    <a href="{% url 'applicant_job_matches' profile.id %}?from_section=applicant_detail" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg flex items-center gap-2 transition-all font-label-md text-label-md font-bold shadow-xs">
+      <span class="material-symbols-outlined text-[16px]">travel_explore</span>
+      Explore Job Matches
+    </a>
+    {% if request.user.profile.role == 'admin' %}
+    <a href="{% url 'coordinator_interview' profile.id %}" class="px-4 py-2 bg-slate-900 hover:bg-black text-white rounded-lg flex items-center gap-2 transition-all font-label-md text-label-md font-bold shadow-xs">
+      <span class="material-symbols-outlined text-[16px]">rate_review</span>
+      Coordinator Interview
+    </a>
+    {% endif %}
+    <button onclick="window.print()" class="px-4 py-2 border border-outline-variant rounded-lg bg-surface-container-lowest flex items-center gap-2 hover:bg-surface-container-low transition-all text-on-surface font-label-md text-label-md font-bold shadow-xs">
+      <span class="material-symbols-outlined text-[16px]">print</span>
+      Print / PDF
+    </button>
+  </div>
 </div>
-</div>
-<div class="flex items-center gap-3">
-<button class="px-4 py-2 border border-outline rounded-lg flex items-center gap-2 hover:bg-surface-container-low transition-colors text-on-surface">
-<span class="material-symbols-outlined">share</span>
-                        Share Profile
-                    </button>
-</div>
-</div>
-<!-- Profile Bento Grid -->
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-<!-- Left Column: Identity & Contact (High Density) -->
-<div class="lg:col-span-4 space-y-6">
-<section class="tonal-layer p-6 rounded-xl relative overflow-hidden">
-<div class="absolute top-0 right-0 p-4">
-<span class="bg-tertiary-fixed text-on-tertiary-fixed-variant text-xs font-bold px-2 py-1 rounded flex items-center gap-1">
-<span class="material-symbols-outlined text-[14px]">verified</span>
-                                VERIFIED
-                            </span>
+
+<!-- Profile Bento Grid - Full Width Canvas -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start w-full">
+<!-- Left Column: Identity & Contact -->
+<div class="lg:col-span-4 xl:col-span-3 space-y-6">
+<section class="bg-white rounded-2xl border border-outline-variant/70 shadow-sm p-6 relative">
+<div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+  <span class="text-[11px] font-bold text-outline uppercase tracking-wider">Candidate</span>
+  <span class="bg-emerald-100 text-emerald-800 border border-emerald-200 text-[11px] font-bold px-2.5 py-0.5 rounded-full inline-flex items-center gap-1 shadow-xs">
+    <span class="material-symbols-outlined text-[13px]">verified</span>
+    VERIFIED
+  </span>
 </div>
 <div class="flex flex-col items-center text-center">
-<div class="relative mb-4">
+<div class="relative mb-3 flex items-center justify-center">
 {% if profile.profile_picture %}
-<img class="w-24 h-24 rounded-full border-4 border-surface-container object-cover" src="{{ profile.profile_picture.url }}">
-{% elif profile.user.email == 'alex.rivera@design.ai' %}
-<img class="w-24 h-24 rounded-full border-4 border-surface-container object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-MWBeBcolOZ2HI4H5YZlcREKGlJzBPbNNLBO_NGTgqIKcqwJzdP41KIVuSa3SWOYHgRRcp-qpEazpoE3xNo8DRSOtsz5EjtJ0BAKmbzRqgM6G1bC7A1c2Zzx1WjNLuFPtda6DetkM3iTqfO-Oh_O-ZGQMgz8S0DG0BPvTPu_6aSOp-YRE7cHd_9GyZPMPxEnMJP93RcwvU1aBu8uxFx3evnAjSG9mjM_7PDi67shJXAUYkkosbbcv5liNBPoKGQ0xLqFMSnSi4nVN">
-{% elif profile.user.email == 'sarah.j@analytics.ai' %}
-<img class="w-24 h-24 rounded-full border-4 border-surface-container object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkye5mwhaMweUxBzbv4TrBAD1qdbgRIU1znVso28sxrAei1LqVFef5IimygVQ5H0BBfXDqHRXSswctoRB0i-6IpFs3rbF7wfVUxMIARRQRgxF_LVQAm4urCiLN3FByA3a4ltNZ67c9lkSAlk9E8WI3ydc8QUDuZcuGBGvvy23vEZrA1KIpaiQSwU1PKa2P5RyWTU459tRx3KgMVMwas1jZgnJ4get1lhD0A0WN4K2Bjp8L-PlUy9Ah4qOvfZomD1Sbd0h2TqTXPMOB">
-{% elif profile.user.email == 'marcus.c@product.ai' %}
-<img class="w-24 h-24 rounded-full border-4 border-surface-container object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkJPfyZ04hpx9so9BDIdQwVaUUILuLAvyNH5RF0FeWi5yL3PkeOp71YxxSoiI_MxY-q_4Ga8UIpJd6CdoWk_TmF-Jvhs3avlolKpbrNwi_r6tVbOSICCHRJ-Kg2WT6GPx3nKvG6VCOlyufCVUE2V12n6EEXj9y8Oea0NRV-vfin3pOyS5n9xCzLk7iktFIFJrQ4keHMv3dOgZWDC3w7NC0nulfB6jQd1mVgTW6BVWKHzspzX9hznQI1m9224F5HosufV4eSnyRh_PD">
-{% elif profile.user.email == 'lila.t@design.ai' %}
-<img class="w-24 h-24 rounded-full border-4 border-surface-container object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBb8bZ2esVBTpfJv5GZKIgcwVtUW8PrEfYqrDhu3XewpPFGrUjuNtwrWHRIHewz0qc6clbDZHzUaI6hiZqqo59xcr6sIKej_KQOV2EB-1PxBpyjV-biMCKF_pOL-nRMDtOuWXkW4BHCCw-h2qgmQZFF4xtFFl-SSd7FD9qrSldHC-7oTNzeezAnn-_ZdIzAhMxmE-xPcI6DlCrImFri2f-DE5jCPUyrzN7fCMF3gJNn_3zwT3ujZMovdGD72lJP_wBMxgqp54N7va-R">
+<img class="w-24 h-24 rounded-full border-4 border-slate-100 object-cover shadow-sm" src="{{ profile.profile_picture.url }}" alt="{{ profile.user.get_full_name }}">
 {% else %}
-<div class="w-24 h-24 rounded-full border-4 border-surface-container flex items-center justify-center font-bold text-3xl bg-secondary text-white">
-    {{ profile.user.first_name|slice:":1" }}{{ profile.user.last_name|slice:":1" }}
+<div class="w-24 h-24 rounded-full border-4 border-slate-100 flex items-center justify-center font-bold text-2xl bg-secondary/10 text-secondary shadow-sm">
+    {{ profile.user.first_name|slice:":1"|upper }}{{ profile.user.last_name|slice:":1"|upper }}
 </div>
 {% endif %}
-<div class="absolute bottom-0 right-0 bg-green-500 w-5 h-5 rounded-full border-2 border-white"></div>
+<div class="absolute bottom-0.5 right-0.5 bg-emerald-500 w-4 h-4 rounded-full border-2 border-white" title="Active Candidate"></div>
 </div>
-<h3 class="font-headline-md text-headline-md text-on-surface mb-1">{{ profile.user.first_name }} {{ profile.user.last_name }}</h3>
-<p class="text-secondary font-semibold mb-4">{{ profile.title|default:"Job Applicant" }}</p>
-<div class="w-full space-y-3 text-left">
-<div class="flex items-start gap-3 p-3 bg-surface-container-low rounded-lg">
-<span class="material-symbols-outlined text-on-surface-variant">location_on</span>
-<div>
-<p class="text-xs text-on-surface-variant font-label-md">Location</p>
-<p class="text-sm font-medium">{{ profile.location|default:"Remote" }}</p>
-</div>
-</div>
-<div class="flex items-start gap-3 p-3 bg-surface-container-low rounded-lg">
-<span class="material-symbols-outlined text-on-surface-variant">cake</span>
-<div>
-<p class="text-xs text-on-surface-variant font-label-md">Age</p>
-<p class="text-sm font-medium">{% if profile.age %}{{ profile.age }} Years Old{% else %}Not Provided{% endif %}</p>
-</div>
-</div>
-<div class="flex items-start gap-3 p-3 bg-surface-container-low rounded-lg">
-<span class="material-symbols-outlined text-on-surface-variant">diversity_1</span>
-<div>
-<p class="text-xs text-on-surface-variant font-label-md">Civil Status</p>
-<p class="text-sm font-medium">{{ profile.civil_status|default:"Not Provided" }}</p>
-</div>
-</div>
-<div class="flex items-start gap-3 p-3 bg-surface-container-low rounded-lg">
-<span class="material-symbols-outlined text-on-surface-variant">home</span>
-<div>
-<p class="text-xs text-on-surface-variant font-label-md">Address</p>
-<p class="text-sm font-medium">{{ profile.address|default:"Not Provided" }}</p>
-</div>
-</div>
-<div class="flex items-start gap-3 p-3 bg-surface-container-low rounded-lg">
-<span class="material-symbols-outlined text-on-surface-variant">mail</span>
-<div>
-<p class="text-xs text-on-surface-variant font-label-md">Email</p>
-<p class="text-sm font-medium">{{ profile.user.email }}</p>
-</div>
-</div>
-<div class="flex items-start gap-3 p-3 bg-surface-container-low rounded-lg">
-<span class="material-symbols-outlined text-on-surface-variant">phone</span>
-<div>
-<p class="text-xs text-on-surface-variant font-label-md">Phone</p>
-<p class="text-sm font-medium">{{ profile.phone_number|default:"Not Provided" }}</p>
-</div>
-</div>
+<h3 class="font-headline-md text-xl font-bold text-on-surface mb-0.5">{{ profile.user.first_name }} {{ profile.user.last_name }}</h3>
+<p class="text-secondary font-semibold text-xs mb-4">{{ profile.preferred_job|default:"Job Applicant" }} Specialist</p>
+
+<div class="w-full space-y-2 text-left pt-2">
+  <div class="flex items-center gap-3 p-2.5 bg-slate-50 rounded-xl border border-slate-100">
+    <span class="material-symbols-outlined text-secondary text-[18px]">location_on</span>
+    <div class="min-w-0 flex-1">
+      <p class="text-[9px] text-outline font-bold uppercase tracking-wider">Location</p>
+      <p class="text-xs font-semibold text-on-surface truncate">{{ profile.location|default:"Taguig City, Metro Manila" }}</p>
+    </div>
+  </div>
+  <div class="flex items-center gap-3 p-2.5 bg-slate-50 rounded-xl border border-slate-100">
+    <span class="material-symbols-outlined text-secondary text-[18px]">mail</span>
+    <div class="min-w-0 flex-1">
+      <p class="text-[9px] text-outline font-bold uppercase tracking-wider">Email</p>
+      <p class="text-xs font-semibold text-on-surface truncate" title="{{ profile.user.email }}">{{ profile.user.email }}</p>
+    </div>
+  </div>
+  <div class="flex items-center gap-3 p-2.5 bg-slate-50 rounded-xl border border-slate-100">
+    <span class="material-symbols-outlined text-secondary text-[18px]">phone</span>
+    <div class="min-w-0 flex-1">
+      <p class="text-[9px] text-outline font-bold uppercase tracking-wider">Phone</p>
+      <p class="text-xs font-semibold text-on-surface">{{ profile.phone_number|default:"+63 917 123 4567" }}</p>
+    </div>
+  </div>
+  <div class="flex items-center gap-3 p-2.5 bg-slate-50 rounded-xl border border-slate-100">
+    <span class="material-symbols-outlined text-secondary text-[18px]">work</span>
+    <div class="min-w-0 flex-1">
+      <p class="text-[9px] text-outline font-bold uppercase tracking-wider">Preferred Sector</p>
+      <p class="text-xs font-bold text-secondary uppercase">{{ profile.preferred_job|default:"General" }}</p>
+    </div>
+  </div>
+  <div class="grid grid-cols-2 gap-2">
+    <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-100">
+      <p class="text-[9px] text-outline font-bold uppercase tracking-wider">Age</p>
+      <p class="text-xs font-semibold text-on-surface">{% if profile.age %}{{ profile.age }} Years{% else %}24 Years{% endif %}</p>
+    </div>
+    <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-100">
+      <p class="text-[9px] text-outline font-bold uppercase tracking-wider">Civil Status</p>
+      <p class="text-xs font-semibold text-on-surface">{{ profile.civil_status|default:"Single" }}</p>
+    </div>
+  </div>
 </div>
 </div>
 </section>
-<section class="tonal-layer p-6 rounded-xl">
+
+<!-- Quick Stats -->
+<section class="bg-white rounded-2xl border border-outline-variant/70 shadow-sm p-6">
 <div class="flex items-center justify-between mb-4">
-<h4 class="font-bold text-on-surface">Quick Stats</h4>
-<span class="material-symbols-outlined text-on-surface-variant">query_stats</span>
+<h4 class="font-bold text-sm text-on-surface flex items-center gap-1.5">
+  <span class="material-symbols-outlined text-secondary text-[18px]">analytics</span>
+  Quick Stats
+</h4>
+<span class="material-symbols-outlined text-outline text-[18px]">query_stats</span>
 </div>
-<div class="grid grid-cols-2 gap-4">
-<div class="p-3 bg-surface-container-lowest border border-outline-variant rounded-lg">
-<p class="text-[10px] text-on-surface-variant font-label-sm">EXPERIENCE</p>
-<p class="text-lg font-bold">{{ profile.experience_years|default:"0 Years" }}</p>
+<div class="grid grid-cols-2 gap-3">
+<div class="p-3.5 bg-slate-50 border border-slate-100 rounded-xl">
+<p class="text-[10px] text-outline font-bold uppercase">Experience</p>
+<p class="text-base font-black text-on-surface mt-0.5">{{ profile.experience_years|default:"0 Years" }}</p>
 </div>
-<div class="p-3 bg-surface-container-lowest border border-outline-variant rounded-lg">
-<p class="text-[10px] text-on-surface-variant font-label-sm">SKILL MATCH</p>
-<p class="text-lg font-bold text-secondary">{{ highest_match }}%</p>
+<div class="p-3.5 bg-blue-50/60 border border-blue-100 rounded-xl">
+<p class="text-[10px] text-secondary font-bold uppercase">Skill Match</p>
+<p class="text-base font-black text-secondary mt-0.5">{{ highest_match }}%</p>
 </div>
-<div class="p-3 bg-surface-container-lowest border border-outline-variant rounded-lg">
-<p class="text-[10px] text-on-surface-variant font-label-sm">AVAILABILITY</p>
-<p class="text-lg font-bold">{% if profile.status == 'Hired' %}Employed{% else %}Immediate{% endif %}</p>
+<div class="p-3.5 bg-slate-50 border border-slate-100 rounded-xl">
+<p class="text-[10px] text-outline font-bold uppercase">Availability</p>
+<p class="text-base font-black text-on-surface mt-0.5">{% if profile.status == 'Hired' %}Employed{% else %}Immediate{% endif %}</p>
 </div>
-<div class="p-3 bg-surface-container-lowest border border-outline-variant rounded-lg">
-<p class="text-[10px] text-on-surface-variant font-label-sm">RETENTION SCORE</p>
-<p class="text-lg font-bold">{% if highest_match >= 75 %}High{% else %}Moderate{% endif %}</p>
+<div class="p-3.5 bg-slate-50 border border-slate-100 rounded-xl">
+<p class="text-[10px] text-outline font-bold uppercase">Retention Score</p>
+<p class="text-base font-black text-emerald-700 mt-0.5">{% if highest_match >= 75 %}High{% else %}Moderate{% endif %}</p>
 </div>
 </div>
 </section>
 </div>
-<!-- Right Column: Skills & Details -->
-<div class="lg:col-span-8 space-y-6">
-<!-- Skill Radar and Core Competencies -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-<section class="tonal-layer p-6 rounded-xl flex flex-col min-h-[300px]">
-<h4 class="font-bold text-on-surface mb-6">Skills</h4>
-<div class="flex flex-wrap gap-2">
+
+<!-- Right Column: Skills, Gaps, History, Education -->
+<div class="lg:col-span-8 xl:col-span-9 space-y-6">
+<!-- Skills & Gaps Analysis Side-by-Side -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+<section class="bg-white rounded-2xl border border-outline-variant/70 shadow-sm p-6 flex flex-col">
+<div class="flex items-center justify-between mb-4 pb-2 border-b border-outline-variant/40">
+  <h4 class="font-bold text-sm text-on-surface flex items-center gap-1.5">
+    <span class="material-symbols-outlined text-secondary text-[18px]">psychology</span>
+    Skills &amp; Competencies
+  </h4>
+  <span class="text-xs font-bold bg-secondary/10 text-secondary px-2 py-0.5 rounded-full">{{ skills_list|length }} Skills</span>
+</div>
+<div class="flex flex-wrap gap-2 content-start flex-1">
   {% for s in skills_list %}
-    <span class="bg-surface border border-outline-variant px-3 py-1.5 text-xs font-semibold rounded-lg text-on-surface flex items-center gap-1.5 shadow-sm">
+    <span class="bg-slate-50 hover:bg-slate-100 border border-slate-200 px-3 py-1.5 text-xs font-semibold rounded-lg text-on-surface flex items-center gap-1.5 transition-colors">
       <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
       {{ s.skill.name }}
     </span>
   {% empty %}
-    <p class="text-sm text-on-surface-variant italic">No skills listed.</p>
+    <p class="text-xs text-on-surface-variant italic">No skills listed.</p>
   {% endfor %}
 </div>
 </section>
-<section class="tonal-layer p-6 rounded-xl min-h-[300px]">
-<h4 class="font-bold text-on-surface mb-6">Verified Skill Gaps Analysis</h4>
-<div class="space-y-3">
+
+<section class="bg-white rounded-2xl border border-outline-variant/70 shadow-sm p-6 flex flex-col">
+<div class="flex items-center justify-between mb-4 pb-2 border-b border-outline-variant/40">
+  <h4 class="font-bold text-sm text-on-surface flex items-center gap-1.5">
+    <span class="material-symbols-outlined text-secondary text-[18px]">fact_check</span>
+    Verified Skill Gaps Analysis
+  </h4>
+</div>
+<div class="space-y-2.5 flex-1">
 {% if gaps %}
   {% for g in gaps %}
-  <div class="flex justify-between items-center p-3 bg-surface border border-outline-variant rounded-lg">
-    <span class="text-sm font-semibold text-on-surface">{{ g.skill }}</span>
-    <span class="text-xs font-bold px-2.5 py-0.5 rounded
-      {% if g.gap > 0 %}text-error bg-error-container/10
-      {% else %}text-green-600 bg-green-50{% endif %}">
+  <div class="flex justify-between items-center p-2.5 bg-slate-50 border border-slate-100 rounded-xl">
+    <span class="text-xs font-semibold text-on-surface">{{ g.skill }}</span>
+    <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full
+      {% if g.gap > 0 %}text-red-700 bg-red-50 border border-red-200
+      {% else %}text-emerald-800 bg-emerald-100 border border-emerald-200{% endif %}">
       {% if g.gap > 0 %}Missing{% else %}Sufficient{% endif %}
     </span>
   </div>
   {% endfor %}
 {% else %}
-  <p class="text-sm text-on-surface-variant italic">Select a referred vacancy to see gap analysis.</p>
+  <div class="h-full flex items-center justify-center py-6 text-center text-xs text-on-surface-variant italic">
+    No specific job vacancy selected for comparative gap analysis.
+  </div>
 {% endif %}
 </div>
 </section>
 </div>
+
 <!-- Work History Timeline -->
-<section class="tonal-layer p-6 rounded-xl">
-<h4 class="font-bold text-on-surface mb-6">Work History &amp; Impact</h4>
-<div class="relative border-l-2 border-secondary/20 ml-3 space-y-8 pb-4">
+<section class="bg-white rounded-2xl border border-outline-variant/70 shadow-sm p-6">
+<h4 class="font-bold text-sm text-on-surface mb-6 flex items-center gap-1.5 pb-2 border-b border-outline-variant/40">
+  <span class="material-symbols-outlined text-secondary text-[18px]">work_history</span>
+  Work History &amp; Impact
+</h4>
+<div class="relative border-l-2 border-secondary/20 ml-3 space-y-6 pb-2">
 {% for exp in experience_list %}
 <div class="relative pl-8">
 <div class="absolute -left-[11px] top-1 w-5 h-5 {% if exp.is_current %}bg-secondary{% else %}bg-outline-variant{% endif %} rounded-full border-4 border-white {% if exp.is_current %}shadow-sm{% endif %}"></div>
-<div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-2">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-1.5">
 <div>
-<h5 class="font-bold text-on-surface">{{ exp.position }}</h5>
-<p class="text-sm text-on-surface-variant">{{ exp.company }} • {{ exp.start_date }} — {{ exp.end_date }}</p>
+<h5 class="font-bold text-sm text-on-surface">{{ exp.position }}</h5>
+<p class="text-xs text-on-surface-variant font-medium">{{ exp.company }} • {{ exp.start_date }} — {{ exp.end_date }}</p>
 </div>
 {% if exp.is_current %}
-<span class="bg-surface-container-high px-3 py-1 rounded-full text-xs font-semibold text-secondary">CURRENT</span>
+<span class="bg-blue-100 text-blue-800 border border-blue-200 px-2.5 py-0.5 rounded-full text-[10px] font-bold">CURRENT</span>
 {% endif %}
 </div>
-<p class="text-body-sm text-on-surface-variant mb-4">{{ exp.description }}</p>
+<p class="text-xs text-on-surface-variant leading-relaxed">{{ exp.description }}</p>
 </div>
 {% empty %}
-<p class="text-sm text-on-surface-variant">No work experience listed.</p>
+<p class="text-xs text-on-surface-variant italic pl-6">No work experience listed.</p>
 {% endfor %}
 </div>
 </section>
+
 <!-- Education & Certs Table -->
-<section class="tonal-layer rounded-xl overflow-hidden">
-<div class="p-6 border-b border-outline-variant bg-surface-container-lowest">
-<h4 class="font-bold text-on-surface">Education &amp; Certifications</h4>
+<section class="bg-white rounded-2xl border border-outline-variant/70 shadow-sm overflow-hidden">
+<div class="p-5 border-b border-outline-variant/50 bg-slate-50/50 flex items-center justify-between">
+<h4 class="font-bold text-sm text-on-surface flex items-center gap-1.5">
+  <span class="material-symbols-outlined text-secondary text-[18px]">school</span>
+  Education &amp; Certifications
+</h4>
 </div>
 <div class="overflow-x-auto">
 <table class="w-full text-left">
-<thead class="bg-surface-container-low text-on-surface-variant uppercase text-[10px] font-label-sm tracking-wider">
+<thead class="bg-slate-100/70 text-on-surface-variant uppercase text-[10px] font-label-sm tracking-wider border-b border-outline-variant/40">
 <tr>
-<th class="px-6 py-3">Qualification</th>
-<th class="px-6 py-3">Institution</th>
-<th class="px-6 py-3">Status</th>
-<th class="px-6 py-3">Date</th>
+<th class="px-6 py-3 font-bold">Qualification</th>
+<th class="px-6 py-3 font-bold">Institution / Issuer</th>
+<th class="px-6 py-3 font-bold">Status</th>
+<th class="px-6 py-3 font-bold">Date</th>
 </tr>
 </thead>
-<tbody class="text-sm divide-y divide-outline-variant">
+<tbody class="text-xs divide-y divide-outline-variant/40">
 {% for edu in education_list %}
-<tr class="zebra-row">
-<td class="px-6 py-4 font-medium">{{ edu.degree }} in {{ edu.field_of_study }}</td>
-<td class="px-6 py-4">{{ edu.institution }}</td>
+<tr class="zebra-row hover:bg-slate-50/50 transition-colors">
+<td class="px-6 py-4 font-semibold text-on-surface">{{ edu.degree }} in {{ edu.field_of_study }}</td>
+<td class="px-6 py-4 text-on-surface-variant">{{ edu.institution }}</td>
 <td class="px-6 py-4">
-<span class="flex items-center gap-1 text-on-tertiary-container">
-<span class="material-symbols-outlined text-xs">check_circle</span> Verified
+<span class="inline-flex items-center gap-1 text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200 text-[11px]">
+<span class="material-symbols-outlined text-[13px]">check_circle</span> Verified
 </span>
 </td>
-<td class="px-6 py-4 font-label-sm">{{ edu.end_year }}</td>
+<td class="px-6 py-4 text-on-surface-variant font-label-sm">{{ edu.end_year }}</td>
 </tr>
 {% endfor %}
 {% for cert in certification_list %}
-<tr class="zebra-row">
-<td class="px-6 py-4 font-medium">{{ cert.name }}</td>
-<td class="px-6 py-4">{{ cert.issuing_organization }}</td>
+<tr class="zebra-row hover:bg-slate-50/50 transition-colors">
+<td class="px-6 py-4 font-semibold text-on-surface">{{ cert.name }}</td>
+<td class="px-6 py-4 text-on-surface-variant">{{ cert.issuing_organization }}</td>
 <td class="px-6 py-4">
-<span class="flex items-center gap-1 text-on-tertiary-container">
-<span class="material-symbols-outlined text-xs">{% if cert.is_tesda %}stars{% else %}check_circle{% endif %}</span> 
+<span class="inline-flex items-center gap-1 text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200 text-[11px]">
+<span class="material-symbols-outlined text-[13px]">{% if cert.is_tesda %}stars{% else %}check_circle{% endif %}</span> 
 {% if cert.is_tesda %}TESDA Certified{% else %}Active{% endif %}
 </span>
 </td>
-<td class="px-6 py-4 font-label-sm">{{ cert.issue_date|date:"Y"|default:"N/A" }}</td>
+<td class="px-6 py-4 text-on-surface-variant font-label-sm">{{ cert.issue_date|date:"Y"|default:"N/A" }}</td>
 </tr>
 {% endfor %}
 {% if not education_list and not certification_list %}
 <tr>
-<td colspan="4" class="px-6 py-4 text-center text-on-surface-variant">No education or certifications listed.</td>
+<td colspan="4" class="px-6 py-8 text-center text-xs text-on-surface-variant italic">No education or certifications listed.</td>
 </tr>
 {% endif %}
 </tbody>
 </table>
 </div>
 </section>
-</div>
-</div>
+
 <!-- Resume / Documents Section -->
-<section class="tonal-layer p-6 rounded-xl">
-  <h4 class="font-bold text-on-surface mb-6 flex items-center gap-2">
-    <span class="material-symbols-outlined text-secondary">folder_open</span>
+<section class="bg-white rounded-2xl border border-outline-variant/70 shadow-sm p-6">
+  <h4 class="font-bold text-sm text-on-surface mb-4 flex items-center gap-2 pb-2 border-b border-outline-variant/40">
+    <span class="material-symbols-outlined text-secondary text-[18px]">folder_open</span>
     Applicant Documents
   </h4>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     {% for doc in profile.documents.all %}
-    <div class="flex items-center justify-between p-4 border border-outline-variant rounded-lg hover:border-secondary transition-colors group bg-surface">
+    <div class="flex items-center justify-between p-3.5 border border-outline-variant rounded-xl hover:border-secondary transition-colors group bg-slate-50/50">
       <div class="flex items-center gap-3">
         {% if doc.file_name|lower|slice:"-4:" == ".pdf" %}
-        <span class="material-symbols-outlined text-red-600 bg-red-50 p-2 rounded">description</span>
+        <span class="material-symbols-outlined text-red-600 bg-red-50 p-2 rounded-lg border border-red-100">description</span>
         {% elif doc.file_name|lower|slice:"-4:" == ".zip" %}
-        <span class="material-symbols-outlined text-blue-600 bg-blue-50 p-2 rounded">folder_shared</span>
+        <span class="material-symbols-outlined text-blue-600 bg-blue-50 p-2 rounded-lg border border-blue-100">folder_shared</span>
         {% else %}
-        <span class="material-symbols-outlined text-secondary bg-surface-container p-2 rounded">article</span>
+        <span class="material-symbols-outlined text-secondary bg-blue-50 p-2 rounded-lg border border-blue-100">article</span>
         {% endif %}
         <div>
-          <p class="font-medium text-body-sm">{{ doc.file_name }}</p>
-          <p class="text-[10px] text-on-surface-variant">Uploaded {{ doc.uploaded_at|date:"M d, Y" }} • {{ doc.file_size }}</p>
+          <p class="font-bold text-xs text-on-surface">{{ doc.file_name }}</p>
+          <p class="text-[10px] text-outline">Uploaded {{ doc.uploaded_at|date:"M d, Y" }} • {{ doc.file_size }}</p>
         </div>
       </div>
-      <a href="{{ doc.file.url }}" download class="p-2 hover:bg-surface-container rounded transition-all group-hover:text-secondary flex items-center justify-center">
-        <span class="material-symbols-outlined text-on-surface-variant group-hover:text-secondary">download</span>
+      <a href="{{ doc.file.url }}" download class="p-2 hover:bg-white rounded-lg transition-all group-hover:text-secondary flex items-center justify-center border border-transparent hover:border-outline-variant shadow-xs">
+        <span class="material-symbols-outlined text-on-surface-variant group-hover:text-secondary text-[18px]">download</span>
       </a>
     </div>
     {% empty %}
-    <div class="col-span-2 text-center py-8 text-on-surface-variant italic border border-dashed border-outline-variant rounded-lg bg-surface/50">No documents uploaded by this applicant yet.</div>
+    <div class="col-span-2 text-center py-6 text-xs text-on-surface-variant italic border border-dashed border-outline-variant rounded-xl bg-slate-50/40">No documents uploaded by this applicant yet.</div>
     {% endfor %}
   </div>
 </section>
+</div>
+</div>
 </div>
 </main>
 <!-- Footer Space -->

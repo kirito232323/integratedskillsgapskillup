@@ -165,18 +165,28 @@
 <div class="flex items-center gap-4">
 <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">notifications</button>
 <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">settings</button>
-<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
-<img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCn5ndUBvKYHDdfjOtDcuDcmEa-zwbSgM-ZLHNPtfHm7uL9e355N19pHC8c-XBPUwwXHIzoATnKENMDvabjLGF5diSFylP09pwQghoAY0N70mks-GlVv2KmatElbeqz2_5J-gSw4HGwnHnPHYMLeRKflzGezIfmEqF1sJTCsVHaAp-3UBTYmVg6yrq3nRzkltjZyYRqaTWNO9ETM3eG6xeP_aE-PZkbZbeBZvG-dmCW3fgaiDFfFN1v9i2cwj6DH0AUyxyPRP9c4y2t">
-</div>
+<a href="{% url 'peso_profile_admin' %}" class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant bg-secondary/15 flex items-center justify-center font-bold text-xs text-secondary shrink-0 hover:ring-2 hover:ring-secondary transition-all" title="{{ request.user.get_full_name }}">
+{% if request.user.profile.profile_picture %}
+<img alt="{{ request.user.get_full_name }}" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+{% else %}
+{{ request.user.first_name|slice:":1"|upper }}{{ request.user.last_name|slice:":1"|upper|default:"P" }}
+{% endif %}
+</a>
 </div>
 </header>
 <!-- SideNavBar Shell -->
 <aside class="fixed left-0 top-0 h-full w-64 pt-20 bg-surface-container-lowest dark:bg-primary-container border-r border-outline-variant dark:border-outline hidden md:flex flex-col p-4 gap-2 z-40">
 <div class="flex items-center gap-3 px-2 py-4 mb-4 border-b border-outline-variant/30">
-<div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center text-white font-black text-xl">P</div>
+{% if request.user.profile.profile_picture %}
+<div class="w-10 h-10 rounded-lg overflow-hidden border border-outline-variant shrink-0">
+  <img alt="Office Logo" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+</div>
+{% else %}
+<div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center text-white font-black text-xl shrink-0">P</div>
+{% endif %}
 <div>
-<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">Enterprise Portal</h2>
-<p class="text-[10px] text-on-surface-variant opacity-70">Talent Management</p>
+<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">SKILLUP Portal</h2>
+<p class="text-[10px] text-on-surface-variant opacity-70">Public Employment Service</p>
 </div>
 </div>
 <nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
@@ -206,7 +216,7 @@
 </a>
 <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'training_monitoring_admin' %}">
 <span class="material-symbols-outlined">school</span>
-<span>Learning Paths</span>
+<span>Training Programs</span>
 </a>
 <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'job_matching_analytics_admin' %}">
 <span class="material-symbols-outlined">monitoring</span>
@@ -245,95 +255,109 @@
     </form>
     <div class="flex items-center gap-3">
 <div class="flex -space-x-2">
-<img class="w-8 h-8 rounded-full border-2 border-white object-cover" data-alt="A professional portrait of a female applicant in a high-key studio setting, conveying confidence and openness for a modern corporate environment. The background is a soft, clean white, aligning with the light-mode UI aesthetic. The overall lighting is warm and inviting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCDKKRO_wf75qZnxT6pqEN3fZUsSGKQdM_bzIJbQKHhi6z24LGi-Hv7YU4KWCuF4E1MbBwB_ZNYtS-VIEQ3R80AX2qRmKPpATgJftI8nZTns4rgBmQ4tZk5RzNuMrzWj_JenuapEE-sSRMLmAeZs8DIo1d_UbW_WBCvtNJ9nAu12axOPE7wI1BqenZO4iJ0gLd-lUyOH0yWLlx7N1g-RZRMa83arOE4Zv1nCj2bQeBZHQmLx00F7j2KgNBMih9f151C5UtfJGj_ZC8">
-<img class="w-8 h-8 rounded-full border-2 border-white object-cover" data-alt="A detailed headshot of a male software engineer looking focused and professional, set against a blurred modern office backdrop. The image uses a clean, bright lighting style consistent with a premium enterprise talent platform. The color palette emphasizes cool blues and neutrals to match the corporate branding." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAf42Idoq8X3w2NzDgAC5q7v22H4K1Q51ldAXXNH6xSne0F1JfpG5IjnP_1yNXmHeXhSEIF-T06cS1tUXOfTFawOasvcdZh06fEe-qmFykOFvKOevvSNL_qEzcUo9snId9nWw9AR1KOrlQEJUojwh_aq4mhpNo7oJ3Qr97wFyrXt6QdU4bW2h6UIMZFhcVtjnOxYSNgKi5f9qIovn_DJpZC15Q6PVx-vizT0BxQ78VmvRc25ojEFM9MevEfRsGAkBky2njmEXAjxXlm">
-<img class="w-8 h-8 rounded-full border-2 border-white object-cover" data-alt="A professional close-up of a diverse male applicant with a friendly expression, illuminated by natural, soft light in a minimalist professional environment. The high-resolution image maintains a sophisticated and clean aesthetic suitable for an authoritative HR dashboard. The background is a subtle, high-key gray." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqgF3oh3gJP4tTZjOupEzFPdWxtB8pmMH5XOM4-_PoLY9Wx6qrw1ps5D-gYdMF4au6Dts5-t1bz6m5EFVBbMnat_P25EGsCqyjcd4IkW0aovXOSTDsYQi5qRSMC-hmg6q3f6Exf9shuSE35cTYZkuNgIpejGa8bH1KXHgzlPGI5PXEW8aSo_zolRBtLf8Opkoasj7uILfmwkQsmOOoDd1Srrsx72T7TWo0P-3xpvlsS-6yXrL05uLFmxCAcz4StyygcnuOyl1FNpxM">
-<div class="w-8 h-8 rounded-full border-2 border-white bg-surface-container-high flex items-center justify-center text-[10px] font-bold">+124</div>
+{% for app in applicants|slice:":3" %}
+<div class="w-8 h-8 rounded-full border-2 border-white bg-secondary/15 text-secondary flex items-center justify-center text-[10px] font-bold shadow-sm" title="{{ app.user.get_full_name }}">
+  {{ app.user.first_name|slice:":1"|upper }}{{ app.user.last_name|slice:":1"|upper }}
+</div>
+{% endfor %}
+<div class="w-8 h-8 rounded-full border-2 border-white bg-surface-container-high flex items-center justify-center text-[10px] font-bold text-on-surface">
+  +{{ total_applicants }}
+</div>
 </div>
 <span class="text-label-md font-bold text-on-surface-variant">Active Candidates</span>
 </div>
 </div>
 </div>
-<!-- Stats Bento Grid -->
+
+<!-- Stats Bento Grid (Real Dynamic Metrics) -->
 <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-<div class="bg-surface-container-lowest border border-outline-variant p-5 rounded-xl">
+<!-- KPI 1: Total Applicants -->
+<div class="bg-surface-container-lowest border border-outline-variant p-5 rounded-xl shadow-sm">
 <div class="flex items-center justify-between mb-2">
-<span class="text-label-sm text-on-surface-variant uppercase">Total Applicants</span>
+<span class="text-label-sm text-on-surface-variant uppercase font-semibold">Total Applicants</span>
 <span class="material-symbols-outlined text-secondary" data-icon="person">person</span>
 </div>
 <div class="flex items-end gap-2">
-<span class="font-headline-md text-headline-md font-bold">1,482</span>
-<span class="text-on-tertiary-container font-label-sm mb-1 text-[10px]">+12% vs LY</span>
+<span class="font-headline-md text-headline-md font-bold text-on-surface">{{ total_applicants }}</span>
+<span class="text-secondary font-label-sm mb-1 text-[10px] font-bold bg-secondary/10 px-2 py-0.5 rounded border border-secondary/20">Talent Pool</span>
 </div>
+<p class="text-[11px] text-on-surface-variant mt-2">Registered active job seekers</p>
 </div>
-<div class="bg-surface-container-lowest border border-outline-variant p-5 rounded-xl">
+
+<!-- KPI 2: Referred to Jobs -->
+<div class="bg-surface-container-lowest border border-outline-variant p-5 rounded-xl shadow-sm">
 <div class="flex items-center justify-between mb-2">
-<span class="text-label-sm text-on-surface-variant uppercase">Interview Stage</span>
+<span class="text-label-sm text-on-surface-variant uppercase font-semibold">In Pipeline</span>
 <span class="material-symbols-outlined text-secondary" data-icon="record_voice_over">record_voice_over</span>
 </div>
 <div class="flex items-end gap-2">
-<span class="font-headline-md text-headline-md font-bold">42</span>
-<span class="text-on-tertiary-container font-label-sm mb-1 text-[10px]">Active now</span>
+<span class="font-headline-md text-headline-md font-bold text-on-surface">{{ referred_candidates }}</span>
+<span class="text-on-tertiary-container font-label-sm mb-1 text-[10px] font-bold bg-tertiary-fixed-dim/20 px-2 py-0.5 rounded">Endorsed</span>
 </div>
+<p class="text-[11px] text-on-surface-variant mt-2">Referred to active job vacancies</p>
 </div>
-<div class="bg-surface-container-lowest border border-outline-variant p-5 rounded-xl">
+
+<!-- KPI 3: Skill Readiness -->
+<div class="bg-surface-container-lowest border border-outline-variant p-5 rounded-xl shadow-sm">
 <div class="flex items-center justify-between mb-2">
-<span class="text-label-sm text-on-surface-variant uppercase">Skill Readiness</span>
+<span class="text-label-sm text-on-surface-variant uppercase font-semibold">Skill Readiness</span>
 <span class="material-symbols-outlined text-secondary" data-icon="bolt">bolt</span>
 </div>
 <div class="flex items-end gap-2">
-<span class="font-headline-md text-headline-md font-bold">78%</span>
-<div class="w-16 h-1 bg-outline-variant rounded-full mb-2 self-end overflow-hidden">
-<div class="w-[78%] h-full bg-secondary"></div>
+<span class="font-headline-md text-headline-md font-bold text-on-surface">{{ readiness_pct|floatformat:0 }}%</span>
+<div class="w-16 h-1.5 bg-outline-variant/40 rounded-full mb-2 self-end overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: {{ readiness_pct }}%"></div>
 </div>
 </div>
+<p class="text-[11px] text-on-surface-variant mt-2">{{ assessed_candidates }} profiles with assessed skills</p>
 </div>
-<div class="bg-surface-container-lowest border border-outline-variant p-5 rounded-xl">
+
+<!-- KPI 4: Enrolled in Training -->
+<div class="bg-surface-container-lowest border border-outline-variant p-5 rounded-xl shadow-sm">
 <div class="flex items-center justify-between mb-2">
-<span class="text-label-sm text-on-surface-variant uppercase">Training ROI</span>
-<span class="material-symbols-outlined text-secondary" data-icon="trending_up">trending_up</span>
+<span class="text-label-sm text-on-surface-variant uppercase font-semibold">Training Enrolled</span>
+<span class="material-symbols-outlined text-secondary" data-icon="school">school</span>
 </div>
 <div class="flex items-end gap-2">
-<span class="font-headline-md text-headline-md font-bold">$2.4M</span>
-<span class="text-on-tertiary-container font-label-sm mb-1 text-[10px]">Projected</span>
+<span class="font-headline-md text-headline-md font-bold text-on-surface">{{ enrolled_in_training }}</span>
+<span class="text-secondary font-label-sm mb-1 text-[10px] font-bold bg-secondary/10 px-2 py-0.5 rounded border border-secondary/20">Upskilling</span>
+</div>
+<p class="text-[11px] text-on-surface-variant mt-2">Participants in training programs</p>
 </div>
 </div>
-</div>
+
 <!-- Filters and Controls -->
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl mb-6">
-<div class="p-4 border-b border-outline-variant flex flex-wrap items-center gap-4">
-<div class="flex items-center gap-2 px-3 py-1.5 bg-surface-container-low border border-outline-variant rounded-lg">
-<span class="material-symbols-outlined text-[18px]" data-icon="filter_list">filter_list</span>
-<span class="font-label-md">Filters</span>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl mb-6 shadow-sm">
+<div class="p-4 flex flex-wrap items-center justify-between gap-4">
+<div class="flex flex-wrap items-center gap-3 flex-1">
+  <div class="flex-1 min-w-[260px] relative">
+    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-base">search</span>
+    <input id="applicantSearchInput" oninput="applyApplicantFilters()" class="w-full pl-9 pr-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg focus:ring-2 focus:ring-secondary text-body-sm focus:outline-none text-xs" placeholder="Search applicant name, email, or skill..." type="text">
+  </div>
+
+  <select id="applicantStatusFilter" onchange="applyApplicantFilters()" class="border border-outline-variant rounded-lg px-3 py-2 text-xs bg-surface-container-lowest text-on-surface focus:ring-2 focus:ring-secondary focus:outline-none">
+    <option value="">Status: All</option>
+    <option value="interviewing">Interviewing</option>
+    <option value="shortlisted">Shortlisted</option>
+    <option value="skill gap identified">Skill Gap Identified</option>
+    <option value="hired">Hired</option>
+    <option value="active">Active</option>
+  </select>
+
+  <select id="applicantLevelFilter" onchange="applyApplicantFilters()" class="border border-outline-variant rounded-lg px-3 py-2 text-xs bg-surface-container-lowest text-on-surface focus:ring-2 focus:ring-secondary focus:outline-none">
+    <option value="">Skill Level: All</option>
+    <option value="expert">Expert</option>
+    <option value="advanced">Advanced</option>
+    <option value="intermediate">Intermediate</option>
+    <option value="beginner">Beginner</option>
+  </select>
+
+  <button onclick="clearApplicantFilters()" class="text-secondary font-label-md text-xs px-3 py-2 hover:bg-surface-container transition-colors rounded-lg font-bold">Clear Filters</button>
 </div>
-<select class="bg-transparent border-outline-variant rounded-lg font-label-md focus:ring-secondary focus:border-secondary">
-<option>Status: All</option>
-<option>Applied</option>
-<option>Interviewing</option>
-<option>Offer Extended</option>
-<option>Hired</option>
-</select>
-<select class="bg-transparent border-outline-variant rounded-lg font-label-md focus:ring-secondary focus:border-secondary">
-<option>Skill: Any</option>
-<option>React.js</option>
-<option>Python</option>
-<option>Project Mgmt</option>
-<option>SQL</option>
-</select>
-<select class="bg-transparent border-outline-variant rounded-lg font-label-md focus:ring-secondary focus:border-secondary">
-<option>Location: Global</option>
-<option>New York, NY</option>
-<option>London, UK</option>
-<option>San Francisco, CA</option>
-<option>Remote</option>
-</select>
-<div class="ml-auto flex items-center gap-2">
-<button class="p-2 border border-outline-variant rounded-lg hover:bg-surface-container-low transition-colors">
-<span class="material-symbols-outlined text-[20px]" data-icon="view_list">view_list</span>
-</button>
-<button class="p-2 border border-outline-variant rounded-lg hover:bg-surface-container-low transition-colors">
-<span class="material-symbols-outlined text-[20px]" data-icon="grid_view">grid_view</span>
-</button>
+
+<div class="text-xs text-on-surface-variant font-medium">
+  Showing <strong id="visibleApplicantsCount" class="text-on-surface">{{ applicants|length }}</strong> of {{ total_applicants }} candidates
+</div>
 </div>
 </div>
 <!-- Main Data Table -->
@@ -350,29 +374,27 @@
 <th class="px-6 py-4 font-label-sm text-on-surface-variant uppercase tracking-wider">Actions</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-outline-variant">
+<tbody class="divide-y divide-outline-variant" id="applicantsTableBody">
 {% for applicant in applicants %}
-<tr class="hover:bg-surface-container-low transition-colors group">
+<tr class="applicant-item-row hover:bg-surface-container-low transition-colors group"
+    data-name="{{ applicant.user.get_full_name|lower }}"
+    data-email="{{ applicant.user.email|lower }}"
+    data-title="{{ applicant.title|default:''|lower }}"
+    data-preferred-job="{{ applicant.preferred_job|default:''|lower }}"
+    data-status="{{ applicant.status|default:'active'|lower }}"
+    data-level="{{ applicant.skill_level|default:'intermediate'|lower }}"
+    data-skills="{% for s in applicant.skills_list %}{{ s|lower }} {% endfor %}">
 <td class="px-6 py-4">
 <div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container">
-{% if applicant.user.email == 'alex.rivera@design.ai' %}
-<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-MWBeBcolOZ2HI4H5YZlcREKGlJzBPbNNLBO_NGTgqIKcqwJzdP41KIVuSa3SWOYHgRRcp-qpEazpoE3xNo8DRSOtsz5EjtJ0BAKmbzRqgM6G1bC7A1c2Zzx1WjNLuFPtda6DetkM3iTqfO-Oh_O-ZGQMgz8S0DG0BPvTPu_6aSOp-YRE7cHd_9GyZPMPxEnMJP93RcwvU1aBu8uxFx3evnAjSG9mjM_7PDi67shJXAUYkkosbbcv5liNBPoKGQ0xLqFMSnSi4nVN">
-{% elif applicant.user.email == 'sarah.j@analytics.ai' %}
-<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkye5mwhaMweUxBzbv4TrBAD1qdbgRIU1znVso28sxrAei1LqVFef5IimygVQ5H0BBfXDqHRXSswctoRB0i-6IpFs3rbF7wfVUxMIARRQRgxF_LVQAm4urCiLN3FByA3a4ltNZ67c9lkSAlk9E8WI3ydc8QUDuZcuGBGvvy23vEZrA1KIpaiQSwU1PKa2P5RyWTU459tRx3KgMVMwas1jZgnJ4get1lhD0A0WN4K2Bjp8L-PlUy9Ah4qOvfZomD1Sbd0h2TqTXPMOB">
-{% elif applicant.user.email == 'marcus.c@product.ai' %}
-<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkJPfyZ04hpx9so9BDIdQwVaUUILuLAvyNH5RF0FeWi5yL3PkeOp71YxxSoiI_MxY-q_4Ga8UIpJd6CdoWk_TmF-Jvhs3avlolKpbrNwi_r6tVbOSICCHRJ-Kg2WT6GPx3nKvG6VCOlyufCVUE2V12n6EEXj9y8Oea0NRV-vfin3pOyS5n9xCzLk7iktFIFJrQ4keHMv3dOgZWDC3w7NC0nulfB6jQd1mVgTW6BVWKHzspzX9hznQI1m9224F5HosufV4eSnyRh_PD">
-{% elif applicant.user.email == 'lila.t@design.ai' %}
-<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBb8bZ2esVBTpfJv5GZKIgcwVtUW8PrEfYqrDhu3XewpPFGrUjuNtwrWHRIHewz0qc6clbDZHzUaI6hiZqqo59xcr6sIKej_KQOV2EB-1PxBpyjV-biMCKF_pOL-nRMDtOuWXkW4BHCCw-h2qgmQZFF4xtFFl-SSd7FD9qrSldHC-7oTNzeezAnn-_ZdIzAhMxmE-xPcI6DlCrImFri2f-DE5jCPUyrzN7fCMF3gJNn_3zwT3ujZMovdGD72lJP_wBMxgqp54N7va-R">
-{% else %}
-<div class="w-full h-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-lg">
-    {{ applicant.user.first_name|slice:":1" }}{{ applicant.user.last_name|slice:":1" }}
-</div>
-{% endif %}
+<div class="w-10 h-10 rounded-full bg-secondary/10 text-secondary flex items-center justify-center font-bold text-sm border border-secondary/20 shrink-0">
+  {{ applicant.user.first_name|slice:":1"|upper }}{{ applicant.user.last_name|slice:":1"|upper }}
 </div>
 <div>
-<div class="font-bold text-on-surface">{{ applicant.user.first_name }} {{ applicant.user.last_name }}</div>
-<div class="text-[12px] text-on-surface-variant">{{ applicant.title|default:"Job Applicant" }}</div>
+<a href="{% url 'applicant_details_employer_id' applicant.id %}?from_section=talent_bench" class="font-bold text-on-surface hover:text-secondary transition-colors inline-flex items-center gap-1 group">
+  {{ applicant.user.first_name }} {{ applicant.user.last_name }}
+  <span class="material-symbols-outlined text-xs opacity-0 group-hover:opacity-100 transition-opacity">open_in_new</span>
+</a>
+<div class="text-[12px] text-on-surface-variant">{{ applicant.title|default:applicant.user.email }}</div>
 </div>
 </div>
 </td>
@@ -461,23 +483,32 @@
 </td>
 <td class="px-6 py-4 text-body-sm text-on-surface-variant">{{ applicant.location|default:"Remote" }}</td>
 <td class="px-6 py-4">
-<div class="flex items-center gap-2">
+<div class="flex items-center gap-1.5">
+<a href="{% url 'applicant_job_matches' applicant.id %}?from_section=talent_bench" class="p-1.5 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all" title="View Best Matches & Alternative Pathways">
+    <span class="material-symbols-outlined text-[18px]">travel_explore</span>
+</a>
+<a href="{% url 'applicant_employment_report' applicant.id %}" class="p-1.5 text-indigo-700 hover:bg-indigo-50 rounded-lg transition-all" title="View Full Employment Dossier & Report">
+    <span class="material-symbols-outlined text-[18px]">description</span>
+</a>
+<a href="{% url 'applicant_details_employer_id' applicant.id %}?from_section=talent_bench" class="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-all" title="View Full Profile">
+    <span class="material-symbols-outlined text-[18px]">visibility</span>
+</a>
 <form method="post" action="{% url 'update_applicant_status' applicant.id %}" style="display:inline;">
     {% csrf_token %}
     <input type="hidden" name="status" value="Shortlisted">
-    <button type="submit" class="p-1 text-secondary hover:bg-secondary/10 rounded-lg transition-all" title="Shortlist">
-        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+    <button type="submit" class="p-1.5 text-secondary hover:bg-secondary/10 rounded-lg transition-all" title="Shortlist">
+        <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
     </button>
 </form>
 <form method="post" action="{% url 'update_applicant_status' applicant.id %}" style="display:inline;">
     {% csrf_token %}
     <input type="hidden" name="status" value="Rejected">
-    <button type="submit" class="p-1 text-error hover:bg-error/10 rounded-lg transition-all" title="Reject">
-        <span class="material-symbols-outlined">cancel</span>
+    <button type="submit" class="p-1.5 text-error hover:bg-error/10 rounded-lg transition-all" title="Reject">
+        <span class="material-symbols-outlined text-[18px]">cancel</span>
     </button>
 </form>
-<button type="button" onclick="openReferModal('{{ applicant.id }}', '{{ applicant.user.first_name }} {{ applicant.user.last_name }}')" class="p-1 text-blue-600 hover:bg-blue-50 rounded-lg transition-all" title="Refer to Job">
-    <span class="material-symbols-outlined">forward</span>
+<button type="button" onclick="openReferModal('{{ applicant.id }}', '{{ applicant.user.first_name }} {{ applicant.user.last_name }}')" class="p-1.5 text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all" title="Refer to Job">
+    <span class="material-symbols-outlined text-[18px]">forward</span>
 </button>
 </div>
 </td>
@@ -583,76 +614,6 @@
       </tbody>
     </table>
   </div>
-</div>
-
-<!-- Secondary Analysis Section (Radar Chart Placeholder & Insights) -->
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-<div class="lg:col-span-1 bg-surface-container-lowest border border-outline-variant rounded-xl p-6">
-<h3 class="font-headline-md text-headline-md mb-4 text-on-surface">Target Skill Bench</h3>
-<div class="aspect-square w-full relative flex items-center justify-center">
-<!-- Simulated Radar Chart -->
-<div class="absolute inset-0 flex items-center justify-center">
-<div class="w-4/5 h-4/5 border border-dashed border-outline-variant rounded-full flex items-center justify-center">
-<div class="w-3/4 h-3/4 border border-dashed border-outline-variant rounded-full flex items-center justify-center">
-<div class="w-1/2 h-1/2 border border-dashed border-outline-variant rounded-full"></div>
-</div>
-</div>
-</div>
-<!-- Radar Shape -->
-<svg class="w-4/5 h-4/5 relative z-10" viewBox="0 0 100 100">
-<polygon fill="rgba(0, 81, 213, 0.1)" points="50,10 90,40 70,90 30,90 10,40" stroke="#0051d5" stroke-width="2"></polygon>
-<circle cx="50" cy="10" fill="#0051d5" r="3"></circle>
-<circle cx="90" cy="40" fill="#0051d5" r="3"></circle>
-<circle cx="70" cy="90" fill="#0051d5" r="3"></circle>
-<circle cx="30" cy="90" fill="#0051d5" r="3"></circle>
-<circle cx="10" cy="40" fill="#0051d5" r="3"></circle>
-</svg>
-<div class="absolute top-0 left-1/2 -translate-x-1/2 text-[10px] font-bold text-on-surface uppercase">Technical</div>
-<div class="absolute top-1/3 right-0 text-[10px] font-bold text-on-surface uppercase">Strategy</div>
-<div class="absolute bottom-0 right-1/4 text-[10px] font-bold text-on-surface uppercase">Leadership</div>
-<div class="absolute bottom-0 left-1/4 text-[10px] font-bold text-on-surface uppercase">Analysis</div>
-<div class="absolute top-1/3 left-0 text-[10px] font-bold text-on-surface uppercase">Communication</div>
-</div>
-<p class="mt-6 text-body-sm text-on-surface-variant text-center">Benchmark comparison across the selected candidate cohort.</p>
-</div>
-<div class="lg:col-span-2 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 relative overflow-hidden">
-<div class="relative z-10">
-<h3 class="font-headline-md text-headline-md mb-6 text-on-surface">Top Talent Mobility Insights</h3>
-<div class="space-y-6">
-<div class="flex gap-4 p-4 bg-surface-container-low rounded-lg border border-outline-variant">
-<div class="w-12 h-12 rounded-lg bg-on-tertiary-container/10 flex items-center justify-center text-on-tertiary-container">
-<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
-</div>
-<div>
-<h4 class="font-bold text-on-surface">AI Recommendation</h4>
-<p class="text-body-sm text-on-surface-variant">Based on recent performance, Sarah Jenkins is 85% ready for a Senior Architect role. Recommend accelerating Kubernetes certification modules.</p>
-</div>
-</div>
-<div class="flex gap-4 p-4 bg-surface-container-low rounded-lg border border-outline-variant">
-<div class="w-12 h-12 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
-<span class="material-symbols-outlined" data-icon="report_problem">report_problem</span>
-</div>
-<div>
-<h4 class="font-bold text-on-surface">Critical Skill Gap</h4>
-<p class="text-body-sm text-on-surface-variant">The "Security Compliance" skill level is averaging below 40% across all new applicants. Consider adding this to the mandatory core training path.</p>
-</div>
-</div>
-<div class="flex items-center justify-between pt-4">
-<button class="text-secondary font-label-md flex items-center gap-2 hover:underline">
-                                        View Full Mobility Report <span class="material-symbols-outlined text-[18px]" data-icon="arrow_forward">arrow_forward</span>
-</button>
-<div class="flex items-center gap-1">
-<span class="text-[10px] text-on-surface-variant uppercase font-bold">Data Refreshed</span>
-<span class="text-[10px] text-on-tertiary-container font-bold">2m ago</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Subtle Background Graphic -->
-<div class="absolute -bottom-10 -right-10 opacity-5">
-<span class="material-symbols-outlined text-[300px]" data-icon="analytics">analytics</span>
-</div>
-</div>
 </div>
 </div>
 </main>
@@ -771,10 +732,44 @@
         modal.classList.add('flex');
     }
     
-    function closeReferModal() {
-        const modal = document.getElementById('referModal');
-        modal.classList.remove('flex');
-        modal.classList.add('hidden');
+    function applyApplicantFilters() {
+        const search = (document.getElementById('applicantSearchInput').value || '').toLowerCase().trim();
+        const status = (document.getElementById('applicantStatusFilter').value || '').toLowerCase();
+        const level = (document.getElementById('applicantLevelFilter').value || '').toLowerCase();
+
+        const rows = document.querySelectorAll('.applicant-item-row');
+        let visibleCount = 0;
+
+        rows.forEach(row => {
+            const name = row.dataset.name || '';
+            const email = row.dataset.email || '';
+            const title = row.dataset.title || '';
+            const preferredJob = row.dataset.preferredJob || '';
+            const skills = row.dataset.skills || '';
+            const rowStatus = row.dataset.status || '';
+            const rowLevel = row.dataset.level || '';
+
+            const matchesSearch = !search || name.includes(search) || email.includes(search) || title.includes(search) || preferredJob.includes(search) || skills.includes(search);
+            const matchesStatus = !status || rowStatus.includes(status);
+            const matchesLevel = !level || rowLevel === level;
+
+            if (matchesSearch && matchesStatus && matchesLevel) {
+                row.style.display = '';
+                visibleCount++;
+            } else {
+                row.style.display = 'none';
+            }
+        });
+
+        const counter = document.getElementById('visibleApplicantsCount');
+        if (counter) counter.textContent = visibleCount;
+    }
+
+    function clearApplicantFilters() {
+        document.getElementById('applicantSearchInput').value = '';
+        document.getElementById('applicantStatusFilter').value = '';
+        document.getElementById('applicantLevelFilter').value = '';
+        applyApplicantFilters();
     }
 </script>
 </body></html>

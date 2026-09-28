@@ -169,6 +169,15 @@
       </div>
       <button
         class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">settings</button>
+      <a href="{% url 'company_profile_employer' %}" class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant bg-secondary/15 flex items-center justify-center font-bold text-xs text-secondary shrink-0 hover:ring-2 hover:ring-secondary transition-all" title="{{ request.user.profile.company_name|default:request.user.get_full_name }}">
+        {% if request.user.profile.company_logo %}
+          <img alt="{{ request.user.profile.company_name }}" class="w-full h-full object-cover" src="{{ request.user.profile.company_logo.url }}">
+        {% elif request.user.profile.profile_picture %}
+          <img alt="{{ request.user.get_full_name }}" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+        {% else %}
+          {{ request.user.profile.company_name|slice:":1"|upper|default:request.user.first_name|slice:":1"|upper|default:"E" }}
+        {% endif %}
+      </a>
     </div>
   </header>
   <div class="flex flex-1 pt-20 overflow-hidden">
@@ -183,8 +192,8 @@
         {% endif %}
       </div>
         <div>
-          <h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">Enterprise Portal</h2>
-          <p class="text-[10px] text-on-surface-variant opacity-70">Talent Management</p>
+          <h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">SKILLUP Portal</h2>
+          <p class="text-[10px] text-on-surface-variant opacity-70">Enterprise Talent Network</p>
         </div>
       </div>
       <nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
@@ -211,43 +220,65 @@
       </div>
       {% endif %}
       <!-- Header Section -->
-      <div class="flex items-center justify-between mb-8">
+      <div class="flex items-center justify-between mb-6">
         <div>
-          <h2 class="font-headline-lg text-headline-lg text-on-surface mb-1">Senior Product Designer Pipeline</h2>
-          <div class="flex items-center gap-4 text-on-surface-variant text-body-sm">
-            <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">location_on</span>
-              San Francisco, CA</span>
-            <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">work</span>
-              Full-time</span>
-            <span class="flex items-center gap-1 font-semibold text-secondary"><span
-                class="material-symbols-outlined text-[18px]">verified</span> 24 Matches Found</span>
+          <h2 id="pipelineHeaderTitle" class="font-headline-lg text-headline-lg font-bold text-on-surface mb-1">
+            {{ profile.company_name|default:"Enterprise" }} Candidate Pipeline
+          </h2>
+          <div class="flex items-center gap-4 text-on-surface-variant text-body-sm flex-wrap">
+            <span class="flex items-center gap-1">
+              <span class="material-symbols-outlined text-[18px]">domain</span>
+              {{ profile.company_name|default:"Enterprise Partner" }}
+            </span>
+            <span class="flex items-center gap-1">
+              <span class="material-symbols-outlined text-[18px]">location_on</span>
+              {{ profile.address|default:profile.location|default:"Bulacan, Philippines" }}
+            </span>
+            <span class="flex items-center gap-1 font-bold text-secondary">
+              <span class="material-symbols-outlined text-[18px]" style="font-variation-settings:'FILL' 1;">groups</span>
+              <span id="pipelineMatchesCount">{{ referrals|length }} Candidate Referrals</span>
+            </span>
           </div>
         </div>
-
       </div>
-      <!-- Search & Filter Controls -->
+      <!-- Search & Filter Controls with View Switcher -->
       <div
         class="mb-6 flex flex-col md:flex-row gap-4 items-center justify-between bg-surface-container-low/50 p-4 rounded-xl border border-outline-variant/30 shrink-0">
-        <div class="relative w-full md:w-96">
+        <div class="relative w-full md:w-80">
           <span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-[18px]">search</span>
           <input type="text" id="boardSearchInput" placeholder="Search candidate name or job..."
-            class="w-full pl-10 pr-4 py-2 bg-white border border-outline-variant rounded-lg font-body-sm focus:ring-2 focus:ring-secondary focus:border-transparent outline-none">
+            class="w-full pl-10 pr-4 py-2 bg-white border border-outline-variant rounded-lg font-body-sm focus:ring-2 focus:ring-secondary focus:border-transparent outline-none text-xs">
         </div>
-        <div class="flex items-center gap-3">
-          <span class="text-xs text-on-surface-variant font-medium">Filter by Job:</span>
-          <select id="boardJobFilter"
-            class="bg-white border border-outline-variant rounded-lg px-3 py-1.5 text-xs focus:ring-2 focus:ring-secondary outline-none">
-            <option value="">All Jobs</option>
-          </select>
-          <button onclick="exportPipelineExcel()" class="flex items-center gap-1.5 font-label-md text-xs text-on-surface-variant border border-outline-variant px-3 py-1.5 rounded-lg hover:bg-surface-container-low transition-colors shadow-sm bg-white">
+        <div class="flex items-center gap-3 flex-wrap justify-end">
+          <!-- View Switcher -->
+          <div class="flex items-center bg-white rounded-lg p-1 border border-outline-variant shadow-sm">
+            <button type="button" id="boardViewToggleBtn" onclick="switchTrackerView('board')" class="px-3 py-1.5 rounded-md text-xs font-bold transition-all bg-secondary text-white shadow-sm flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[16px]">view_kanban</span>
+              <span>Kanban Board</span>
+            </button>
+            <button type="button" id="tableViewToggleBtn" onclick="switchTrackerView('table')" class="px-3 py-1.5 rounded-md text-xs font-bold transition-all text-on-surface-variant hover:text-secondary flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[16px]">table_rows</span>
+              <span>List &amp; Page View</span>
+            </button>
+          </div>
+
+          <div class="flex items-center gap-1.5">
+            <span class="text-xs text-on-surface-variant font-semibold">Job:</span>
+            <select id="boardJobFilter"
+              class="bg-white border border-outline-variant rounded-lg px-3 py-1.5 text-xs focus:ring-2 focus:ring-secondary outline-none font-medium">
+              <option value="">All Jobs</option>
+            </select>
+          </div>
+
+          <button onclick="exportPipelineExcel()" class="flex items-center gap-1.5 font-label-md text-xs text-on-surface-variant border border-outline-variant px-3 py-1.5 rounded-lg hover:bg-surface-container-low transition-colors shadow-sm bg-white font-bold">
             <span class="material-symbols-outlined text-[18px]">download</span>
             Export Excel
           </button>
         </div>
       </div>
 
-      <!-- Pipeline Visual Board -->
-      <div class="flex-1 overflow-x-auto custom-scrollbar pb-6">
+      <!-- VIEW 1: Pipeline Visual Board (Kanban) -->
+      <div id="kanbanBoardView" class="flex-1 overflow-x-auto custom-scrollbar pb-6">
         <div class="flex gap-6 h-full items-start">
           <!-- Column: Applied -->
           <div class="pipeline-column h-full flex flex-col gap-4">
@@ -285,13 +316,31 @@
                     <span class="font-label-sm text-[12px]">{{ ref.match_percentage }}% Match</span>
                   </div>
                 </div>
-                <div class="mt-4 flex gap-2 justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+                <div class="mt-4 flex items-center gap-1.5 justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button type="button"
+                    class="inspect-candidate-btn px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 text-[10px] rounded font-bold transition-all border border-slate-200"
+                    data-id="{{ ref.applicant.id }}"
+                    data-referral-id="{{ ref.id }}"
+                    data-name="{{ ref.applicant.user.get_full_name }}"
+                    data-email="{{ ref.applicant.user.email }}"
+                    data-phone="{{ ref.applicant.phone_number|default:'No Phone' }}"
+                    data-location="{{ ref.applicant.location|default:'Bulacan, Philippines' }}"
+                    data-job="{{ ref.job_vacancy.title }}"
+                    data-status="{{ ref.status }}"
+                    data-stage="{{ ref.stage_name }}"
+                    data-match="{{ ref.match_percentage }}"
+                    data-skills="{{ ref.skills_str }}"
+                    data-education="{{ ref.edu_str }}"
+                    data-experience="{{ ref.exp_str }}"
+                    data-certifications="{{ ref.certs_str }}"
+                    data-profile-url="{% url 'applicant_details_employer_id' ref.applicant.id %}"
+                    title="View candidate details">Details</button>
                   <button type="button"
                     onclick="openConfirmInterviewModal('{{ ref.id }}', '{{ ref.applicant.user.get_full_name|escapejs }}')"
-                    class="px-2.5 py-1 bg-secondary text-white text-[10px] rounded font-bold hover:bg-opacity-90">Interview</button>
+                    class="px-2.5 py-1 bg-secondary text-white text-[10px] rounded font-bold hover:bg-opacity-90 shadow-sm">Interview</button>
                   <button type="button"
                     onclick="openConfirmRejectModal('{{ ref.id }}', '{{ ref.applicant.user.get_full_name|escapejs }}')"
-                    class="px-2.5 py-1 bg-error text-white text-[10px] rounded font-bold hover:bg-opacity-90">Reject</button>
+                    class="px-2 py-1 bg-error text-white text-[10px] rounded font-bold hover:bg-opacity-90">Reject</button>
                 </div>
               </div>
               {% empty %}
@@ -332,17 +381,35 @@
                 <div class="flex items-center justify-between pt-3 border-t border-outline-variant/30">
                   <div class="flex items-center gap-1 text-tertiary-fixed-dim">
                     <span class="material-symbols-outlined text-[16px]"
-                      style="font-variation-settings: 'FILL' 1;">stars</span>
+                       style="font-variation-settings: 'FILL' 1;">stars</span>
                     <span class="font-label-sm text-[12px]">{{ ref.match_percentage }}% Match</span>
                   </div>
                 </div>
-                <div class="mt-4 flex gap-2 justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+                <div class="mt-4 flex items-center gap-1.5 justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button type="button"
+                    class="inspect-candidate-btn px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 text-[10px] rounded font-bold transition-all border border-slate-200"
+                    data-id="{{ ref.applicant.id }}"
+                    data-referral-id="{{ ref.id }}"
+                    data-name="{{ ref.applicant.user.get_full_name }}"
+                    data-email="{{ ref.applicant.user.email }}"
+                    data-phone="{{ ref.applicant.phone_number|default:'No Phone' }}"
+                    data-location="{{ ref.applicant.location|default:'Bulacan, Philippines' }}"
+                    data-job="{{ ref.job_vacancy.title }}"
+                    data-status="{{ ref.status }}"
+                    data-stage="{{ ref.stage_name }}"
+                    data-match="{{ ref.match_percentage }}"
+                    data-skills="{{ ref.skills_str }}"
+                    data-education="{{ ref.edu_str }}"
+                    data-experience="{{ ref.exp_str }}"
+                    data-certifications="{{ ref.certs_str }}"
+                    data-profile-url="{% url 'applicant_details_employer_id' ref.applicant.id %}"
+                    title="View candidate details">Details</button>
                   <button type="button"
                     onclick="openOfferAcceptanceModal('{{ ref.id }}', '{{ ref.job_vacancy.title|escapejs }}', '{{ ref.applicant.user.get_full_name|escapejs }}')"
-                    class="px-2.5 py-1 bg-secondary text-white text-[10px] rounded font-bold hover:bg-opacity-90">Offer</button>
+                    class="px-2.5 py-1 bg-secondary text-white text-[10px] rounded font-bold hover:bg-opacity-90 shadow-sm">Offer</button>
                   <button type="button"
                     onclick="openConfirmRejectModal('{{ ref.id }}', '{{ ref.applicant.user.get_full_name|escapejs }}')"
-                    class="px-2.5 py-1 bg-error text-white text-[10px] rounded font-bold hover:bg-opacity-90">Reject</button>
+                    class="px-2 py-1 bg-error text-white text-[10px] rounded font-bold hover:bg-opacity-90">Reject</button>
                 </div>
               </div>
               {% empty %}
@@ -397,7 +464,25 @@
                     <span class="font-label-sm text-[12px]">{{ ref.match_percentage }}% Match</span>
                   </div>
                 </div>
-                <div class="mt-4 flex gap-2 justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+                <div class="mt-4 flex items-center gap-1.5 justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button type="button"
+                    class="inspect-candidate-btn px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 text-[10px] rounded font-bold transition-all border border-slate-200"
+                    data-id="{{ ref.applicant.id }}"
+                    data-referral-id="{{ ref.id }}"
+                    data-name="{{ ref.applicant.user.get_full_name }}"
+                    data-email="{{ ref.applicant.user.email }}"
+                    data-phone="{{ ref.applicant.phone_number|default:'No Phone' }}"
+                    data-location="{{ ref.applicant.location|default:'Bulacan, Philippines' }}"
+                    data-job="{{ ref.job_vacancy.title }}"
+                    data-status="{{ ref.status }}"
+                    data-stage="{{ ref.stage_name }}"
+                    data-match="{{ ref.match_percentage }}"
+                    data-skills="{{ ref.skills_str }}"
+                    data-education="{{ ref.edu_str }}"
+                    data-experience="{{ ref.exp_str }}"
+                    data-certifications="{{ ref.certs_str }}"
+                    data-profile-url="{% url 'applicant_details_employer_id' ref.applicant.id %}"
+                    title="View candidate details">Details</button>
                   {% if ref.status == 'Accepted — Awaiting Onboarding' %}
                   <form method="POST" class="inline">
                     {% csrf_token %}
@@ -416,7 +501,7 @@
                   {% endif %}
                   <button type="button"
                     onclick="openConfirmRejectModal('{{ ref.id }}', '{{ ref.applicant.user.get_full_name|escapejs }}')"
-                    class="px-2.5 py-1 bg-error text-white text-[10px] rounded font-bold hover:bg-opacity-90">Reject</button>
+                    class="px-2 py-1 bg-error text-white text-[10px] rounded font-bold hover:bg-opacity-90">Reject</button>
                 </div>
               </div>
               {% empty %}
@@ -469,7 +554,25 @@
                     <span class="font-label-sm text-[12px]">{{ ref.status }}</span>
                   </div>
                 </div>
-                <div class="mt-4 flex gap-2 justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+                <div class="mt-4 flex items-center gap-1.5 justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button type="button"
+                    class="inspect-candidate-btn px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 text-[10px] rounded font-bold transition-all border border-slate-200"
+                    data-id="{{ ref.applicant.id }}"
+                    data-referral-id="{{ ref.id }}"
+                    data-name="{{ ref.applicant.user.get_full_name }}"
+                    data-email="{{ ref.applicant.user.email }}"
+                    data-phone="{{ ref.applicant.phone_number|default:'No Phone' }}"
+                    data-location="{{ ref.applicant.location|default:'Bulacan, Philippines' }}"
+                    data-job="{{ ref.job_vacancy.title }}"
+                    data-status="{{ ref.status }}"
+                    data-stage="{{ ref.stage_name }}"
+                    data-match="{{ ref.match_percentage }}"
+                    data-skills="{{ ref.skills_str }}"
+                    data-education="{{ ref.edu_str }}"
+                    data-experience="{{ ref.exp_str }}"
+                    data-certifications="{{ ref.certs_str }}"
+                    data-profile-url="{% url 'applicant_details_employer_id' ref.applicant.id %}"
+                    title="View candidate details">Details</button>
                   {% if ref.status == 'Hired — Probationary' or ref.status == 'Probation Extended' %}
                   <button type="button"
                     onclick="openProbationReviewModal('{{ ref.id }}', '{{ ref.job_vacancy.title|escapejs }}', '{{ ref.applicant.user.get_full_name|escapejs }}')"
@@ -527,7 +630,25 @@
                     <span class="font-label-sm text-[12px]">Closed</span>
                   </div>
                 </div>
-                <div class="mt-4 flex gap-2 justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+                <div class="mt-4 flex items-center gap-1.5 justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button type="button"
+                    class="inspect-candidate-btn px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 text-[10px] rounded font-bold transition-all border border-slate-200"
+                    data-id="{{ ref.applicant.id }}"
+                    data-referral-id="{{ ref.id }}"
+                    data-name="{{ ref.applicant.user.get_full_name }}"
+                    data-email="{{ ref.applicant.user.email }}"
+                    data-phone="{{ ref.applicant.phone_number|default:'No Phone' }}"
+                    data-location="{{ ref.applicant.location|default:'Bulacan, Philippines' }}"
+                    data-job="{{ ref.job_vacancy.title }}"
+                    data-status="{{ ref.status }}"
+                    data-stage="{{ ref.stage_name }}"
+                    data-match="{{ ref.match_percentage }}"
+                    data-skills="{{ ref.skills_str }}"
+                    data-education="{{ ref.edu_str }}"
+                    data-experience="{{ ref.exp_str }}"
+                    data-certifications="{{ ref.certs_str }}"
+                    data-profile-url="{% url 'applicant_details_employer_id' ref.applicant.id %}"
+                    title="View candidate details">Details</button>
                   {% if not ref.eval_emp_satisfaction %}
                   <button type="button"
                     onclick="openEmployerEvaluationModal('{{ ref.id }}', '{{ ref.job_vacancy.title|escapejs }}', '{{ ref.applicant.user.get_full_name|escapejs }}')"
@@ -542,8 +663,297 @@
           </div>
         </div>
       </div>
+
+      <!-- VIEW 2: Interactive Candidate List & Approval Table View -->
+      <div id="candidateTableView" class="hidden flex-1 overflow-y-auto custom-scrollbar pb-6 space-y-4">
+        <!-- Stage Filter Navigation Tabs -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-1 custom-scrollbar shrink-0">
+          <button type="button" onclick="filterTableStage('all')" class="table-stage-tab px-4 py-2 rounded-full text-xs font-bold transition-all bg-secondary text-white shadow-sm" data-stage="all">
+            All Candidates (<span id="tabCount-all">{{ all_referrals|length }}</span>)
+          </button>
+          <button type="button" onclick="filterTableStage('Applied')" class="table-stage-tab px-4 py-2 rounded-full text-xs font-semibold transition-all bg-surface-container-high text-on-surface-variant hover:text-on-surface" data-stage="Applied">
+            Applied (<span id="tabCount-Applied">{{ applied_lane|length }}</span>)
+          </button>
+          <button type="button" onclick="filterTableStage('Interviewing')" class="table-stage-tab px-4 py-2 rounded-full text-xs font-semibold transition-all bg-surface-container-high text-on-surface-variant hover:text-on-surface" data-stage="Interviewing">
+            Interviewing (<span id="tabCount-Interviewing">{{ interviewing_lane|length }}</span>)
+          </button>
+          <button type="button" onclick="filterTableStage('Offered')" class="table-stage-tab px-4 py-2 rounded-full text-xs font-semibold transition-all bg-surface-container-high text-on-surface-variant hover:text-on-surface" data-stage="Offered">
+            Offered &amp; Onboarding (<span id="tabCount-Offered">{{ offered_lane|length }}</span>)
+          </button>
+          <button type="button" onclick="filterTableStage('Hired')" class="table-stage-tab px-4 py-2 rounded-full text-xs font-semibold transition-all bg-surface-container-high text-on-surface-variant hover:text-on-surface" data-stage="Hired">
+            Hired Placements (<span id="tabCount-Hired">{{ hired_lane|length }}</span>)
+          </button>
+          <button type="button" onclick="filterTableStage('Closed')" class="table-stage-tab px-4 py-2 rounded-full text-xs font-semibold transition-all bg-surface-container-high text-on-surface-variant hover:text-on-surface" data-stage="Closed">
+            Closed / Declined (<span id="tabCount-Closed">{{ closed_lane|length }}</span>)
+          </button>
+        </div>
+
+        <!-- High-Density Candidate Approval Table -->
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+          <table class="w-full text-left border-collapse table-auto">
+            <thead class="bg-slate-100/80 border-b border-outline-variant">
+              <tr>
+                <th class="px-6 py-3.5 font-label-md text-xs font-bold text-on-surface-variant uppercase">Candidate</th>
+                <th class="px-6 py-3.5 font-label-md text-xs font-bold text-on-surface-variant uppercase">Applied Position</th>
+                <th class="px-6 py-3.5 font-label-md text-xs font-bold text-on-surface-variant uppercase text-center">Match Score</th>
+                <th class="px-6 py-3.5 font-label-md text-xs font-bold text-on-surface-variant uppercase">Stage &amp; Status</th>
+                <th class="px-6 py-3.5 font-label-md text-xs font-bold text-on-surface-variant uppercase">Date Referred</th>
+                <th class="px-6 py-3.5 font-label-md text-xs font-bold text-on-surface-variant uppercase text-right whitespace-nowrap">Quick Actions &amp; Approval</th>
+              </tr>
+            </thead>
+            <tbody id="candidateTableListBody" class="divide-y divide-outline-variant">
+              <tr id="tableEmptyRow" class="hidden">
+                <td colspan="6" class="px-6 py-12 text-center text-on-surface-variant">
+                  <div class="flex flex-col items-center justify-center">
+                    <span class="material-symbols-outlined text-4xl text-outline/40 mb-2">person_search</span>
+                    <p class="font-bold text-on-surface text-sm">No Candidates in This Stage</p>
+                    <p class="text-xs text-on-surface-variant mt-1" id="tableEmptyMsg">No candidates found for the selected stage and job filter.</p>
+                  </div>
+                </td>
+              </tr>
+              {% for ref in all_referrals %}
+              <tr class="table-candidate-row zebra-row hover:bg-blue-50/40 transition-colors"
+                  data-name="{{ ref.applicant.user.get_full_name|lower }}"
+                  data-job="{{ ref.job_vacancy.title|lower }}"
+                  data-stage="{{ ref.stage_name }}"
+                  data-job-exact="{{ ref.job_vacancy.title }}">
+                <td class="px-6 py-4.5">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-secondary/15 text-secondary font-black text-sm flex items-center justify-center shrink-0 border border-secondary/20 shadow-sm">
+                      {{ ref.initials }}
+                    </div>
+                    <div>
+                      <a href="{% url 'applicant_details_employer_id' ref.applicant.id %}" class="font-bold text-on-surface hover:text-secondary text-sm block">
+                        {{ ref.applicant.user.get_full_name }}
+                      </a>
+                      <div class="text-xs text-on-surface-variant">{{ ref.applicant.user.email }} &bull; {{ ref.applicant.phone_number|default:"No Phone" }}</div>
+                      <div class="text-[11px] text-outline mt-0.5">{{ ref.applicant.location|default:"Bulacan, Philippines" }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4.5">
+                  <span class="font-bold text-on-surface text-sm block">{{ ref.job_vacancy.title }}</span>
+                  <span class="text-[11px] font-semibold text-secondary px-2 py-0.5 bg-secondary/10 rounded-full border border-secondary/20 inline-block mt-0.5">{{ ref.job_vacancy.category_display }}</span>
+                </td>
+                <td class="px-6 py-4.5 text-center whitespace-nowrap">
+                  <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold {% if ref.match_percentage >= 70 %}bg-emerald-100 text-emerald-800 border border-emerald-200{% elif ref.match_percentage >= 50 %}bg-blue-100 text-blue-800 border border-blue-200{% else %}bg-amber-100 text-amber-800 border border-amber-200{% endif %}">
+                    <span class="material-symbols-outlined text-[14px]" style="font-variation-settings:'FILL' 1;">stars</span>
+                    {{ ref.match_percentage }}% Match
+                  </span>
+                </td>
+                <td class="px-6 py-4.5 whitespace-nowrap">
+                  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold
+                    {% if ref.stage_name == 'Hired' %}bg-emerald-100 text-emerald-800 border border-emerald-200
+                    {% elif ref.stage_name == 'Interviewing' %}bg-blue-100 text-blue-800 border border-blue-200
+                    {% elif ref.stage_name == 'Offered' %}bg-purple-100 text-purple-800 border border-purple-200
+                    {% elif ref.stage_name == 'Closed' %}bg-slate-100 text-slate-700 border border-slate-200
+                    {% else %}bg-amber-100 text-amber-800 border border-amber-200{% endif %}">
+                    <span class="w-2 h-2 rounded-full {% if ref.stage_name == 'Hired' %}bg-emerald-600{% elif ref.stage_name == 'Interviewing' %}bg-blue-600{% elif ref.stage_name == 'Offered' %}bg-purple-600{% elif ref.stage_name == 'Closed' %}bg-slate-400{% else %}bg-amber-600{% endif %}"></span>
+                    {{ ref.status }}
+                  </span>
+                </td>
+                <td class="px-6 py-4.5 text-on-surface-variant text-sm whitespace-nowrap">
+                  <div>{{ ref.date_referred|date:"M d, Y" }}</div>
+                  <div class="text-[11px] text-outline">{{ ref.updated_at|time:"g:i A" }}</div>
+                </td>
+                <td class="px-6 py-4.5 text-right whitespace-nowrap">
+                  <div class="inline-flex items-center justify-end gap-2">
+                    {% if ref.stage_name == 'Applied' %}
+                    <!-- One-Click Approve to Interview -->
+                    <button type="button"
+                      onclick="openConfirmInterviewModal('{{ ref.id }}', '{{ ref.applicant.user.get_full_name|escapejs }}')"
+                      class="h-8 px-3.5 inline-flex items-center justify-center gap-1 bg-secondary hover:opacity-90 text-white rounded-lg text-xs font-bold whitespace-nowrap shadow-sm active:scale-95 transition-all">
+                      <span class="material-symbols-outlined text-[16px]">how_to_reg</span>
+                      <span>Approve Interview</span>
+                    </button>
+                    {% elif ref.stage_name == 'Interviewing' %}
+                    <!-- One-Click Extend Job Offer -->
+                    <button type="button"
+                      onclick="openOfferAcceptanceModal('{{ ref.id }}', '{{ ref.job_vacancy.title|escapejs }}', '{{ ref.applicant.user.get_full_name|escapejs }}')"
+                      class="h-8 px-3.5 inline-flex items-center justify-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold whitespace-nowrap shadow-sm active:scale-95 transition-all">
+                      <span class="material-symbols-outlined text-[16px]">card_membership</span>
+                      <span>Extend Offer</span>
+                    </button>
+                    {% elif ref.stage_name == 'Offered' %}
+                    {% if ref.status == 'Accepted — Awaiting Onboarding' %}
+                    <form method="POST" class="inline">
+                      {% csrf_token %}
+                      <input type="hidden" name="referral_id" value="{{ ref.id }}">
+                      <input type="hidden" name="action" value="confirm_onboarding">
+                      <button type="submit"
+                        class="h-8 px-3.5 inline-flex items-center justify-center gap-1 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-xs font-bold whitespace-nowrap shadow-sm active:scale-95 transition-all">
+                        <span class="material-symbols-outlined text-[16px]">check_circle</span>
+                        <span>Confirm Onboarding</span>
+                      </button>
+                    </form>
+                    {% else %}
+                    <button type="button"
+                      onclick="openLogReportingModal('{{ ref.id }}', '{{ ref.job_vacancy.title|escapejs }}', '{{ ref.applicant.user.get_full_name|escapejs }}')"
+                      class="h-8 px-3.5 inline-flex items-center justify-center gap-1 bg-blue-700 hover:bg-blue-800 text-white rounded-lg text-xs font-bold whitespace-nowrap shadow-sm active:scale-95 transition-all">
+                      <span class="material-symbols-outlined text-[16px]">badge</span>
+                      <span>Log Reporting</span>
+                    </button>
+                    {% endif %}
+                    {% elif ref.stage_name == 'Hired' %}
+                    <button type="button"
+                      onclick="openProbationReviewModal('{{ ref.id }}', '{{ ref.job_vacancy.title|escapejs }}', '{{ ref.applicant.user.get_full_name|escapejs }}')"
+                      class="h-8 px-3.5 inline-flex items-center justify-center gap-1 bg-slate-800 hover:bg-black text-white rounded-lg text-xs font-bold whitespace-nowrap shadow-sm active:scale-95 transition-all">
+                      <span class="material-symbols-outlined text-[16px]">rate_review</span>
+                      <span>Probation Review</span>
+                    </button>
+                    {% endif %}
+
+                    <!-- Full Candidate Inspector Trigger Button -->
+                    <button type="button"
+                      class="inspect-candidate-btn h-8 px-3 inline-flex items-center justify-center gap-1 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg text-xs font-semibold whitespace-nowrap border border-slate-200 transition-all shadow-sm active:scale-95"
+                      data-id="{{ ref.applicant.id }}"
+                      data-referral-id="{{ ref.id }}"
+                      data-name="{{ ref.applicant.user.get_full_name }}"
+                      data-email="{{ ref.applicant.user.email }}"
+                      data-phone="{{ ref.applicant.phone_number|default:'No Phone' }}"
+                      data-location="{{ ref.applicant.location|default:'Bulacan, Philippines' }}"
+                      data-job="{{ ref.job_vacancy.title }}"
+                      data-status="{{ ref.status }}"
+                      data-stage="{{ ref.stage_name }}"
+                      data-match="{{ ref.match_percentage }}"
+                      data-skills="{{ ref.skills_str }}"
+                      data-education="{{ ref.edu_str }}"
+                      data-experience="{{ ref.exp_str }}"
+                      data-certifications="{{ ref.certs_str }}"
+                      data-profile-url="{% url 'applicant_details_employer_id' ref.applicant.id %}"
+                      title="Inspect full candidate details">
+                      <span class="material-symbols-outlined text-[15px]">visibility</span>
+                      <span>Details</span>
+                    </button>
+
+                    {% if ref.stage_name != 'Closed' %}
+                    <!-- Quick Reject -->
+                    <button type="button"
+                      onclick="openConfirmRejectModal('{{ ref.id }}', '{{ ref.applicant.user.get_full_name|escapejs }}')"
+                      class="h-8 w-8 inline-flex items-center justify-center bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-xs font-bold border border-red-200 transition-all active:scale-95"
+                      title="Decline Candidate">
+                      <span class="material-symbols-outlined text-[16px]">close</span>
+                    </button>
+                    {% endif %}
+                  </div>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="6" class="px-6 py-12 text-center text-on-surface-variant">
+                  <span class="material-symbols-outlined text-4xl text-outline/40 mb-2 block">person_search</span>
+                  <p class="font-bold text-on-surface">No Candidates in Pipeline</p>
+                  <p class="text-xs text-on-surface-variant mt-1">No candidate referrals found for this company.</p>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </main>
   </div>
+
+  <!-- CANDIDATE PROFILE INSPECTION & QUICK ACTION MODAL -->
+  <div id="candidateInspectModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 animate-fade-in">
+    <div class="bg-white border border-outline-variant rounded-2xl max-w-2xl w-full p-6 shadow-2xl relative max-h-[90vh] flex flex-col overflow-hidden">
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between border-b border-outline-variant/60 pb-4 mb-4 shrink-0">
+        <div class="flex items-center gap-3">
+          <div id="inspectAvatar" class="w-12 h-12 rounded-full bg-secondary/15 text-secondary font-black text-lg flex items-center justify-center border border-secondary/20 shadow-sm">
+            C
+          </div>
+          <div>
+            <h3 id="inspectName" class="font-headline-md text-lg font-bold text-on-surface">Candidate Name</h3>
+            <p id="inspectJob" class="text-xs font-semibold text-secondary">Applied Position</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span id="inspectMatchBadge" class="px-3 py-1 bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-bold rounded-full">
+            100% Match
+          </span>
+          <button onclick="closeCandidateInspectModal()" class="w-8 h-8 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-400 hover:text-slate-700 transition-colors">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="flex-1 overflow-y-auto custom-scrollbar space-y-4 pr-1 text-xs">
+        <!-- Contact & Basic Info -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+          <div>
+            <span class="text-outline uppercase text-[10px] font-bold block">Email</span>
+            <span id="inspectEmail" class="font-semibold text-on-surface break-all">email@test.com</span>
+          </div>
+          <div>
+            <span class="text-outline uppercase text-[10px] font-bold block">Phone</span>
+            <span id="inspectPhone" class="font-semibold text-on-surface">09123456789</span>
+          </div>
+          <div>
+            <span class="text-outline uppercase text-[10px] font-bold block">Location</span>
+            <span id="inspectLocation" class="font-semibold text-on-surface">Bulacan, Philippines</span>
+          </div>
+        </div>
+
+        <!-- Skills -->
+        <div class="p-3.5 bg-white rounded-xl border border-slate-200">
+          <h4 class="font-bold text-on-surface uppercase text-[11px] tracking-wider mb-1.5 flex items-center gap-1 text-secondary">
+            <span class="material-symbols-outlined text-[16px]">psychology</span>
+            Applicant Skills &amp; Proficiency
+          </h4>
+          <p id="inspectSkills" class="text-on-surface-variant font-medium leading-relaxed"></p>
+        </div>
+
+        <!-- Experience -->
+        <div class="p-3.5 bg-white rounded-xl border border-slate-200">
+          <h4 class="font-bold text-on-surface uppercase text-[11px] tracking-wider mb-1.5 flex items-center gap-1 text-secondary">
+            <span class="material-symbols-outlined text-[16px]">work</span>
+            Work Experience
+          </h4>
+          <p id="inspectExperience" class="text-on-surface-variant font-medium leading-relaxed"></p>
+        </div>
+
+        <!-- Education -->
+        <div class="p-3.5 bg-white rounded-xl border border-slate-200">
+          <h4 class="font-bold text-on-surface uppercase text-[11px] tracking-wider mb-1.5 flex items-center gap-1 text-secondary">
+            <span class="material-symbols-outlined text-[16px]">school</span>
+            Education Background
+          </h4>
+          <p id="inspectEducation" class="text-on-surface-variant font-medium leading-relaxed"></p>
+        </div>
+
+        <!-- Certifications -->
+        <div class="p-3.5 bg-white rounded-xl border border-slate-200">
+          <h4 class="font-bold text-on-surface uppercase text-[11px] tracking-wider mb-1.5 flex items-center gap-1 text-secondary">
+            <span class="material-symbols-outlined text-[16px]">verified</span>
+            Certifications &amp; Licenses
+          </h4>
+          <p id="inspectCertifications" class="text-on-surface-variant font-medium leading-relaxed"></p>
+        </div>
+      </div>
+
+      <!-- Modal Footer with Instant Actions -->
+      <div class="border-t border-outline-variant/60 pt-4 mt-4 shrink-0 flex items-center justify-between flex-wrap gap-3">
+        <a id="inspectFullProfileLink" href="#" class="inline-flex items-center gap-1 text-secondary hover:underline font-bold text-xs">
+          <span>Open Full Profile Page</span>
+          <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+        </a>
+        <div class="flex items-center gap-2 flex-wrap">
+          <button type="button" id="inspectInterviewBtn" class="px-3.5 py-2 bg-secondary hover:opacity-90 text-white rounded-lg text-xs font-bold transition-all shadow-sm">
+            Approve Interview
+          </button>
+          <button type="button" id="inspectOfferBtn" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition-all shadow-sm">
+            Extend Offer
+          </button>
+          <button type="button" id="inspectRejectBtn" class="px-3.5 py-2 bg-error hover:bg-opacity-90 text-white rounded-lg text-xs font-bold transition-all shadow-sm">
+            Decline
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- STAGE 1: Offer Acceptance Modal -->
   <div id="offerAcceptanceModal"
     class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center hidden animate-fade-in">
@@ -910,6 +1320,69 @@
   </div>
 
   <script>
+    // VIEW SWITCHING (Kanban vs Table List)
+    let currentTrackerView = localStorage.getItem('skillup_tracker_view') || 'board';
+
+    function switchTrackerView(mode) {
+      currentTrackerView = mode;
+      localStorage.setItem('skillup_tracker_view', mode);
+
+      const boardView = document.getElementById('kanbanBoardView');
+      const tableView = document.getElementById('candidateTableView');
+      const boardBtn = document.getElementById('boardViewToggleBtn');
+      const tableBtn = document.getElementById('tableViewToggleBtn');
+
+      if (!boardView || !tableView) return;
+
+      if (mode === 'table') {
+        boardView.classList.add('hidden');
+        tableView.classList.remove('hidden');
+        if (tableBtn) {
+          tableBtn.classList.remove('text-on-surface-variant');
+          tableBtn.classList.add('bg-secondary', 'text-white', 'shadow-sm');
+        }
+        if (boardBtn) {
+          boardBtn.classList.remove('bg-secondary', 'text-white', 'shadow-sm');
+          boardBtn.classList.add('text-on-surface-variant');
+        }
+      } else {
+        tableView.classList.add('hidden');
+        boardView.classList.remove('hidden');
+        if (boardBtn) {
+          boardBtn.classList.remove('text-on-surface-variant');
+          boardBtn.classList.add('bg-secondary', 'text-white', 'shadow-sm');
+        }
+        if (tableBtn) {
+          tableBtn.classList.remove('bg-secondary', 'text-white', 'shadow-sm');
+          tableBtn.classList.add('text-on-surface-variant');
+        }
+      }
+      if (typeof applyCandidateFilters === 'function') {
+        applyCandidateFilters();
+      }
+    }
+
+    // TABLE STAGE TAB FILTERING
+    let selectedTableStage = 'all';
+    function filterTableStage(stage) {
+      selectedTableStage = stage;
+      
+      // Update tab active classes
+      document.querySelectorAll('.table-stage-tab').forEach(tab => {
+        if (tab.dataset.stage === stage) {
+          tab.classList.remove('bg-surface-container-high', 'text-on-surface-variant');
+          tab.classList.add('bg-secondary', 'text-white', 'shadow-sm');
+        } else {
+          tab.classList.remove('bg-secondary', 'text-white', 'shadow-sm');
+          tab.classList.add('bg-surface-container-high', 'text-on-surface-variant');
+        }
+      });
+
+      if (typeof applyCandidateFilters === 'function') {
+        applyCandidateFilters();
+      }
+    }
+
     // Modal functions
     function openConfirmInterviewModal(referralId, candidateName) {
       document.getElementById('interviewReferralId').value = referralId;
@@ -996,49 +1469,206 @@
     function closeEmployerEvaluationModal() {
       document.getElementById('employerEvaluationModal').classList.add('hidden');
     }
-  </script>
 
-  <!-- Micro-Interaction Script -->
-  <script>
-    document.querySelectorAll('.candidate-card').forEach(card => {
-      card.addEventListener('mouseenter', () => {
-        card.style.transform = 'translateY(-2px)';
+    // CANDIDATE INSPECT MODAL LOGIC
+    document.querySelectorAll('.inspect-candidate-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const data = {
+          id: btn.dataset.id,
+          referralId: btn.dataset.referralId,
+          name: btn.dataset.name,
+          email: btn.dataset.email,
+          phone: btn.dataset.phone,
+          location: btn.dataset.location,
+          job: btn.dataset.job,
+          status: btn.dataset.status,
+          stage: btn.dataset.stage,
+          match: btn.dataset.match,
+          skills: btn.dataset.skills,
+          education: btn.dataset.education,
+          experience: btn.dataset.experience,
+          certifications: btn.dataset.certifications,
+          profileUrl: btn.dataset.profileUrl
+        };
+        openCandidateInspectModal(data);
       });
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = 'translateY(0px)';
-      });
-      card.addEventListener('mousedown', (e) => {
-        if (!e.target.closest('button') && !e.target.closest('form') && !e.target.closest('a')) {
-          card.classList.add('scale-95');
+    });
+
+    function openCandidateInspectModal(data) {
+      document.getElementById('inspectName').textContent = data.name;
+      document.getElementById('inspectJob').textContent = data.job;
+      document.getElementById('inspectEmail').textContent = data.email;
+      document.getElementById('inspectPhone').textContent = data.phone;
+      document.getElementById('inspectLocation').textContent = data.location;
+      document.getElementById('inspectSkills').textContent = data.skills;
+      document.getElementById('inspectExperience').textContent = data.experience;
+      document.getElementById('inspectEducation').textContent = data.education;
+      document.getElementById('inspectCertifications').textContent = data.certifications;
+      document.getElementById('inspectMatchBadge').textContent = data.match + '% Match';
+
+      const initials = data.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'C';
+      document.getElementById('inspectAvatar').textContent = initials;
+      document.getElementById('inspectFullProfileLink').href = data.profileUrl;
+
+      // Action buttons in modal
+      document.getElementById('inspectInterviewBtn').onclick = () => {
+        closeCandidateInspectModal();
+        openConfirmInterviewModal(data.referralId, data.name);
+      };
+      document.getElementById('inspectOfferBtn').onclick = () => {
+        closeCandidateInspectModal();
+        openOfferAcceptanceModal(data.referralId, data.job, data.name);
+      };
+      document.getElementById('inspectRejectBtn').onclick = () => {
+        closeCandidateInspectModal();
+        openConfirmRejectModal(data.referralId, data.name);
+      };
+
+      document.getElementById('candidateInspectModal').classList.remove('hidden');
+    }
+
+    function closeCandidateInspectModal() {
+      document.getElementById('candidateInspectModal').classList.add('hidden');
+    }
+
+    // GLOBAL FILTER FUNCTION (Works across both Kanban and Table View)
+    function applyCandidateFilters() {
+      const searchInput = document.getElementById('boardSearchInput');
+      const jobFilter = document.getElementById('boardJobFilter');
+      const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+      const selectedJob = jobFilter ? jobFilter.value : '';
+
+      // Update header dynamically
+      const headerTitle = document.getElementById('pipelineHeaderTitle');
+      if (headerTitle) {
+        if (selectedJob) {
+          headerTitle.textContent = selectedJob + ' Pipeline';
+        } else {
+          headerTitle.textContent = '{{ profile.company_name|default:"Enterprise"|escapejs }} Candidate Pipeline';
         }
-      });
-      card.addEventListener('mouseup', () => {
-        card.classList.remove('scale-95');
-      });
-      card.addEventListener('click', (e) => {
-        if (!e.target.closest('button') && !e.target.closest('form') && !e.target.closest('a')) {
-          const link = card.querySelector('a');
-          if (link) {
-            window.location.href = link.href;
+      }
+
+      let totalVisibleKanban = 0;
+
+      // Filter Kanban Cards
+      const columns = document.querySelectorAll('.pipeline-column');
+      columns.forEach(col => {
+        let visibleCount = 0;
+        const colCards = col.querySelectorAll('.candidate-card');
+        colCards.forEach(card => {
+          const nameLink = card.querySelector('a.font-bold');
+          const name = nameLink ? nameLink.textContent.toLowerCase() : '';
+          const jobEl = card.querySelector('.text-xs span.font-semibold');
+          const job = jobEl ? jobEl.textContent.trim() : '';
+
+          const matchesQuery = !query || name.includes(query) || job.toLowerCase().includes(query);
+          const matchesJob = !selectedJob || job === selectedJob;
+
+          if (matchesQuery && matchesJob) {
+            card.classList.remove('hidden');
+            visibleCount++;
+            totalVisibleKanban++;
+          } else {
+            card.classList.add('hidden');
           }
+        });
+
+        const badge = col.querySelector('.bg-surface-container-high');
+        if (badge) {
+          badge.textContent = visibleCount;
         }
       });
-    });
 
-    // Simple scroll wheel to horizontal scroll conversion for board
-    const pipelineBoard = document.querySelector('.overflow-x-auto');
-    pipelineBoard.addEventListener('wheel', (evt) => {
-      evt.preventDefault();
-      pipelineBoard.scrollLeft += evt.deltaY;
-    });
+      // Dynamic Stage Counters based on currently filtered job / search
+      const stageCounts = {
+        'all': 0,
+        'Applied': 0,
+        'Interviewing': 0,
+        'Offered': 0,
+        'Hired': 0,
+        'Closed': 0
+      };
 
-    // Client-side Candidate search and job filter logic
+      let visibleInTableCount = 0;
+
+      // Filter Table Rows & count matching candidates per stage
+      const tableRows = document.querySelectorAll('.table-candidate-row');
+      tableRows.forEach(row => {
+        const name = row.dataset.name || '';
+        const job = row.dataset.job || '';
+        const jobExact = row.dataset.jobExact || '';
+        const stage = row.dataset.stage || '';
+
+        const matchesQuery = !query || name.includes(query) || job.includes(query);
+        const matchesJob = !selectedJob || jobExact === selectedJob;
+
+        if (matchesQuery && matchesJob) {
+          stageCounts['all']++;
+          if (stageCounts.hasOwnProperty(stage)) {
+            stageCounts[stage]++;
+          }
+
+          const matchesStage = selectedTableStage === 'all' || stage === selectedTableStage;
+          if (matchesStage) {
+            row.classList.remove('hidden');
+            visibleInTableCount++;
+          } else {
+            row.classList.add('hidden');
+          }
+        } else {
+          row.classList.add('hidden');
+        }
+      });
+
+      // Update Navigation Tab Badges Dynamically
+      const tabAll = document.getElementById('tabCount-all');
+      if (tabAll) tabAll.textContent = stageCounts['all'];
+      const tabApplied = document.getElementById('tabCount-Applied');
+      if (tabApplied) tabApplied.textContent = stageCounts['Applied'];
+      const tabInterviewing = document.getElementById('tabCount-Interviewing');
+      if (tabInterviewing) tabInterviewing.textContent = stageCounts['Interviewing'];
+      const tabOffered = document.getElementById('tabCount-Offered');
+      if (tabOffered) tabOffered.textContent = stageCounts['Offered'];
+      const tabHired = document.getElementById('tabCount-Hired');
+      if (tabHired) tabHired.textContent = stageCounts['Hired'];
+      const tabClosed = document.getElementById('tabCount-Closed');
+      if (tabClosed) tabClosed.textContent = stageCounts['Closed'];
+
+      // Show empty state row if no candidates match in the selected tab/job
+      const emptyRow = document.getElementById('tableEmptyRow');
+      if (emptyRow) {
+        if (visibleInTableCount === 0) {
+          emptyRow.classList.remove('hidden');
+          const emptyMsg = document.getElementById('tableEmptyMsg');
+          if (emptyMsg) {
+            if (selectedJob && selectedTableStage !== 'all') {
+              emptyMsg.textContent = `No candidates in "${selectedTableStage}" stage for ${selectedJob}.`;
+            } else if (selectedJob) {
+              emptyMsg.textContent = `No candidates found for ${selectedJob}.`;
+            } else {
+              emptyMsg.textContent = `No candidates found in "${selectedTableStage}" stage.`;
+            }
+          }
+        } else {
+          emptyRow.classList.add('hidden');
+        }
+      }
+
+      const matchesCountEl = document.getElementById('pipelineMatchesCount');
+      if (matchesCountEl) {
+        matchesCountEl.textContent = (stageCounts['all']) + ' Candidate Referrals';
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
+      // Restore view mode
+      switchTrackerView(currentTrackerView);
+
       const searchInput = document.getElementById('boardSearchInput');
       const jobFilter = document.getElementById('boardJobFilter');
       const cards = document.querySelectorAll('.candidate-card');
 
-      // Collect unique job titles to populate dropdown
+      // Populate unique job dropdown
       const jobTitles = new Set();
       cards.forEach(card => {
         const jobTitleEl = card.querySelector('.text-xs span.font-semibold');
@@ -1053,59 +1683,20 @@
         jobFilter.appendChild(opt);
       });
 
-      function filterCandidates() {
-        const query = searchInput.value.toLowerCase().trim();
-        const selectedJob = jobFilter.value;
-
-        const columns = document.querySelectorAll('.pipeline-column');
-        columns.forEach(col => {
-          let visibleCount = 0;
-          const colCards = col.querySelectorAll('.candidate-card');
-          colCards.forEach(card => {
-            const nameLink = card.querySelector('a.font-bold');
-            const name = nameLink ? nameLink.textContent.toLowerCase() : '';
-
-            const jobEl = card.querySelector('.text-xs span.font-semibold');
-            const job = jobEl ? jobEl.textContent.trim() : '';
-
-            const matchesQuery = name.includes(query) || job.toLowerCase().includes(query);
-            const matchesJob = !selectedJob || job === selectedJob;
-
-            if (matchesQuery && matchesJob) {
-              card.classList.remove('hidden');
-              visibleCount++;
-            } else {
-              card.classList.add('hidden');
-            }
-          });
-
-          // Update lane counter badge
-          const badge = col.querySelector('.bg-surface-container-high');
-          if (badge) {
-            badge.textContent = visibleCount;
-          }
-        });
-      }
-
-      searchInput.addEventListener('input', filterCandidates);
-      jobFilter.addEventListener('change', filterCandidates);
+      if (searchInput) searchInput.addEventListener('input', applyCandidateFilters);
+      if (jobFilter) jobFilter.addEventListener('change', applyCandidateFilters);
     });
 
     function exportPipelineExcel() {
-        const jobFilterVal = document.getElementById('boardJobFilter').value;
-        const searchVal = document.getElementById('boardSearchInput').value.trim();
-        
-        const urlParams = new URLSearchParams();
-        urlParams.set('export', 'excel');
-        if (jobFilterVal) {
-            urlParams.set('job_title', jobFilterVal);
-        }
-        if (searchVal) {
-            urlParams.set('search', searchVal);
-        }
-        window.location.href = window.location.pathname + '?' + urlParams.toString();
+      const jobFilterVal = document.getElementById('boardJobFilter').value;
+      const searchVal = document.getElementById('boardSearchInput').value.trim();
+      
+      const urlParams = new URLSearchParams();
+      urlParams.set('export', 'excel');
+      if (jobFilterVal) urlParams.set('job_title', jobFilterVal);
+      if (searchVal) urlParams.set('search', searchVal);
+      window.location.href = window.location.pathname + '?' + urlParams.toString();
     }
   </script>
 </body>
-
 </html>

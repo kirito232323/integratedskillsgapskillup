@@ -25,12 +25,14 @@ urlpatterns = [
     # Admin URLs
     path('admin-dashboard/', views.peso_dashboard_admin, name='peso_dashboard_admin'),
     path('peso-admin/applicants/', views.applicant_monitoring_admin, name='applicant_monitoring_admin'),
+    path('peso-admin/applicants/<int:profile_id>/matches/', views.applicant_job_matches, name='applicant_job_matches'),
     path('peso-admin/applicants/import/', views.bulk_import_applicants, name='bulk_import_applicants'),
     path('peso-admin/applicants/<int:profile_id>/interview/', views.coordinator_interview, name='coordinator_interview'),
     path('peso-admin/applicants/<int:profile_id>/status-update/', views.update_applicant_status, name='update_applicant_status'),
     path('peso-admin/employers/', views.employer_management_admin, name='employer_management_admin'),
     path('peso-admin/employers/<int:profile_id>/verify/', views.verify_employer, name='verify_employer'),
     path('peso-admin/employment-tracking/', views.employment_tracking_admin, name='employment_tracking_admin'),
+    path('peso-admin/employment-tracking/applicant/<int:profile_id>/', views.applicant_employment_report, name='applicant_employment_report'),
     path('peso-admin/referrals/create/', views.create_referral, name='create_referral'),
     path('peso-admin/referrals/<int:referral_id>/update-status/', views.update_referral_status, name='update_referral_status'),
     path('peso-admin/referrals/<int:referral_id>/log-contact/', views.log_contact_attempt, name='log_contact_attempt'),
@@ -39,6 +41,7 @@ urlpatterns = [
     path('peso-admin/profile/', views.peso_profile_admin, name='peso_profile_admin'),
     path('peso-admin/skill-monitoring/', views.skill_monitoring_admin, name='skill_monitoring_admin'),
     path('peso-admin/training-monitoring/', views.training_monitoring_admin, name='training_monitoring_admin'),
+    path('peso-admin/training-programs/<int:program_id>/', views.training_program_detail_admin, name='training_program_detail_admin'),
     path('peso-admin/vacancies/', views.vacancy_management_admin, name='vacancy_management_admin'),
     path('peso-admin/vacancies/<int:vacancy_id>/', views.vacancy_detail_admin, name='vacancy_detail_admin'),
 
@@ -56,6 +59,7 @@ urlpatterns = [
     path('applicant/training/enroll/<int:program_id>/', views.applicant_enroll_training, name='applicant_enroll_training'),
     path('applicant/wizard/', views.profile_wizard, name='profile_wizard'),
     path('applicant/settings/', views.applicant_settings, name='applicant_settings'),
+    path('applicant/skill-assessment/submit/', views.submit_skill_assessment, name='submit_skill_assessment'),
     path('applicant/notifications/', views.applicant_notifications, name='applicant_notifications'),
 
     # Employer URLs

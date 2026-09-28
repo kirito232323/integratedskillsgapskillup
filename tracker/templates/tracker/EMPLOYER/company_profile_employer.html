@@ -136,6 +136,15 @@
      class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">{{ unread_match_alerts }}</span>{% endif %}
 </div>
 <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">settings</button>
+<a href="{% url 'company_profile_employer' %}" class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant bg-secondary/15 flex items-center justify-center font-bold text-xs text-secondary shrink-0 hover:ring-2 hover:ring-secondary transition-all" title="{{ request.user.profile.company_name|default:request.user.get_full_name }}">
+  {% if request.user.profile.company_logo %}
+    <img alt="{{ request.user.profile.company_name }}" class="w-full h-full object-cover" src="{{ request.user.profile.company_logo.url }}">
+  {% elif request.user.profile.profile_picture %}
+    <img alt="{{ request.user.get_full_name }}" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+  {% else %}
+    {{ request.user.profile.company_name|slice:":1"|upper|default:request.user.first_name|slice:":1"|upper|default:"E" }}
+  {% endif %}
+</a>
 </div>
 </header>
 <!-- SideNavBar -->
@@ -149,8 +158,8 @@
   {% endif %}
 </div>
 <div>
-<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">Enterprise Portal</h2>
-<p class="text-[10px] text-on-surface-variant opacity-70">Talent Management</p>
+<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">SKILLUP Portal</h2>
+<p class="text-[10px] text-on-surface-variant opacity-70">Enterprise Talent Network</p>
 </div>
 </div>
 <nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
@@ -207,33 +216,37 @@
 <h3 class="font-headline-md text-headline-md text-on-surface">Brand Identity</h3>
 </div>
 </div>
-<div class="grid grid-cols-3 gap-8">
-<div class="col-span-1">
-<label class="block text-label-sm font-label-sm text-on-surface-variant mb-3">COMPANY LOGO</label>
+<div class="flex flex-col md:flex-row gap-8 items-start">
+<div class="flex-shrink-0 flex flex-col items-center">
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-2 self-start font-semibold uppercase tracking-wider">Company Logo</label>
 <div class="relative group">
-<div onclick="document.getElementById('logoFileInput').click()" class="w-full aspect-square bg-surface-container border-2 border-dashed border-outline-variant rounded-xl flex flex-col items-center justify-center cursor-pointer group-hover:border-secondary transition-colors overflow-hidden relative">
+<div onclick="document.getElementById('logoFileInput').click()" class="w-40 h-40 bg-surface-container border-2 border-dashed border-outline-variant rounded-2xl flex flex-col items-center justify-center cursor-pointer group-hover:border-secondary transition-all overflow-hidden relative shadow-sm hover:shadow-md bg-white p-2.5">
 {% if profile.company_logo %}
-<img id="companyLogoPreview" class="w-full h-full object-cover" src="{{ profile.company_logo.url }}">
+<img id="companyLogoPreview" class="w-full h-full object-contain" src="{{ profile.company_logo.url }}">
 {% else %}
-<img id="companyLogoPreview" class="w-full h-full object-cover" data-alt="A sleek corporate logo design..." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdMw5mmmox8BYZy-x0WBPiT0GMsmdUQYYDKU6rhH-gEpoK6FE5UJa8c575bgaBIsZFB-JxpuxyzA1i0OZxVcf8XHtB_DpVFrzPWTtM2vk1odO-k43Rvq9vrx-RMhNx-Qam1umYBcf25DNfLu0wKq0txPFg0I-lk2qOPS3yo-qFLm8Tihvjy5j8jw9TUt5-N1rg7dSyDW_Pw4n8gkb2a7VzxsxlZ_77QMehstREVXIlUxNCZuA1eLzhzSGtRr1H_8kYgDrwBc7X1tcV">
+<img id="companyLogoPreview" class="w-full h-full object-contain" data-alt="A sleek corporate logo design..." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdMw5mmmox8BYZy-x0WBPiT0GMsmdUQYYDKU6rhH-gEpoK6FE5UJa8c575bgaBIsZFB-JxpuxyzA1i0OZxVcf8XHtB_DpVFrzPWTtM2vk1odO-k43Rvq9vrx-RMhNx-Qam1umYBcf25DNfLu0wKq0txPFg0I-lk2qOPS3yo-qFLm8Tihvjy5j8jw9TUt5-N1rg7dSyDW_Pw4n8gkb2a7VzxsxlZ_77QMehstREVXIlUxNCZuA1eLzhzSGtRr1H_8kYgDrwBc7X1tcV">
 {% endif %}
-<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition-opacity text-white">
-<span class="material-symbols-outlined mb-1">upload</span>
-<span class="text-label-sm font-label-sm">CHANGE LOGO</span>
+<div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition-opacity text-white text-xs font-semibold gap-1 rounded-2xl">
+<span class="material-symbols-outlined text-2xl">photo_camera</span>
+<span>Change Logo</span>
 </div>
 </div>
 <input type="file" id="logoFileInput" name="company_logo" onchange="previewLogo(this)" class="hidden" accept="image/*">
-<p class="mt-2 text-[11px] text-on-surface-variant font-body-sm leading-tight text-center">SVG, PNG, JPG (Max 2MB). Recommended size 512x512px.</p>
+<button type="button" onclick="document.getElementById('logoFileInput').click()" class="mt-2 text-xs text-secondary font-bold flex items-center justify-center gap-1 w-full hover:underline">
+  <span class="material-symbols-outlined text-sm">upload</span>
+  Upload Image
+</button>
+<p class="mt-1 text-[11px] text-on-surface-variant font-body-sm leading-tight text-center max-w-[160px]">SVG, PNG, JPG (Max 2MB)</p>
 </div>
 </div>
-<div class="col-span-2 space-y-6">
+<div class="flex-1 w-full space-y-4">
 <div>
-<label class="block text-label-sm font-label-sm text-on-surface-variant mb-2">COMPANY NAME</label>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-2 font-semibold">COMPANY NAME</label>
 <input name="company_name" class="w-full bg-white border border-outline-variant rounded-lg px-4 py-2.5 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent outline-none transition-all" type="text" value="{{ profile.company_name|default:'' }}">
 </div>
-<div class="grid grid-cols-2 gap-4">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 <div>
-<label class="block text-label-sm font-label-sm text-on-surface-variant mb-2">INDUSTRY</label>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-2 font-semibold">INDUSTRY</label>
 <select name="industry" class="w-full bg-white border border-outline-variant rounded-lg px-4 py-2.5 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent outline-none">
 <option value="Information Technology & Services" {% if profile.industry == "Information Technology & Services" %}selected{% endif %}>Information Technology & Services</option>
 <option value="Software Development" {% if profile.industry == "Software Development" %}selected{% endif %}>Software Development</option>
@@ -252,7 +265,7 @@
 </select>
 </div>
 <div>
-<label class="block text-label-sm font-label-sm text-on-surface-variant mb-2">COMPANY SIZE</label>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-2 font-semibold">COMPANY SIZE</label>
 <select name="company_size" class="w-full bg-white border border-outline-variant rounded-lg px-4 py-2.5 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent outline-none">
 <option value="50-200 employees" {% if profile.company_size == "50-200 employees" %}selected{% endif %}>50-200 employees</option>
 <option value="201-500 employees" {% if profile.company_size == "201-500 employees" %}selected{% endif %}>201-500 employees</option>
@@ -262,7 +275,7 @@
 </div>
 </div>
 <div>
-<label class="block text-label-sm font-label-sm text-on-surface-variant mb-2">TAGLINE</label>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-2 font-semibold">TAGLINE</label>
 <input name="tagline" class="w-full bg-white border border-outline-variant rounded-lg px-4 py-2.5 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:border-transparent outline-none transition-all" placeholder="e.g. Innovating the future of talent" type="text" value="{{ profile.title|default:'' }}">
 </div>
 </div>

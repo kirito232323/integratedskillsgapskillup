@@ -63,8 +63,7 @@
             "borderRadius": {
                 "DEFAULT": "0.125rem",
                 "lg": "0.25rem",
-                "xl": "0.5rem",
-                "full": "0.75rem"
+                "xl": "0.5rem"
             },
             "spacing": {
                 "gutter": "24px",
@@ -131,6 +130,15 @@
      class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">{{ unread_match_alerts }}</span>{% endif %}
 </div>
 <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">settings</button>
+<a href="{% url 'company_profile_employer' %}" class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant bg-secondary/15 flex items-center justify-center font-bold text-xs text-secondary shrink-0 hover:ring-2 hover:ring-secondary transition-all" title="{{ request.user.profile.company_name|default:request.user.get_full_name }}">
+  {% if request.user.profile.company_logo %}
+    <img alt="{{ request.user.profile.company_name }}" class="w-full h-full object-cover" src="{{ request.user.profile.company_logo.url }}">
+  {% elif request.user.profile.profile_picture %}
+    <img alt="{{ request.user.get_full_name }}" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+  {% else %}
+    {{ request.user.profile.company_name|slice:":1"|upper|default:request.user.first_name|slice:":1"|upper|default:"E" }}
+  {% endif %}
+</a>
 </div>
 </header>
 <!-- SideNavBar -->
@@ -144,14 +152,14 @@
   {% endif %}
 </div>
 <div>
-<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">Enterprise Portal</h2>
-<p class="text-[10px] text-on-surface-variant opacity-70">Talent Management</p>
+<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">SKILLUP Portal</h2>
+<p class="text-[10px] text-on-surface-variant opacity-70">Enterprise Talent Network</p>
 </div>
 </div>
 <nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
 <a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'employer_dashboard' %}"><span class="material-symbols-outlined">dashboard</span><span>Dashboard</span></a>
 <a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'hiring_tracker_employer' %}"><span class="material-symbols-outlined">developer_board</span><span>Hiring Tracker</span></a>
-<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'job_management_employer' %}"><span class="material-symbols-outlined">work</span><span>Job Management</span></a>
+<a class="flex items-center gap-3 px-3 py-2 bg-surface-container dark:bg-secondary-container text-on-surface dark:text-on-secondary-container font-bold rounded-lg scale-98 active:scale-95 duration-150 transition-all font-label-md text-label-md" href="{% url 'job_management_employer' %}"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">work</span><span>Job Management</span></a>
 <a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'company_profile_employer' %}"><span class="material-symbols-outlined">corporate_fare</span><span>Company Profile</span></a>
 <a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md relative" href="{% url 'employer_notifications' %}"><span class="material-symbols-outlined">notifications</span><span>Match Alerts</span></a>
 </nav>
@@ -160,9 +168,9 @@
 </div>
 </aside>
 <!-- Main Canvas -->
-<main class="ml-64 pt-20 min-h-screen">
+<main class="md:ml-64 pt-24 pb-12 px-6 md:px-8 min-h-screen bg-slate-50/60">
 <!-- Content Area -->
-<div class="py-8 px-margin-desktop max-w-[1440px] mx-auto">
+<div class="w-full space-y-6">
 <!-- Analysis Header -->
 <div class="flex justify-between items-end mb-8">
 <div class="space-y-2">

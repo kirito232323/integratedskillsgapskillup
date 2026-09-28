@@ -1,0 +1,682 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Employment Dossier Report: {{ candidate.user.get_full_name }} | SKILLUP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#0051d5",
+                    "inverse-surface": "#213145",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "outline-variant": "#c6c6cd",
+                    "primary-fixed": "#dae2fd",
+                    "on-error": "#ffffff",
+                    "surface-container": "#e5eeff",
+                    "on-tertiary": "#ffffff",
+                    "surface-tint": "#565e74",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "surface-container-low": "#eff4ff",
+                    "on-surface": "#0b1c30",
+                    "on-secondary-fixed-variant": "#003ea8",
+                    "surface-bright": "#f8f9ff",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-primary-container": "#7c839b",
+                    "primary-fixed-dim": "#bec6e0",
+                    "outline": "#76777d",
+                    "on-secondary-fixed": "#00174b",
+                    "on-secondary": "#ffffff",
+                    "surface-container-highest": "#d3e4fe",
+                    "tertiary-container": "#002113",
+                    "primary-container": "#131b2e",
+                    "tertiary": "#000000",
+                    "on-tertiary-container": "#009668",
+                    "surface-variant": "#d3e4fe",
+                    "surface-container-high": "#dce9ff",
+                    "error-container": "#ffdad6",
+                    "on-error-container": "#93000a",
+                    "surface": "#f8f9ff",
+                    "secondary-fixed-dim": "#b4c5ff",
+                    "on-primary-fixed": "#131b2e",
+                    "inverse-primary": "#bec6e0"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "40px",
+                    "container-max": "1440px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["JetBrains Mono"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-md": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #f8f9ff; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+        }
+        .zebra-row:nth-child(even) { background-color: #f8fafc; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+        @media print {
+          body { background-color: #ffffff !important; }
+          aside, header, .no-print { display: none !important; }
+          main { margin-left: 0 !important; padding: 0 !important; width: 100% !important; }
+          .shadow-sm, .shadow-md, .shadow-2xs, .shadow-xs { box-shadow: none !important; border: 1px solid #cbd5e1 !important; }
+        }
+</style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen">
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 w-full z-50 bg-surface dark:bg-surface-container-low border-b border-outline-variant dark:border-outline flex items-center justify-between px-margin-desktop h-16 w-full no-print">
+<div class="flex items-center gap-8">
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-inverse-on-surface">SKILLUP</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">notifications</button>
+<a href="{% url 'peso_profile_admin' %}" class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80" title="Settings">settings</a>
+<a href="{% url 'peso_profile_admin' %}" class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant bg-secondary/15 flex items-center justify-center font-bold text-xs text-secondary shrink-0 hover:ring-2 hover:ring-secondary transition-all" title="{{ request.user.get_full_name }}">
+{% if request.user.profile.profile_picture %}
+<img alt="{{ request.user.get_full_name }}" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+{% else %}
+{{ request.user.first_name|slice:":1"|upper }}{{ request.user.last_name|slice:":1"|upper|default:"P" }}
+{% endif %}
+</a>
+</div>
+</header>
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 h-full w-64 pt-20 bg-surface-container-lowest dark:bg-primary-container border-r border-outline-variant dark:border-outline hidden md:flex flex-col p-4 gap-2 z-40 no-print">
+<div class="flex items-center gap-3 px-2 py-4 mb-4 border-b border-outline-variant/30">
+{% if request.user.profile.profile_picture %}
+<div class="w-10 h-10 rounded-lg overflow-hidden border border-outline-variant shrink-0">
+  <img alt="Office Logo" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+</div>
+{% else %}
+<div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center text-white font-black text-xl shrink-0">P</div>
+{% endif %}
+<div>
+<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">SKILLUP Portal</h2>
+<p class="text-[10px] text-on-surface-variant opacity-70">Public Employment Service</p>
+</div>
+</div>
+<nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'peso_dashboard_admin' %}">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'applicant_monitoring_admin' %}">
+<span class="material-symbols-outlined">groups</span>
+<span>Talent Bench</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'employer_management_admin' %}">
+<span class="material-symbols-outlined">domain</span>
+<span>Employers</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'vacancy_management_admin' %}">
+<span class="material-symbols-outlined">work</span>
+<span>Vacancies</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-surface-container dark:bg-secondary-container text-on-surface dark:text-on-secondary-container font-bold rounded-lg scale-98 active:scale-95 duration-150 transition-all font-label-md text-label-md" href="{% url 'employment_tracking_admin' %}">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">description</span>
+<span>Reports</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'skill_monitoring_admin' %}">
+<span class="material-symbols-outlined">analytics</span>
+<span>Skill Gaps</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'training_monitoring_admin' %}">
+<span class="material-symbols-outlined">school</span>
+<span>Training Programs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'job_matching_analytics_admin' %}">
+<span class="material-symbols-outlined">monitoring</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'peso_profile_admin' %}">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'logout' %}">
+<span class="material-symbols-outlined">logout</span>
+<span>Log Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="md:ml-64 pt-20 min-h-screen">
+<div class="p-margin-desktop space-y-gutter">
+    
+    <!-- Messages Notification -->
+    {% if messages %}
+      <div class="space-y-2 no-print">
+        {% for message in messages %}
+          <div class="p-4 rounded-xl border flex items-center justify-between {% if message.tags == 'success' %}bg-green-50 border-green-200 text-green-800{% else %}bg-blue-50 border-blue-200 text-blue-800{% endif %} shadow-xs">
+            <div class="flex items-center gap-2 font-medium text-sm">
+              <span class="material-symbols-outlined text-[20px]">check_circle</span>
+              <span>{{ message }}</span>
+            </div>
+            <button onclick="this.parentElement.remove()" class="opacity-60 hover:opacity-100"><span class="material-symbols-outlined text-sm">close</span></button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <!-- Top Action & Breadcrumb Bar -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-outline-variant/50">
+      <div class="flex items-center gap-3.5">
+        <a href="{% url 'employment_tracking_admin' %}" class="w-10 h-10 rounded-full border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low hover:text-secondary flex items-center justify-center text-on-surface-variant transition-all shadow-xs active:scale-95 shrink-0 no-print" title="Back to Reports">
+          <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+        </a>
+        <div>
+          <div class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant mb-0.5">
+            <a href="{% url 'employment_tracking_admin' %}" class="hover:text-secondary font-medium">Reports & Employment Tracking</a>
+            <span class="material-symbols-outlined text-xs">chevron_right</span>
+            <span class="font-bold text-on-surface">Candidate Employment Dossier</span>
+          </div>
+          <h1 class="font-headline-lg text-headline-lg font-bold text-on-surface">Employment Dossier & Audit Report</h1>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 no-print">
+        <a href="{% url 'applicant_job_matches' candidate.id %}?from_section=employment_report" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all shadow-xs">
+          <span class="material-symbols-outlined text-[16px]">travel_explore</span>
+          Job Matches & Pathways
+        </a>
+        <a href="{% url 'applicant_details_employer_id' candidate.id %}?from_section=talent_bench" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-outline-variant bg-white hover:bg-surface-container-low text-on-surface text-xs font-bold transition-all shadow-xs">
+          <span class="material-symbols-outlined text-[16px]">person</span>
+          Profile
+        </a>
+        <button onclick="window.print()" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-900 hover:bg-black text-white text-xs font-bold transition-all shadow-xs">
+          <span class="material-symbols-outlined text-[16px]">print</span>
+          Print / PDF Export
+        </button>
+      </div>
+    </div>
+
+    <!-- Candidate Identification Dossier Card -->
+    <div class="bg-white rounded-2xl border border-outline-variant/70 p-6 md:p-8 shadow-sm">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-outline-variant/40">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-5">
+          <div class="w-20 h-20 rounded-2xl bg-secondary/10 text-secondary border-2 border-secondary/20 flex items-center justify-center text-3xl font-black shrink-0 shadow-inner">
+            {{ candidate.user.first_name|slice:":1"|upper }}{{ candidate.user.last_name|slice:":1"|upper }}
+          </div>
+          <div class="space-y-1">
+            <div class="flex flex-wrap items-center gap-3">
+              <h2 class="text-2xl font-black text-on-surface">{{ candidate.user.get_full_name }}</h2>
+              <span class="px-3 py-0.5 rounded-full text-xs font-extrabold uppercase tracking-wide {% if 'Hired' in candidate.status or 'Regular' in candidate.status %}bg-green-100 text-green-800 border border-green-200{% else %}bg-blue-100 text-blue-800 border border-blue-200{% endif %}">
+                {{ candidate.status|default:"Active Applicant" }}
+              </span>
+            </div>
+            <p class="text-sm text-on-surface-variant font-medium">
+              {{ candidate.user.email }} • {{ candidate.phone|default:"+63 (02) 8920-0000" }} • {{ candidate.location|default:"Philippines" }}
+            </p>
+            <p class="text-xs text-on-surface-variant">
+              Field of Study: <span class="font-bold text-on-surface">{{ candidate.education.first.field_of_study|default:"General Academic" }}</span> • Experience: <span class="font-bold text-on-surface">{{ candidate.experience_years|default:"0 Years" }}</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Government IDs Badge Box -->
+        <div class="bg-surface-container-low border border-outline-variant/60 rounded-xl p-4 min-w-[280px]">
+          <div class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wider mb-2">Registered Government IDs</div>
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div><span class="text-outline font-semibold">SSS:</span> <span class="font-bold text-on-surface">{{ documents.sss|default:"Logged" }}</span></div>
+            <div><span class="text-outline font-semibold">PhilHealth:</span> <span class="font-bold text-on-surface">{{ documents.philhealth|default:"Logged" }}</span></div>
+            <div><span class="text-outline font-semibold">Pag-IBIG:</span> <span class="font-bold text-on-surface">{{ documents.pagibig|default:"Logged" }}</span></div>
+            <div><span class="text-outline font-semibold">TIN:</span> <span class="font-bold text-on-surface">{{ documents.tin|default:"Logged" }}</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills Matrix Tags -->
+      <div class="pt-4 flex flex-wrap items-center gap-1.5">
+        <span class="text-xs font-bold text-on-surface-variant mr-1">Registered Competencies:</span>
+        {% for s in skills_list %}
+          <span class="bg-surface-container text-on-surface text-xs font-semibold px-2.5 py-1 rounded-md border border-outline-variant/60">{{ s }}</span>
+        {% empty %}
+          <span class="text-xs text-on-surface-variant italic">No skills registered yet</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Executive Summary Bento Cards -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-white p-5 rounded-xl border border-outline-variant/70 shadow-2xs">
+        <div class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1">Total Referrals</div>
+        <div class="text-2xl font-black text-on-surface">{{ total_referrals_count }}</div>
+        <div class="text-[11px] text-on-surface-variant mt-1">Logged endorsements</div>
+      </div>
+      <div class="bg-white p-5 rounded-xl border border-outline-variant/70 shadow-2xs">
+        <div class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1">Placements Confirmed</div>
+        <div class="text-2xl font-black text-green-700">{{ hired_count }}</div>
+        <div class="text-[11px] text-green-800 font-semibold mt-1">Active / Regular hires</div>
+      </div>
+      <div class="bg-white p-5 rounded-xl border border-outline-variant/70 shadow-2xs">
+        <div class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1">Top Match Score</div>
+        <div class="text-2xl font-black text-secondary">{{ highest_match }}%</div>
+        <div class="text-[11px] text-secondary font-semibold mt-1">Core qualification match</div>
+      </div>
+      <div class="bg-white p-5 rounded-xl border border-outline-variant/70 shadow-2xs">
+        <div class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1">Document Compliance</div>
+        <div class="text-2xl font-black text-indigo-700">{{ compliance_score }}%</div>
+        <div class="text-[11px] text-indigo-800 font-semibold mt-1">Pre-employment verified</div>
+      </div>
+    </div>
+
+    <!-- Section 1: Complete Placement & Referral Audit Log -->
+    <section class="bg-white rounded-2xl border border-outline-variant/70 shadow-sm overflow-hidden">
+      <div class="p-6 border-b border-outline-variant/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h3 class="text-lg font-bold text-on-surface">1. Placement & Referral Audit Log</h3>
+          <p class="text-xs text-on-surface-variant mt-0.5">Chronological record of employer endorsements, vacancy matches, and hiring outcomes.</p>
+        </div>
+        <span class="px-3 py-1 bg-surface-container rounded-full text-xs font-bold text-secondary">{{ referrals|length }} Records Logged</span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-surface-container-low text-on-surface-variant font-bold text-xs uppercase tracking-wider">
+            <tr>
+              <th class="px-6 py-4">Date Referred</th>
+              <th class="px-6 py-4">Employer & Company</th>
+              <th class="px-6 py-4">Job Vacancy</th>
+              <th class="px-6 py-4">Match Rating</th>
+              <th class="px-6 py-4">Placement Status</th>
+              <th class="px-6 py-4 text-right no-print">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-outline-variant/40 font-medium">
+            {% for r in referrals %}
+              <tr class="zebra-row hover:bg-surface-container-low/60 transition-colors">
+                <td class="px-6 py-4 font-mono text-xs text-on-surface-variant">{{ r.date_referred|date:"M d, Y" }}</td>
+                <td class="px-6 py-4 font-bold text-on-surface">{{ r.job_vacancy.employer.company_name|default:r.job_vacancy.employer.user.first_name }}</td>
+                <td class="px-6 py-4">
+                  <div class="font-bold text-secondary">{{ r.job_vacancy.title }}</div>
+                  <div class="text-xs text-on-surface-variant">Salary: {{ r.job_vacancy.salary_range|default:"Competitive" }}</div>
+                </td>
+                <td class="px-6 py-4">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold {% if r.match_pct >= 70 %}bg-green-100 text-green-800{% elif r.match_pct >= 40 %}bg-amber-100 text-amber-800{% else %}bg-slate-100 text-slate-700{% endif %}">
+                    {{ r.match_pct }}% Match
+                  </span>
+                </td>
+                <td class="px-6 py-4">
+                  {% if 'Hired' in r.status or 'Regular' in r.status %}
+                    <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-green-100 text-green-800">{{ r.status }}</span>
+                  {% elif 'Interview' in r.status %}
+                    <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800">{{ r.status }}</span>
+                  {% elif 'No Response' in r.status or r.is_stale %}
+                    <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800">Pending Employer</span>
+                  {% else %}
+                    <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700">{{ r.status }}</span>
+                  {% endif %}
+                </td>
+                <td class="px-6 py-4 text-right no-print">
+                  <button type="button" onclick="openCoordinationModal('{{ r.id }}', '{{ r.job_vacancy.title|escapejs }}', '{{ r.pre_employment_status|escapejs }}', '{{ r.coordination_notes|escapejs }}', '{{ r.reporting_date|date:'Y-m-d' }}')" class="px-3 py-1.5 rounded-lg border border-outline-variant hover:bg-surface-container text-xs font-bold text-on-surface transition-colors shadow-2xs">
+                    Update Onboarding
+                  </button>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="6" class="px-6 py-8 text-center text-on-surface-variant italic">No referral records logged for this candidate.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 2: Pre-Employment Verification & Documents Checklist -->
+    <section class="bg-white rounded-2xl border border-outline-variant/70 shadow-sm p-6 space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-outline-variant/50">
+        <div>
+          <h3 class="text-lg font-bold text-on-surface">2. Pre-Employment Requirements & Compliance Matrix</h3>
+          <p class="text-xs text-on-surface-variant mt-0.5">Verification status of mandatory DOLE and employer onboarding credentials.</p>
+        </div>
+        <span class="text-xs font-extrabold px-3 py-1 rounded-full bg-indigo-100 text-indigo-800">
+          Compliance: {{ compliance_score }}%
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- NBI -->
+        <div class="p-4 rounded-xl border {% if documents.nbi %}bg-green-50/60 border-green-200{% else %}bg-slate-50 border-outline-variant/60{% endif %} flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined {% if documents.nbi %}text-green-700{% else %}text-slate-400{% endif %} text-2xl">
+              {% if documents.nbi %}verified{% else %}pending{% endif %}
+            </span>
+            <div>
+              <div class="text-xs font-bold text-on-surface">NBI Clearance</div>
+              <div class="text-[11px] text-on-surface-variant">{% if documents.nbi %}Verified Valid{% else %}Pending Submission{% endif %}</div>
+            </div>
+          </div>
+          {% if documents.nbi_url %}
+            <a href="{{ documents.nbi_url }}" target="_blank" class="text-xs text-secondary font-bold hover:underline no-print">View</a>
+          {% endif %}
+        </div>
+
+        <!-- Medical -->
+        <div class="p-4 rounded-xl border {% if documents.medical %}bg-green-50/60 border-green-200{% else %}bg-slate-50 border-outline-variant/60{% endif %} flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined {% if documents.medical %}text-green-700{% else %}text-slate-400{% endif %} text-2xl">
+              {% if documents.medical %}medical_services{% else %}pending{% endif %}
+            </span>
+            <div>
+              <div class="text-xs font-bold text-on-surface">Medical Examination</div>
+              <div class="text-[11px] text-on-surface-variant">{% if documents.medical %}Fit to Work{% else %}Pending Clinic Result{% endif %}</div>
+            </div>
+          </div>
+          {% if documents.medical_url %}
+            <a href="{{ documents.medical_url }}" target="_blank" class="text-xs text-secondary font-bold hover:underline no-print">View</a>
+          {% endif %}
+        </div>
+
+        <!-- PSA Birth Cert -->
+        <div class="p-4 rounded-xl border {% if documents.birth_cert %}bg-green-50/60 border-green-200{% else %}bg-slate-50 border-outline-variant/60{% endif %} flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined {% if documents.birth_cert %}text-green-700{% else %}text-slate-400{% endif %} text-2xl">
+              {% if documents.birth_cert %}badge{% else %}pending{% endif %}
+            </span>
+            <div>
+              <div class="text-xs font-bold text-on-surface">PSA Birth Certificate</div>
+              <div class="text-[11px] text-on-surface-variant">{% if documents.birth_cert %}Authenticated Copy{% else %}Pending Submission{% endif %}</div>
+            </div>
+          </div>
+          {% if documents.birth_cert_url %}
+            <a href="{{ documents.birth_cert_url }}" target="_blank" class="text-xs text-secondary font-bold hover:underline no-print">View</a>
+          {% endif %}
+        </div>
+
+        <!-- Diploma / TOR -->
+        <div class="p-4 rounded-xl border {% if documents.diploma %}bg-green-50/60 border-green-200{% else %}bg-slate-50 border-outline-variant/60{% endif %} flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined {% if documents.diploma %}text-green-700{% else %}text-slate-400{% endif %} text-2xl">
+              {% if documents.diploma %}school{% else %}pending{% endif %}
+            </span>
+            <div>
+              <div class="text-xs font-bold text-on-surface">Diploma / Transcript</div>
+              <div class="text-[11px] text-on-surface-variant">{% if documents.diploma %}Certified True Copy{% else %}Pending Submission{% endif %}</div>
+            </div>
+          </div>
+          {% if documents.diploma_url %}
+            <a href="{{ documents.diploma_url }}" target="_blank" class="text-xs text-secondary font-bold hover:underline no-print">View</a>
+          {% endif %}
+        </div>
+
+        <!-- Prev Employment -->
+        <div class="p-4 rounded-xl border {% if documents.prev_employment %}bg-green-50/60 border-green-200{% else %}bg-slate-50 border-outline-variant/60{% endif %} flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined {% if documents.prev_employment %}text-green-700{% else %}text-slate-400{% endif %} text-2xl">
+              {% if documents.prev_employment %}work_history{% else %}pending{% endif %}
+            </span>
+            <div>
+              <div class="text-xs font-bold text-on-surface">Certificate of Employment</div>
+              <div class="text-[11px] text-on-surface-variant">{% if documents.prev_employment %}Verified Previous COE{% else %}Fresh Grad / Optional{% endif %}</div>
+            </div>
+          </div>
+          {% if documents.prev_employment_url %}
+            <a href="{{ documents.prev_employment_url }}" target="_blank" class="text-xs text-secondary font-bold hover:underline no-print">View</a>
+          {% endif %}
+        </div>
+
+        <!-- TESDA NC -->
+        <div class="p-4 rounded-xl border {% if documents.tesda %}bg-green-50/60 border-green-200{% else %}bg-slate-50 border-outline-variant/60{% endif %} flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined {% if documents.tesda %}text-green-700{% else %}text-slate-400{% endif %} text-2xl">
+              {% if documents.tesda %}workspace_premium{% else %}pending{% endif %}
+            </span>
+            <div>
+              <div class="text-xs font-bold text-on-surface">TESDA National Certificate</div>
+              <div class="text-[11px] text-on-surface-variant">{% if documents.tesda %}NC II/III Verified{% else %}Not Required / N/A{% endif %}</div>
+            </div>
+          </div>
+          {% if documents.tesda_url %}
+            <a href="{{ documents.tesda_url }}" target="_blank" class="text-xs text-secondary font-bold hover:underline no-print">View</a>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Capacity Building & Training Progress History -->
+    <section class="bg-white rounded-2xl border border-outline-variant/70 shadow-sm overflow-hidden">
+      <div class="p-6 border-b border-outline-variant/60 flex items-center justify-between">
+        <div>
+          <h3 class="text-lg font-bold text-on-surface">3. Training Programs & Upskilling Milestones</h3>
+          <p class="text-xs text-on-surface-variant mt-0.5">Courses and capacity-building programs attended through PESO and TESDA partners.</p>
+        </div>
+        <span class="px-3 py-1 bg-surface-container rounded-full text-xs font-bold text-secondary">{{ enrollments|length }} Enrolled</span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-surface-container-low text-on-surface-variant font-bold text-xs uppercase tracking-wider">
+            <tr>
+              <th class="px-6 py-4">Training Program Title</th>
+              <th class="px-6 py-4">Training Provider</th>
+              <th class="px-6 py-4">Duration & Schedule</th>
+              <th class="px-6 py-4">Progress / Status</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-outline-variant/40 font-medium">
+            {% for e in enrollments %}
+              <tr class="zebra-row hover:bg-surface-container-low/60 transition-colors">
+                <td class="px-6 py-4 font-bold text-on-surface">{{ e.training_program.title }}</td>
+                <td class="px-6 py-4 text-on-surface-variant">{{ e.training_program.provider }}</td>
+                <td class="px-6 py-4 text-xs text-on-surface-variant">{{ e.training_program.duration|default:"40 Hours" }}</td>
+                <td class="px-6 py-4">
+                  <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-green-100 text-green-800">{{ e.status|default:"Completed" }}</span>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="4" class="px-6 py-8 text-center text-on-surface-variant italic">No specialized training program enrollments recorded.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Mid-Probation & Retention Monitoring -->
+    <section class="bg-white rounded-2xl border border-outline-variant/70 shadow-sm p-6 space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-outline-variant/50">
+        <div>
+          <h3 class="text-lg font-bold text-on-surface">4. Mid-Probationary & Workplace Retention Monitoring</h3>
+          <p class="text-xs text-on-surface-variant mt-0.5">Evaluation of candidate performance, workplace integration, and regularization tracking.</p>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        {% for r in referrals %}
+          {% if r.actual_start_date or r.reporting_date %}
+            <div class="p-5 rounded-xl border border-outline-variant/60 bg-surface-container-low/30 space-y-3">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <h4 class="font-bold text-on-surface text-base">{{ r.job_vacancy.title }} at {{ r.job_vacancy.employer.company_name|default:r.job_vacancy.employer.user.first_name }}</h4>
+                  <div class="text-xs text-on-surface-variant mt-0.5">
+                    Start Date: <span class="font-bold text-on-surface">{{ r.actual_start_date|default:r.reporting_date|date:"M d, Y" }}</span> • 
+                    Expected Mid-Review: <span class="font-bold text-secondary">{{ r.expected_mid_date|date:"M d, Y"|default:"3 Months Post-Hire" }}</span>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-2">
+                  <span class="px-3 py-1 rounded-full text-xs font-bold {% if r.mid_probation_outcome == 'Regularly Employed' %}bg-green-100 text-green-800{% elif r.mid_probation_outcome %}bg-blue-100 text-blue-800{% else %}bg-amber-100 text-amber-800{% endif %}">
+                    {{ r.mid_probation_outcome|default:"Pending Mid-Probation Check" }}
+                  </span>
+                  <button type="button" onclick="openProbationModal('{{ r.id }}', '{{ r.job_vacancy.title|escapejs }}', '{{ r.mid_probation_outcome|escapejs }}', '{{ r.mid_probation_notes|escapejs }}')" class="px-3 py-1 rounded-lg bg-secondary text-white text-xs font-bold shadow-xs hover:bg-secondary/90 transition-all no-print">
+                    Log Outcome
+                  </button>
+                </div>
+              </div>
+
+              {% if r.mid_probation_notes %}
+                <div class="bg-white p-3 rounded-lg border border-outline-variant/40 text-xs text-on-surface-variant">
+                  <span class="font-bold text-on-surface">Coordinator Observations:</span> {{ r.mid_probation_notes }}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% empty %}
+          <div class="text-center py-6 text-xs text-on-surface-variant italic">No probationary placements active.</div>
+        {% endfor %}
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<!-- Onboarding Coordination Modal -->
+<div id="coordinationModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl border border-outline-variant">
+    <div class="flex items-center justify-between pb-3 border-b border-outline-variant/60">
+      <h3 class="text-lg font-bold text-on-surface">Update Onboarding Coordination</h3>
+      <button onclick="closeCoordinationModal()" class="w-8 h-8 rounded-full hover:bg-surface-container flex items-center justify-center text-on-surface-variant">
+        <span class="material-symbols-outlined text-lg">close</span>
+      </button>
+    </div>
+
+    <form method="post" action="{% url 'applicant_employment_report' candidate.id %}" class="space-y-3">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="update_compliance">
+      <input type="hidden" name="referral_id" id="modalReferralId">
+
+      <div>
+        <label class="block text-xs font-bold text-on-surface-variant uppercase mb-1">Pre-Employment Status</label>
+        <select name="pre_employment_status" id="modalPreEmploymentStatus" class="w-full px-3 py-2 border border-outline-variant rounded-lg text-sm bg-white focus:ring-2 focus:ring-secondary outline-none">
+          <option value="Complete">Complete (All Documents Verified)</option>
+          <option value="Incomplete">Incomplete (Pending Documents)</option>
+          <option value="Under Review">Under Review</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-on-surface-variant uppercase mb-1">Confirmed Reporting Date</label>
+        <input type="date" name="reporting_date" id="modalReportingDate" class="w-full px-3 py-2 border border-outline-variant rounded-lg text-sm bg-white focus:ring-2 focus:ring-secondary outline-none">
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-on-surface-variant uppercase mb-1">Coordination Remarks</label>
+        <textarea name="coordination_notes" id="modalCoordinationNotes" rows="3" placeholder="Notes on employer coordination..." class="w-full px-3 py-2 border border-outline-variant rounded-lg text-sm bg-white focus:ring-2 focus:ring-secondary outline-none"></textarea>
+      </div>
+
+      <div class="pt-3 border-t border-outline-variant/60 flex justify-end gap-2">
+        <button type="button" onclick="closeCoordinationModal()" class="px-4 py-2 rounded-xl bg-surface-container text-on-surface font-bold text-xs">Cancel</button>
+        <button type="submit" class="px-5 py-2 rounded-xl bg-secondary text-white font-bold text-xs shadow-xs hover:bg-secondary/90">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Mid-Probation Modal -->
+<div id="probationModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl border border-outline-variant">
+    <div class="flex items-center justify-between pb-3 border-b border-outline-variant/60">
+      <h3 class="text-lg font-bold text-on-surface">Log Mid-Probation Review</h3>
+      <button onclick="closeProbationModal()" class="w-8 h-8 rounded-full hover:bg-surface-container flex items-center justify-center text-on-surface-variant">
+        <span class="material-symbols-outlined text-lg">close</span>
+      </button>
+    </div>
+
+    <form method="post" action="{% url 'applicant_employment_report' candidate.id %}" class="space-y-3">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="update_mid_probation">
+      <input type="hidden" name="referral_id" id="modalProbationReferralId">
+
+      <div>
+        <label class="block text-xs font-bold text-on-surface-variant uppercase mb-1">Evaluation Outcome</label>
+        <select name="mid_probation_outcome" id="modalProbationOutcome" class="w-full px-3 py-2 border border-outline-variant rounded-lg text-sm bg-white focus:ring-2 focus:ring-secondary outline-none">
+          <option value="Still Employed — Performing Well">Still Employed — Performing Well</option>
+          <option value="Regularly Employed">Regularly Employed (Regularization Confirmed)</option>
+          <option value="Still Employed — On Improvement Plan">Still Employed — On Improvement Plan</option>
+          <option value="Probation Extended">Probation Extended</option>
+          <option value="Resigned Voluntarily">Resigned Voluntarily</option>
+          <option value="Terminated by Employer">Terminated by Employer</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-on-surface-variant uppercase mb-1">Coordinator Observation Notes</label>
+        <textarea name="mid_probation_notes" id="modalProbationNotes" rows="3" placeholder="Supervisor feedback, attendance, performance remarks..." class="w-full px-3 py-2 border border-outline-variant rounded-lg text-sm bg-white focus:ring-2 focus:ring-secondary outline-none"></textarea>
+      </div>
+
+      <div class="pt-3 border-t border-outline-variant/60 flex justify-end gap-2">
+        <button type="button" onclick="closeProbationModal()" class="px-4 py-2 rounded-xl bg-surface-container text-on-surface font-bold text-xs">Cancel</button>
+        <button type="submit" class="px-5 py-2 rounded-xl bg-secondary text-white font-bold text-xs shadow-xs hover:bg-secondary/90">Save Outcome</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+function openCoordinationModal(id, title, status, notes, reportingDate) {
+  document.getElementById('modalReferralId').value = id;
+  document.getElementById('modalPreEmploymentStatus').value = status || 'Complete';
+  document.getElementById('modalCoordinationNotes').value = notes || '';
+  document.getElementById('modalReportingDate').value = reportingDate || '';
+  document.getElementById('coordinationModal').classList.remove('hidden');
+}
+
+function closeCoordinationModal() {
+  document.getElementById('coordinationModal').classList.add('hidden');
+}
+
+function openProbationModal(id, title, outcome, notes) {
+  document.getElementById('modalProbationReferralId').value = id;
+  document.getElementById('modalProbationOutcome').value = outcome || 'Still Employed — Performing Well';
+  document.getElementById('modalProbationNotes').value = notes || '';
+  document.getElementById('probationModal').classList.remove('hidden');
+}
+
+function closeProbationModal() {
+  document.getElementById('probationModal').classList.add('hidden');
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeCoordinationModal();
+    closeProbationModal();
+  }
+});
+</script>
+
+</body>
+</html>

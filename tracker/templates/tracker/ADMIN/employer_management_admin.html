@@ -116,20 +116,29 @@
 </div>
 <div class="flex items-center gap-4">
 <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">notifications</button>
-<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">help</button>
-<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">settings</button>
-<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
-<img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCn5ndUBvKYHDdfjOtDcuDcmEa-zwbSgM-ZLHNPtfHm7uL9e355N19pHC8c-XBPUwwXHIzoATnKENMDvabjLGF5diSFylP09pwQghoAY0N70mks-GlVv2KmatElbeqz2_5J-gSw4HGwnHnPHYMLeRKflzGezIfmEqF1sJTCsVHaAp-3UBTYmVg6yrq3nRzkltjZyYRqaTWNO9ETM3eG6xeP_aE-PZkbZbeBZvG-dmCW3fgaiDFfFN1v9i2cwj6DH0AUyxyPRP9c4y2t">
-</div>
+<a href="{% url 'peso_profile_admin' %}" class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80" title="Settings">settings</a>
+<a href="{% url 'peso_profile_admin' %}" class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant bg-secondary/15 flex items-center justify-center font-bold text-xs text-secondary shrink-0 hover:ring-2 hover:ring-secondary transition-all" title="{{ request.user.get_full_name }}">
+{% if request.user.profile.profile_picture %}
+<img alt="{{ request.user.get_full_name }}" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+{% else %}
+{{ request.user.first_name|slice:":1"|upper }}{{ request.user.last_name|slice:":1"|upper|default:"P" }}
+{% endif %}
+</a>
 </div>
 </header>
 <!-- SideNavBar Shell -->
 <aside class="fixed left-0 top-0 h-full w-64 pt-20 bg-surface-container-lowest dark:bg-primary-container border-r border-outline-variant dark:border-outline hidden md:flex flex-col p-4 gap-2 z-40">
 <div class="flex items-center gap-3 px-2 py-4 mb-4 border-b border-outline-variant/30">
-<div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center text-white font-black text-xl">P</div>
+{% if request.user.profile.profile_picture %}
+<div class="w-10 h-10 rounded-lg overflow-hidden border border-outline-variant shrink-0">
+  <img alt="Office Logo" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+</div>
+{% else %}
+<div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center text-white font-black text-xl shrink-0">P</div>
+{% endif %}
 <div>
-<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">Enterprise Portal</h2>
-<p class="text-[10px] text-on-surface-variant opacity-70">Talent Management</p>
+<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">SKILLUP Portal</h2>
+<p class="text-[10px] text-on-surface-variant opacity-70">Public Employment Service</p>
 </div>
 </div>
 <nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
@@ -159,7 +168,7 @@
 </a>
 <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'training_monitoring_admin' %}">
 <span class="material-symbols-outlined">school</span>
-<span>Learning Paths</span>
+<span>Training Programs</span>
 </a>
 <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'job_matching_analytics_admin' %}">
 <span class="material-symbols-outlined">monitoring</span>
@@ -171,10 +180,6 @@
 </a>
 </nav>
 <div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-1">
-<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="#">
-<span class="material-symbols-outlined">support_agent</span>
-<span>Support</span>
-</a>
 <a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'logout' %}">
 <span class="material-symbols-outlined">logout</span>
 <span>Log Out</span>
@@ -183,132 +188,173 @@
 </aside>
 <!-- Main Canvas -->
 <main class="md:ml-64 pt-20 min-h-screen">
-<div class="p-margin-desktop space-y-gutter">
+<div class="px-6 md:px-8 py-6 space-y-6">
 <!-- Page Header -->
-<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-6">
 <div>
-<nav class="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm mb-2">
-<span>ADMIN</span>
-<span class="material-symbols-outlined text-[12px]">chevron_right</span>
-<span class="text-secondary">EMPLOYERS</span>
-</nav>
 <h2 class="font-headline-lg text-headline-lg text-on-surface">Employers</h2>
-<p class="text-on-surface-variant font-body-md text-body-md mt-1">Audit, verify, and manage 124 enterprise partners.</p>
+<p class="text-on-surface-variant font-body-md text-body-md mt-1">Audit, verify, and manage {{ total_employers }} enterprise partner{{ total_employers|pluralize }}.</p>
 </div>
-<div class="flex items-center gap-3">
-<button class="flex items-center gap-2 px-4 py-2 border border-outline rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-colors">
-<span class="material-symbols-outlined text-[18px]">filter_list</span>
-                        Filter
-                    </button>
-<button class="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:opacity-90 transition-opacity">
-<span class="material-symbols-outlined text-[18px]">add</span>
-                        Add Employer
-                    </button>
+<div class="flex items-center gap-3 flex-wrap">
+<a href="{% url 'export_analytics_csv' %}?report=employers" class="flex items-center gap-2 px-4 py-2 border border-outline hover:border-secondary hover:text-secondary rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-colors font-bold shadow-sm" title="Export Employer Directory CSV">
+<span class="material-symbols-outlined text-[18px]">download</span>
+Export CSV
+</a>
+<button onclick="focusEmployerSearch()" class="flex items-center gap-2 px-4 py-2 bg-secondary text-white rounded-lg font-label-md text-label-md hover:bg-blue-700 transition-colors font-bold shadow-sm cursor-pointer">
+<span class="material-symbols-outlined text-[18px] text-white">search</span>
+<span class="text-white">Find Employer</span>
+</button>
 </div>
 </div>
-<!-- Stats Overview (Analytics Widgets) -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-10">
-<div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-lg relative overflow-hidden">
+
+<!-- Stats Overview (Real Dynamic Analytics Widgets) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-8">
+<!-- KPI 1: Total Employers -->
+<div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl relative overflow-hidden shadow-sm">
 <div class="z-10 relative">
 <p class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Total Employers</p>
-<h3 class="font-headline-lg text-headline-lg font-bold">124</h3>
-<p class="text-on-tertiary-container font-label-sm text-label-sm mt-2 flex items-center gap-1">
-<span class="material-symbols-outlined text-[14px]">trending_up</span> +5% this month
-                        </p>
+<h3 class="font-headline-lg text-headline-lg font-bold text-on-surface">{{ total_employers }}</h3>
+<p class="text-secondary font-label-sm text-label-sm mt-2 flex items-center gap-1 font-bold">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> {{ verified_count }} Verified Partners
+</p>
 </div>
 <div class="absolute right-0 bottom-0 opacity-10">
 <span class="material-symbols-outlined text-[80px]">corporate_fare</span>
 </div>
 </div>
-<div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-lg relative overflow-hidden">
+
+<!-- KPI 2: Pending Verification -->
+<div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl relative overflow-hidden shadow-sm">
 <div class="z-10 relative">
 <p class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Pending Verification</p>
-<h3 class="font-headline-lg text-headline-lg font-bold text-secondary">12</h3>
-<p class="text-on-surface-variant font-label-sm text-label-sm mt-2">Requires immediate attention</p>
+<h3 class="font-headline-lg text-headline-lg font-bold {% if pending_verification_count > 0 %}text-amber-600{% else %}text-secondary{% endif %}">{{ pending_verification_count }}</h3>
+<p class="font-label-sm text-label-sm mt-2 {% if pending_verification_count > 0 %}text-amber-600 font-bold{% else %}text-on-surface-variant{% endif %}">
+{% if pending_verification_count > 0 %}Requires review & audit{% else %}All accounts verified{% endif %}
+</p>
 </div>
 <div class="absolute right-0 bottom-0 opacity-10">
 <span class="material-symbols-outlined text-[80px]">verified_user</span>
 </div>
 </div>
-<div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-lg relative overflow-hidden">
+
+<!-- KPI 3: Active Job Postings -->
+<div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl relative overflow-hidden shadow-sm">
 <div class="z-10 relative">
 <p class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Active Job Postings</p>
-<h3 class="font-headline-lg text-headline-lg font-bold">842</h3>
-<p class="text-on-surface-variant font-label-sm text-label-sm mt-2">Across 18 industries</p>
+<h3 class="font-headline-lg text-headline-lg font-bold text-on-surface">{{ total_active_postings }}</h3>
+<p class="text-on-surface-variant font-label-sm text-label-sm mt-2">Across {{ total_industries }} industry sectors</p>
 </div>
 <div class="absolute right-0 bottom-0 opacity-10 text-secondary">
 <span class="material-symbols-outlined text-[80px]">work</span>
 </div>
 </div>
-<div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-lg relative overflow-hidden">
+
+<!-- KPI 4: Avg Response Rate -->
+<div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl relative overflow-hidden shadow-sm">
 <div class="z-10 relative">
-<p class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Platform Revenue</p>
-<h3 class="font-headline-lg text-headline-lg font-bold text-tertiary-container">$42.5k</h3>
-<p class="text-on-tertiary-container font-label-sm text-label-sm mt-2 flex items-center gap-1">
-<span class="material-symbols-outlined text-[14px]">trending_up</span> +12% growth
-                        </p>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Avg. Responsiveness</p>
+<h3 class="font-headline-lg text-headline-lg font-bold text-green-700 dark:text-green-400">{{ avg_response_rate|floatformat:1 }}%</h3>
+<p class="text-secondary font-label-sm text-label-sm mt-2 flex items-center gap-1 font-bold">
+<span class="material-symbols-outlined text-[14px]">speed</span> Candidate Feedback Rate
+</p>
 </div>
 <div class="absolute right-0 bottom-0 opacity-10">
-<span class="material-symbols-outlined text-[80px]">payments</span>
+<span class="material-symbols-outlined text-[80px]">quickreply</span>
 </div>
 </div>
 </div>
+
+<!-- Filter Toolbar -->
+<div class="bg-surface-container-lowest p-4 border border-outline-variant rounded-xl mb-6 flex flex-wrap items-center justify-between gap-4 shadow-sm">
+<div class="flex flex-wrap items-center gap-3 flex-1">
+  <div class="flex-1 min-w-[260px] relative">
+    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-base">search</span>
+    <input id="employerSearchInput" oninput="applyEmployerFilters()" class="w-full pl-9 pr-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg focus:ring-2 focus:ring-secondary text-body-sm focus:outline-none text-xs" placeholder="Search company name, contact person, or email..." type="text">
+  </div>
+
+  <select id="employerStatusFilter" onchange="applyEmployerFilters()" class="border border-outline-variant rounded-lg px-3 py-2 text-xs bg-surface-container-lowest text-on-surface focus:ring-2 focus:ring-secondary focus:outline-none">
+    <option value="">Status: All</option>
+    <option value="verified">Verified</option>
+    <option value="pending">Pending Review</option>
+    <option value="low_resp">Low Responsiveness</option>
+  </select>
+
+  <button id="clearEmployerFiltersBtn" onclick="clearEmployerFilters()" class="text-secondary font-label-md text-xs px-3 py-2 hover:bg-surface-container transition-colors rounded-lg font-bold">Clear Filters</button>
+</div>
+
+<div class="text-xs text-on-surface-variant font-medium">
+  Showing <strong id="visibleEmployersCount" class="text-on-surface">{{ employers|length }}</strong> of {{ total_employers }} partners
+</div>
+</div>
+
 <!-- Employer Table (High Density) -->
-<div class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden shadow-sm">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm">
 <div class="overflow-x-auto custom-scrollbar">
 <table class="w-full text-left border-collapse">
 <thead class="bg-surface-container-low border-b border-outline-variant">
 <tr>
 <th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase">Company</th>
-<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase">Industry</th>
-<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase">Jobs</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase">Industry / Title</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase">Active Jobs</th>
 <th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase">Status</th>
-<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase">Health</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase">Responsiveness</th>
 <th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase text-right">Actions</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-outline-variant">
+<tbody class="divide-y divide-outline-variant" id="employersTableBody">
 {% for emp in employers %}
-<tr class="hover:bg-surface-container-low transition-colors group">
+<tr class="employer-item-row hover:bg-surface-container-low transition-colors group"
+    data-name="{{ emp.user.get_full_name|lower }}"
+    data-company="{{ emp.company_name|default:emp.user.get_full_name|lower }}"
+    data-email="{{ emp.user.email|lower }}"
+    data-industry="{{ emp.industry|default:emp.title|default:'Enterprise Partner'|lower }}"
+    data-status="{% if emp.is_verified %}verified{% else %}pending{% endif %}"
+    data-low-resp="{% if emp.low_responsiveness %}true{% else %}false{% endif %}">
 <td class="px-6 py-5">
 <div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded bg-secondary/10 text-secondary flex items-center justify-center font-bold">
-  {{ emp.user.first_name|slice:":1"|upper }}{% if emp.user.last_name %}{{ emp.user.last_name|slice:":1"|upper }}{% endif %}
+<div class="w-10 h-10 rounded-lg bg-secondary/10 text-secondary flex items-center justify-center font-bold text-sm border border-secondary/20 shrink-0 overflow-hidden">
+  {% if emp.company_logo %}
+    <img src="{{ emp.company_logo.url }}" alt="{{ emp.company_name }}" class="w-full h-full object-cover">
+  {% else %}
+    {{ emp.company_name|slice:":1"|upper|default:emp.user.first_name|slice:":1"|upper }}
+  {% endif %}
 </div>
 <div>
-<a href="{% url 'company_profile_detail' emp.id %}" class="font-bold text-on-surface hover:underline hover:text-secondary transition-colors">{{ emp.user.first_name }} {{ emp.user.last_name }}</a>
-<p class="text-on-surface-variant text-body-sm">Joined {{ emp.user.date_joined|date:"M Y" }}</p>
+<a href="{% url 'company_profile_detail' emp.id %}" class="font-bold text-on-surface hover:underline hover:text-secondary transition-colors block text-sm">{{ emp.company_name|default:emp.user.get_full_name }}</a>
+<p class="text-on-surface-variant text-xs">{{ emp.user.email }}</p>
+<p class="text-on-surface-variant text-[11px] opacity-75">Joined {{ emp.user.date_joined|date:"M Y" }}</p>
 </div>
 </div>
 </td>
 <td class="px-6 py-5">
-<span class="px-3 py-1 bg-surface-container-high rounded-full font-label-sm text-label-sm text-on-surface">{{ emp.title|default:'Enterprise Partner' }}</span>
+<span class="px-3 py-1 bg-surface-container-high rounded-full font-label-sm text-xs font-semibold text-on-surface">{{ emp.industry|default:emp.title|default:'Enterprise Partner' }}</span>
 </td>
 <td class="px-6 py-5">
-<span class="font-label-md text-label-md text-secondary">{{ emp.active_postings }} Active</span>
+<span class="font-label-md text-label-md font-bold text-secondary">{{ emp.active_postings }} Active</span>
+<p class="text-[11px] text-on-surface-variant">{{ emp.total_referrals }} Referrals</p>
 </td>
 <td class="px-6 py-5">
-<div class="flex items-center gap-2 {% if emp.is_verified %}text-on-tertiary-container{% else %}text-error{% endif %} font-label-md text-label-md">
+<div class="flex items-center gap-1.5 {% if emp.is_verified %}text-green-700 dark:text-green-400{% else %}text-amber-700 dark:text-amber-400{% endif %} font-label-md text-xs font-bold">
   {% if emp.is_verified %}
     <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">verified</span>
-    Verified
+    Verified Partner
   {% else %}
     <span class="material-symbols-outlined text-[18px]">pending_actions</span>
     Pending Review
-  {%   endif %}
+  {% endif %}
 </div>
 </td>
 <td class="px-6 py-5">
   <div class="flex flex-col gap-1">
     <div class="flex justify-between items-center text-[10px] text-outline font-semibold">
       <span>Response Rate</span>
-      <span>{{ emp.response_rate }}%</span>
+      <span class="font-bold text-on-surface">{{ emp.response_rate }}%</span>
     </div>
-    <div class="w-24 h-2 bg-outline-variant rounded-full overflow-hidden">
-      <div class="h-full {% if emp.low_responsiveness %}bg-error animate-pulse{% else %}bg-on-tertiary-container{% endif %} progress-bar" data-progress="{{ emp.response_rate }}"></div>
+    <div class="w-28 h-2 bg-outline-variant/40 rounded-full overflow-hidden">
+      <div class="h-full {% if emp.low_responsiveness %}bg-error{% else %}bg-green-600{% endif %} progress-bar" style="width: {{ emp.response_rate }}%"></div>
     </div>
     {% if emp.low_responsiveness %}
-      <span class="text-[9px] text-error font-bold uppercase tracking-wider flex items-center gap-0.5 mt-0.5 animate-pulse">
+      <span class="text-[9px] text-error font-bold uppercase tracking-wider flex items-center gap-0.5 mt-0.5">
         <span class="material-symbols-outlined text-[11px]" style="font-variation-settings: 'FILL' 1;">warning</span> Low Responsiveness
       </span>
     {% endif %}
@@ -319,122 +365,102 @@
   {% if not emp.is_verified %}
     <form method="post" action="{% url 'verify_employer' emp.id %}" class="inline">
       {% csrf_token %}
-      <button type="submit" class="px-3 py-1 bg-secondary text-white rounded text-xs font-semibold hover:bg-secondary/90 transition-all shadow-sm">Verify</button>
+      <button type="submit" class="px-3 py-1 bg-secondary text-white rounded text-xs font-bold hover:opacity-90 transition-all shadow-sm">Verify</button>
     </form>
   {% endif %}
-<a href="{% url 'company_profile_detail' emp.id %}" class="p-2 rounded hover:bg-surface-container-highest text-secondary transition-colors" title="View Profile">
-<span class="material-symbols-outlined">visibility</span>
+<a href="{% url 'company_profile_detail' emp.id %}" class="p-1.5 rounded hover:bg-surface-container-highest text-secondary transition-colors" title="View Profile">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
 </a>
-<button class="p-2 rounded hover:bg-surface-container-highest text-secondary transition-colors" title="Manage Account">
-<span class="material-symbols-outlined">edit_square</span>
-</button>
-<button class="p-2 rounded hover:bg-surface-container-highest text-on-surface-variant transition-colors" title="View Analytics">
-<span class="material-symbols-outlined">bar_chart</span>
-</button>
 </div>
 </td>
 </tr>
 {% empty %}
 <tr>
-  <td colspan="6" class="px-6 py-8 text-center text-on-surface-variant italic">No employers registered yet.</td>
+  <td colspan="6" class="px-6 py-10 text-center text-on-surface-variant italic">No employers registered yet.</td>
 </tr>
 {% endfor %}
+<tr id="noMatchingEmployersRow" class="hidden">
+  <td colspan="6" class="px-6 py-12 text-center text-on-surface-variant italic text-xs">
+    <span class="material-symbols-outlined text-3xl mb-1 text-outline block">domain_disabled</span>
+    No employers match your search or filter criteria.
+  </td>
+</tr>
 </tbody>
 </table>
 </div>
-<!-- Table Pagination -->
-<div class="bg-surface-container-low px-6 py-4 flex items-center justify-between">
-<p class="text-body-sm text-on-surface-variant">Showing {{ employers|length }} partner companies</p>
-<div class="flex items-center gap-2">
-<button class="p-2 rounded border border-outline hover:bg-surface transition-colors disabled:opacity-50" disabled="">
-<span class="material-symbols-outlined">chevron_left</span>
-</button>
-<span class="px-4 py-2 bg-secondary text-on-secondary rounded font-label-md">1</span>
-<button class="px-4 py-2 hover:bg-surface transition-colors rounded font-label-md">2</button>
-<button class="px-4 py-2 hover:bg-surface transition-colors rounded font-label-md">3</button>
-<button class="p-2 rounded border border-outline hover:bg-surface transition-colors">
-<span class="material-symbols-outlined">chevron_right</span>
-</button>
+<!-- Table Footer -->
+<div class="bg-surface-container-low px-6 py-4 flex items-center justify-between border-t border-outline-variant">
+<p class="text-body-sm text-xs text-on-surface-variant">Total registered partner companies: <strong class="text-on-surface">{{ total_employers }}</strong></p>
 </div>
 </div>
-</div>
-<!-- Verified Image Promotion (Context Relevance) -->
-<section class="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-gutter">
-<div class="relative rounded-xl overflow-hidden h-[300px] group shadow-lg">
-<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A sophisticated modern corporate office lobby with glass walls and minimalist architectural lines. The lighting is soft and natural, reflecting a clean professional atmosphere. The scene is captured in a high-end commercial photography style, emphasizing the brand's authoritative and analytical identity with a bright light-mode aesthetic and secondary blue accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1vi-vp2va8h8HD2_mSTdKXRLEs1ngUMGyHlW7dE-5SKlUsyezvuuN3-09idoGgts9-PNLl4rNL9N0xYzkbJsN_9ZVkVIGV-dPWqcdDQuC2KLfIe7IE7IksUjhOEJp_d2ObSc2HNS5W_1TceNxvi8Xncn6jffFOq0x6-mCcEQ0OVpD2a8h6kSzgOekxFa7MjQOXT0cRvZ7tHjikTIYmcvhDmZOJgSJzg-Ll5Wwc4WhgQjcNuSLwlxOs3GltEqrDlL7TWVowf59s7W4">
-<div class="absolute inset-0 bg-gradient-to-t from-primary-container/80 to-transparent flex flex-col justify-end p-8">
-<h4 class="text-on-secondary font-headline-md text-headline-md">Enterprise Verification Protocol</h4>
-<p class="text-on-secondary-fixed-dim font-body-sm mt-2 max-w-md">Our new AI-driven background check ensures all partner companies meet the SKILLUP quality threshold for candidate safety.</p>
-</div>
-</div>
-<div class="bg-surface-container-highest border border-outline-variant p-8 rounded-xl flex flex-col justify-center">
-<h4 class="text-on-surface font-headline-md text-headline-md mb-4">Verification Health Index</h4>
-<div class="space-y-6">
-<div>
-<div class="flex justify-between mb-2">
-<span class="font-label-md text-label-md">Technical Verification</span>
-<span class="font-label-md text-label-md">98%</span>
-</div>
-<div class="h-2 w-full bg-outline-variant rounded-full overflow-hidden">
-<div class="h-full bg-secondary w-[98%]"></div>
-</div>
-</div>
-<div>
-<div class="flex justify-between mb-2">
-<span class="font-label-md text-label-md">Financial Compliance</span>
-<span class="font-label-md text-label-md">84%</span>
-</div>
-<div class="h-2 w-full bg-outline-variant rounded-full overflow-hidden">
-<div class="h-full bg-secondary w-[84%]"></div>
-</div>
-</div>
-<div>
-<div class="flex justify-between mb-2">
-<span class="font-label-md text-label-md">Job Posting Accuracy</span>
-<span class="font-label-md text-label-md">91%</span>
-</div>
-<div class="h-2 w-full bg-outline-variant rounded-full overflow-hidden">
-<div class="h-full bg-secondary w-[91%]"></div>
-</div>
-</div>
-</div>
-<button class="mt-8 self-start flex items-center gap-2 text-secondary font-bold hover:underline">
-                        Review Compliance Documentation
-                        <span class="material-symbols-outlined">arrow_right_alt</span>
-</button>
-</div>
-</section>
 </div>
 </main>
-<!-- Contextual FAB - Suppression Logic: Should be hidden on Details but Active on Dashboards -->
-<button class="fixed bottom-8 right-8 w-14 h-14 bg-secondary text-on-secondary rounded-full flex items-center justify-center shadow-xl hover:scale-110 active:scale-95 transition-all z-50">
-<span class="material-symbols-outlined">add</span>
-</button>
+
 <script>
-        // Set progress bar widths dynamically to avoid inline template validation issues
-        document.querySelectorAll('.progress-bar').forEach(bar => {
-            bar.style.width = (bar.dataset.progress || '0') + '%';
+    function applyEmployerFilters() {
+        const query = (document.getElementById('employerSearchInput').value || '').toLowerCase().trim();
+        const statusFilter = (document.getElementById('employerStatusFilter').value || '').toLowerCase();
+
+        const rows = document.querySelectorAll('.employer-item-row');
+        let visibleCount = 0;
+
+        rows.forEach(row => {
+            const name = row.dataset.name || '';
+            const company = row.dataset.company || '';
+            const email = row.dataset.email || '';
+            const industry = row.dataset.industry || '';
+            const status = row.dataset.status || '';
+            const isLowResp = row.dataset.lowResp === 'true';
+
+            const matchesSearch = !query || name.includes(query) || company.includes(query) || email.includes(query) || industry.includes(query);
+            let matchesStatus = true;
+            if (statusFilter === 'verified') {
+                matchesStatus = (status === 'verified');
+            } else if (statusFilter === 'pending') {
+                matchesStatus = (status === 'pending');
+            } else if (statusFilter === 'low_resp') {
+                matchesStatus = isLowResp;
+            }
+
+            if (matchesSearch && matchesStatus) {
+                row.style.display = '';
+                visibleCount++;
+            } else {
+                row.style.display = 'none';
+            }
         });
 
-        // Simple Interaction logic for demo
-        document.querySelectorAll('tr').forEach(row => {
-            row.addEventListener('mouseenter', () => {
-                row.classList.add('translate-x-1');
-            });
-            row.addEventListener('mouseleave', () => {
-                row.classList.remove('translate-x-1');
-            });
-        });
+        const countBadge = document.getElementById('visibleEmployersCount');
+        if (countBadge) countBadge.textContent = visibleCount;
 
-        // Search highlight effect
-        const searchInput = document.querySelector('input[type="text"]');
-        if (searchInput) {
-            searchInput.addEventListener('focus', () => {
-                searchInput.parentElement.classList.add('scale-105');
-            });
-            searchInput.addEventListener('blur', () => {
-                searchInput.parentElement.classList.remove('scale-105');
-            });
+        const emptyRow = document.getElementById('noMatchingEmployersRow');
+        if (emptyRow) {
+            if (visibleCount === 0 && rows.length > 0) {
+                emptyRow.classList.remove('hidden');
+            } else {
+                emptyRow.classList.add('hidden');
+            }
         }
-    </script>
+    }
+
+    function clearEmployerFilters() {
+        document.getElementById('employerSearchInput').value = '';
+        document.getElementById('employerStatusFilter').value = '';
+        applyEmployerFilters();
+    }
+
+    function focusEmployerSearch() {
+        const el = document.getElementById('employerSearchInput');
+        if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(() => {
+                el.focus();
+                el.classList.add('ring-4', 'ring-secondary/40', 'border-secondary');
+                setTimeout(() => {
+                    el.classList.remove('ring-4', 'ring-secondary/40');
+                }, 1500);
+            }, 300);
+        }
+    }
+</script>
 </body></html>

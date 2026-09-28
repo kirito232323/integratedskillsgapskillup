@@ -202,7 +202,7 @@
   {% endif %}
   <!-- Top Navigation Bar -->
   <header
-    class="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant h-16 flex items-center justify-between px-margin-desktop">
+    class="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant h-16 flex items-center justify-between px-6 md:px-12 lg:px-16">
     <div class="flex items-center gap-8">
       <a href="{% url 'applicant_dashboard' %}"
         class="font-headline-md text-headline-md font-bold text-on-surface">SKILLUP</a>
@@ -236,7 +236,7 @@
       </div>
     </div>
   </header>
-  <main class="pt-24 pb-24 md:pb-12 px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto">
+  <main class="pt-24 pb-24 md:pb-12 px-6 md:px-12 lg:px-16 max-w-[1600px] w-full mx-auto">
     <!-- Form for applying to the job (used globally via form attribute on submit buttons) -->
     <form id="applyForm" method="POST" action="{% url 'apply_to_job' vacancy.id %}">
       {% csrf_token %}

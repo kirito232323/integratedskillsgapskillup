@@ -169,6 +169,15 @@
      class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">{{ unread_match_alerts }}</span>{% endif %}
 </div>
 <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">settings</button>
+<a href="{% url 'company_profile_employer' %}" class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant bg-secondary/15 flex items-center justify-center font-bold text-xs text-secondary shrink-0 hover:ring-2 hover:ring-secondary transition-all" title="{{ request.user.profile.company_name|default:request.user.get_full_name }}">
+  {% if request.user.profile.company_logo %}
+    <img alt="{{ request.user.profile.company_name }}" class="w-full h-full object-cover" src="{{ request.user.profile.company_logo.url }}">
+  {% elif request.user.profile.profile_picture %}
+    <img alt="{{ request.user.get_full_name }}" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+  {% else %}
+    {{ request.user.profile.company_name|slice:":1"|upper|default:request.user.first_name|slice:":1"|upper|default:"E" }}
+  {% endif %}
+</a>
 </div>
 </header>
 <!-- SideNavBar -->
@@ -182,14 +191,14 @@
   {% endif %}
 </div>
 <div>
-<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">Enterprise Portal</h2>
-<p class="text-[10px] text-on-surface-variant opacity-70">Talent Management</p>
+<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">SKILLUP Portal</h2>
+<p class="text-[10px] text-on-surface-variant opacity-70">Enterprise Talent Network</p>
 </div>
 </div>
 <nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
-<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'employer_dashboard' %}"><span class="material-symbols-outlined">dashboard</span><span>Dashboard</span></a>
+<a class="flex items-center gap-3 px-3 py-2 {% if from_section == 'dashboard' %}bg-surface-container dark:bg-secondary-container text-on-surface dark:text-on-secondary-container font-bold{% else %}text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface{% endif %} transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'employer_dashboard' %}"><span class="material-symbols-outlined" {% if from_section == 'dashboard' %}style="font-variation-settings: 'FILL' 1;"{% endif %}>dashboard</span><span>Dashboard</span></a>
 <a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'hiring_tracker_employer' %}"><span class="material-symbols-outlined">developer_board</span><span>Hiring Tracker</span></a>
-<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'job_management_employer' %}"><span class="material-symbols-outlined">work</span><span>Job Management</span></a>
+<a class="flex items-center gap-3 px-3 py-2 {% if from_section != 'dashboard' %}bg-surface-container dark:bg-secondary-container text-on-surface dark:text-on-secondary-container font-bold{% else %}text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface{% endif %} transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'job_management_employer' %}"><span class="material-symbols-outlined" {% if from_section != 'dashboard' %}style="font-variation-settings: 'FILL' 1;"{% endif %}>work</span><span>Job Management</span></a>
 <a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'company_profile_employer' %}"><span class="material-symbols-outlined">corporate_fare</span><span>Company Profile</span></a>
 <a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md relative" href="{% url 'employer_notifications' %}"><span class="material-symbols-outlined">notifications</span><span>Match Alerts</span></a>
 </nav>
@@ -203,7 +212,18 @@
 <!-- Page Header & Stats -->
 <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
 <div>
-<h1 class="font-headline-lg text-headline-lg text-on-surface mb-2">Applicants Overview</h1>
+  <div class="flex items-center gap-3 mb-2">
+    {% if from_section == 'dashboard' %}
+      <a href="{% url 'employer_dashboard' %}" class="w-10 h-10 rounded-full border border-outline-variant bg-surface-container-low hover:bg-surface-container hover:text-secondary flex items-center justify-center text-on-surface-variant transition-all shadow-xs" title="Back to Dashboard">
+        <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+      </a>
+    {% else %}
+      <a href="{% url 'job_management_employer' %}" class="w-10 h-10 rounded-full border border-outline-variant bg-surface-container-low hover:bg-surface-container hover:text-secondary flex items-center justify-center text-on-surface-variant transition-all shadow-xs" title="Back to Job Management">
+        <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+      </a>
+    {% endif %}
+    <h1 class="font-headline-lg text-headline-lg text-on-surface">Applicants Overview</h1>
+  </div>
 <p class="font-body-lg text-body-lg text-on-surface-variant">
   {% if selected_job %}
     Reviewing candidates for <span class="text-headline-md font-extrabold text-secondary">{{ selected_job.title }}</span>.
@@ -226,16 +246,16 @@
 <!-- Dashboard Filters & Actions -->
 <div class="flex flex-wrap items-center justify-between gap-4 py-2">
 <div class="flex items-center gap-2 overflow-x-auto pb-2 custom-scrollbar">
-<a href="{% url 'applicants_employer' %}{% if selected_job_id %}?job_id={{ selected_job_id }}{% endif %}" class="{% if not selected_filter or selected_filter == 'all' %}bg-secondary text-white font-bold{% else %}bg-surface-container-high text-on-surface-variant{% endif %} px-4 py-2 rounded-full font-label-md text-label-md flex items-center gap-2 whitespace-nowrap hover:opacity-95 transition-all">
+<a href="{% url 'applicants_employer' %}?{% if selected_job_id %}job_id={{ selected_job_id }}&{% endif %}{% if from_section %}from_section={{ from_section }}{% endif %}" class="{% if not selected_filter or selected_filter == 'all' %}bg-secondary text-white font-bold{% else %}bg-surface-container-high text-on-surface-variant{% endif %} px-4 py-2 rounded-full font-label-md text-label-md flex items-center gap-2 whitespace-nowrap hover:opacity-95 transition-all">
                         All Applicants
 </a>
-<a href="{% url 'applicants_employer' %}?filter=high_potential{% if selected_job_id %}&job_id={{ selected_job_id }}{% endif %}" class="{% if selected_filter == 'high_potential' %}bg-secondary text-white font-bold{% else %}bg-surface-container-high text-on-surface-variant{% endif %} px-4 py-2 rounded-full font-label-md text-label-md flex items-center gap-2 whitespace-nowrap hover:opacity-95 transition-all">
+<a href="{% url 'applicants_employer' %}?filter=high_potential{% if selected_job_id %}&job_id={{ selected_job_id }}{% endif %}{% if from_section %}&from_section={{ from_section }}{% endif %}" class="{% if selected_filter == 'high_potential' %}bg-secondary text-white font-bold{% else %}bg-surface-container-high text-on-surface-variant{% endif %} px-4 py-2 rounded-full font-label-md text-label-md flex items-center gap-2 whitespace-nowrap hover:opacity-95 transition-all">
                         High Potential
 </a>
-<a href="{% url 'applicants_employer' %}?filter=Shortlisted{% if selected_job_id %}&job_id={{ selected_job_id }}{% endif %}" class="{% if selected_filter == 'Shortlisted' %}bg-secondary text-white font-bold{% else %}bg-surface-container-high text-on-surface-variant{% endif %} px-4 py-2 rounded-full font-label-md text-label-md flex items-center gap-2 whitespace-nowrap hover:opacity-95 transition-all">
+<a href="{% url 'applicants_employer' %}?filter=Shortlisted{% if selected_job_id %}&job_id={{ selected_job_id }}{% endif %}{% if from_section %}&from_section={{ from_section }}{% endif %}" class="{% if selected_filter == 'Shortlisted' %}bg-secondary text-white font-bold{% else %}bg-surface-container-high text-on-surface-variant{% endif %} px-4 py-2 rounded-full font-label-md text-label-md flex items-center gap-2 whitespace-nowrap hover:opacity-95 transition-all">
                         Shortlisted
 </a>
-<a href="{% url 'applicants_employer' %}?filter=Rejected{% if selected_job_id %}&job_id={{ selected_job_id }}{% endif %}" class="{% if selected_filter == 'Rejected' %}bg-secondary text-white font-bold{% else %}bg-surface-container-high text-on-surface-variant{% endif %} px-4 py-2 rounded-full font-label-md text-label-md flex items-center gap-2 whitespace-nowrap hover:opacity-95 transition-all">
+<a href="{% url 'applicants_employer' %}?filter=Rejected{% if selected_job_id %}&job_id={{ selected_job_id }}{% endif %}{% if from_section %}&from_section={{ from_section }}{% endif %}" class="{% if selected_filter == 'Rejected' %}bg-secondary text-white font-bold{% else %}bg-surface-container-high text-on-surface-variant{% endif %} px-4 py-2 rounded-full font-label-md text-label-md flex items-center gap-2 whitespace-nowrap hover:opacity-95 transition-all">
                         Rejected
 </a>
 </div>
@@ -260,6 +280,9 @@
     {% endif %}
     {% if selected_filter %}
       <input type="hidden" name="filter" value="{{ selected_filter }}">
+    {% endif %}
+    {% if from_section %}
+      <input type="hidden" name="from_section" value="{{ from_section }}">
     {% endif %}
     
     <!-- Search Name / Skill -->
@@ -306,7 +329,7 @@
 
     <!-- Buttons -->
     <div class="md:col-span-4 flex justify-end gap-3 mt-2 border-t border-outline-variant/30 pt-3">
-      <a href="{% url 'applicants_employer' %}{% if selected_job_id %}?job_id={{ selected_job_id }}{% endif %}" class="px-4 py-2 text-xs font-bold text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg flex items-center justify-center">
+      <a href="{% url 'applicants_employer' %}?{% if selected_job_id %}job_id={{ selected_job_id }}&{% endif %}{% if from_section %}from_section={{ from_section }}{% endif %}" class="px-4 py-2 text-xs font-bold text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg flex items-center justify-center">
         Reset Filters
       </a>
       <button type="submit" class="px-5 py-2 text-xs font-bold text-white bg-secondary hover:opacity-95 transition-all active:scale-95 rounded-lg flex items-center justify-center gap-1.5">
@@ -351,7 +374,7 @@
 {% endif %}
 </div>
 <div>
-<a href="{% url 'applicant_details_employer_id' applicant.id %}{% if selected_job %}?job_id={{ selected_job.id }}{% endif %}" class="font-body-md text-body-md font-bold text-on-surface hover:text-secondary transition-colors block">{{ applicant.user.first_name }} {{ applicant.user.last_name }}</a>
+<a href="{% url 'applicant_details_employer_id' applicant.id %}?{% if selected_job %}job_id={{ selected_job.id }}&{% endif %}from_section={% if from_section == 'dashboard' %}employer_dashboard{% else %}job_management{% endif %}" class="font-body-md text-body-md font-bold text-on-surface hover:text-secondary transition-colors block">{{ applicant.user.first_name }} {{ applicant.user.last_name }}</a>
 <p class="font-body-sm text-body-sm text-on-surface-variant">{{ applicant.location|default:"Remote" }}</p>
 </div>
 </div>

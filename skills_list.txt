@@ -1,0 +1,571 @@
+=======================================================
+            SKILLUP - CENTRALIZED SKILLS LIST          
+            Total Skills: 525            
+=======================================================
+
+[BACKEND DEV] (16 Skills)
+-------------------------------------------------------
+   1. .NET Framework - Professional competency in .NET Framework within Backend Dev.
+   2. C# - Professional competency in C# within Backend Dev.
+   3. Django - Professional competency in Django within Backend Dev.
+   4. Express.js - Professional competency in Express.js within Backend Dev.
+   5. Firebase - Professional competency in Firebase within Backend Dev.
+   6. GraphQL - Professional competency in GraphQL within Backend Dev.
+   7. Java - Professional competency in Java within Backend Dev.
+   8. Laravel - Professional competency in Laravel within Backend Dev.
+   9. MongoDB - Professional competency in MongoDB within Backend Dev.
+  10. Node.js - Professional competency in Node.js within Backend Dev.
+  11. PHP - Professional competency in PHP within Backend Dev.
+  12. PostgreSQL - Professional competency in PostgreSQL within Backend Dev.
+  13. Python - High-level programming language known for readability.
+  14. REST API Development - Professional competency in REST API Development within Backend Dev.
+  15. SQL - Structured Query Language for database management.
+  16. Spring Boot - Professional competency in Spring Boot within Backend Dev.
+
+[COMMON SKILLS] (141 Skills)
+-------------------------------------------------------
+   1. Access Control & Visitor Management - Professional competency in Access Control & Visitor Management within Common Skills.
+   2. After-Sales Support - Professional competency in After-Sales Support within Common Skills.
+   3. Answering & Routing Phone Calls - Professional competency in Answering & Routing Phone Calls within Common Skills.
+   4. Attendance & Punctuality - Professional competency in Attendance & Punctuality within Common Skills.
+   5. Barista & Coffee Preparation - Professional competency in Barista & Coffee Preparation within Common Skills.
+   6. Basic Bookkeeping - Professional competency in Basic Bookkeeping within Common Skills.
+   7. Basic Budgeting - Professional competency in Basic Budgeting within Common Skills.
+   8. Basic Computer Operation - Professional competency in Basic Computer Operation within Common Skills.
+   9. Basic Conversational English - Professional competency in Basic Conversational English within Common Skills.
+  10. Basic Electrical Assistance - Professional competency in Basic Electrical Assistance within Common Skills.
+  11. Basic Financial Record Keeping - Professional competency in Basic Financial Record Keeping within Common Skills.
+  12. Basic First Aid - Professional competency in Basic First Aid within Common Skills.
+  13. Basic Life Support (BLS) Awareness - Professional competency in Basic Life Support (BLS) Awareness within Common Skills.
+  14. Basic Machine Operation - Professional competency in Basic Machine Operation within Common Skills.
+  15. Basic Math & Arithmetic - Professional competency in Basic Math & Arithmetic within Common Skills.
+  16. Basic Payroll Assistance - Professional competency in Basic Payroll Assistance within Common Skills.
+  17. Basic Plumbing Assistance - Professional competency in Basic Plumbing Assistance within Common Skills.
+  18. Basic Safety Compliance - Professional competency in Basic Safety Compliance within Common Skills.
+  19. Basic Sales Techniques - Professional competency in Basic Sales Techniques within Common Skills.
+  20. Basic Security Guard Duties - Professional competency in Basic Security Guard Duties within Common Skills.
+  21. Basic Troubleshooting of Office Equipment - Professional competency in Basic Troubleshooting of Office Equipment within Common Skills.
+  22. Basic Vehicle Maintenance Awareness - Professional competency in Basic Vehicle Maintenance Awareness within Common Skills.
+  23. Basic Visual Merchandising - Professional competency in Basic Visual Merchandising within Common Skills.
+  24. Basic Workplace Etiquette - Professional competency in Basic Workplace Etiquette within Common Skills.
+  25. Blueprint & Plan Reading - Professional competency in Blueprint & Plan Reading within Common Skills.
+  26. Business Writing - Professional competency in Business Writing within Common Skills.
+  27. CCTV Monitoring - Professional competency in CCTV Monitoring within Common Skills.
+  28. Cash Counting & Management - Professional competency in Cash Counting & Management within Common Skills.
+  29. Cashiering & Cash Handling - Professional competency in Cashiering & Cash Handling within Common Skills.
+  30. Catering & Event Food Service - Professional competency in Catering & Event Food Service within Common Skills.
+  31. Childcare & Supervision - Professional competency in Childcare & Supervision within Common Skills.
+  32. Classroom Management Assistance - Professional competency in Classroom Management Assistance within Common Skills.
+  33. Concrete & Masonry Assistance - Professional competency in Concrete & Masonry Assistance within Common Skills.
+  34. Construction Site Safety Awareness - Professional competency in Construction Site Safety Awareness within Common Skills.
+  35. Crop Planting & Harvesting - Professional competency in Crop Planting & Harvesting within Common Skills.
+  36. Crowd Control Assistance - Professional competency in Crowd Control Assistance within Common Skills.
+  37. Customer Needs Assessment - Professional competency in Customer Needs Assessment within Common Skills.
+  38. Data Entry - Professional competency in Data Entry within Common Skills.
+  39. Defensive Driving - Professional competency in Defensive Driving within Common Skills.
+  40. Delivery & Logistics Support - Professional competency in Delivery & Logistics Support within Common Skills.
+  41. Delivery Coordination - Professional competency in Delivery Coordination within Common Skills.
+  42. Dishwashing & Kitchen Utility - Professional competency in Dishwashing & Kitchen Utility within Common Skills.
+  43. Document Filing & Recordkeeping - Professional competency in Document Filing & Recordkeeping within Common Skills.
+  44. Educational Material Preparation - Professional competency in Educational Material Preparation within Common Skills.
+  45. Email Composition & Management - Professional competency in Email Composition & Management within Common Skills.
+  46. Emergency Response Awareness - Professional competency in Emergency Response Awareness within Common Skills.
+  47. Encoding & Transcription - Professional competency in Encoding & Transcription within Common Skills.
+  48. English Communication — Oral - Professional competency in English Communication — Oral within Common Skills.
+  49. English Communication — Written - Professional competency in English Communication — Written within Common Skills.
+  50. Equipment Operation - Professional competency in Equipment Operation within Common Skills.
+  51. Face-to-Face Customer Service - Professional competency in Face-to-Face Customer Service within Common Skills.
+  52. Farm Equipment Operation - Professional competency in Farm Equipment Operation within Common Skills.
+  53. Fast Food Counter Service - Professional competency in Fast Food Counter Service within Common Skills.
+  54. File Management & Organization - Professional competency in File Management & Organization within Common Skills.
+  55. Filipino / Tagalog Communication - Professional competency in Filipino / Tagalog Communication within Common Skills.
+  56. Fire Safety Awareness - Professional competency in Fire Safety Awareness within Common Skills.
+  57. Following Workplace Rules & Policies - Professional competency in Following Workplace Rules & Policies within Common Skills.
+  58. Food Preparation Assistance - Professional competency in Food Preparation Assistance within Common Skills.
+  59. Food Safety & Hygiene Practices - Professional competency in Food Safety & Hygiene Practices within Common Skills.
+  60. Forklift Operation - Professional competency in Forklift Operation within Common Skills.
+  61. Google Docs - Professional competency in Google Docs within Common Skills.
+  62. Google Sheets - Professional competency in Google Sheets within Common Skills.
+  63. Google Slides - Professional competency in Google Slides within Common Skills.
+  64. Handling Criticism & Feedback - Professional competency in Handling Criticism & Feedback within Common Skills.
+  65. Handling Customer Complaints - Professional competency in Handling Customer Complaints within Common Skills.
+  66. Handling Returns & Exchanges - Professional competency in Handling Returns & Exchanges within Common Skills.
+  67. Health & Safety Compliance - Professional competency in Health & Safety Compliance within Common Skills.
+  68. Hospital / Clinic Reception - Professional competency in Hospital / Clinic Reception within Common Skills.
+  69. Housekeeping & Janitorial Work - Professional competency in Housekeeping & Janitorial Work within Common Skills.
+  70. Hygiene Assistance for Patients - Professional competency in Hygiene Assistance for Patients within Common Skills.
+  71. Incident Reporting - Professional competency in Incident Reporting within Common Skills.
+  72. Instruction Following - Professional competency in Instruction Following within Common Skills.
+  73. Internet Research - Professional competency in Internet Research within Common Skills.
+  74. Inventory Count & Reporting - Professional competency in Inventory Count & Reporting within Common Skills.
+  75. Inventory Recording - Professional competency in Inventory Recording within Common Skills.
+  76. Invoice & Receipt Processing - Professional competency in Invoice & Receipt Processing within Common Skills.
+  77. Irrigation & Water Management - Professional competency in Irrigation & Water Management within Common Skills.
+  78. Kitchen Cleaning & Sanitation - Professional competency in Kitchen Cleaning & Sanitation within Common Skills.
+  79. Lesson Plan Preparation Assistance - Professional competency in Lesson Plan Preparation Assistance within Common Skills.
+  80. Lifting & Material Handling - Professional competency in Lifting & Material Handling within Common Skills.
+  81. Light Vehicle Driving - Professional competency in Light Vehicle Driving within Common Skills.
+  82. Livestock Care & Feeding - Professional competency in Livestock Care & Feeding within Common Skills.
+  83. Loading & Unloading - Professional competency in Loading & Unloading within Common Skills.
+  84. Loss Prevention Awareness - Professional competency in Loss Prevention Awareness within Common Skills.
+  85. Manual Labor & General Utility - Professional competency in Manual Labor & General Utility within Common Skills.
+  86. Medical Records Filing - Professional competency in Medical Records Filing within Common Skills.
+  87. Medicine Administration Assistance - Professional competency in Medicine Administration Assistance within Common Skills.
+  88. Meeting Coordination - Professional competency in Meeting Coordination within Common Skills.
+  89. Menu Knowledge - Professional competency in Menu Knowledge within Common Skills.
+  90. Motorcycle Driving - Professional competency in Motorcycle Driving within Common Skills.
+  91. Note-Taking & Minute Writing - Professional competency in Note-Taking & Minute Writing within Common Skills.
+  92. Office Correspondence - Professional competency in Office Correspondence within Common Skills.
+  93. Office Supply Management - Professional competency in Office Supply Management within Common Skills.
+  94. Order Taking & Processing - Professional competency in Order Taking & Processing within Common Skills.
+  95. Organic Farming Practices - Professional competency in Organic Farming Practices within Common Skills.
+  96. POS System Operation - Professional competency in POS System Operation within Common Skills.
+  97. Packing & Labeling - Professional competency in Packing & Labeling within Common Skills.
+  98. Painting & Surface Preparation - Professional competency in Painting & Surface Preparation within Common Skills.
+  99. Passenger Handling - Professional competency in Passenger Handling within Common Skills.
+  100. Patient / Elder Care Assistance - Professional competency in Patient / Elder Care Assistance within Common Skills.
+  101. Percentage & Discount Computation - Professional competency in Percentage & Discount Computation within Common Skills.
+  102. Pest & Disease Control Awareness - Professional competency in Pest & Disease Control Awareness within Common Skills.
+  103. Petty Cash Handling - Professional competency in Petty Cash Handling within Common Skills.
+  104. Phone & Online Customer Support - Professional competency in Phone & Online Customer Support within Common Skills.
+  105. Physical Fitness for Work - Professional competency in Physical Fitness for Work within Common Skills.
+  106. Post-Harvest Handling - Professional competency in Post-Harvest Handling within Common Skills.
+  107. Preparation of Reports & Memos - Professional competency in Preparation of Reports & Memos within Common Skills.
+  108. Price Tagging & Labeling - Professional competency in Price Tagging & Labeling within Common Skills.
+  109. Printing & Scanning Documents - Professional competency in Printing & Scanning Documents within Common Skills.
+  110. Processing of Forms & Documents - Professional competency in Processing of Forms & Documents within Common Skills.
+  111. Product Display & Arrangement - Professional competency in Product Display & Arrangement within Common Skills.
+  112. Product Knowledge & Demonstration - Professional competency in Product Knowledge & Demonstration within Common Skills.
+  113. Quality Checking & Sorting - Professional competency in Quality Checking & Sorting within Common Skills.
+  114. Reading Comprehension - Professional competency in Reading Comprehension within Common Skills.
+  115. Receptionist Duties - Professional competency in Receptionist Duties within Common Skills.
+  116. Records & Database Management - Professional competency in Records & Database Management within Common Skills.
+  117. Report & Letter Writing - Professional competency in Report & Letter Writing within Common Skills.
+  118. Retail Store Operations - Professional competency in Retail Store Operations within Common Skills.
+  119. Route Planning & Navigation - Professional competency in Route Planning & Navigation within Common Skills.
+  120. Sanitation & Cleanliness Standards - Professional competency in Sanitation & Cleanliness Standards within Common Skills.
+  121. Scaffolding & Formworks Assistance - Professional competency in Scaffolding & Formworks Assistance within Common Skills.
+  122. Scheduling & Calendar Management - Professional competency in Scheduling & Calendar Management within Common Skills.
+  123. Shift Work Readiness - Professional competency in Shift Work Readiness within Common Skills.
+  124. Site Cleanup & Material Disposal - Professional competency in Site Cleanup & Material Disposal within Common Skills.
+  125. Stock & Inventory Counting - Professional competency in Stock & Inventory Counting within Common Skills.
+  126. Stock Monitoring & Replenishment - Professional competency in Stock Monitoring & Replenishment within Common Skills.
+  127. Stock Replenishment - Professional competency in Stock Replenishment within Common Skills.
+  128. Student Record Management - Professional competency in Student Record Management within Common Skills.
+  129. Table Setting & Service - Professional competency in Table Setting & Service within Common Skills.
+  130. Taking Food & Beverage Orders - Professional competency in Taking Food & Beverage Orders within Common Skills.
+  131. Tools & Equipment Handling - Professional competency in Tools & Equipment Handling within Common Skills.
+  132. Tutorial & Academic Support - Professional competency in Tutorial & Academic Support within Common Skills.
+  133. Typing Speed & Accuracy - Professional competency in Typing Speed & Accuracy within Common Skills.
+  134. Upselling & Cross-Selling - Professional competency in Upselling & Cross-Selling within Common Skills.
+  135. Vehicle Safety & Inspection - Professional competency in Vehicle Safety & Inspection within Common Skills.
+  136. Video Conferencing Tools - Professional competency in Video Conferencing Tools within Common Skills.
+  137. Vital Signs Monitoring - Professional competency in Vital Signs Monitoring within Common Skills.
+  138. Warehouse Operations - Professional competency in Warehouse Operations within Common Skills.
+  139. Wearing & Maintaining Proper Uniform - Professional competency in Wearing & Maintaining Proper Uniform within Common Skills.
+  140. Willingness to Learn On the Job - Professional competency in Willingness to Learn On the Job within Common Skills.
+  141. Working with Minimal Supervision - Professional competency in Working with Minimal Supervision within Common Skills.
+
+[CYBERSECURITY] (6 Skills)
+-------------------------------------------------------
+   1. Ethical Hacking - Professional competency in Ethical Hacking within Cybersecurity.
+   2. Incident Response - Professional competency in Incident Response within Cybersecurity.
+   3. Network Security - Professional competency in Network Security within Cybersecurity.
+   4. Penetration Testing - Professional competency in Penetration Testing within Cybersecurity.
+   5. Security Information & Event Management - Professional competency in Security Information & Event Management within Cybersecurity.
+   6. Vulnerability Assessment - Professional competency in Vulnerability Assessment within Cybersecurity.
+
+[DATA SCIENCE] (13 Skills)
+-------------------------------------------------------
+   1. Data Analysis - Professional competency in Data Analysis within Data Science.
+   2. Data Visualization - Professional competency in Data Visualization within Data Science.
+   3. Excel for Data Analysis - Professional competency in Excel for Data Analysis within Data Science.
+   4. Machine Learning - Professional competency in Machine Learning within Data Science.
+   5. Natural Language Processing - Professional competency in Natural Language Processing within Data Science.
+   6. NumPy - Professional competency in NumPy within Data Science.
+   7. Pandas - Professional competency in Pandas within Data Science.
+   8. Power BI - Professional competency in Power BI within Data Science.
+   9. PyTorch - Open source machine learning library based on Torch.
+  10. R Programming - Professional competency in R Programming within Data Science.
+  11. Statistics & Probability - Professional competency in Statistics & Probability within Data Science.
+  12. Tableau - Professional competency in Tableau within Data Science.
+  13. TensorFlow - Professional competency in TensorFlow within Data Science.
+
+[DEVOPS] (12 Skills)
+-------------------------------------------------------
+   1. AWS Cloud - Amazon Web Services cloud platform solutions.
+   2. Amazon Web Services - Professional competency in Amazon Web Services within DevOps.
+   3. Azure DevOps - Professional competency in Azure DevOps within DevOps.
+   4. CI/CD Pipeline - Professional competency in CI/CD Pipeline within DevOps.
+   5. Docker - Professional competency in Docker within DevOps.
+   6. GitHub Actions - Professional competency in GitHub Actions within DevOps.
+   7. Google Cloud Platform - Professional competency in Google Cloud Platform within DevOps.
+   8. Jenkins - Professional competency in Jenkins within DevOps.
+   9. Kubernetes - Container orchestration tool.
+  10. Linux Administration - Professional competency in Linux Administration within DevOps.
+  11. Nginx - Professional competency in Nginx within DevOps.
+  12. Terraform - Professional competency in Terraform within DevOps.
+
+[DIGITAL SKILLS] (15 Skills)
+-------------------------------------------------------
+   1. Basic Bookkeeping Software - Professional competency in Basic Bookkeeping Software within Digital Skills.
+   2. Basic Video Editing - Professional competency in Basic Video Editing within Digital Skills.
+   3. Canva - Professional competency in Canva within Digital Skills.
+   4. Content Writing - Professional competency in Content Writing within Digital Skills.
+   5. Cybersecurity Awareness - Professional competency in Cybersecurity Awareness within Digital Skills.
+   6. E-Commerce Management - Professional competency in E-Commerce Management within Digital Skills.
+   7. Email Marketing - Professional competency in Email Marketing within Digital Skills.
+   8. Google Workspace - Professional competency in Google Workspace within Digital Skills.
+   9. Microsoft Excel - Professional competency in Microsoft Excel within Digital Skills.
+  10. Microsoft PowerPoint - Professional competency in Microsoft PowerPoint within Digital Skills.
+  11. Microsoft Word - Professional competency in Microsoft Word within Digital Skills.
+  12. Online Customer Service - Professional competency in Online Customer Service within Digital Skills.
+  13. Search Engine Optimization - Professional competency in Search Engine Optimization within Digital Skills.
+  14. Social Media Management - Professional competency in Social Media Management within Digital Skills.
+  15. Zoom / Google Meet Facilitation - Professional competency in Zoom / Google Meet Facilitation within Digital Skills.
+
+[FRONTEND DEV] (11 Skills)
+-------------------------------------------------------
+   1. Angular - Professional competency in Angular within Frontend Dev.
+   2. Bootstrap - Professional competency in Bootstrap within Frontend Dev.
+   3. HTML & CSS - Professional competency in HTML & CSS within Frontend Dev.
+   4. JavaScript - Professional competency in JavaScript within Frontend Dev.
+   5. Next.js - Professional competency in Next.js within Frontend Dev.
+   6. React - A JavaScript library for building user interfaces.
+   7. Redux - Professional competency in Redux within Frontend Dev.
+   8. Responsive Web Design - Professional competency in Responsive Web Design within Frontend Dev.
+   9. Tailwind CSS - Professional competency in Tailwind CSS within Frontend Dev.
+  10. TypeScript - Strongly typed programming language that builds on JavaScript.
+  11. Vue.js - Professional competency in Vue.js within Frontend Dev.
+
+[GENERAL] (165 Skills)
+-------------------------------------------------------
+   1. API Documentation - Predefined skill for API Documentation
+   2. AWS - Predefined skill for AWS
+   3. Active Directory - Predefined skill for Active Directory
+   4. Agile Methods - Predefined skill for Agile Methods
+   5. Agile Roadmap - Predefined skill for Agile Roadmap
+   6. Anatomy & Physiology - Seeded skill: Anatomy & Physiology
+   7. Apex Programming - Predefined skill for Apex Programming
+   8. Applicant Tracking - Predefined skill for Applicant Tracking
+   9. Assembly Line Operations - Predefined skill for Assembly Line Operations
+  10. AutoCAD - Predefined skill for AutoCAD
+  11. Automotive Diagnostics - Seeded skill: Automotive Diagnostics
+  12. Azure - Predefined skill for Azure
+  13. B2B Sales - Predefined skill for B2B Sales
+  14. Backup Recovery - Predefined skill for Backup Recovery
+  15. Benefits Admin - Predefined skill for Benefits Admin
+  16. Blueprints Reading - Predefined skill for Blueprints Reading
+  17. Budgeting - Predefined skill for Budgeting
+  18. CI/CD - Predefined skill for CI/CD
+  19. CNC Programming - Predefined skill for CNC Programming
+  20. CSS - Predefined skill for CSS
+  21. CSS3 - Predefined skill for CSS3
+  22. Calendar Management - Predefined skill for Calendar Management
+  23. Circuit Design - Predefined skill for Circuit Design
+  24. Cisco Routing - Predefined skill for Cisco Routing
+  25. Civil Engineering Design - Seeded skill: Civil Engineering Design
+  26. Client Relations - Predefined skill for Client Relations
+  27. Clinical Decision Making - Seeded skill: Clinical Decision Making
+  28. Clinical Trials - Seeded skill: Clinical Trials
+  29. Cloud Architecture - Predefined skill for Cloud Architecture
+  30. Communication - Predefined skill for Communication
+  31. Communication Skills - Seeded skill: Communication Skills
+  32. Confidential Handling - Predefined skill for Confidential Handling
+  33. Copywriting - Predefined skill for Copywriting
+  34. Corporate Finance - Predefined skill for Corporate Finance
+  35. Counseling Skills - Seeded skill: Counseling Skills
+  36. Crisis Management - Seeded skill: Crisis Management
+  37. Customer Service - Predefined skill for Customer Service
+  38. DOLE Standards - Predefined skill for DOLE Standards
+  39. Dart - Predefined skill for Dart
+  40. Data Collection - Seeded skill: Data Collection
+  41. Data Modeling - Predefined skill for Data Modeling
+  42. Database Admin - Predefined skill for Database Admin
+  43. Dental Prophylaxis - Seeded skill: Dental Prophylaxis
+  44. Dietary Planning - Seeded skill: Dietary Planning
+  45. Documentation - Predefined skill for Documentation
+  46. Electrical Repair - Predefined skill for Electrical Repair
+  47. Electrical Safety - Predefined skill for Electrical Safety
+  48. Emergency Response - Predefined skill for Emergency Response
+  49. Employee Relations - Predefined skill for Employee Relations
+  50. English Communication - Predefined skill for English Communication
+  51. English Communication – Oral - Seeded skill: English Communication – Oral
+  52. English Communication – Written - Seeded skill: English Communication – Written
+  53. Enterprise Architecture - Predefined skill for Enterprise Architecture
+  54. Equipment Calibration - Seeded skill: Equipment Calibration
+  55. Ergonomic Assessment - Seeded skill: Ergonomic Assessment
+  56. Excel - Predefined skill for Excel
+  57. Excel Formulas - Predefined skill for Excel Formulas
+  58. Executive Support - Predefined skill for Executive Support
+  59. Financial Auditing - Predefined skill for Financial Auditing
+  60. Financial Modeling - Predefined skill for Financial Modeling
+  61. Firewalls - Predefined skill for Firewalls
+  62. First Aid - Predefined skill for First Aid
+  63. First Aid & CPR - Seeded skill: First Aid & CPR
+  64. Flutter - Predefined skill for Flutter
+  65. General Ledger Bookkeeping - Predefined skill for General Ledger Bookkeeping
+  66. General Utility - Seeded skill: General Utility
+  67. Git - Predefined skill for Git
+  68. Google Analytics - Predefined skill for Google Analytics
+  69. HTML - Predefined skill for HTML
+  70. HTML5 - Predefined skill for HTML5
+  71. Hardware Support - Predefined skill for Hardware Support
+  72. Hazard Assessment - Predefined skill for Hazard Assessment
+  73. Health Assessments - Seeded skill: Health Assessments
+  74. Heavy Equipment Operations - Seeded skill: Heavy Equipment Operations
+  75. IT Strategy - Predefined skill for IT Strategy
+  76. Interviewing - Predefined skill for Interviewing
+  77. Inventory Management - Predefined skill for Inventory Management
+  78. Japanese Language - Seeded skill: Japanese Language
+  79. Jira - Predefined skill for Jira
+  80. Jira Bug Tracking - Predefined skill for Jira Bug Tracking
+  81. Jira Coordination - Predefined skill for Jira Coordination
+  82. LWC Integration - Predefined skill for LWC Integration
+  83. Labor Law Compliance - Predefined skill for Labor Law Compliance
+  84. Laboratory Testing - Seeded skill: Laboratory Testing
+  85. Lean Six Sigma - Predefined skill for Lean Six Sigma
+  86. Linux Admin - Predefined skill for Linux Admin
+  87. Logistics - Predefined skill for Logistics
+  88. Logistics Coordinating - Predefined skill for Logistics Coordinating
+  89. Logistics Support - Seeded skill: Logistics Support
+  90. MS Office - Predefined skill for MS Office
+  91. Machine Maintenance - Seeded skill: Machine Maintenance
+  92. Machinery Maintenance - Predefined skill for Machinery Maintenance
+  93. Machining - Predefined skill for Machining
+  94. Manual Testing - Predefined skill for Manual Testing
+  95. Markdown - Predefined skill for Markdown
+  96. Mechanical Design - Predefined skill for Mechanical Design
+  97. Mechanical Systems Repair - Seeded skill: Mechanical Systems Repair
+  98. Medical Diagnosis - Seeded skill: Medical Diagnosis
+  99. Medical Scheduling - Seeded skill: Medical Scheduling
+  100. Medical Terminology - Seeded skill: Medical Terminology
+  101. Medication Dispensing - Seeded skill: Medication Dispensing
+  102. Minute Taking - Predefined skill for Minute Taking
+  103. Mobile UI Design - Predefined skill for Mobile UI Design
+  104. Negotiation - Predefined skill for Negotiation
+  105. Networking - Predefined skill for Networking
+  106. Nursing Care - Seeded skill: Nursing Care
+  107. Nutritional Assessment - Seeded skill: Nutritional Assessment
+  108. OS Troubleshooting - Predefined skill for OS Troubleshooting
+  109. Office Administration - Predefined skill for Office Administration
+  110. Onboarding - Predefined skill for Onboarding
+  111. Operations Management - Predefined skill for Operations Management
+  112. Oral Health Education - Seeded skill: Oral Health Education
+  113. PLC Programming - Predefined skill for PLC Programming
+  114. Patient Assessment - Seeded skill: Patient Assessment
+  115. Patient Billing - Seeded skill: Patient Billing
+  116. Patient Care - Seeded skill: Patient Care
+  117. Patient Mobility - Seeded skill: Patient Mobility
+  118. Patient Positioning - Seeded skill: Patient Positioning
+  119. Pediatric Care - Seeded skill: Pediatric Care
+  120. Pharmacology - Seeded skill: Pharmacology
+  121. Power Systems - Predefined skill for Power Systems
+  122. Production Planning - Predefined skill for Production Planning
+  123. Project Management - Predefined skill for Project Management
+  124. Psychotherapy - Seeded skill: Psychotherapy
+  125. Purchasing - Predefined skill for Purchasing
+  126. Quality Control - Seeded skill: Quality Control
+  127. QuickBooks - Predefined skill for QuickBooks
+  128. REST APIs - Predefined skill for REST APIs
+  129. Radiation Safety - Seeded skill: Radiation Safety
+  130. Regulatory Compliance - Seeded skill: Regulatory Compliance
+  131. Rehabilitation Therapy - Seeded skill: Rehabilitation Therapy
+  132. SEO - Predefined skill for SEO
+  133. SOA Integrations - Predefined skill for SOA Integrations
+  134. SQL Optimization - Predefined skill for SQL Optimization
+  135. Safety Compliance - Predefined skill for Safety Compliance
+  136. Safety Protocols - Predefined skill for Safety Protocols
+  137. Safety Standards - Predefined skill for Safety Standards
+  138. Safety Supervision - Predefined skill for Safety Supervision
+  139. Salesforce CRM - Predefined skill for Salesforce CRM
+  140. Sanitation Standards - Seeded skill: Sanitation Standards
+  141. Scrum Facilitation - Predefined skill for Scrum Facilitation
+  142. Selenium - Predefined skill for Selenium
+  143. Social Media Ads - Predefined skill for Social Media Ads
+  144. Sourcing - Predefined skill for Sourcing
+  145. Stakeholder Mgmt - Predefined skill for Stakeholder Mgmt
+  146. Supply Chain Tracking - Predefined skill for Supply Chain Tracking
+  147. Switching - Predefined skill for Switching
+  148. System Blueprints - Predefined skill for System Blueprints
+  149. TCP/IP Networking - Predefined skill for TCP/IP Networking
+  150. Tax Compliance - Predefined skill for Tax Compliance
+  151. Team Coaching - Predefined skill for Team Coaching
+  152. Team Leadership - Predefined skill for Team Leadership
+  153. Technical Support - Predefined skill for Technical Support
+  154. Technical Writing - Predefined skill for Technical Writing
+  155. Test Case Design - Predefined skill for Test Case Design
+  156. Typing Speed - Seeded skill: Typing Speed
+  157. UI Design - Predefined skill for UI Design
+  158. UML Modeling - Predefined skill for UML Modeling
+  159. Vendor Negotiation - Predefined skill for Vendor Negotiation
+  160. Vulnerability Scanning - Predefined skill for Vulnerability Scanning
+  161. Windows OS - Predefined skill for Windows OS
+  162. Wiring - Predefined skill for Wiring
+  163. Workplace Safety - Seeded skill: Workplace Safety
+  164. X-Ray Imaging - Seeded skill: X-Ray Imaging
+  165. mahal si mark
+
+[IT] (5 Skills)
+-------------------------------------------------------
+   1. Django Web Dev
+   2. Python Coding
+   3. Python programming
+   4. Recommendation Skill Test
+   5. SQL Database
+
+[PRODUCT MGMT] (10 Skills)
+-------------------------------------------------------
+   1. Agile - Software development methodology focused on iterative progress.
+   2. Business Analysis - Professional competency in Business Analysis within Product Mgmt.
+   3. JIRA - Professional competency in JIRA within Product Mgmt.
+   4. Kanban - Professional competency in Kanban within Product Mgmt.
+   5. OKR Framework - Professional competency in OKR Framework within Product Mgmt.
+   6. Product Roadmapping - Professional competency in Product Roadmapping within Product Mgmt.
+   7. Requirements Gathering - Professional competency in Requirements Gathering within Product Mgmt.
+   8. Scrum - Professional competency in Scrum within Product Mgmt.
+   9. Stakeholder Management - Professional competency in Stakeholder Management within Product Mgmt.
+  10. Trello - Professional competency in Trello within Product Mgmt.
+
+[QA] (1 Skills)
+-------------------------------------------------------
+   1. Match Skill Test
+
+[SOFT SKILLS] (96 Skills)
+-------------------------------------------------------
+   1. Accountability - Professional competency in Accountability within Soft Skills.
+   2. Active Listening - Professional competency in Active Listening within Soft Skills.
+   3. Adaptability - Professional competency in Adaptability within Soft Skills.
+   4. Analytical Thinking - Professional competency in Analytical Thinking within Soft Skills.
+   5. Attention to Detail - Professional competency in Attention to Detail within Soft Skills.
+   6. Business Correspondence - Professional competency in Business Correspondence within Soft Skills.
+   7. Career Planning - Professional competency in Career Planning within Soft Skills.
+   8. Change Management - Professional competency in Change Management within Soft Skills.
+   9. Client Communication - Professional competency in Client Communication within Soft Skills.
+  10. Coaching & Mentoring - Professional competency in Coaching & Mentoring within Soft Skills.
+  11. Commitment to Quality - Professional competency in Commitment to Quality within Soft Skills.
+  12. Compassion - Professional competency in Compassion within Soft Skills.
+  13. Complaint Handling - Professional competency in Complaint Handling within Soft Skills.
+  14. Compliance Mindset - Professional competency in Compliance Mindset within Soft Skills.
+  15. Confidentiality & Discretion - Professional competency in Confidentiality & Discretion within Soft Skills.
+  16. Conflict Resolution - Professional competency in Conflict Resolution within Soft Skills.
+  17. Continuous Learning Mindset - Professional competency in Continuous Learning Mindset within Soft Skills.
+  18. Cooperation & Flexibility - Professional competency in Cooperation & Flexibility within Soft Skills.
+  19. Coping with Change - Professional competency in Coping with Change within Soft Skills.
+  20. Creative Thinking - Professional competency in Creative Thinking within Soft Skills.
+  21. Critical Thinking - Professional competency in Critical Thinking within Soft Skills.
+  22. Cross-Cultural Communication - Professional competency in Cross-Cultural Communication within Soft Skills.
+  23. Cross-Functional Collaboration - Professional competency in Cross-Functional Collaboration within Soft Skills.
+  24. Cultural Sensitivity - Professional competency in Cultural Sensitivity within Soft Skills.
+  25. Customer Relationship Management - Professional competency in Customer Relationship Management within Soft Skills.
+  26. Customer Service Orientation - Professional competency in Customer Service Orientation within Soft Skills.
+  27. Decision Making - Professional competency in Decision Making within Soft Skills.
+  28. Decision Making Under Pressure - Professional competency in Decision Making Under Pressure within Soft Skills.
+  29. Delegation - Professional competency in Delegation within Soft Skills.
+  30. Diversity & Inclusion Awareness - Professional competency in Diversity & Inclusion Awareness within Soft Skills.
+  31. Emotional Maturity - Professional competency in Emotional Maturity within Soft Skills.
+  32. Emotional Regulation - Professional competency in Emotional Regulation within Soft Skills.
+  33. Empathy - Professional competency in Empathy within Soft Skills.
+  34. Empathy & Patience - Professional competency in Empathy & Patience within Soft Skills.
+  35. Flexibility - Professional competency in Flexibility within Soft Skills.
+  36. Following Instructions & Procedures - Professional competency in Following Instructions & Procedures within Soft Skills.
+  37. Global Mindset - Professional competency in Global Mindset within Soft Skills.
+  38. Goal Setting - Professional competency in Goal Setting within Soft Skills.
+  39. Growth Mindset - Professional competency in Growth Mindset within Soft Skills.
+  40. Industry Awareness - Professional competency in Industry Awareness within Soft Skills.
+  41. Initiative & Proactiveness - Professional competency in Initiative & Proactiveness within Soft Skills.
+  42. Integrity & Honesty - Professional competency in Integrity & Honesty within Soft Skills.
+  43. Interpersonal Communication - Professional competency in Interpersonal Communication within Soft Skills.
+  44. Knowledge Sharing - Professional competency in Knowledge Sharing within Soft Skills.
+  45. Language Adaptability - Professional competency in Language Adaptability within Soft Skills.
+  46. Leadership - Professional competency in Leadership within Soft Skills.
+  47. Learning Agility - Professional competency in Learning Agility within Soft Skills.
+  48. Logical Reasoning - Professional competency in Logical Reasoning within Soft Skills.
+  49. Meeting Deadlines - Professional competency in Meeting Deadlines within Soft Skills.
+  50. Motivating Others - Professional competency in Motivating Others within Soft Skills.
+  51. Multitasking - Professional competency in Multitasking within Soft Skills.
+  52. Needs Assessment - Professional competency in Needs Assessment within Soft Skills.
+  53. Non-Verbal Communication - Professional competency in Non-Verbal Communication within Soft Skills.
+  54. Occupational Health & Safety Awareness - Professional competency in Occupational Health & Safety Awareness within Soft Skills.
+  55. Openness to Feedback - Professional competency in Openness to Feedback within Soft Skills.
+  56. Organization Skills - Professional competency in Organization Skills within Soft Skills.
+  57. Patience - Professional competency in Patience within Soft Skills.
+  58. Peer Support & Mentoring - Professional competency in Peer Support & Mentoring within Soft Skills.
+  59. People Management - Professional competency in People Management within Soft Skills.
+  60. Performance Feedback - Professional competency in Performance Feedback within Soft Skills.
+  61. Personal Branding - Professional competency in Personal Branding within Soft Skills.
+  62. Planning & Scheduling - Professional competency in Planning & Scheduling within Soft Skills.
+  63. Positive Attitude - Professional competency in Positive Attitude within Soft Skills.
+  64. Presentation Skills - Professional competency in Presentation Skills within Soft Skills.
+  65. Problem Solving - Professional competency in Problem Solving within Soft Skills.
+  66. Professional Conduct - Professional competency in Professional Conduct within Soft Skills.
+  67. Professional Networking - Professional competency in Professional Networking within Soft Skills.
+  68. Public Speaking - Professional competency in Public Speaking within Soft Skills.
+  69. Punctuality & Reliability - Professional competency in Punctuality & Reliability within Soft Skills.
+  70. Relationship Management - Professional competency in Relationship Management within Soft Skills.
+  71. Report Writing - Professional competency in Report Writing within Soft Skills.
+  72. Research & Information Gathering - Professional competency in Research & Information Gathering within Soft Skills.
+  73. Resilience & Stress Tolerance - Professional competency in Resilience & Stress Tolerance within Soft Skills.
+  74. Risk Awareness - Professional competency in Risk Awareness within Soft Skills.
+  75. Root Cause Analysis - Professional competency in Root Cause Analysis within Soft Skills.
+  76. Sales Orientation - Professional competency in Sales Orientation within Soft Skills.
+  77. Seeking Mentorship - Professional competency in Seeking Mentorship within Soft Skills.
+  78. Self-Awareness - Professional competency in Self-Awareness within Soft Skills.
+  79. Self-Motivation - Professional competency in Self-Motivation within Soft Skills.
+  80. Service Quality Mindset - Professional competency in Service Quality Mindset within Soft Skills.
+  81. Social Awareness - Professional competency in Social Awareness within Soft Skills.
+  82. Storytelling & Persuasion - Professional competency in Storytelling & Persuasion within Soft Skills.
+  83. Strategic Thinking - Professional competency in Strategic Thinking within Soft Skills.
+  84. Task Prioritization - Professional competency in Task Prioritization within Soft Skills.
+  85. Team Building - Professional competency in Team Building within Soft Skills.
+  86. Teamwork & Collaboration - Professional competency in Teamwork & Collaboration within Soft Skills.
+  87. Time Management - Professional competency in Time Management within Soft Skills.
+  88. Troubleshooting - Professional competency in Troubleshooting within Soft Skills.
+  89. Verbal Communication - Professional competency in Verbal Communication within Soft Skills.
+  90. Visionary Thinking - Professional competency in Visionary Thinking within Soft Skills.
+  91. Work Ethic - Professional competency in Work Ethic within Soft Skills.
+  92. Working Under Pressure - Professional competency in Working Under Pressure within Soft Skills.
+  93. Workload Management - Professional competency in Workload Management within Soft Skills.
+  94. Workplace Discipline - Professional competency in Workplace Discipline within Soft Skills.
+  95. Workplace Relationship Building - Professional competency in Workplace Relationship Building within Soft Skills.
+  96. Written Communication - Professional competency in Written Communication within Soft Skills.
+
+[TESDA TRADE] (23 Skills)
+-------------------------------------------------------
+   1. Agricultural Crops Production - Professional competency in Agricultural Crops Production within TESDA Trade.
+   2. Automotive Servicing - Professional competency in Automotive Servicing within TESDA Trade.
+   3. Barbering - Professional competency in Barbering within TESDA Trade.
+   4. Beauty/Nail Care - Professional competency in Beauty/Nail Care within TESDA Trade.
+   5. Bread & Pastry Production - Professional competency in Bread & Pastry Production within TESDA Trade.
+   6. Caregiving - Professional competency in Caregiving within TESDA Trade.
+   7. Carpentry - Professional competency in Carpentry within TESDA Trade.
+   8. Computer Systems Servicing - Professional competency in Computer Systems Servicing within TESDA Trade.
+   9. Contact Center Services - Professional competency in Contact Center Services within TESDA Trade.
+  10. Cookery - Professional competency in Cookery within TESDA Trade.
+  11. Dressmaking & Tailoring - Professional competency in Dressmaking & Tailoring within TESDA Trade.
+  12. Driving - Professional competency in Driving within TESDA Trade.
+  13. Electrical Installation & Maintenance - Professional competency in Electrical Installation & Maintenance within TESDA Trade.
+  14. Food & Beverage Service - Professional competency in Food & Beverage Service within TESDA Trade.
+  15. Gas Metal Arc Welding - Professional competency in Gas Metal Arc Welding within TESDA Trade.
+  16. Health Care Services - Professional competency in Health Care Services within TESDA Trade.
+  17. Housekeeping - TESDA vocational housekeeping qualifications.
+  18. Masonry - Professional competency in Masonry within TESDA Trade.
+  19. Motorcycle/Small Engine Servicing - Professional competency in Motorcycle/Small Engine Servicing within TESDA Trade.
+  20. Plumbing - Professional competency in Plumbing within TESDA Trade.
+  21. Shielded Metal Arc Welding - Professional competency in Shielded Metal Arc Welding within TESDA Trade.
+  22. Tile Setting - Professional competency in Tile Setting within TESDA Trade.
+  23. Welding - TESDA structural welding trade skills.
+
+[UX DESIGN] (11 Skills)
+-------------------------------------------------------
+   1. A11y - Accessibility standards and practice.
+   2. Adobe XD - Professional competency in Adobe XD within UX Design.
+   3. Design Thinking - Professional competency in Design Thinking within UX Design.
+   4. Figma - Collaborative interface design tool.
+   5. InVision - Professional competency in InVision within UX Design.
+   6. Information Architecture - Professional competency in Information Architecture within UX Design.
+   7. Prototyping - Professional competency in Prototyping within UX Design.
+   8. Sketch - Professional competency in Sketch within UX Design.
+   9. Usability Testing - Professional competency in Usability Testing within UX Design.
+  10. User Research - Professional competency in User Research within UX Design.
+  11. Wireframing - Professional competency in Wireframing within UX Design.

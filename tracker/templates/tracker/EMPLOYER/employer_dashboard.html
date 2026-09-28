@@ -203,6 +203,15 @@
 
             <button
                 class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">settings</button>
+            <a href="{% url 'company_profile_employer' %}" class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant bg-secondary/15 flex items-center justify-center font-bold text-xs text-secondary shrink-0 hover:ring-2 hover:ring-secondary transition-all" title="{{ request.user.profile.company_name|default:request.user.get_full_name }}">
+              {% if request.user.profile.company_logo %}
+                <img alt="{{ request.user.profile.company_name }}" class="w-full h-full object-cover" src="{{ request.user.profile.company_logo.url }}">
+              {% elif request.user.profile.profile_picture %}
+                <img alt="{{ request.user.get_full_name }}" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+              {% else %}
+                {{ request.user.profile.company_name|slice:":1"|upper|default:request.user.first_name|slice:":1"|upper|default:"E" }}
+              {% endif %}
+            </a>
         </div>
     </header>
     <!-- SideNavBar -->
@@ -219,8 +228,8 @@
             <div>
                 <h2
                     class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">
-                    Enterprise Portal</h2>
-                <p class="text-[10px] text-on-surface-variant opacity-70">Talent Management</p>
+                    SKILLUP Portal</h2>
+                <p class="text-[10px] text-on-surface-variant opacity-70">Enterprise Talent Network</p>
             </div>
         </div>
         <nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
@@ -414,7 +423,7 @@
                             <tbody class="divide-y divide-outline-variant">
                                 {% for pipe in pipelines %}
                                 <tr class="zebra-row hover:bg-surface-container transition-colors group cursor-pointer pipeline-row"
-                                    data-url="{% url 'applicants_employer' %}?job_id={{ pipe.vacancy.id }}"
+                                    data-url="{% url 'applicants_employer' %}?job_id={{ pipe.vacancy.id }}&from_section=dashboard"
                                     data-title="{{ pipe.vacancy.title|lower }}"
                                     data-location="{{ pipe.vacancy.location|lower }}"
                                     data-match="{{ pipe.avg_match }}"
@@ -428,7 +437,7 @@
                                     <td class="px-6 py-5">
                                         <div class="flex -space-x-2">
                                             {% for cand in pipe.candidates %}
-                                            <a href="{% url 'applicant_details_employer_id' cand.id %}" class="w-8 h-8 rounded-full border-2 border-white overflow-hidden bg-secondary text-white flex items-center justify-center text-[10px] font-bold z-10 hover:scale-110 hover:bg-opacity-95 transition-all duration-150 active:scale-95"
+                                            <a href="{% url 'applicant_details_employer_id' cand.id %}?from_section=employer_dashboard&job_id={{ pipe.vacancy.id }}" class="w-8 h-8 rounded-full border-2 border-white overflow-hidden bg-secondary text-white flex items-center justify-center text-[10px] font-bold z-10 hover:scale-110 hover:bg-opacity-95 transition-all duration-150 active:scale-95"
                                                 title="{{ cand.user.first_name }} {{ cand.user.last_name }}">
                                                 {{ cand.user.first_name|slice:":1" }}{{ cand.user.last_name|slice:":1" }}
                                             </a>

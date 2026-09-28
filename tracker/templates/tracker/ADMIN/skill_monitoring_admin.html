@@ -1,140 +1,157 @@
-<!DOCTYPE html><html class="light" lang="en"><head>
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Skill Gaps | SKILLUP</title>
+<title>Skill Gaps & Talent Monitoring | SKILLUP</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "secondary": "#0051d5",
-                    "inverse-surface": "#213145",
-                    "on-primary-fixed-variant": "#3f465c",
-                    "outline-variant": "#c6c6cd",
-                    "primary-fixed": "#dae2fd",
-                    "on-error": "#ffffff",
-                    "surface-container": "#e5eeff",
-                    "on-tertiary": "#ffffff",
-                    "surface-tint": "#565e74",
-                    "on-tertiary-fixed-variant": "#005236",
-                    "surface-container-low": "#eff4ff",
-                    "on-surface": "#0b1c30",
-                    "on-secondary-fixed-variant": "#003ea8",
-                    "surface-bright": "#f8f9ff",
-                    "tertiary-fixed": "#6ffbbe",
-                    "on-primary-container": "#7c839b",
-                    "primary-fixed-dim": "#bec6e0",
-                    "outline": "#76777d",
-                    "on-secondary-fixed": "#00174b",
-                    "on-secondary": "#ffffff",
-                    "surface-container-highest": "#d3e4fe",
-                    "tertiary-container": "#002113",
-                    "primary-container": "#131b2e",
-                    "tertiary": "#000000",
-                    "on-secondary-container": "#fefcff",
-                    "surface-dim": "#cbdbf5",
-                    "error": "#ba1a1a",
-                    "on-primary": "#ffffff",
-                    "tertiary-fixed-dim": "#4edea3",
-                    "on-background": "#0b1c30",
-                    "on-surface-variant": "#45464d",
-                    "surface-container-lowest": "#ffffff",
-                    "on-tertiary-fixed": "#002113",
-                    "inverse-on-surface": "#eaf1ff",
-                    "background": "#f8f9ff",
-                    "secondary-fixed": "#dbe1ff",
-                    "primary": "#000000",
-                    "secondary-container": "#316bf3",
-                    "on-tertiary-container": "#009668",
-                    "surface-variant": "#d3e4fe",
-                    "surface-container-high": "#dce9ff",
-                    "error-container": "#ffdad6",
-                    "on-error-container": "#93000a",
-                    "surface": "#f8f9ff",
-                    "secondary-fixed-dim": "#b4c5ff",
-                    "on-primary-fixed": "#131b2e",
-                    "inverse-primary": "#bec6e0"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.125rem",
-                    "lg": "0.25rem",
-                    "xl": "0.5rem",
-                    "full": "0.75rem"
-            },
-            "spacing": {
-                    "gutter": "24px",
-                    "margin-mobile": "16px",
-                    "margin-desktop": "40px",
-                    "container-max": "1440px",
-                    "unit": "4px"
-            },
-            "fontFamily": {
-                    "body-md": ["Inter"],
-                    "headline-md": ["Inter"],
-                    "display-lg": ["Inter"],
-                    "body-lg": ["Inter"],
-                    "label-sm": ["JetBrains Mono"],
-                    "headline-lg-mobile": ["Inter"],
-                    "body-sm": ["Inter"],
-                    "headline-lg": ["Inter"],
-                    "label-md": ["JetBrains Mono"]
-            },
-            "fontSize": {
-                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-                    "label-sm": ["12px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
-                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}]
-            }
-          },
-        },
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "secondary": "#0051d5",
+        "inverse-surface": "#213145",
+        "on-primary-fixed-variant": "#3f465c",
+        "outline-variant": "#c6c6cd",
+        "primary-fixed": "#dae2fd",
+        "on-error": "#ffffff",
+        "surface-container": "#e5eeff",
+        "on-tertiary": "#ffffff",
+        "surface-tint": "#565e74",
+        "on-tertiary-fixed-variant": "#005236",
+        "surface-container-low": "#eff4ff",
+        "on-surface": "#0b1c30",
+        "on-secondary-fixed-variant": "#003ea8",
+        "surface-bright": "#f8f9ff",
+        "tertiary-fixed": "#6ffbbe",
+        "on-primary-container": "#7c839b",
+        "primary-fixed-dim": "#bec6e0",
+        "outline": "#76777d",
+        "on-secondary-fixed": "#00174b",
+        "on-secondary": "#ffffff",
+        "surface-container-highest": "#d3e4fe",
+        "tertiary-container": "#002113",
+        "primary-container": "#131b2e",
+        "tertiary": "#000000",
+        "on-secondary-container": "#fefcff",
+        "surface-dim": "#cbdbf5",
+        "error": "#ba1a1a",
+        "on-primary": "#ffffff",
+        "tertiary-fixed-dim": "#4edea3",
+        "on-background": "#0b1c30",
+        "on-surface-variant": "#45464d",
+        "surface-container-lowest": "#ffffff",
+        "on-tertiary-fixed": "#002113",
+        "inverse-on-surface": "#eaf1ff",
+        "background": "#f8f9ff",
+        "secondary-fixed": "#dbe1ff",
+        "primary": "#000000",
+        "secondary-container": "#316bf3",
+        "on-tertiary-container": "#009668",
+        "surface-variant": "#d3e4fe",
+        "surface-container-high": "#dce9ff",
+        "error-container": "#ffdad6",
+        "on-error-container": "#93000a",
+        "surface": "#f8f9ff",
+        "secondary-fixed-dim": "#b4c5ff",
+        "on-primary-fixed": "#131b2e",
+        "inverse-primary": "#bec6e0"
+      },
+      borderRadius: {
+        "DEFAULT": "0.125rem",
+        "lg": "0.25rem",
+        "xl": "0.5rem",
+        "full": "0.75rem"
+      },
+      spacing: {
+        "gutter": "24px",
+        "margin-mobile": "16px",
+        "margin-desktop": "40px",
+        "container-max": "1440px",
+        "unit": "4px"
+      },
+      fontFamily: {
+        "body-md": ["Inter"],
+        "headline-md": ["Inter"],
+        "display-lg": ["Inter"],
+        "body-lg": ["Inter"],
+        "label-sm": ["JetBrains Mono"],
+        "headline-lg-mobile": ["Inter"],
+        "body-sm": ["Inter"],
+        "headline-lg": ["Inter"],
+        "label-md": ["JetBrains Mono"]
+      },
+      fontSize: {
+        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+        "label-sm": ["12px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+        "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}]
       }
-    </script>
+    }
+  }
+}
+</script>
 <style>
-        body { background-color: #f8f9ff; font-family: 'Inter', sans-serif; }
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            display: inline-block;
-            line-height: 1;
-            vertical-align: middle;
-        }
-        .sidebar-transition { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .glass-effect { backdrop-filter: blur(8px); background: rgba(255, 255, 255, 0.8); }
-        .radar-grid { background-image: radial-gradient(circle, #e2e8f0 1px, transparent 1px); background-size: 20px 20px; }
-        .skill-bar-gradient { background: linear-gradient(90deg, #0051d5 0%, #316bf3 100%); }
-    </style>
+body { background-color: #f8f9ff; font-family: 'Inter', sans-serif; }
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    display: inline-block;
+    line-height: 1;
+    vertical-align: middle;
+}
+.zebra-row:nth-child(even) { background-color: #f8fafc; }
+.custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+@media print {
+  body { background-color: #ffffff !important; }
+  aside, header, footer, .no-print { display: none !important; }
+  main { margin-left: 0 !important; padding: 0 !important; width: 100% !important; }
+  .shadow-sm, .shadow-md, .shadow-2xs, .shadow-xs { box-shadow: none !important; border: 1px solid #cbd5e1 !important; }
+}
+</style>
 </head>
 <body class="bg-background text-on-background font-body-md min-h-screen">
+
 <!-- TopNavBar Shell -->
-<header class="fixed top-0 w-full z-50 bg-surface dark:bg-surface-container-low border-b border-outline-variant dark:border-outline flex items-center justify-between px-margin-desktop h-16 w-full">
+<header class="fixed top-0 w-full z-50 bg-surface dark:bg-surface-container-low border-b border-outline-variant dark:border-outline flex items-center justify-between px-margin-desktop h-16 w-full no-print">
 <div class="flex items-center gap-8">
 <h1 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-inverse-on-surface">SKILLUP</h1>
 </div>
 <div class="flex items-center gap-4">
-<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">notifications</button>
-<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">help</button>
-<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">settings</button>
-<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
-<img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCn5ndUBvKYHDdfjOtDcuDcmEa-zwbSgM-ZLHNPtfHm7uL9e355N19pHC8c-XBPUwwXHIzoATnKENMDvabjLGF5diSFylP09pwQghoAY0N70mks-GlVv2KmatElbeqz2_5J-gSw4HGwnHnPHYMLeRKflzGezIfmEqF1sJTCsVHaAp-3UBTYmVg6yrq3nRzkltjZyYRqaTWNO9ETM3eG6xeP_aE-PZkbZbeBZvG-dmCW3fgaiDFfFN1v9i2cwj6DH0AUyxyPRP9c4y2t">
-</div>
+<button onclick="openNotificationModal()" class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80" title="Alerts & Notifications">notifications</button>
+<a href="{% url 'peso_profile_admin' %}" class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80" title="Settings">settings</a>
+<a href="{% url 'peso_profile_admin' %}" class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant bg-secondary/15 flex items-center justify-center font-bold text-xs text-secondary shrink-0 hover:ring-2 hover:ring-secondary transition-all" title="{{ request.user.get_full_name }}">
+{% if request.user.profile.profile_picture %}
+<img alt="{{ request.user.get_full_name }}" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+{% else %}
+{{ request.user.first_name|slice:":1"|upper }}{{ request.user.last_name|slice:":1"|upper|default:"P" }}
+{% endif %}
+</a>
 </div>
 </header>
+
 <!-- SideNavBar Shell -->
-<aside class="fixed left-0 top-0 h-full w-64 pt-20 bg-surface-container-lowest dark:bg-primary-container border-r border-outline-variant dark:border-outline hidden md:flex flex-col p-4 gap-2 z-40">
+<aside class="fixed left-0 top-0 h-full w-64 pt-20 bg-surface-container-lowest dark:bg-primary-container border-r border-outline-variant dark:border-outline hidden md:flex flex-col p-4 gap-2 z-40 no-print">
 <div class="flex items-center gap-3 px-2 py-4 mb-4 border-b border-outline-variant/30">
-<div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center text-white font-black text-xl">P</div>
+{% if request.user.profile.profile_picture %}
+<div class="w-10 h-10 rounded-lg overflow-hidden border border-outline-variant shrink-0">
+  <img alt="Office Logo" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+</div>
+{% else %}
+<div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center text-white font-black text-xl shrink-0">P</div>
+{% endif %}
 <div>
-<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">Enterprise Portal</h2>
-<p class="text-[10px] text-on-surface-variant opacity-70">Talent Management</p>
+<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">SKILLUP Portal</h2>
+<p class="text-[10px] text-on-surface-variant opacity-70">Public Employment Service</p>
 </div>
 </div>
 <nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
@@ -164,7 +181,7 @@
 </a>
 <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'training_monitoring_admin' %}">
 <span class="material-symbols-outlined">school</span>
-<span>Learning Paths</span>
+<span>Training Programs</span>
 </a>
 <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'job_matching_analytics_admin' %}">
 <span class="material-symbols-outlined">monitoring</span>
@@ -176,319 +193,443 @@
 </a>
 </nav>
 <div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-1">
-<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="#">
-<span class="material-symbols-outlined">support_agent</span>
-<span>Support</span>
-</a>
 <a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'logout' %}">
 <span class="material-symbols-outlined">logout</span>
 <span>Log Out</span>
 </a>
 </div>
 </aside>
+
 <!-- Main Canvas -->
 <main class="md:ml-64 pt-20 min-h-screen">
 <div class="p-margin-desktop space-y-gutter">
+
+<!-- Flash Messages -->
+{% if messages %}
+<div class="space-y-2 no-print">
+  {% for message in messages %}
+    <div class="p-4 rounded-xl border flex items-center justify-between {% if message.tags == 'success' %}bg-green-50 border-green-200 text-green-800{% elif message.tags == 'error' %}bg-red-50 border-red-200 text-red-800{% else %}bg-blue-50 border-blue-200 text-blue-800{% endif %} shadow-xs">
+      <div class="flex items-center gap-2.5 font-medium text-sm">
+        <span class="material-symbols-outlined text-[20px]">{% if message.tags == 'success' %}check_circle{% else %}info{% endif %}</span>
+        <span>{{ message }}</span>
+      </div>
+      <button onclick="this.parentElement.remove()" class="opacity-60 hover:opacity-100"><span class="material-symbols-outlined text-sm">close</span></button>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
 <!-- Header Section with Stats -->
-<section class="flex flex-col md:flex-row justify-between items-end gap-6">
+<section class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
 <div>
-<h2 class="font-headline-lg text-headline-lg text-on-background">Skill Gaps</h2>
-<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">Real-time mapping of global talent competencies. Identify surplus skill clusters and critical developmental gaps across 12 major industries.</p>
+  <div class="flex items-center gap-2 font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">
+    <span>DOLE-PESO Talent Intelligence</span>
+    <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+    <span class="text-secondary font-bold">Labor Market Analytics</span>
+  </div>
+  <h2 class="font-headline-lg text-headline-lg text-on-background">Skill Gaps & Competency Monitoring</h2>
+  <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">Real-time mapping of applicant proficiencies against vacancy requirements. Identify surplus skill clusters and prioritize capacity-building interventions.</p>
 </div>
-<div class="flex gap-4">
-<div class="bg-surface-container-lowest border border-outline-variant p-4 rounded-xl flex items-center gap-4 min-w-[200px]">
-<div class="p-2 bg-on-tertiary-container/10 text-on-tertiary-container rounded-lg">
-<span class="material-symbols-outlined">trending_up</span>
-</div>
-<div>
-<p class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Growth Trend</p>
-<p class="font-headline-md text-headline-md">+14.2%</p>
-</div>
-</div>
-<div class="bg-surface-container-lowest border border-outline-variant p-4 rounded-xl flex items-center gap-4 min-w-[200px]">
-<div class="p-2 bg-error-container text-error rounded-lg">
-<span class="material-symbols-outlined">warning</span>
-</div>
-<div>
-<p class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Major Gaps</p>
-<p class="font-headline-md text-headline-md">32</p>
-</div>
-</div>
+
+<div class="flex flex-wrap gap-3 w-full md:w-auto">
+  <div class="bg-surface-container-lowest border border-outline-variant p-4 rounded-xl flex items-center gap-4 min-w-[170px] flex-1 md:flex-initial shadow-xs">
+    <div class="p-2.5 bg-on-tertiary-container/10 text-on-tertiary-container rounded-lg">
+      <span class="material-symbols-outlined text-xl">trending_up</span>
+    </div>
+    <div>
+      <p class="font-label-sm text-[11px] text-outline uppercase tracking-wider">Growth Trend</p>
+      <p class="font-headline-md text-xl font-bold text-on-surface">{{ growth_trend|default:"+14.2%" }}</p>
+    </div>
+  </div>
+
+  <div class="bg-surface-container-lowest border border-outline-variant p-4 rounded-xl flex items-center gap-4 min-w-[170px] flex-1 md:flex-initial shadow-xs">
+    <div class="p-2.5 bg-error-container text-error rounded-lg">
+      <span class="material-symbols-outlined text-xl">warning</span>
+    </div>
+    <div>
+      <p class="font-label-sm text-[11px] text-outline uppercase tracking-wider">Critical Gaps</p>
+      <p class="font-headline-md text-xl font-bold text-error">{{ major_gaps_count|default:"32" }}</p>
+    </div>
+  </div>
+
+  <div class="bg-surface-container-lowest border border-outline-variant p-4 rounded-xl flex items-center gap-4 min-w-[170px] flex-1 md:flex-initial shadow-xs">
+    <div class="p-2.5 bg-secondary/15 text-secondary rounded-lg">
+      <span class="material-symbols-outlined text-xl">hub</span>
+    </div>
+    <div>
+      <p class="font-label-sm text-[11px] text-outline uppercase tracking-wider">Tracked Skills</p>
+      <p class="font-headline-md text-xl font-bold text-secondary">{{ total_skills_count|default:"45" }}</p>
+    </div>
+  </div>
 </div>
 </section>
+
 <!-- Bento Grid - Analytics Layout -->
 <div class="grid grid-cols-12 gap-gutter">
-<!-- Main Radar Comparison (Large) -->
-<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl p-8 relative overflow-hidden h-[500px]">
-<div class="flex justify-between items-start mb-6">
-<div>
-<h3 class="font-headline-md text-headline-md text-on-surface">Skill Landscape: Tech vs Industry Avg</h3>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Comparative proficiency across core domains</p>
+
+<!-- Main Vertical Bar Comparison (Full Width) -->
+<div class="col-span-12 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 md:p-8 flex flex-col justify-between shadow-xs">
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+    <div>
+      <h3 class="font-headline-md text-headline-md text-on-surface">Skill Landscape: Tech vs Industry Avg</h3>
+      <p class="font-body-sm text-body-sm text-on-surface-variant">Comparative proficiency across core domains (Vertical Column Analysis)</p>
+    </div>
+    <div class="flex items-center gap-4 bg-surface-container-low px-3.5 py-1.5 rounded-lg border border-outline-variant/50 shrink-0">
+      <span class="flex items-center gap-2 text-label-sm font-label-sm text-secondary font-semibold"><div class="w-3.5 h-3.5 rounded-md bg-secondary"></div> Current Talent</span>
+      <span class="flex items-center gap-2 text-label-sm font-label-sm text-slate-500 font-semibold"><div class="w-3.5 h-3.5 rounded-md bg-slate-400"></div> Market Demand</span>
+    </div>
+  </div>
+
+  <!-- Vertical Bar Chart Area -->
+  <div class="relative w-full pt-4 pb-2">
+    <!-- Grid and Bars Container -->
+    <div class="relative h-[290px] w-full flex items-end">
+      <!-- Y-Axis Scale Lines -->
+      <div class="absolute inset-0 flex flex-col justify-between pointer-events-none pr-2">
+        <div class="border-b border-outline-variant/30 w-full flex items-center justify-between">
+          <span class="text-[10px] font-label-sm text-outline -mt-2.5">100%</span>
+        </div>
+        <div class="border-b border-outline-variant/30 w-full flex items-center justify-between">
+          <span class="text-[10px] font-label-sm text-outline -mt-2.5">75%</span>
+        </div>
+        <div class="border-b border-outline-variant/30 w-full flex items-center justify-between">
+          <span class="text-[10px] font-label-sm text-outline -mt-2.5">50%</span>
+        </div>
+        <div class="border-b border-outline-variant/30 w-full flex items-center justify-between">
+          <span class="text-[10px] font-label-sm text-outline -mt-2.5">25%</span>
+        </div>
+        <div class="border-b border-outline-variant w-full flex items-center justify-between">
+          <span class="text-[10px] font-label-sm text-outline -mt-2.5">0%</span>
+        </div>
+      </div>
+
+      <!-- Columns Container -->
+      <div class="relative z-10 w-full pl-8 pr-2 h-full flex items-end justify-between gap-2 md:gap-4">
+        {% for dom in domain_comparisons %}
+          <div class="flex-1 flex flex-col items-center h-full justify-end group">
+            <!-- Top Gap/Surplus Badge -->
+            <div class="mb-2 opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all">
+              <span class="px-1.5 py-0.5 rounded text-[10px] font-bold font-label-sm {% if dom.is_gap %}bg-error-container text-error{% else %}bg-green-100 text-green-800{% endif %}">
+                {{ dom.status_text }}
+              </span>
+            </div>
+
+            <!-- Paired Vertical Bars -->
+            <div class="flex items-end gap-1 md:gap-2 h-[220px] w-full justify-center">
+              <!-- Current Talent Bar (Upward) -->
+              <div class="w-4 md:w-6 lg:w-8 bg-secondary rounded-t-lg transition-all duration-700 relative flex flex-col justify-start items-center hover:bg-secondary/90 cursor-pointer shadow-2xs" style="height: {{ dom.talent_pct }}%;" title="Current Talent: {{ dom.talent_pct }}%">
+                <span class="text-[10px] font-bold text-white mt-1 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">{{ dom.talent_pct }}%</span>
+              </div>
+
+              <!-- Market Demand Bar (Upward) -->
+              <div class="w-4 md:w-6 lg:w-8 bg-slate-400 dark:bg-slate-500 rounded-t-lg transition-all duration-700 relative flex flex-col justify-start items-center hover:bg-slate-500 cursor-pointer shadow-2xs" style="height: {{ dom.demand_pct }}%;" title="Market Demand: {{ dom.demand_pct }}%">
+                <span class="text-[10px] font-bold text-white mt-1 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">{{ dom.demand_pct }}%</span>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- X-Axis Domain Labels -->
+    <div class="w-full pl-8 pr-2 flex justify-between gap-2 md:gap-4 mt-3 pt-2 border-t border-outline-variant/60">
+      {% for dom in domain_comparisons %}
+        <div class="flex-1 text-center">
+          <p class="text-[11px] md:text-xs font-bold text-on-surface line-clamp-2 leading-tight" title="{{ dom.name }}">{{ dom.name }}</p>
+          <p class="text-[10px] font-semibold text-outline mt-0.5">T: <span class="text-secondary font-bold">{{ dom.talent_pct }}%</span> | D: <span class="text-slate-600 font-bold">{{ dom.demand_pct }}%</span></p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="pt-4 border-t border-outline-variant/40 flex justify-between items-center text-xs text-on-surface-variant font-medium mt-3">
+    <span>Vertical Scale: Upright competency rating (0 - 100%)</span>
+    <span class="font-bold text-secondary flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Live Calculated Metrics</span>
+  </div>
 </div>
-<div class="flex gap-2">
-<span class="flex items-center gap-1.5 text-label-sm font-label-sm text-secondary"><div class="w-3 h-3 rounded-full bg-secondary"></div> Current Talent</span>
-<span class="flex items-center gap-1.5 text-label-sm font-label-sm text-outline"><div class="w-3 h-3 rounded-full bg-outline"></div> Market Demand</span>
+
+<!-- Industry Distribution Table Section -->
+<div class="col-span-12 bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-xs">
+  <div class="p-6 border-b border-outline-variant flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div>
+      <h3 class="font-headline-md text-headline-md text-on-surface">Skill Saturation by Industry</h3>
+      <p class="text-xs text-on-surface-variant mt-0.5">Identified talent surplus and deficits segmented by economic sector.</p>
+    </div>
+    
+    <div class="flex flex-wrap items-center gap-3">
+      <!-- Search Input -->
+      <div class="relative min-w-[220px]">
+        <span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant text-[18px]">search</span>
+        <input type="text" id="industryTableSearch" onkeyup="filterIndustryTable()" placeholder="Search industry or skill..." class="w-full pl-9 pr-4 py-2 bg-surface-container-low border border-outline-variant/60 rounded-lg text-xs text-on-surface placeholder:text-outline focus:ring-2 focus:ring-secondary focus:border-secondary outline-none transition-all">
+      </div>
+
+      <!-- Industry Filter Dropdown -->
+      <form method="GET" class="inline-flex items-center">
+        <select id="industryFilterSelect" name="industry" onchange="onIndustrySelectChange(this.value)" class="bg-surface-container-low border border-outline-variant/60 rounded-lg text-xs font-semibold text-on-surface py-2 px-3 focus:ring-2 focus:ring-secondary focus:border-secondary cursor-pointer">
+          {% for ind_opt in all_industries_list %}
+            <option value="{{ ind_opt }}" {% if selected_industry == ind_opt %}selected{% endif %}>{{ ind_opt }}</option>
+          {% endfor %}
+        </select>
+      </form>
+
+      <!-- CSV Export Button -->
+      <a href="{% url 'export_analytics_csv' %}?report=gaps" class="bg-surface-container-low hover:bg-surface-container-high border border-outline-variant/60 text-secondary px-3 py-2 rounded-lg font-bold text-xs flex items-center gap-1.5 transition-colors" title="Export Skill Gap Dataset">
+        <span class="material-symbols-outlined text-[16px]">download</span> Export CSV
+      </a>
+    </div>
+  </div>
+
+  <div class="overflow-x-auto">
+    <table class="w-full text-left border-collapse" id="industryDataTable">
+      <thead class="bg-surface-container-low text-on-surface-variant font-bold text-xs uppercase tracking-wider">
+        <tr>
+          <th class="px-6 py-4">Industry Sector</th>
+          <th class="px-6 py-4">Primary Surplus Competencies</th>
+          <th class="px-6 py-4">Critical Skill Deficits</th>
+          <th class="px-6 py-4">Talent Supply Gauge</th>
+          <th class="px-6 py-4 text-right">Trend</th>
+          <th class="px-6 py-4 text-center">Action</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-outline-variant font-body-sm text-sm" id="industryTableBody">
+        {% for item in industry_data %}
+          <tr class="industry-row hover:bg-surface-container-low/50 transition-colors" data-industry="{{ item.industry|lower }}" data-skills="{{ item.surplus_skills|join:' '|lower }} {{ item.gap_skills|join:' '|lower }}">
+            <td class="px-6 py-4 font-bold text-on-surface">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-secondary"></span>
+                <span>{{ item.industry }}</span>
+              </div>
+            </td>
+            <td class="px-6 py-4">
+              <div class="flex flex-wrap gap-1.5">
+                {% for ss in item.surplus_skills %}
+                  <span class="bg-surface-container text-secondary px-2.5 py-1 rounded-md text-[11px] font-semibold border border-secondary/20">{{ ss }}</span>
+                {% endfor %}
+              </div>
+            </td>
+            <td class="px-6 py-4">
+              <div class="flex flex-wrap gap-1.5">
+                {% for gs in item.gap_skills %}
+                  <span class="bg-error-container text-error px-2.5 py-1 rounded-md text-[11px] font-bold border border-error/20 flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[13px]">warning</span> {{ gs }}
+                  </span>
+                {% endfor %}
+              </div>
+            </td>
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-3">
+                <div class="w-28 bg-outline-variant/40 h-2 rounded-full overflow-hidden">
+                  <div class="bg-secondary h-full rounded-full" style="width: {{ item.progress_pct }}%"></div>
+                </div>
+                <span class="font-label-sm text-xs font-bold text-on-surface">{{ item.talent_count }}</span>
+              </div>
+            </td>
+            <td class="px-6 py-4 text-right font-bold {% if item.trend_positive %}text-on-tertiary-container{% else %}text-error{% endif %}">
+              {{ item.trend }}
+            </td>
+            <td class="px-6 py-4 text-center">
+              <a href="{% url 'vacancy_management_admin' %}?q={{ item.category|default:item.industry|urlencode }}" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white hover:bg-surface-container-low border border-outline-variant text-secondary text-xs font-bold transition-all shadow-2xs hover:scale-105">
+                <span>Vacancies</span>
+                <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+              </a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr id="emptyRow">
+            <td colspan="6" class="px-6 py-8 text-center text-on-surface-variant italic">
+              No matching industry sectors found for your search filter.
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Bottom Row: Fast-Track Recruitment Pipeline & Priority Shortages -->
+<div class="col-span-12 space-y-4">
+  <!-- Call to action card -->
+  <div class="bg-secondary text-white rounded-xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
+    <div>
+      <p class="font-label-sm uppercase tracking-wider opacity-80 mb-1">Identified Critical Gaps</p>
+      <h4 class="font-headline-md font-bold text-white">Fast-Track Recruitment Pipeline</h4>
+      <p class="text-xs opacity-90 mt-1">Accelerate placement for open vacancies with critical qualification deficits.</p>
+    </div>
+    <a href="{% url 'applicant_monitoring_admin' %}" class="bg-white text-secondary px-5 py-2.5 rounded-xl hover:scale-105 transition-transform font-bold text-xs shadow-sm flex items-center gap-2 shrink-0 self-start md:self-auto" title="Go to Talent Bench">
+      <span>Inspect Talent Bench</span>
+      <span class="material-symbols-outlined text-sm">arrow_forward</span>
+    </a>
+  </div>
+
+  <!-- Critical Shortages Breakdown -->
+  <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 space-y-4 shadow-xs">
+    <div class="flex items-center justify-between pb-2 border-b border-outline-variant/40">
+      <div>
+        <h4 class="font-label-md text-label-md text-outline uppercase tracking-wider font-bold">High Priority Shortages & Intervention Pathways</h4>
+        <p class="text-xs text-on-surface-variant mt-0.5">Key competencies where open vacancy requirements outpace local candidate supply.</p>
+      </div>
+      <span class="text-xs text-secondary font-bold px-3 py-1 bg-surface-container rounded-full">{{ critical_shortages|length }} Active Priorities</span>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {% for cs in critical_shortages %}
+        <div class="p-4 bg-surface-container-low rounded-xl border border-outline-variant/50 flex flex-col justify-between gap-3 hover:border-secondary/50 transition-colors">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <div class="w-8 h-8 rounded-lg {% if forloop.first %}bg-error-container text-error{% else %}bg-secondary/15 text-secondary{% endif %} flex items-center justify-center font-bold text-xs shrink-0">
+                <span class="material-symbols-outlined text-[18px]">{% if forloop.first %}warning{% else %}offline_bolt{% endif %}</span>
+              </div>
+              <span class="text-[10px] font-bold uppercase tracking-wider {% if forloop.first %}text-error{% else %}text-secondary{% endif %}">
+                {% if forloop.first %}Critical Deficit{% else %}High Demand{% endif %}
+              </span>
+            </div>
+            <h5 class="text-sm font-bold text-on-surface">{{ cs.name }}</h5>
+            <p class="text-xs text-on-surface-variant font-medium mt-1">{{ cs.total_demand }} Required by Vacancies • {{ cs.total_supply }} Qualified Candidates</p>
+          </div>
+          <div class="flex items-center gap-2 pt-3 border-t border-outline-variant/40">
+            <a href="{% url 'training_monitoring_admin' %}" class="flex-1 py-1.5 bg-white border border-outline-variant hover:border-secondary text-secondary rounded-lg text-xs font-bold transition-colors text-center">
+              Deploy Training
+            </a>
+            <a href="{% url 'vacancy_management_admin' %}?q={{ cs.name|urlencode }}" class="flex-1 py-1.5 bg-secondary text-white rounded-lg text-xs font-bold hover:bg-secondary/90 transition-colors shadow-2xs text-center">
+              Vacancies
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
 </div>
 </div>
-<div class="radar-grid absolute inset-0 mt-32 flex items-center justify-center opacity-30"></div>
-<!-- Simplified Visual Radar Implementation -->
-<div class="relative h-full flex items-center justify-center">
-<svg class="w-[380px] h-[380px] -rotate-90" viewBox="0 0 100 100">
-<!-- Background Circles -->
-<circle cx="50" cy="50" fill="none" r="10" stroke="#e2e8f0" stroke-width="0.5"></circle>
-<circle cx="50" cy="50" fill="none" r="20" stroke="#e2e8f0" stroke-width="0.5"></circle>
-<circle cx="50" cy="50" fill="none" r="30" stroke="#e2e8f0" stroke-width="0.5"></circle>
-<circle cx="50" cy="50" fill="none" r="40" stroke="#e2e8f0" stroke-width="0.5"></circle>
-<circle cx="50" cy="50" fill="none" r="50" stroke="#e2e8f0" stroke-width="0.5"></circle>
-<!-- Legend Lines -->
-<line stroke="#e2e8f0" stroke-width="0.5" x1="50" x2="50" y1="50" y2="0"></line>
-<line stroke="#e2e8f0" stroke-width="0.5" x1="50" x2="100" y1="50" y2="50"></line>
-<line stroke="#e2e8f0" stroke-width="0.5" x1="50" x2="50" y1="50" y2="100"></line>
-<line stroke="#e2e8f0" stroke-width="0.5" x1="50" x2="0" y1="50" y2="50"></line>
-<!-- Data Shape 1 (Current) -->
-<polygon fill="rgba(0, 81, 213, 0.15)" points="50,15 85,35 60,85 15,50 30,20" stroke="#0051d5" stroke-width="1.5"></polygon>
-<!-- Data Shape 2 (Demand) -->
-<polygon fill="none" points="50,5 95,50 50,95 5,50 20,20" stroke="#76777d" stroke-dasharray="2" stroke-width="1"></polygon>
-</svg>
-<!-- Labels -->
-<div class="absolute top-0 transform -translate-y-4 font-label-sm text-label-sm bg-white px-2">Data Science</div>
-<div class="absolute right-0 transform translate-x-12 font-label-sm text-label-sm bg-white px-2">Cloud Arch</div>
-<div class="absolute bottom-0 transform translate-y-4 font-label-sm text-label-sm bg-white px-2">Product Mgt</div>
-<div class="absolute left-0 transform -translate-x-12 font-label-sm text-label-sm bg-white px-2">Soft Skills</div>
-</div>
-</div>
-<!-- Trending Emerging Skills (Medium) -->
-<div class="col-span-12 lg:col-span-4 bg-primary-container text-white rounded-xl p-8 flex flex-col justify-between overflow-hidden relative">
-<div class="relative z-10">
-<h3 class="font-headline-md text-headline-md mb-2">Emerging Skills</h3>
-<p class="font-body-sm text-body-sm text-on-primary-container">Top 3 skill sets showing exponential demand growth in Q3.</p>
-</div>
-<div class="space-y-6 relative z-10 mt-8">
-<div class="group cursor-pointer">
-<div class="flex justify-between items-center mb-2">
-<span class="font-body-md font-bold">Generative AI Ops</span>
-<span class="text-tertiary-fixed font-label-sm">+184%</span>
-</div>
-<div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-<div class="bg-tertiary-fixed h-full w-[85%] group-hover:w-full transition-all duration-700"></div>
-</div>
-</div>
-<div class="group cursor-pointer">
-<div class="flex justify-between items-center mb-2">
-<span class="font-body-md font-bold">Quantum Computing</span>
-<span class="text-tertiary-fixed font-label-sm">+62%</span>
-</div>
-<div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-<div class="bg-tertiary-fixed h-full w-[45%] group-hover:w-[55%] transition-all duration-700"></div>
-</div>
-</div>
-<div class="group cursor-pointer">
-<div class="flex justify-between items-center mb-2">
-<span class="font-body-md font-bold">Rust Engineering</span>
-<span class="text-tertiary-fixed font-label-sm">+41%</span>
-</div>
-<div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-<div class="bg-tertiary-fixed h-full w-[60%] group-hover:w-[70%] transition-all duration-700"></div>
-</div>
-</div>
-</div>
-<div class="absolute -bottom-10 -right-10 opacity-20">
-<span class="material-symbols-outlined text-[200px]" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
-</div>
-</div>
-<!-- Industry Distribution (Wide) -->
-<div class="col-span-12 bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
-<div class="p-6 border-b border-outline-variant flex justify-between items-center">
-<h3 class="font-headline-md text-headline-md">Skill Saturation by Industry</h3>
-<div class="flex gap-2">
-<select class="bg-surface-container-low border-none rounded-lg text-label-md py-2 px-4 focus:ring-secondary/20">
-<option>All Industries</option>
-<option>Technology</option>
-<option>Finance</option>
-<option>Healthcare</option>
-</select>
-<button class="bg-surface-container-low p-2 rounded-lg hover:bg-surface-container-high transition-colors">
-<span class="material-symbols-outlined">filter_list</span>
-</button>
-</div>
-</div>
-<div class="overflow-x-auto">
-<table class="w-full text-left border-collapse">
-<thead class="bg-surface-container-low">
-<tr>
-<th class="px-6 py-4 font-label-sm text-label-sm text-outline uppercase tracking-wider">Industry Sector</th>
-<th class="px-6 py-4 font-label-sm text-label-sm text-outline uppercase tracking-wider">Primary Surplus</th>
-<th class="px-6 py-4 font-label-sm text-label-sm text-outline uppercase tracking-wider">Critical Gaps</th>
-<th class="px-6 py-4 font-label-sm text-label-sm text-outline uppercase tracking-wider">Talent Supply</th>
-<th class="px-6 py-4 font-label-sm text-label-sm text-outline uppercase tracking-wider text-right">Trend</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-outline-variant font-body-sm text-body-sm">
-<tr class="hover:bg-surface-container-low transition-colors">
-<td class="px-6 py-4 font-semibold text-on-surface">Financial Services</td>
-<td class="px-6 py-4">
-<div class="flex gap-2">
-<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded text-[10px]">COBOL</span>
-<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded text-[10px]">Excel Macro</span>
-</div>
-</td>
-<td class="px-6 py-4">
-<span class="bg-error-container text-error px-2 py-1 rounded text-[10px] font-bold">BlockChain Security</span>
-</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-2">
-<div class="w-24 bg-outline-variant h-1 rounded-full overflow-hidden">
-<div class="bg-secondary h-full w-[65%]"></div>
-</div>
-<span class="font-label-sm text-[11px]">6.2k</span>
-</div>
-</td>
-<td class="px-6 py-4 text-right text-on-tertiary-container font-bold">+2.4%</td>
-</tr>
-<tr class="bg-surface-container-low/30 hover:bg-surface-container-low transition-colors">
-<td class="px-6 py-4 font-semibold text-on-surface">Healthcare Tech</td>
-<td class="px-6 py-4">
-<div class="flex gap-2">
-<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded text-[10px]">Data Entry</span>
-</div>
-</td>
-<td class="px-6 py-4">
-<span class="bg-error-container text-error px-2 py-1 rounded text-[10px] font-bold">Bioinformatics</span>
-</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-2">
-<div class="w-24 bg-outline-variant h-1 rounded-full overflow-hidden">
-<div class="bg-secondary h-full w-[30%]"></div>
-</div>
-<span class="font-label-sm text-[11px]">2.1k</span>
-</div>
-</td>
-<td class="px-6 py-4 text-right text-on-tertiary-container font-bold">+8.1%</td>
-</tr>
-<tr class="hover:bg-surface-container-low transition-colors">
-<td class="px-6 py-4 font-semibold text-on-surface">Advanced Manufacturing</td>
-<td class="px-6 py-4">
-<div class="flex gap-2">
-<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded text-[10px]">Assembly</span>
-<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded text-[10px]">Logistics</span>
-</div>
-</td>
-<td class="px-6 py-4">
-<span class="bg-error-container text-error px-2 py-1 rounded text-[10px] font-bold">Robotic Maintenance</span>
-</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-2">
-<div class="w-24 bg-outline-variant h-1 rounded-full overflow-hidden">
-<div class="bg-secondary h-full w-[45%]"></div>
-</div>
-<span class="font-label-sm text-[11px]">11.4k</span>
-</div>
-</td>
-<td class="px-6 py-4 text-right text-error font-bold">-1.2%</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<!-- Talent Pool Geography (Asymmetric Half-Width) -->
-<div class="col-span-12 lg:col-span-7 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 h-[400px] overflow-hidden">
-<div class="flex justify-between items-center mb-6">
-<h3 class="font-headline-md text-headline-md">Skill Hotspots</h3>
-<div class="text-label-sm text-outline flex items-center gap-1">
-<span class="material-symbols-outlined text-sm">location_on</span> Global Distribution
-                        </div>
-</div>
-<div class="relative w-full h-[280px] bg-surface-container-low rounded-lg overflow-hidden group">
-<img alt="World Map Skill Distribution" class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-1000" data-alt="A high-tech digital world map visualization displayed on a large dark screen. The map features glowing cyan and magenta data points representing global skill distribution hotspots across continents. Lines of light connect major cities like London, New York, and Singapore, illustrating global talent flow and data connectivity. The aesthetic is clean, sophisticated, and analytical, with a subtle dark-mode corporate feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOF2WzBUsEJn59O6L9EhmHzjMcsFpKC6et5VX9F_o6o4cLyVwfBhDXos9uLr5oY9zR9MaOOfeiO5ua7rGESa-_ugKRC2eJz2CM4bJpOPRjjT22xJhxcM65-nMlX_Mp9osj6oHCVxQmCcwlA78OAyArvWIETio-C8YVdUD1lvk2EZPuK9QgBBY7xtz6_weYIvND-fNYwh96VrzfYqVoykK3bUIWzdYDv7FRlU86Xsj_H-hzJGjhWZ1VbDZWgGUK2DcZIK_xBq89n3F9">
-<!-- Decorative Pins -->
-<div class="absolute top-1/4 left-1/4 w-3 h-3 bg-secondary rounded-full animate-ping"></div>
-<div class="absolute top-1/3 right-1/3 w-3 h-3 bg-secondary rounded-full animate-ping" style="animation-delay: 0.5s"></div>
-<div class="absolute bottom-1/2 left-1/2 w-3 h-3 bg-tertiary-fixed-dim rounded-full animate-ping" style="animation-delay: 1.2s"></div>
-<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
-</div>
-</div>
-<!-- Quick Action List (Small Sidebar) -->
-<div class="col-span-12 lg:col-span-5 space-y-4">
-<div class="bg-secondary-container text-white rounded-xl p-6 flex items-center justify-between">
-<div>
-<p class="font-label-sm opacity-80 mb-1">Identified Gaps</p>
-<h4 class="font-headline-md font-bold">Recruitment Pipeline</h4>
-</div>
-<button class="bg-white text-secondary p-3 rounded-full hover:scale-110 transition-transform">
-<span class="material-symbols-outlined">arrow_forward</span>
-</button>
-</div>
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 h-full">
-<h4 class="font-label-md text-label-md text-outline uppercase mb-4 tracking-widest">Recent Activity</h4>
-<div class="space-y-6">
-<div class="flex gap-4">
-<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-secondary">verified</span>
-</div>
-<div>
-<p class="font-body-sm"><span class="font-bold">FinTech Group</span> verified 450 new Python Developers</p>
-<p class="text-[10px] text-outline">2 hours ago</p>
-</div>
-</div>
-<div class="flex gap-4">
-<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-error">priority_high</span>
-</div>
-<div>
-<p class="font-body-sm"><span class="font-bold">Critical Shortage:</span> Data Security Analysts in EU Region</p>
-<p class="text-[10px] text-outline">5 hours ago</p>
-</div>
-</div>
-<div class="flex gap-4">
-<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-tertiary-container">auto_stories</span>
-</div>
-<div>
-<p class="font-body-sm"><span class="font-bold">New Path:</span> 'AI Ethics for Executives' launched</p>
-<p class="text-[10px] text-outline">Yesterday</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+
 <!-- Sticky Status Footer -->
-<footer class="mt-auto bg-surface border-t border-outline-variant px-margin-desktop py-4 flex justify-between items-center z-40">
+<footer class="mt-8 bg-white border-t border-outline-variant px-margin-desktop py-4 flex flex-col sm:flex-row justify-between items-center gap-4 z-40 no-print">
 <div class="flex gap-6 items-center">
-<div class="flex items-center gap-2">
-<div class="w-2 h-2 rounded-full bg-on-tertiary-container animate-pulse"></div>
-<span class="font-label-sm text-on-surface-variant">Live Data Engine</span>
+  <div class="flex items-center gap-2">
+    <div class="w-2 h-2 rounded-full bg-on-tertiary-container animate-pulse"></div>
+    <span class="font-label-sm text-on-surface-variant font-medium">PESO Talent Matching Engine</span>
+  </div>
+  <span class="font-label-sm text-outline">Database Sync: Active</span>
 </div>
-<span class="font-label-sm text-outline">Last sync: 2 minutes ago</span>
-</div>
-<div class="flex items-center gap-4">
-<button class="text-secondary font-label-md hover:underline decoration-2 underline-offset-4">Download PDF</button>
-<button class="bg-on-surface text-white px-4 py-2 rounded-lg font-label-md hover:opacity-90">Manage Notifications</button>
+<div class="flex items-center gap-3">
+  <button onclick="window.print()" class="text-secondary font-bold text-xs px-3 py-2 rounded-lg border border-outline-variant hover:bg-surface-container-low transition-colors flex items-center gap-1.5 shadow-2xs">
+    <span class="material-symbols-outlined text-[16px]">print</span> Print / PDF Export
+  </button>
+  <button onclick="openNotificationModal()" class="bg-secondary text-white px-4 py-2 rounded-lg font-bold text-xs hover:bg-secondary/90 transition-colors shadow-2xs flex items-center gap-1.5">
+    <span class="material-symbols-outlined text-[16px]">tune</span> Manage Notifications
+  </button>
 </div>
 </footer>
-</main>
-<!-- Micro-interaction Scripts -->
-<script>
-        // Simple script to toggle active states or handle micro-interactions
-        document.querySelectorAll('nav a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                // If we want to simulate navigation in this prototype
-                // document.querySelector('nav .bg-surface-container').classList.remove('bg-surface-container', 'dark:bg-secondary-container', 'font-bold');
-                // link.classList.add('bg-surface-container', 'dark:bg-secondary-container', 'font-bold');
-            });
-        });
 
-        // Hover effect for radar labels
-        const labels = document.querySelectorAll('.radar-grid + div div');
-        labels.forEach(label => {
-            label.addEventListener('mouseenter', () => {
-                label.classList.add('text-secondary', 'font-bold', 'scale-110');
-            });
-            label.addEventListener('mouseleave', () => {
-                label.classList.remove('text-secondary', 'font-bold', 'scale-110');
-            });
-        });
-    </script>
-</body></html>
+</main>
+
+<!-- Manage Notifications Modal -->
+<div id="notificationModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-outline-variant">
+    <div class="flex items-center justify-between pb-3 border-b border-outline-variant/60">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-secondary/15 text-secondary flex items-center justify-center">
+          <span class="material-symbols-outlined text-lg">notifications_active</span>
+        </div>
+        <h3 class="text-base font-bold text-on-surface">Skill Gap Alert Preferences</h3>
+      </div>
+      <button onclick="closeNotificationModal()" class="w-8 h-8 rounded-full hover:bg-surface-container flex items-center justify-center text-on-surface-variant">
+        <span class="material-symbols-outlined text-lg">close</span>
+      </button>
+    </div>
+
+    <form method="POST" action="{% url 'skill_monitoring_admin' %}" class="space-y-4">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="update_notifications">
+
+      <div>
+        <label class="block text-xs font-bold text-on-surface-variant uppercase mb-1.5">Deficit Alert Threshold</label>
+        <select name="threshold" class="w-full px-3 py-2 border border-outline-variant rounded-lg text-sm bg-white focus:ring-2 focus:ring-secondary outline-none font-medium">
+          <option value="30">Alert when Skill Deficit exceeds 30%</option>
+          <option value="40" selected>Alert when Skill Deficit exceeds 40% (Recommended)</option>
+          <option value="50">Alert when Skill Deficit exceeds 50%</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-on-surface-variant uppercase mb-1.5">Email Digest Frequency</label>
+        <select name="digest_frequency" class="w-full px-3 py-2 border border-outline-variant rounded-lg text-sm bg-white focus:ring-2 focus:ring-secondary outline-none font-medium">
+          <option value="daily">Daily Morning Labor Market Digest</option>
+          <option value="weekly" selected>Weekly PESO Summary (Every Monday)</option>
+          <option value="monthly">Monthly Policy Review</option>
+        </select>
+      </div>
+
+      <div class="space-y-2 pt-2 border-t border-outline-variant/40">
+        <label class="flex items-center gap-2 text-xs font-medium text-on-surface cursor-pointer">
+          <input type="checkbox" name="notify_training" checked class="rounded border-outline-variant text-secondary focus:ring-secondary">
+          <span>Auto-suggest training courses for deficits &gt; 35%</span>
+        </label>
+        <label class="flex items-center gap-2 text-xs font-medium text-on-surface cursor-pointer">
+          <input type="checkbox" name="notify_applicants" checked class="rounded border-outline-variant text-secondary focus:ring-secondary">
+          <span>Notify applicants when matching upskilling is deployed</span>
+        </label>
+      </div>
+
+      <div class="pt-3 border-t border-outline-variant/60 flex justify-end gap-2">
+        <button type="button" onclick="closeNotificationModal()" class="px-4 py-2 rounded-xl bg-surface-container text-on-surface font-bold text-xs">Cancel</button>
+        <button type="submit" class="px-5 py-2 rounded-xl bg-secondary text-white font-bold text-xs shadow-xs hover:bg-secondary/90">Save Preferences</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Interactive Client-side Scripting -->
+<script>
+function filterIndustryTable() {
+  const query = document.getElementById('industryTableSearch').value.toLowerCase().trim();
+  const rows = document.querySelectorAll('#industryTableBody .industry-row');
+  let visibleCount = 0;
+
+  rows.forEach(row => {
+    const industry = row.getAttribute('data-industry') || '';
+    const skills = row.getAttribute('data-skills') || '';
+    const textContent = row.textContent.toLowerCase();
+
+    if (!query || industry.includes(query) || skills.includes(query) || textContent.includes(query)) {
+      row.style.display = '';
+      visibleCount++;
+    } else {
+      row.style.display = 'none';
+    }
+  });
+
+  const emptyRow = document.getElementById('emptyRow');
+  if (emptyRow) {
+    emptyRow.style.display = visibleCount === 0 ? '' : 'none';
+  }
+}
+
+function onIndustrySelectChange(selected) {
+  if (selected === 'All Industries') {
+    document.getElementById('industryTableSearch').value = '';
+    filterIndustryTable();
+  } else {
+    document.getElementById('industryTableSearch').value = selected;
+    filterIndustryTable();
+  }
+}
+
+function openNotificationModal() {
+  document.getElementById('notificationModal').classList.remove('hidden');
+}
+
+function closeNotificationModal() {
+  document.getElementById('notificationModal').classList.add('hidden');
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeNotificationModal();
+  }
+});
+</script>
+
+</body>
+</html>

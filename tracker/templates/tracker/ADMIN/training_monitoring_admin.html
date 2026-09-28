@@ -1,7 +1,7 @@
 <!DOCTYPE html><html class="light" lang="en"><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Learning Paths | SKILLUP</title>
+<title>Training Programs | SKILLUP</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
@@ -176,18 +176,28 @@
 <div class="flex items-center gap-4">
 <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">notifications</button>
 <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">settings</button>
-<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
-<img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCn5ndUBvKYHDdfjOtDcuDcmEa-zwbSgM-ZLHNPtfHm7uL9e355N19pHC8c-XBPUwwXHIzoATnKENMDvabjLGF5diSFylP09pwQghoAY0N70mks-GlVv2KmatElbeqz2_5J-gSw4HGwnHnPHYMLeRKflzGezIfmEqF1sJTCsVHaAp-3UBTYmVg6yrq3nRzkltjZyYRqaTWNO9ETM3eG6xeP_aE-PZkbZbeBZvG-dmCW3fgaiDFfFN1v9i2cwj6DH0AUyxyPRP9c4y2t">
-</div>
+<a href="{% url 'peso_profile_admin' %}" class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant bg-secondary/15 flex items-center justify-center font-bold text-xs text-secondary shrink-0 hover:ring-2 hover:ring-secondary transition-all" title="{{ request.user.get_full_name }}">
+{% if request.user.profile.profile_picture %}
+<img alt="{{ request.user.get_full_name }}" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+{% else %}
+{{ request.user.first_name|slice:":1"|upper }}{{ request.user.last_name|slice:":1"|upper|default:"P" }}
+{% endif %}
+</a>
 </div>
 </header>
 <!-- SideNavBar Shell -->
 <aside class="fixed left-0 top-0 h-full w-64 pt-20 bg-surface-container-lowest dark:bg-primary-container border-r border-outline-variant dark:border-outline hidden md:flex flex-col p-4 gap-2 z-40">
 <div class="flex items-center gap-3 px-2 py-4 mb-4 border-b border-outline-variant/30">
-<div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center text-white font-black text-xl">P</div>
+{% if request.user.profile.profile_picture %}
+<div class="w-10 h-10 rounded-lg overflow-hidden border border-outline-variant shrink-0">
+  <img alt="Office Logo" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+</div>
+{% else %}
+<div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center text-white font-black text-xl shrink-0">P</div>
+{% endif %}
 <div>
-<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">Enterprise Portal</h2>
-<p class="text-[10px] text-on-surface-variant opacity-70">Talent Management</p>
+<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">SKILLUP Portal</h2>
+<p class="text-[10px] text-on-surface-variant opacity-70">Public Employment Service</p>
 </div>
 </div>
 <nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
@@ -217,7 +227,7 @@
 </a>
 <a class="flex items-center gap-3 px-3 py-2 bg-surface-container dark:bg-secondary-container text-on-surface dark:text-on-secondary-container font-bold rounded-lg scale-98 active:scale-95 duration-150 transition-all font-label-md text-label-md" href="{% url 'training_monitoring_admin' %}">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">school</span>
-<span>Learning Paths</span>
+<span>Training Programs</span>
 </a>
 <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'job_matching_analytics_admin' %}">
 <span class="material-symbols-outlined">monitoring</span>
@@ -241,111 +251,90 @@
 <!-- Page Header -->
 <header class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
 <div>
-<h2 class="font-headline-lg text-headline-lg text-on-surface">Learning Paths</h2>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Training Programs</h2>
 <p class="font-body-md text-body-md text-on-surface-variant mt-1">Real-time oversight of organizational growth and provider performance.</p>
 </div>
-<div class="flex items-center gap-3">
-<div class="bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2 flex items-center gap-2">
-<span class="material-symbols-outlined text-on-surface-variant text-sm">calendar_today</span>
-<span class="font-label-md text-label-md">Last 30 Days</span>
-<span class="material-symbols-outlined text-on-surface-variant text-sm">expand_more</span>
-</div>
-<button id="openModalBtn" class="bg-primary text-on-primary px-6 py-2 rounded-lg font-label-md text-label-md hover:opacity-90 transition-opacity flex items-center gap-2">
-<span class="material-symbols-outlined text-sm">add</span>
-                    New Program
-                </button>
+<div class="flex items-center gap-3 flex-wrap">
+<!-- Interactive Timeframe Filter -->
+<form method="GET" class="inline-flex items-center">
+  <div class="bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-1.5 flex items-center gap-2 shadow-sm hover:border-secondary transition-colors">
+    <span class="material-symbols-outlined text-on-surface-variant text-sm">calendar_today</span>
+    <select name="timeframe" onchange="this.form.submit()" class="bg-transparent border-none text-xs font-semibold text-on-surface focus:ring-0 cursor-pointer pr-4">
+      <option value="all" {% if timeframe == 'all' or not timeframe %}selected{% endif %}>All Time</option>
+      <option value="30" {% if timeframe == '30' %}selected{% endif %}>Last 30 Days</option>
+      <option value="60" {% if timeframe == '60' %}selected{% endif %}>Last 60 Days</option>
+      <option value="90" {% if timeframe == '90' %}selected{% endif %}>Last 90 Days</option>
+      <option value="365" {% if timeframe == '365' %}selected{% endif %}>This Year</option>
+    </select>
+  </div>
+</form>
+
+<button id="openModalBtn" class="bg-secondary text-white px-5 py-2 rounded-lg font-label-md text-label-md hover:bg-blue-700 transition-colors flex items-center gap-2 shadow-sm font-bold cursor-pointer">
+<span class="material-symbols-outlined text-sm text-white">add</span>
+New Program
+</button>
 </div>
 </header>
-<!-- KPI Bento Grid -->
+<!-- Real KPI Bento Grid -->
 <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+<!-- KPI 1: Total Enrolled -->
 <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant card-shadow">
 <div class="flex justify-between items-start mb-4">
 <span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">groups</span>
-<span class="text-on-tertiary-container bg-tertiary-fixed-dim/20 px-2 py-0.5 rounded text-[10px] font-bold">+12%</span>
+<span class="text-secondary bg-secondary/10 px-2 py-0.5 rounded text-[10px] font-bold border border-secondary/20">{{ active_enrolled }} Active</span>
 </div>
-<p class="font-label-md text-label-md text-on-surface-variant">Active Enrolled</p>
-<h2 class="font-display-lg text-display-lg text-on-surface mt-1">1,284</h2>
-<div class="w-full h-1 bg-surface-container-low rounded-full mt-4 overflow-hidden">
-<div class="h-full bg-secondary w-3/4 rounded-full"></div>
+<p class="font-label-md text-label-md text-on-surface-variant">Total Enrolled</p>
+<h2 class="font-display-lg text-display-lg text-on-surface mt-1">{{ total_enrolled }}</h2>
+<div class="w-full h-1.5 bg-surface-container-low rounded-full mt-4 overflow-hidden">
+<div class="h-full bg-secondary w-full rounded-full"></div>
 </div>
+<p class="text-[11px] text-on-surface-variant mt-2">Active training participants</p>
 </div>
+
+<!-- KPI 2: Completion Rate -->
 <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant card-shadow">
 <div class="flex justify-between items-start mb-4">
 <span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">task_alt</span>
-<span class="text-on-tertiary-container bg-tertiary-fixed-dim/20 px-2 py-0.5 rounded text-[10px] font-bold">Stable</span>
+<span class="text-green-800 bg-green-100 px-2 py-0.5 rounded text-[10px] font-bold border border-green-200">{{ attended_count }} Completed</span>
 </div>
 <p class="font-label-md text-label-md text-on-surface-variant">Completion Rate</p>
-<h2 class="font-display-lg text-display-lg text-on-surface mt-1">84.2<span class="text-headline-md">%</span></h2>
-<div class="w-full h-1 bg-surface-container-low rounded-full mt-4 overflow-hidden">
-<div class="h-full bg-secondary w-[84%] rounded-full"></div>
+<h2 class="font-display-lg text-display-lg text-on-surface mt-1">{{ completion_rate|floatformat:1 }}<span class="text-headline-md">%</span></h2>
+<div class="w-full h-1.5 bg-surface-container-low rounded-full mt-4 overflow-hidden">
+<div class="h-full bg-green-600 rounded-full" style="width: {{ completion_rate }}%"></div>
 </div>
+<p class="text-[11px] text-on-surface-variant mt-2">Completed and certified attendees</p>
 </div>
+
+<!-- KPI 3: Active Programs -->
 <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant card-shadow">
 <div class="flex justify-between items-start mb-4">
-<span class="material-symbols-outlined text-on-tertiary-container" style="font-variation-settings: 'FILL' 1;">trending_up</span>
-<span class="text-on-tertiary-container bg-tertiary-fixed-dim/20 px-2 py-0.5 rounded text-[10px] font-bold">+5.4%</span>
+<span class="material-symbols-outlined text-on-tertiary-container" style="font-variation-settings: 'FILL' 1;">school</span>
+<span class="text-on-tertiary-container bg-tertiary-fixed-dim/20 px-2 py-0.5 rounded text-[10px] font-bold">{{ programs|length }} Total</span>
 </div>
-<p class="font-label-md text-label-md text-on-surface-variant">Effectiveness Score</p>
-<h2 class="font-display-lg text-display-lg text-on-surface mt-1">4.8<span class="text-headline-md">/5</span></h2>
-<div class="w-full h-1 bg-surface-container-low rounded-full mt-4 overflow-hidden">
-<div class="h-full bg-on-tertiary-container w-[92%] rounded-full"></div>
+<p class="font-label-md text-label-md text-on-surface-variant">Active Programs</p>
+<h2 class="font-display-lg text-display-lg text-on-surface mt-1">{{ active_programs_count }}</h2>
+<div class="w-full h-1.5 bg-surface-container-low rounded-full mt-4 overflow-hidden">
+<div class="h-full bg-secondary w-full rounded-full"></div>
 </div>
+<p class="text-[11px] text-on-surface-variant mt-2">Scheduled & in-progress courses</p>
 </div>
+
+<!-- KPI 4: Skills Addressed -->
 <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant card-shadow">
 <div class="flex justify-between items-start mb-4">
-<span class="material-symbols-outlined text-on-error-container" style="font-variation-settings: 'FILL' 1;">timer</span>
-<span class="text-on-error-container bg-error-container px-2 py-0.5 rounded text-[10px] font-bold">-2d</span>
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<span class="text-secondary bg-secondary/10 px-2 py-0.5 rounded text-[10px] font-bold border border-secondary/20">Skill Gaps</span>
 </div>
-<p class="font-label-md text-label-md text-on-surface-variant">Avg. Time to Finish</p>
-<h2 class="font-display-lg text-display-lg text-on-surface mt-1">18<span class="text-headline-md">days</span></h2>
-<div class="w-full h-1 bg-surface-container-low rounded-full mt-4 overflow-hidden">
-<div class="h-full bg-error w-1/2 rounded-full"></div>
+<p class="font-label-md text-label-md text-on-surface-variant">Skills Addressed</p>
+<h2 class="font-display-lg text-display-lg text-on-surface mt-1">{{ skills_addressed_count }}</h2>
+<div class="w-full h-1.5 bg-surface-container-low rounded-full mt-4 overflow-hidden">
+<div class="h-full bg-secondary w-full rounded-full"></div>
 </div>
+<p class="text-[11px] text-on-surface-variant mt-2">Targeted competencies covered</p>
 </div>
 </div>
 <!-- Main Analytics Section -->
 <div class="bento-grid">
-<!-- Effectiveness Comparison (Radar Chart Visualization Mock) -->
-<div class="col-span-12 bg-surface-container-lowest p-6 rounded-xl border border-outline-variant card-shadow flex flex-col">
-<div class="flex items-center justify-between mb-6">
-<div>
-<h3 class="font-headline-md text-headline-md text-on-surface">Skill Acquisition</h3>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Target vs. Actual Proficiency</p>
-</div>
-<button class="p-2 hover:bg-surface-container-low rounded-lg transition-colors">
-<span class="material-symbols-outlined text-on-surface-variant">more_vert</span>
-</button>
-</div>
-<div class="flex-1 relative flex items-center justify-center p-4">
-<!-- Radar Chart Mock-up with SVG -->
-<svg class="w-full h-full max-w-[280px]" viewBox="0 0 200 200">
-<!-- Web structure -->
-<polygon fill="none" points="100,20 176,75 147,165 53,165 24,75" stroke="#E2E8F0" stroke-width="1"></polygon>
-<polygon fill="none" points="100,50 148,85 130,140 70,140 52,85" stroke="#E2E8F0" stroke-width="1"></polygon>
-<polygon fill="none" points="100,80 119,94 112,116 88,116 81,94" stroke="#E2E8F0" stroke-width="1"></polygon>
-<!-- Target (Outline) -->
-<polygon fill="none" points="100,20 176,75 147,165 53,165 24,75" stroke="#0051d5" stroke-dasharray="4" stroke-width="2"></polygon>
-<!-- Actual (Filled) -->
-<polygon fill="rgba(49, 107, 243, 0.2)" points="100,40 160,85 135,150 65,155 40,80" stroke="#316bf3" stroke-width="2"></polygon>
-<!-- Points -->
-<text class="font-label-sm text-[8px]" fill="#45464d" text-anchor="middle" x="100" y="15">Product</text>
-<text class="font-label-sm text-[8px]" fill="#45464d" text-anchor="start" x="185" y="75">Engineering</text>
-<text class="font-label-sm text-[8px]" fill="#45464d" text-anchor="start" x="155" y="175">Design</text>
-<text class="font-label-sm text-[8px]" fill="#45464d" text-anchor="end" x="45" y="175">Data</text>
-<text class="font-label-sm text-[8px]" fill="#45464d" text-anchor="end" x="15" y="75">Leadership</text>
-</svg>
-</div>
-<div class="mt-4 grid grid-cols-2 gap-4">
-<div class="flex items-center gap-2">
-<div class="w-3 h-3 rounded-full border border-secondary border-dashed"></div>
-<span class="text-label-sm font-label-sm text-on-surface-variant">Benchmark</span>
-</div>
-<div class="flex items-center gap-2">
-<div class="w-3 h-3 rounded-full bg-secondary/30 border border-secondary"></div>
-<span class="text-label-sm font-label-sm text-on-surface-variant">Current Org Average</span>
-</div>
-</div>
-</div>
 <!-- Program Status Table -->
 <div class="col-span-12 bg-surface-container-lowest rounded-xl border border-outline-variant card-shadow flex flex-col">
 <div class="p-6 border-b border-outline-variant flex items-center justify-between sticky top-0 bg-surface-container-lowest z-10 rounded-t-xl">
@@ -360,9 +349,10 @@
 <thead>
 <tr class="bg-surface-container-low border-b border-outline-variant">
 <th class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Program Name</th>
-<th class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Enrolled</th>
+<th class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Available Slots</th>
 <th class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Progress</th>
 <th class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Status</th>
+<th class="px-6 py-3 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right">Actions</th>
 </tr>
 </thead>
 <tbody class="divide-y divide-outline-variant">
@@ -370,18 +360,27 @@
 <tr class="hover:bg-surface-container-low transition-colors">
 <td class="px-6 py-4">
 <div class="flex flex-col">
-<span class="font-body-md font-semibold text-on-surface">{{ prog.title }}</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">Addresses: {{ prog.skill_addressed.name }} • Provider: {{ prog.provider }}</span>
+<a href="{% url 'training_program_detail_admin' prog.id %}" class="font-body-md font-semibold text-on-surface hover:text-secondary transition-colors inline-flex items-center gap-1 group">
+  <span>{{ prog.title }}</span>
+  <span class="material-symbols-outlined text-xs opacity-0 group-hover:opacity-100 text-secondary transition-opacity">arrow_forward</span>
+</a>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Addresses: <span class="font-semibold text-secondary">{{ prog.skills_display }}</span> • Provider: {{ prog.provider }}</span>
+<span class="inline-flex items-center gap-1 text-[11px] text-on-surface-variant/80 mt-0.5"><span class="material-symbols-outlined text-[13px] text-secondary">location_on</span>{{ prog.location|default:"PESO Training Center" }} • Duration: {{ prog.duration }}</span>
 </div>
 </td>
-<td class="px-6 py-4">
-  <div class="flex flex-col">
-    <span class="font-label-md text-label-md font-medium text-on-surface">{{ prog.enrollments.count }} Enrolled</span>
-    <span class="text-[10px] text-outline">Date: {{ prog.scheduled_date|default:"TBD" }}</span>
+<td class="px-6 py-4 whitespace-nowrap">
+  <div class="flex flex-col gap-1">
+    <div class="flex items-center gap-2">
+      <span class="inline-flex items-center gap-1.5 font-bold text-xs px-2.5 py-1 rounded-full {% if prog.available_slots > 0 %}bg-emerald-50 text-emerald-700 border border-emerald-200{% else %}bg-rose-50 text-rose-700 border border-rose-200{% endif %}">
+        <span class="w-1.5 h-1.5 rounded-full {% if prog.available_slots > 0 %}bg-emerald-500{% else %}bg-rose-500{% endif %}"></span>
+        {{ prog.available_slots }} / {{ prog.slots }} Open
+      </span>
+    </div>
+    <span class="text-[11px] text-outline font-medium">Start: {{ prog.scheduled_date|default:"TBD" }}</span>
   </div>
 </td>
 <td class="px-6 py-4">
-  <div class="space-y-1.5 max-w-[220px]">
+  <div class="space-y-1.5 max-w-[200px]">
     {% if prog.status == 'Completed' %}
       <div class="flex flex-wrap gap-1.5 text-[11px]">
         {% for enroll in prog.enrollments.all %}
@@ -410,143 +409,64 @@
     {% endif %}
   </div>
 </td>
-<td class="px-6 py-4 flex items-center gap-2">
-  <span class="px-2 py-1 rounded text-[10px] font-bold uppercase
-    {% if prog.status == 'Completed' %}bg-green-100 text-green-800
-    {% else %}bg-blue-100 text-blue-800{% endif %}">
-    {{ prog.status }}
+<td class="px-6 py-4 whitespace-nowrap">
+  <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider
+    {% if prog.status == 'Completed' %}bg-green-100 text-green-800 border border-green-200
+    {% elif prog.status == 'In Progress' %}bg-amber-100 text-amber-800 border border-amber-200
+    {% elif prog.status == 'Closed' or prog.available_slots <= 0 %}bg-rose-100 text-rose-800 border border-rose-200
+    {% else %}bg-blue-100 text-blue-800 border border-blue-200{% endif %}">
+    {% if prog.status == 'Scheduled' and prog.available_slots <= 0 %}FULL (CLOSED){% elif prog.status == 'In Progress' %}ONGOING{% else %}{{ prog.status }}{% endif %}
   </span>
-  {% if prog.status == 'Scheduled' %}
-    <button type="button" onclick="openEnrollModal('{{ prog.id }}', '{{ prog.title|escapejs }}')" class="px-2 py-1 bg-secondary text-white text-[10px] rounded hover:opacity-90 font-bold" title="Enroll Candidate">Enroll</button>
-    {% if prog.enrollments.exists %}
+</td>
+<td class="px-6 py-4 text-right whitespace-nowrap">
+  <div class="inline-flex items-center justify-end gap-2">
+    <!-- View Full Program & Enrollees Roster Button -->
+    <a href="{% url 'training_program_detail_admin' prog.id %}"
+      class="px-2.5 py-1.5 bg-surface-container hover:bg-secondary hover:text-white text-secondary text-xs rounded-lg font-bold transition-all inline-flex items-center gap-1 border border-outline-variant shadow-sm"
+      title="View Full Training Program & Enrolled Candidates">
+      <span class="material-symbols-outlined text-[15px]">groups</span>
+      <span>List ({{ prog.enrollments.count }})</span>
+    </a>
+
+    {% if prog.status == 'Scheduled' or prog.status == 'In Progress' %}
       <button type="button" 
-        data-enrolled='[{% for enroll in prog.enrollments.all %}{"id": {{ enroll.profile.id }}, "name": "{{ enroll.profile.user.get_full_name|escapejs }}"}{% if not forloop.last %},{% endif %}{% endfor %}]'
-        onclick="openCompleteModal('{{ prog.id }}', '{{ prog.title|escapejs }}', JSON.parse(this.dataset.enrolled || '[]'))" 
-        class="px-2 py-1 bg-green-600 text-white text-[10px] rounded hover:opacity-90 font-bold" 
-        title="Confirm Completion">Finish</button>
+        onclick="openEnrollModal('{{ prog.id }}', '{{ prog.title|escapejs }}')" 
+        class="px-2.5 py-1.5 bg-secondary text-white text-xs rounded-lg hover:opacity-90 font-bold transition-all shadow-sm inline-flex items-center gap-1" 
+        title="Enroll Candidate">
+        <span class="material-symbols-outlined text-[15px]">person_add</span>
+        <span>Enroll</span>
+      </button>
+      {% if prog.enrollments.exists %}
+        <button type="button" 
+          data-enrolled='[{% for enroll in prog.enrollments.all %}{"id": {{ enroll.profile.id }}, "name": "{{ enroll.profile.user.get_full_name|escapejs }}"}{% if not forloop.last %},{% endif %}{% endfor %}]'
+          onclick="openCompleteModal('{{ prog.id }}', '{{ prog.title|escapejs }}', JSON.parse(this.dataset.enrolled || '[]'))" 
+          class="px-2.5 py-1.5 bg-green-600 text-white text-xs rounded-lg hover:bg-green-700 font-bold transition-all shadow-sm inline-flex items-center gap-1" 
+          title="Confirm Completion">
+          <span class="material-symbols-outlined text-[15px]">check_circle</span>
+          <span>Finish</span>
+        </button>
+      {% endif %}
     {% endif %}
-  {% endif %}
+
+    <!-- Edit Button -->
+    <button type="button"
+      data-program='{"id": {{ prog.id }}, "title": "{{ prog.title|escapejs }}", "provider": "{{ prog.provider|escapejs }}", "duration": "{{ prog.duration|escapejs }}", "location": "{{ prog.location|default:"PESO Training Center"|escapejs }}", "scheduled_date": "{{ prog.scheduled_date|date:"Y-m-d"|default:"" }}", "status": "{{ prog.status|escapejs }}", "slots": {{ prog.slots|default:30 }}, "description": "{{ prog.description|default:""|escapejs }}", "skills": [{% for sk in prog.all_skills %}{"id": "{{ sk.id }}", "name": "{{ sk.name|escapejs }}", "category": "{{ sk.category|escapejs }}"}{% if not forloop.last %},{% endif %}{% endfor %}]}'
+      onclick="openEditModal(JSON.parse(this.dataset.program))"
+      class="px-2.5 py-1.5 bg-surface-container-high hover:bg-secondary hover:text-white text-on-surface text-xs rounded-lg font-bold transition-all inline-flex items-center gap-1 border border-outline-variant/60 shadow-sm"
+      title="Edit Program Details">
+      <span class="material-symbols-outlined text-[15px]">edit</span>
+      <span>Edit</span>
+    </button>
+  </div>
 </td>
 </tr>
 {% empty %}
 <tr>
-  <td colspan="4" class="px-6 py-10 text-center italic text-outline">No training programs scheduled.</td>
+  <td colspan="5" class="px-6 py-10 text-center italic text-outline">No training programs scheduled.</td>
 </tr>
 {% endfor %}
 </tbody>
 </table>
-</div>
-</div>
-<!-- Provider Performance -->
-<div class="col-span-12 bg-surface-container-lowest p-6 rounded-xl border border-outline-variant card-shadow mb-8">
-<div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-<div>
-<h3 class="font-headline-md text-headline-md text-on-surface">Provider Performance Registry</h3>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Auditing course quality and enrollment ROI.</p>
-</div>
-<div class="flex gap-2">
-<div class="flex -space-x-2">
-<img class="w-8 h-8 rounded-full border-2 border-white" data-alt="Corporate training provider representative avatar in a minimalist circle. The lighting is clean and the background is a soft blue-grey tonal shift." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5cUZPI-L_fvplFjm5EiKe1yb2yTn1ljCaXO84BiW_LQWy_0WRGgU6gkM-cPLoggjEiAisJvZjv7vmLlatkSLePjMMN46MGVV42EflHHUIG4EoNC5CL0Jy6NDe5YQH34EXNFhmx4yQy1ljEL9isQASb1FfZYOYiti1bfzaQgX28chr10fmHBPOVzHnbZtdPq-3BHXAknJa4nXminQSOtqbGJ4cUOuisG4YX_jAYB7w01beBncDN73n5DrxpCpCRjiQvcTqU9J2USS_">
-<img class="w-8 h-8 rounded-full border-2 border-white" data-alt="Corporate training provider representative avatar in a minimalist circle. The lighting is clean and the background is a soft blue-grey tonal shift." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQs5mSMhfOQmeIH-uT9aWgsc14xMwI2qNX0G4n46P3K6TmdmhTw2WYkv8WaScCsZszr7PrWMr2PaH6-LAkFz_uDTyZtcss64gYelV1c3Vgw72n0Y4S9vaWf7ZOU6Nb6ubM1XhgnHNaSQFQRdaoeB_KsAl7NhmtkWsrV8g5nnSRm-HyvoAkmv-EBE3IRfmBbX0DKziZhAW5shbgBYtZPZJ29Chx2VFq2z_H7mbeFjIUHG00CwDlQFaCU2U68rPmUy_3quYlbMvGJwcm">
-<div class="w-8 h-8 rounded-full bg-surface-container-high border-2 border-white flex items-center justify-center text-[10px] font-bold">+8</div>
-</div>
-<button class="px-4 py-2 border border-outline-variant rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-colors">Manage Providers</button>
-</div>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-<!-- Provider Card 1 -->
-<div class="flex flex-col gap-4 group cursor-pointer">
-<div class="relative overflow-hidden rounded-xl aspect-[16/9]">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A modern, high-tech corporate training facility with glass walls, ergonomic furniture, and large screens displaying data analytics. The space is illuminated by bright, cool-white lighting, creating a professional and forward-thinking environment. The color palette is dominated by whites, greys, and corporate blues." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuLAi3yby3IxCivi5lOBHSq7-z9HEVqdzzLaA8eXGKBS8qka5AeV95-Z_D7dJHywMLx1Sf_vwAuAKPTvPVLdgBLPsavbRFQZMQEvqxrLoG2uBccbMHPZEsSschawogOXdenuZ4XnZkLR2SDwHPOHfRYxXILiweoDGF9UH0Uh5O0aVjSN01ui-EuPWLwqKXCgRQrj6S9zspJGAvUFu2f49TWYdjW1K9oY4i3MzOSX5tOaNJCVg3rQ1fBN0oVKcgCZ19St5gt0AD7mYp">
-<div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded text-[10px] font-bold font-label-sm uppercase">Premier Partner</div>
-</div>
-<div>
-<div class="flex items-center justify-between mb-1">
-<h4 class="font-headline-md text-headline-md text-on-surface">SkillSprint Academy</h4>
-<div class="flex items-center gap-1 text-on-tertiary-container">
-<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="font-label-md text-label-md">4.9</span>
-</div>
-</div>
-<p class="font-body-sm text-body-sm text-on-surface-variant mb-4 line-clamp-2">Specializing in cloud infrastructure and DevOps pipelines with a focus on enterprise-scale hands-on labs.</p>
-<div class="flex items-center gap-6">
-<div class="flex flex-col">
-<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">ROI</span>
-<span class="font-label-md text-label-md text-on-surface">3.2x</span>
-</div>
-<div class="flex flex-col">
-<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Students</span>
-<span class="font-label-md text-label-md text-on-surface">840+</span>
-</div>
-<div class="flex flex-col">
-<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Uptime</span>
-<span class="font-label-md text-label-md text-on-surface">99.9%</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Provider Card 2 -->
-<div class="flex flex-col gap-4 group cursor-pointer">
-<div class="relative overflow-hidden rounded-xl aspect-[16/9]">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A collaborative workshop environment featuring diverse professionals working together around a minimalist table with high-end tech gadgets. The atmosphere is energetic and focused, with soft natural light streaming through large windows. The interior design is modern-minimalist with a neutral color scheme and blue accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnB4YizdYCtr3kADVEuxyKnvwj1cA3zR02zRov-F1vFsJsDWpcgtdI1yXFXh2kA0uF2xWySrIH807CKjf-I7cQrk4xxduOVwEqWHBi0sgmDiEcI27adLk3am42zSNuuUQ1IZOZiTQqLPgM1J-nXYPnppgtjC1jy2ZJ66Q8-ckRU04iubnAkd91s7JEfxS5qyfhdUTaZwTokdajfBfDNjiUzhOtOU5te5lxirpS57mus92BTZSN2l-NzFeADVhLLdIf4vhJeCgjMEd0">
-<div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded text-[10px] font-bold font-label-sm uppercase">Growth Leader</div>
-</div>
-<div>
-<div class="flex items-center justify-between mb-1">
-<h4 class="font-headline-md text-headline-md text-on-surface">LeadEdge Consult</h4>
-<div class="flex items-center gap-1 text-on-tertiary-container">
-<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="font-label-md text-label-md">4.7</span>
-</div>
-</div>
-<p class="font-body-sm text-body-sm text-on-surface-variant mb-4 line-clamp-2">Executive coaching and managerial development frameworks designed for rapid organizational scaling.</p>
-<div class="flex items-center gap-6">
-<div class="flex flex-col">
-<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">ROI</span>
-<span class="font-label-md text-label-md text-on-surface">2.8x</span>
-</div>
-<div class="flex flex-col">
-<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Students</span>
-<span class="font-label-md text-label-md text-on-surface">320+</span>
-</div>
-<div class="flex flex-col">
-<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Uptime</span>
-<span class="font-label-md text-label-md text-on-surface">98.5%</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Provider Card 3 -->
-<div class="flex flex-col gap-4 group cursor-pointer">
-<div class="relative overflow-hidden rounded-xl aspect-[16/9]">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A futuristic data visualization displayed on a large high-resolution screen in a darkened control room. The graphics are sharp, intricate, and rely on a palette of electric blues and deep charcoal. The scene represents cutting-edge information technology and analytical precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcDp9hvyWfic0EXik2QcxeQWNL94nWPlPALaCZ3EdA7m68XmAYMEV45kj4UO2q3ko7QBJg2EyVe7weoSfD7uo3TiBhBnAuCyiwzaLTSkk-BABKOK16n3DQpzZ9YVx1wzM8bpD00TKawFGq4kVTTq2MiDvzMurxyUVInKNMzCnPWxiWIiStuAzhIB_Tww7lAohL6PR08S1CqhPXpT9F7IJcMk_XoYPbrZuO4H3JogBR3qI4bCTOMFuUy-8J62lRVGnDmR_i64jotU_G">
-<div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded text-[10px] font-bold font-label-sm uppercase">Data Specialist</div>
-</div>
-<div>
-<div class="flex items-center justify-between mb-1">
-<h4 class="font-headline-md text-headline-md text-on-surface">Vector Analytics</h4>
-<div class="flex items-center gap-1 text-on-tertiary-container">
-<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="font-label-md text-label-md">4.8</span>
-</div>
-</div>
-<p class="font-body-sm text-body-sm text-on-surface-variant mb-4 line-clamp-2">Deep-dive technical training for data scientists, covering machine learning models and big data architecture.</p>
-<div class="flex items-center gap-6">
-<div class="flex flex-col">
-<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">ROI</span>
-<span class="font-label-md text-label-md text-on-surface">4.1x</span>
-</div>
-<div class="flex flex-col">
-<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Students</span>
-<span class="font-label-md text-label-md text-on-surface">510+</span>
-</div>
-<div class="flex flex-col">
-<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Uptime</span>
-<span class="font-label-md text-label-md text-on-surface">100%</span>
-</div>
-</div>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -582,19 +502,87 @@
         </div>
       </div>
       
-      <div>
-        <label for="scheduled_date" class="block text-label-md font-bold mb-1.5 text-on-surface">Scheduled Start Date</label>
-        <input type="date" id="scheduled_date" name="scheduled_date" required class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:border-secondary focus:outline-none">
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label for="scheduled_date" class="block text-label-md font-bold mb-1.5 text-on-surface">Start Date</label>
+          <input type="date" id="scheduled_date" name="scheduled_date" required class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:border-secondary focus:outline-none">
+        </div>
+        <div>
+          <label for="location" class="block text-label-md font-bold mb-1.5 text-on-surface">Location / Venue</label>
+          <input type="text" id="location" name="location" required class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:border-secondary focus:outline-none" placeholder="e.g., PESO Taguig / Online">
+        </div>
       </div>
       
-      <div>
-        <label for="skill_addressed" class="block text-label-md font-bold mb-1.5 text-on-surface">Addresses Skill</label>
-        <select id="skill_addressed" name="skill_addressed" required class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:border-secondary focus:outline-none">
-          <option value="" disabled selected>Select a target skill</option>
-          {% for skill in skills %}
-            <option value="{{ skill.id }}">{{ skill.name }} ({{ skill.category }})</option>
-          {% endfor %}
-        </select>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label for="slots" class="block text-label-md font-bold mb-1.5 text-on-surface">Available Slots *</label>
+          <input type="number" id="slots" name="slots" min="1" max="1000" value="30" required class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:border-secondary focus:outline-none" placeholder="e.g., 30">
+        </div>
+        <div>
+          <label for="status" class="block text-label-md font-bold mb-1.5 text-on-surface">Initial Status</label>
+          <select id="status" name="status" class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:border-secondary focus:outline-none">
+            <option value="Scheduled">Scheduled</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </div>
+      </div>
+      
+      <!-- Multi-Select Addresses Skills -->
+      <div class="relative" id="skillSearchContainer">
+        <div class="flex items-center justify-between mb-1.5">
+          <label class="block text-label-md font-bold text-on-surface">Addresses Skills *</label>
+          <span id="selectedCountBadge" class="text-[11px] font-bold text-secondary hidden">0 selected</span>
+        </div>
+        
+        <!-- Hidden inputs container holding selected skill IDs for form POST -->
+        <div id="skillHiddenInputsContainer"></div>
+        
+        <!-- Selected Skills Chips Display -->
+        <div id="selectedSkillsChips" class="flex flex-wrap gap-1.5 mb-2 min-h-[32px] p-1.5 bg-surface-container-low/60 rounded-lg border border-outline-variant/60">
+          <span id="emptySkillsPrompt" class="text-xs text-on-surface-variant/70 italic self-center px-1">No skills selected. Search and click below to add.</span>
+        </div>
+
+        <!-- Search Trigger Input -->
+        <div class="relative flex items-center">
+          <span class="material-symbols-outlined absolute left-3 text-on-surface-variant pointer-events-none text-lg">search</span>
+          <input type="text" 
+                 id="skillSearchInput" 
+                 autocomplete="off"
+                 placeholder="Search to add skills (e.g. Warehouse, Welding, Python, UI)..." 
+                 class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-9 pr-8 py-2 text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary focus:outline-none placeholder:text-outline/70">
+          <button type="button" id="clearSkillSearchBtn" class="absolute right-2.5 text-on-surface-variant hover:text-on-surface p-1 rounded hidden" title="Clear search text">
+            <span class="material-symbols-outlined text-sm">close</span>
+          </button>
+        </div>
+
+        <!-- Dropdown List Container -->
+        <div id="skillDropdownList" class="hidden absolute left-0 right-0 top-full mt-1 bg-surface-bright border border-outline-variant rounded-xl shadow-2xl z-50 max-h-52 overflow-y-auto divide-y divide-outline-variant/30 custom-scrollbar">
+          <div id="skillOptionsList">
+            {% for skill in skills %}
+              <div class="skill-option px-3.5 py-2 hover:bg-surface-container-low cursor-pointer flex items-center justify-between transition-colors text-sm"
+                   data-id="{{ skill.id }}"
+                   data-name="{{ skill.name }}"
+                   data-category="{{ skill.category }}">
+                <div class="flex items-center gap-2.5">
+                  <div class="skill-checkbox w-4 h-4 rounded border border-outline-variant flex items-center justify-center text-white text-[11px] transition-colors">
+                    <span class="material-symbols-outlined text-xs hidden check-icon">check</span>
+                  </div>
+                  <div class="flex flex-col">
+                    <span class="font-semibold text-on-surface skill-name leading-tight">{{ skill.name }}</span>
+                    <span class="text-[10px] text-on-surface-variant opacity-75 skill-category">{{ skill.category }}</span>
+                  </div>
+                </div>
+                <span class="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant border border-outline-variant/40">
+                  {{ skill.category }}
+                </span>
+              </div>
+            {% endfor %}
+          </div>
+          <div id="noSkillsFound" class="hidden px-4 py-6 text-center text-xs text-on-surface-variant italic">
+            No matching skills found.
+          </div>
+        </div>
       </div>
       
       <div>
@@ -604,11 +592,207 @@
       
       <div class="pt-4 border-t border-outline-variant flex justify-end gap-3">
         <button type="button" id="cancelModalBtn" class="px-4 py-2 border border-outline-variant rounded-lg text-label-md font-label-md hover:bg-surface-container-low transition-colors">Cancel</button>
-        <button type="submit" class="px-6 py-2 bg-primary text-on-primary rounded-lg text-label-md font-label-md hover:opacity-90 transition-opacity">Save Program</button>
+        <button type="submit" class="px-6 py-2 bg-secondary text-white rounded-lg text-label-md font-label-md hover:bg-blue-700 transition-colors font-bold cursor-pointer">Save Program</button>
       </div>
     </form>
   </div>
 </div>
+
+<!-- Edit Program Modal -->
+<div id="editProgramModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+  <div class="bg-surface-bright border border-outline-variant rounded-2xl max-w-md w-full p-6 shadow-2xl transform transition-all duration-300 scale-95 opacity-0" id="editModalContainer">
+    <div class="flex justify-between items-center mb-6">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-secondary text-2xl">edit_note</span>
+        <h3 class="font-headline-md text-headline-md text-on-surface">Edit Training Program</h3>
+      </div>
+      <button onclick="closeEditModal()" class="p-1 rounded-full hover:bg-surface-container-low transition-colors text-outline">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    
+    <form method="POST" class="space-y-4" id="editProgramForm">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="edit">
+      <input type="hidden" name="training_program_id" id="editProgramId">
+      
+      <div>
+        <label for="editTitle" class="block text-label-md font-bold mb-1.5 text-on-surface">Program Title *</label>
+        <input type="text" id="editTitle" name="title" required class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:border-secondary focus:outline-none">
+      </div>
+      
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label for="editProvider" class="block text-label-md font-bold mb-1.5 text-on-surface">Provider *</label>
+          <input type="text" id="editProvider" name="provider" required class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:border-secondary focus:outline-none">
+        </div>
+        <div>
+          <label for="editDuration" class="block text-label-md font-bold mb-1.5 text-on-surface">Duration *</label>
+          <input type="text" id="editDuration" name="duration" required class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:border-secondary focus:outline-none">
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label for="editScheduledDate" class="block text-label-md font-bold mb-1.5 text-on-surface">Start Date</label>
+          <input type="date" id="editScheduledDate" name="scheduled_date" class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:border-secondary focus:outline-none">
+        </div>
+        <div>
+          <label for="editLocation" class="block text-label-md font-bold mb-1.5 text-on-surface">Location / Venue</label>
+          <input type="text" id="editLocation" name="location" class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:border-secondary focus:outline-none" placeholder="e.g., PESO Taguig / Online">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label for="editSlots" class="block text-label-md font-bold mb-1.5 text-on-surface">Total Slots *</label>
+          <input type="number" id="editSlots" name="slots" min="1" max="1000" required class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:border-secondary focus:outline-none" placeholder="e.g., 30">
+        </div>
+        <div>
+          <label for="editStatus" class="block text-label-md font-bold mb-1.5 text-on-surface">Program Status</label>
+          <select id="editStatus" name="status" class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:border-secondary focus:outline-none">
+            <option value="Scheduled">Scheduled (Open for Registration)</option>
+            <option value="In Progress">In Progress (Class Ongoing)</option>
+            <option value="Closed">Closed (Registration Locked)</option>
+            <option value="Completed">Completed (Graduated & Certified)</option>
+          </select>
+        </div>
+      </div>
+      
+      <!-- Multi-Select Addresses Skills (Edit Modal) -->
+      <div class="relative" id="editSkillSearchContainer">
+        <div class="flex items-center justify-between mb-1.5">
+          <label class="block text-label-md font-bold text-on-surface">Addresses Skills *</label>
+          <span id="editSelectedCountBadge" class="text-[11px] font-bold text-secondary hidden">0 selected</span>
+        </div>
+        
+        <!-- Hidden inputs container -->
+        <div id="editSkillHiddenInputsContainer"></div>
+        
+        <!-- Selected Skills Chips Display -->
+        <div id="editSelectedSkillsChips" class="flex flex-wrap gap-1.5 mb-2 min-h-[32px] p-1.5 bg-surface-container-low/60 rounded-lg border border-outline-variant/60">
+          <span id="editEmptySkillsPrompt" class="text-xs text-on-surface-variant/70 italic self-center px-1">No skills selected. Search and click below to add.</span>
+        </div>
+
+        <!-- Search Trigger Input -->
+        <div class="relative flex items-center">
+          <span class="material-symbols-outlined absolute left-3 text-on-surface-variant pointer-events-none text-lg">search</span>
+          <input type="text" 
+                 id="editSkillSearchInput" 
+                 autocomplete="off"
+                 placeholder="Search to add/remove skills..." 
+                 class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-9 pr-8 py-2 text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary focus:outline-none placeholder:text-outline/70">
+          <button type="button" id="clearEditSkillSearchBtn" class="absolute right-2.5 text-on-surface-variant hover:text-on-surface p-1 rounded hidden" title="Clear search text">
+            <span class="material-symbols-outlined text-sm">close</span>
+          </button>
+        </div>
+
+        <!-- Dropdown List Container -->
+        <div id="editSkillDropdownList" class="hidden absolute left-0 right-0 top-full mt-1 bg-surface-bright border border-outline-variant rounded-xl shadow-2xl z-50 max-h-52 overflow-y-auto divide-y divide-outline-variant/30 custom-scrollbar">
+          <div id="editSkillOptionsList">
+            {% for skill in skills %}
+              <div class="edit-skill-option px-3.5 py-2 hover:bg-surface-container-low cursor-pointer flex items-center justify-between transition-colors text-sm"
+                   data-id="{{ skill.id }}"
+                   data-name="{{ skill.name }}"
+                   data-category="{{ skill.category }}">
+                <div class="flex items-center gap-2.5">
+                  <div class="edit-skill-checkbox w-4 h-4 rounded border border-outline-variant flex items-center justify-center text-white text-[11px] transition-colors">
+                    <span class="material-symbols-outlined text-xs hidden edit-check-icon">check</span>
+                  </div>
+                  <div class="flex flex-col">
+                    <span class="font-semibold text-on-surface skill-name leading-tight">{{ skill.name }}</span>
+                    <span class="text-[10px] text-on-surface-variant opacity-75 skill-category">{{ skill.category }}</span>
+                  </div>
+                </div>
+                <span class="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant border border-outline-variant/40">
+                  {{ skill.category }}
+                </span>
+              </div>
+            {% endfor %}
+          </div>
+          <div id="noEditSkillsFound" class="hidden px-4 py-6 text-center text-xs text-on-surface-variant italic">
+            No matching skills found.
+          </div>
+        </div>
+      </div>
+      
+      <div>
+        <label for="editDescription" class="block text-label-md font-bold mb-1.5 text-on-surface">Description</label>
+        <textarea id="editDescription" name="description" rows="3" class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:border-secondary focus:outline-none" placeholder="Briefly describe the program contents..."></textarea>
+      </div>
+      
+      <div class="pt-4 border-t border-outline-variant flex justify-between items-center gap-3">
+        <button type="button" onclick="confirmDeleteCurrentProgram()" class="px-3 py-2 border border-error/30 text-error hover:bg-error/10 rounded-lg text-label-md font-label-md transition-colors flex items-center gap-1">
+          <span class="material-symbols-outlined text-sm">delete</span> Delete
+        </button>
+        <div class="flex gap-2">
+          <button type="button" onclick="closeEditModal()" class="px-4 py-2 border border-outline-variant rounded-lg text-label-md font-label-md hover:bg-surface-container-low transition-colors">Cancel</button>
+          <button type="submit" class="px-6 py-2 bg-secondary text-white rounded-lg text-label-md font-label-md hover:opacity-90 transition-opacity font-bold">Save Changes</button>
+        </div>
+      </div>
+    </form>
+    
+    <!-- Hidden form for deletion -->
+    <form method="POST" id="deleteProgramForm" class="hidden">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="delete">
+      <input type="hidden" name="training_program_id" id="deleteProgramId">
+    </form>
+  </div>
+</div>
+
+<!-- Enrolled Candidates Roster Modal -->
+<div id="rosterModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+  <div class="bg-surface-bright border border-outline-variant rounded-2xl max-w-2xl w-full p-6 shadow-2xl transform transition-all duration-300 scale-95 opacity-0" id="rosterModalContainer">
+    <div class="flex justify-between items-start mb-4 pb-4 border-b border-outline-variant">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary text-2xl">groups</span>
+          <h3 class="font-headline-md text-headline-md text-on-surface" id="rosterProgramTitle">Enrolled Candidates List</h3>
+          <span id="rosterCountBadge" class="px-2.5 py-0.5 bg-secondary/10 text-secondary text-xs font-bold rounded-full border border-secondary/30">0 Enrolled</span>
+        </div>
+        <p class="text-xs text-on-surface-variant mt-1" id="rosterProgramDetails">Program Information</p>
+      </div>
+      <button onclick="closeRosterModal()" class="p-1 rounded-full hover:bg-surface-container-low transition-colors text-outline">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+
+    <!-- Search / Filter inside Roster -->
+    <div class="mb-4 flex items-center justify-between gap-3">
+      <div class="relative flex-1">
+        <span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant pointer-events-none text-base">search</span>
+        <input type="text" id="rosterSearchInput" oninput="filterRosterCandidates(this.value)" placeholder="Filter enrolled candidates by name or job..." 
+               class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-9 pr-3 py-1.5 text-xs focus:border-secondary focus:ring-1 focus:ring-secondary focus:outline-none">
+      </div>
+      <button type="button" id="rosterEnrollMoreBtn" class="px-3 py-1.5 bg-secondary text-white text-xs font-bold rounded-lg hover:opacity-90 transition-opacity flex items-center gap-1 shrink-0">
+        <span class="material-symbols-outlined text-sm">person_add</span> Add Candidates
+      </button>
+    </div>
+
+    <!-- Candidates Table / Cards Container -->
+    <div class="max-h-72 overflow-y-auto custom-scrollbar border border-outline-variant/40 rounded-xl divide-y divide-outline-variant/30">
+      <div id="rosterCandidatesList" class="divide-y divide-outline-variant/30"></div>
+      <div id="noRosterCandidatesPrompt" class="hidden py-10 text-center text-on-surface-variant italic text-xs">
+        <span class="material-symbols-outlined text-outline text-3xl mb-1 block">person_off</span>
+        No candidates enrolled in this training program yet.
+      </div>
+    </div>
+
+    <div class="pt-4 mt-4 border-t border-outline-variant flex justify-between items-center">
+      <span class="text-[11px] text-on-surface-variant">PESO Training Program Registry</span>
+      <button type="button" onclick="closeRosterModal()" class="px-5 py-2 bg-surface-container hover:bg-surface-container-high text-on-surface rounded-lg text-xs font-bold transition-colors">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Hidden form for unenrollment -->
+<form method="POST" id="unenrollCandidateForm" class="hidden">
+  {% csrf_token %}
+  <input type="hidden" name="action" value="unenroll">
+  <input type="hidden" name="training_program_id" id="unenrollProgramId">
+  <input type="hidden" name="applicant_id" id="unenrollApplicantId">
+</form>
 
 <!-- Enroll Candidate Modal -->
 <div id="enrollModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
@@ -630,14 +814,65 @@
         <input type="text" id="enrollProgramTitle" readonly class="w-full bg-surface-container border border-outline-variant rounded-lg px-3 py-2 text-body-md cursor-not-allowed">
       </div>
       
-      <div>
-        <label for="applicant_id" class="block text-label-md font-bold mb-1.5 text-on-surface">Select Applicant</label>
-        <select id="applicant_id" name="applicant_id" required class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-body-md focus:border-secondary focus:outline-none">
-          <option value="" disabled selected>Select an applicant</option>
-          {% for app in applicants %}
-            <option value="{{ app.id }}">{{ app.user.get_full_name }} (Preferred Job: {{ app.preferred_job|default:"Any" }})</option>
-          {% endfor %}
-        </select>
+      <!-- Multi-Select Applicant Picker -->
+      <div class="relative" id="applicantSearchContainer">
+        <div class="flex items-center justify-between mb-1.5">
+          <label class="block text-label-md font-bold text-on-surface">Select Applicants *</label>
+          <span id="selectedApplicantCountBadge" class="text-[11px] font-bold text-secondary hidden">0 selected</span>
+        </div>
+        
+        <!-- Hidden inputs container holding selected applicant IDs for form POST -->
+        <div id="applicantHiddenInputsContainer"></div>
+        
+        <!-- Selected Applicants Chips Display -->
+        <div id="selectedApplicantsChips" class="flex flex-wrap gap-1.5 mb-2 min-h-[32px] p-1.5 bg-surface-container-low/60 rounded-lg border border-outline-variant/60">
+          <span id="emptyApplicantsPrompt" class="text-xs text-on-surface-variant/70 italic self-center px-1">No applicants selected. Search and click below to add.</span>
+        </div>
+
+        <!-- Search Input -->
+        <div class="relative flex items-center">
+          <span class="material-symbols-outlined absolute left-3 text-on-surface-variant pointer-events-none text-lg">search</span>
+          <input type="text" 
+                 id="applicantSearchInput" 
+                 autocomplete="off"
+                 placeholder="Search to add applicants (e.g. Dave, Maria, IT, BPO)..." 
+                 class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-9 pr-8 py-2 text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary focus:outline-none placeholder:text-outline/70">
+          <button type="button" id="clearApplicantSearchBtn" class="absolute right-2.5 text-on-surface-variant hover:text-on-surface p-1 rounded hidden" title="Clear search text">
+            <span class="material-symbols-outlined text-sm">close</span>
+          </button>
+        </div>
+
+        <!-- Dropdown List Container -->
+        <div id="applicantDropdownList" class="hidden absolute left-0 right-0 top-full mt-1 bg-surface-bright border border-outline-variant rounded-xl shadow-2xl z-50 max-h-52 overflow-y-auto divide-y divide-outline-variant/30 custom-scrollbar">
+          <div id="applicantOptionsList">
+            {% for app in applicants %}
+              <div class="applicant-option px-3.5 py-2 hover:bg-surface-container-low cursor-pointer flex items-center justify-between transition-colors text-sm"
+                   data-id="{{ app.id }}"
+                   data-name="{{ app.user.get_full_name }}"
+                   data-job="{{ app.preferred_job|default:'Any' }}"
+                   data-email="{{ app.user.email }}">
+                <div class="flex items-center gap-2.5">
+                  <div class="applicant-checkbox w-4 h-4 rounded border border-outline-variant flex items-center justify-center text-white text-[11px] transition-colors">
+                    <span class="material-symbols-outlined text-xs hidden app-check-icon">check</span>
+                  </div>
+                  <div class="w-6 h-6 rounded-full bg-secondary/10 text-secondary font-bold text-[10px] flex items-center justify-center">
+                    {{ app.user.first_name|slice:":1"|upper }}{{ app.user.last_name|slice:":1"|upper }}
+                  </div>
+                  <div class="flex flex-col">
+                    <span class="font-semibold text-on-surface leading-tight">{{ app.user.get_full_name }}</span>
+                    <span class="text-[10px] text-on-surface-variant opacity-75">Pref: {{ app.preferred_job|default:"Any" }}</span>
+                  </div>
+                </div>
+                <span class="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant border border-outline-variant/40">
+                  {{ app.preferred_job|default:"Any" }}
+                </span>
+              </div>
+            {% endfor %}
+          </div>
+          <div id="noApplicantsFound" class="hidden px-4 py-6 text-center text-xs text-on-surface-variant italic">
+            No matching applicants found.
+          </div>
+        </div>
       </div>
       
       <div class="pt-4 border-t border-outline-variant flex justify-end gap-3">
@@ -747,6 +982,7 @@
         function openEnrollModal(id, title) {
             document.getElementById('enrollProgramId').value = id;
             document.getElementById('enrollProgramTitle').value = title;
+            clearSelectedApplicant();
             const enrollModal = document.getElementById('enrollModal');
             enrollModal.classList.remove('hidden');
             enrollModal.classList.add('flex');
@@ -755,6 +991,7 @@
             const enrollModal = document.getElementById('enrollModal');
             enrollModal.classList.add('hidden');
             enrollModal.classList.remove('flex');
+            closeApplicantDropdown();
         }
 
         // Complete Modal helpers
@@ -788,5 +1025,695 @@
             completeModal.classList.add('hidden');
             completeModal.classList.remove('flex');
         }
+
+        // Multi-Select Skill Selection in Add New Program Modal
+        const skillSearchInput = document.getElementById('skillSearchInput');
+        const skillDropdownList = document.getElementById('skillDropdownList');
+        const hiddenInputsContainer = document.getElementById('skillHiddenInputsContainer');
+        const chipsContainer = document.getElementById('selectedSkillsChips');
+        const emptyPrompt = document.getElementById('emptySkillsPrompt');
+        const countBadge = document.getElementById('selectedCountBadge');
+        const clearSearchBtn = document.getElementById('clearSkillSearchBtn');
+        const noSkillsFound = document.getElementById('noSkillsFound');
+        const skillOptions = document.querySelectorAll('.skill-option');
+
+        const selectedSkills = new Map(); // id -> { name, category }
+
+        function openSkillDropdown() {
+            skillDropdownList.classList.remove('hidden');
+            filterSkills(skillSearchInput.value);
+        }
+
+        function closeSkillDropdown() {
+            skillDropdownList.classList.add('hidden');
+        }
+
+        function filterSkills(query) {
+            const q = (query || '').toLowerCase().trim();
+            let matches = 0;
+            skillOptions.forEach(opt => {
+                const name = (opt.dataset.name || '').toLowerCase();
+                const cat = (opt.dataset.category || '').toLowerCase();
+                if (name.includes(q) || cat.includes(q)) {
+                    opt.style.display = 'flex';
+                    matches++;
+                } else {
+                    opt.style.display = 'none';
+                }
+            });
+            if (matches === 0) {
+                noSkillsFound.classList.remove('hidden');
+            } else {
+                noSkillsFound.classList.add('hidden');
+            }
+        }
+
+        function updateSelectedUI() {
+            // Update hidden inputs
+            hiddenInputsContainer.innerHTML = '';
+            chipsContainer.innerHTML = '';
+
+            if (selectedSkills.size === 0) {
+                chipsContainer.appendChild(emptyPrompt);
+                emptyPrompt.classList.remove('hidden');
+                countBadge.classList.add('hidden');
+            } else {
+                countBadge.textContent = `${selectedSkills.size} selected`;
+                countBadge.classList.remove('hidden');
+
+                selectedSkills.forEach((val, id) => {
+                    // Create hidden input
+                    const inp = document.createElement('input');
+                    inp.type = 'hidden';
+                    inp.name = 'skills_addressed[]';
+                    inp.value = id;
+                    hiddenInputsContainer.appendChild(inp);
+
+                    // Create chip
+                    const chip = document.createElement('div');
+                    chip.className = 'inline-flex items-center gap-1.5 px-2.5 py-1 bg-secondary/10 border border-secondary/30 text-secondary rounded-lg text-xs font-semibold';
+                    chip.innerHTML = `
+                        <span>${val.name}</span>
+                        <span class="text-[10px] text-secondary/70">(${val.category})</span>
+                        <button type="button" class="hover:text-error ml-0.5 flex items-center justify-center p-0.5 rounded-full hover:bg-white/50" onclick="removeSkill('${id}')">
+                            <span class="material-symbols-outlined text-[13px]">close</span>
+                        </button>
+                    `;
+                    chipsContainer.appendChild(chip);
+                });
+            }
+
+            // Update dropdown checkmarks
+            skillOptions.forEach(opt => {
+                const id = opt.dataset.id;
+                const isSelected = selectedSkills.has(id);
+                const checkbox = opt.querySelector('.skill-checkbox');
+                const checkIcon = opt.querySelector('.check-icon');
+
+                if (isSelected) {
+                    checkbox.classList.add('bg-secondary', 'border-secondary');
+                    checkbox.classList.remove('border-outline-variant');
+                    checkIcon.classList.remove('hidden');
+                    opt.classList.add('bg-secondary/5');
+                } else {
+                    checkbox.classList.remove('bg-secondary', 'border-secondary');
+                    checkbox.classList.add('border-outline-variant');
+                    checkIcon.classList.add('hidden');
+                    opt.classList.remove('bg-secondary/5');
+                }
+            });
+
+            if (selectedSkills.size > 0) {
+                skillSearchInput.classList.remove('border-error');
+            }
+        }
+
+        function toggleSkill(id, name, category) {
+            if (selectedSkills.has(id)) {
+                selectedSkills.delete(id);
+            } else {
+                selectedSkills.set(id, { name, category });
+            }
+            updateSelectedUI();
+        }
+
+        window.removeSkill = function(id) {
+            selectedSkills.delete(id);
+            updateSelectedUI();
+        };
+
+        if (skillSearchInput) {
+            skillSearchInput.addEventListener('focus', openSkillDropdown);
+            skillSearchInput.addEventListener('click', openSkillDropdown);
+            skillSearchInput.addEventListener('input', (e) => {
+                openSkillDropdown();
+                filterSkills(e.target.value);
+                if (e.target.value) {
+                    clearSearchBtn.classList.remove('hidden');
+                } else {
+                    clearSearchBtn.classList.add('hidden');
+                }
+            });
+        }
+
+        if (clearSearchBtn) {
+            clearSearchBtn.addEventListener('click', () => {
+                skillSearchInput.value = '';
+                clearSearchBtn.classList.add('hidden');
+                filterSkills('');
+                skillSearchInput.focus();
+            });
+        }
+
+        skillOptions.forEach(opt => {
+            opt.addEventListener('click', () => {
+                toggleSkill(opt.dataset.id, opt.dataset.name, opt.dataset.category);
+            });
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const container = document.getElementById('skillSearchContainer');
+            if (container && !container.contains(e.target)) {
+                closeSkillDropdown();
+            }
+        });
+
+        // Validate on form submit
+        const newProgramForm = document.querySelector('#newProgramModal form');
+        if (newProgramForm) {
+            newProgramForm.addEventListener('submit', (e) => {
+                if (selectedSkills.size === 0) {
+                    e.preventDefault();
+                    skillSearchInput.classList.add('border-error');
+                    skillSearchInput.focus();
+                    openSkillDropdown();
+                }
+            });
+        }
+
+        // Multi-Select Applicant Selection in Enroll Modal
+        const applicantSearchInput = document.getElementById('applicantSearchInput');
+        const applicantDropdownList = document.getElementById('applicantDropdownList');
+        const applicantHiddenInputsContainer = document.getElementById('applicantHiddenInputsContainer');
+        const selectedApplicantsChips = document.getElementById('selectedApplicantsChips');
+        const emptyApplicantsPrompt = document.getElementById('emptyApplicantsPrompt');
+        const applicantCountBadge = document.getElementById('selectedApplicantCountBadge');
+        const clearApplicantSearchBtn = document.getElementById('clearApplicantSearchBtn');
+        const noApplicantsFound = document.getElementById('noApplicantsFound');
+        const applicantOptions = document.querySelectorAll('.applicant-option');
+
+        const selectedApplicants = new Map(); // id -> { name, job }
+
+        function openApplicantDropdown() {
+            applicantDropdownList.classList.remove('hidden');
+            filterApplicants(applicantSearchInput.value);
+        }
+
+        function closeApplicantDropdown() {
+            applicantDropdownList.classList.add('hidden');
+        }
+
+        function filterApplicants(query) {
+            const q = (query || '').toLowerCase().trim();
+            let matches = 0;
+            applicantOptions.forEach(opt => {
+                const name = (opt.dataset.name || '').toLowerCase();
+                const job = (opt.dataset.job || '').toLowerCase();
+                const email = (opt.dataset.email || '').toLowerCase();
+                if (name.includes(q) || job.includes(q) || email.includes(q)) {
+                    opt.style.display = 'flex';
+                    matches++;
+                } else {
+                    opt.style.display = 'none';
+                }
+            });
+            if (matches === 0) {
+                noApplicantsFound.classList.remove('hidden');
+            } else {
+                noApplicantsFound.classList.add('hidden');
+            }
+        }
+
+        function updateSelectedApplicantsUI() {
+            applicantHiddenInputsContainer.innerHTML = '';
+            selectedApplicantsChips.innerHTML = '';
+
+            if (selectedApplicants.size === 0) {
+                selectedApplicantsChips.appendChild(emptyApplicantsPrompt);
+                emptyApplicantsPrompt.classList.remove('hidden');
+                applicantCountBadge.classList.add('hidden');
+            } else {
+                applicantCountBadge.textContent = `${selectedApplicants.size} selected`;
+                applicantCountBadge.classList.remove('hidden');
+
+                selectedApplicants.forEach((val, id) => {
+                    // Create hidden input
+                    const inp = document.createElement('input');
+                    inp.type = 'hidden';
+                    inp.name = 'applicant_ids[]';
+                    inp.value = id;
+                    applicantHiddenInputsContainer.appendChild(inp);
+
+                    // Create chip
+                    const chip = document.createElement('div');
+                    chip.className = 'inline-flex items-center gap-1.5 px-2.5 py-1 bg-secondary/10 border border-secondary/30 text-secondary rounded-lg text-xs font-semibold';
+                    chip.innerHTML = `
+                        <span>${val.name}</span>
+                        <span class="text-[10px] text-secondary/70">(${val.job})</span>
+                        <button type="button" class="hover:text-error ml-0.5 flex items-center justify-center p-0.5 rounded-full hover:bg-white/50" onclick="removeApplicant('${id}')">
+                            <span class="material-symbols-outlined text-[13px]">close</span>
+                        </button>
+                    `;
+                    selectedApplicantsChips.appendChild(chip);
+                });
+            }
+
+            // Update dropdown checkmarks
+            applicantOptions.forEach(opt => {
+                const id = opt.dataset.id;
+                const isSelected = selectedApplicants.has(id);
+                const checkbox = opt.querySelector('.applicant-checkbox');
+                const checkIcon = opt.querySelector('.app-check-icon');
+
+                if (isSelected) {
+                    checkbox.classList.add('bg-secondary', 'border-secondary');
+                    checkbox.classList.remove('border-outline-variant');
+                    checkIcon.classList.remove('hidden');
+                    opt.classList.add('bg-secondary/5');
+                } else {
+                    checkbox.classList.remove('bg-secondary', 'border-secondary');
+                    checkbox.classList.add('border-outline-variant');
+                    checkIcon.classList.add('hidden');
+                    opt.classList.remove('bg-secondary/5');
+                }
+            });
+
+            if (selectedApplicants.size > 0) {
+                applicantSearchInput.classList.remove('border-error');
+            }
+        }
+
+        function toggleApplicant(id, name, job) {
+            if (selectedApplicants.has(id)) {
+                selectedApplicants.delete(id);
+            } else {
+                selectedApplicants.set(id, { name, job });
+            }
+            updateSelectedApplicantsUI();
+        }
+
+        window.removeApplicant = function(id) {
+            selectedApplicants.delete(id);
+            updateSelectedApplicantsUI();
+        };
+
+        function clearSelectedApplicant() {
+            selectedApplicants.clear();
+            if (applicantSearchInput) {
+                applicantSearchInput.value = '';
+                applicantSearchInput.classList.remove('border-error');
+            }
+            if (clearApplicantSearchBtn) clearApplicantSearchBtn.classList.add('hidden');
+            updateSelectedApplicantsUI();
+            closeApplicantDropdown();
+        }
+
+        if (applicantSearchInput) {
+            applicantSearchInput.addEventListener('focus', openApplicantDropdown);
+            applicantSearchInput.addEventListener('click', openApplicantDropdown);
+            applicantSearchInput.addEventListener('input', (e) => {
+                openApplicantDropdown();
+                filterApplicants(e.target.value);
+                if (e.target.value) {
+                    clearApplicantSearchBtn.classList.remove('hidden');
+                } else {
+                    clearApplicantSearchBtn.classList.add('hidden');
+                }
+            });
+        }
+
+        if (clearApplicantSearchBtn) {
+            clearApplicantSearchBtn.addEventListener('click', () => {
+                applicantSearchInput.value = '';
+                clearApplicantSearchBtn.classList.add('hidden');
+                filterApplicants('');
+                applicantSearchInput.focus();
+            });
+        }
+
+        applicantOptions.forEach(opt => {
+            opt.addEventListener('click', () => {
+                toggleApplicant(opt.dataset.id, opt.dataset.name, opt.dataset.job);
+            });
+        });
+
+        // Close applicant dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const container = document.getElementById('applicantSearchContainer');
+            if (container && !container.contains(e.target)) {
+                closeApplicantDropdown();
+            }
+        });
+
+        // Validate enroll form submit
+        const enrollForm = document.querySelector('#enrollModal form');
+        if (enrollForm) {
+            enrollForm.addEventListener('submit', (e) => {
+                if (selectedApplicants.size === 0) {
+                    e.preventDefault();
+                    applicantSearchInput.classList.add('border-error');
+                    applicantSearchInput.focus();
+                    openApplicantDropdown();
+                }
+            });
+        }
+
+        // ================= EDIT PROGRAM MODAL LOGIC =================
+        const editModal = document.getElementById('editProgramModal');
+        const editModalContainer = document.getElementById('editModalContainer');
+        const editSkillSearchInput = document.getElementById('editSkillSearchInput');
+        const editSkillDropdownList = document.getElementById('editSkillDropdownList');
+        const editSkillHiddenInputsContainer = document.getElementById('editSkillHiddenInputsContainer');
+        const editSelectedSkillsChips = document.getElementById('editSelectedSkillsChips');
+        const editEmptySkillsPrompt = document.getElementById('editEmptySkillsPrompt');
+        const editSelectedCountBadge = document.getElementById('editSelectedCountBadge');
+        const clearEditSkillSearchBtn = document.getElementById('clearEditSkillSearchBtn');
+        const noEditSkillsFound = document.getElementById('noEditSkillsFound');
+        const editSkillOptions = document.querySelectorAll('.edit-skill-option');
+
+        const editSelectedSkills = new Map(); // id -> { name, category }
+
+        function openEditModal(program) {
+            if (!program) return;
+            document.getElementById('editProgramId').value = program.id;
+            document.getElementById('deleteProgramId').value = program.id;
+            document.getElementById('editTitle').value = program.title || '';
+            document.getElementById('editProvider').value = program.provider || '';
+            document.getElementById('editDuration').value = program.duration || '';
+            document.getElementById('editScheduledDate').value = program.scheduled_date || '';
+            document.getElementById('editLocation').value = program.location || '';
+            document.getElementById('editSlots').value = program.slots || 30;
+            document.getElementById('editStatus').value = program.status || 'Scheduled';
+            document.getElementById('editDescription').value = program.description || '';
+
+            // Populate skills
+            editSelectedSkills.clear();
+            if (program.skills && Array.isArray(program.skills)) {
+                program.skills.forEach(sk => {
+                    editSelectedSkills.set(String(sk.id), { name: sk.name, category: sk.category });
+                });
+            }
+            updateEditSelectedSkillsUI();
+
+            editModal.classList.remove('hidden');
+            editModal.classList.add('flex');
+            setTimeout(() => {
+                editModalContainer.classList.remove('scale-95', 'opacity-0');
+                editModalContainer.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeEditModal() {
+            editModalContainer.classList.remove('scale-100', 'opacity-100');
+            editModalContainer.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                editModal.classList.add('hidden');
+                editModal.classList.remove('flex');
+                closeEditSkillDropdown();
+            }, 300);
+        }
+
+        function openEditSkillDropdown() {
+            editSkillDropdownList.classList.remove('hidden');
+            filterEditSkills(editSkillSearchInput.value);
+        }
+
+        function closeEditSkillDropdown() {
+            editSkillDropdownList.classList.add('hidden');
+        }
+
+        function filterEditSkills(query) {
+            const q = (query || '').toLowerCase().trim();
+            let matches = 0;
+            editSkillOptions.forEach(opt => {
+                const name = (opt.dataset.name || '').toLowerCase();
+                const cat = (opt.dataset.category || '').toLowerCase();
+                if (name.includes(q) || cat.includes(q)) {
+                    opt.style.display = 'flex';
+                    matches++;
+                } else {
+                    opt.style.display = 'none';
+                }
+            });
+            if (matches === 0) {
+                noEditSkillsFound.classList.remove('hidden');
+            } else {
+                noEditSkillsFound.classList.add('hidden');
+            }
+        }
+
+        function updateEditSelectedSkillsUI() {
+            editSkillHiddenInputsContainer.innerHTML = '';
+            editSelectedSkillsChips.innerHTML = '';
+
+            if (editSelectedSkills.size === 0) {
+                editSelectedSkillsChips.appendChild(editEmptySkillsPrompt);
+                editEmptySkillsPrompt.classList.remove('hidden');
+                editSelectedCountBadge.classList.add('hidden');
+            } else {
+                editSelectedCountBadge.textContent = `${editSelectedSkills.size} selected`;
+                editSelectedCountBadge.classList.remove('hidden');
+
+                editSelectedSkills.forEach((val, id) => {
+                    const inp = document.createElement('input');
+                    inp.type = 'hidden';
+                    inp.name = 'skills_addressed[]';
+                    inp.value = id;
+                    editSkillHiddenInputsContainer.appendChild(inp);
+
+                    const chip = document.createElement('div');
+                    chip.className = 'inline-flex items-center gap-1.5 px-2.5 py-1 bg-secondary/10 border border-secondary/30 text-secondary rounded-lg text-xs font-semibold';
+                    chip.innerHTML = `
+                        <span>${val.name}</span>
+                        <span class="text-[10px] text-secondary/70">(${val.category})</span>
+                        <button type="button" class="hover:text-error ml-0.5 flex items-center justify-center p-0.5 rounded-full hover:bg-white/50" onclick="removeEditSkill('${id}')">
+                            <span class="material-symbols-outlined text-[13px]">close</span>
+                        </button>
+                    `;
+                    editSelectedSkillsChips.appendChild(chip);
+                });
+            }
+
+            editSkillOptions.forEach(opt => {
+                const id = String(opt.dataset.id);
+                const isSelected = editSelectedSkills.has(id);
+                const checkbox = opt.querySelector('.edit-skill-checkbox');
+                const checkIcon = opt.querySelector('.edit-check-icon');
+
+                if (isSelected) {
+                    checkbox.classList.add('bg-secondary', 'border-secondary');
+                    checkbox.classList.remove('border-outline-variant');
+                    checkIcon.classList.remove('hidden');
+                    opt.classList.add('bg-secondary/5');
+                } else {
+                    checkbox.classList.remove('bg-secondary', 'border-secondary');
+                    checkbox.classList.add('border-outline-variant');
+                    checkIcon.classList.add('hidden');
+                    opt.classList.remove('bg-secondary/5');
+                }
+            });
+
+            if (editSelectedSkills.size > 0) {
+                editSkillSearchInput.classList.remove('border-error');
+            }
+        }
+
+        function toggleEditSkill(id, name, category) {
+            const sid = String(id);
+            if (editSelectedSkills.has(sid)) {
+                editSelectedSkills.delete(sid);
+            } else {
+                editSelectedSkills.set(sid, { name, category });
+            }
+            updateEditSelectedSkillsUI();
+        }
+
+        window.removeEditSkill = function(id) {
+            editSelectedSkills.delete(String(id));
+            updateEditSelectedSkillsUI();
+        };
+
+        if (editSkillSearchInput) {
+            editSkillSearchInput.addEventListener('focus', openEditSkillDropdown);
+            editSkillSearchInput.addEventListener('click', openEditSkillDropdown);
+            editSkillSearchInput.addEventListener('input', (e) => {
+                openEditSkillDropdown();
+                filterEditSkills(e.target.value);
+                if (e.target.value) {
+                    clearEditSkillSearchBtn.classList.remove('hidden');
+                } else {
+                    clearEditSkillSearchBtn.classList.add('hidden');
+                }
+            });
+        }
+
+        if (clearEditSkillSearchBtn) {
+            clearEditSkillSearchBtn.addEventListener('click', () => {
+                editSkillSearchInput.value = '';
+                clearEditSkillSearchBtn.classList.add('hidden');
+                filterEditSkills('');
+                editSkillSearchInput.focus();
+            });
+        }
+
+        editSkillOptions.forEach(opt => {
+            opt.addEventListener('click', () => {
+                toggleEditSkill(opt.dataset.id, opt.dataset.name, opt.dataset.category);
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            const container = document.getElementById('editSkillSearchContainer');
+            if (container && !container.contains(e.target)) {
+                closeEditSkillDropdown();
+            }
+            if (editModal && e.target === editModal) {
+                closeEditModal();
+            }
+        });
+
+        const editProgramForm = document.getElementById('editProgramForm');
+        if (editProgramForm) {
+            editProgramForm.addEventListener('submit', (e) => {
+                if (editSelectedSkills.size === 0) {
+                    e.preventDefault();
+                    editSkillSearchInput.classList.add('border-error');
+                    editSkillSearchInput.focus();
+                    openEditSkillDropdown();
+                }
+            });
+        }
+
+        function confirmDeleteCurrentProgram() {
+            const title = document.getElementById('editTitle').value || 'this program';
+            if (confirm(`Are you sure you want to delete "${title}"? This action cannot be undone.`)) {
+                document.getElementById('deleteProgramForm').submit();
+            }
+        }
+
+        // ================= ENROLLED CANDIDATES ROSTER MODAL LOGIC =================
+        const rosterModal = document.getElementById('rosterModal');
+        const rosterModalContainer = document.getElementById('rosterModalContainer');
+        const rosterProgramTitle = document.getElementById('rosterProgramTitle');
+        const rosterProgramDetails = document.getElementById('rosterProgramDetails');
+        const rosterCountBadge = document.getElementById('rosterCountBadge');
+        const rosterCandidatesList = document.getElementById('rosterCandidatesList');
+        const noRosterCandidatesPrompt = document.getElementById('noRosterCandidatesPrompt');
+        const rosterSearchInput = document.getElementById('rosterSearchInput');
+        const rosterEnrollMoreBtn = document.getElementById('rosterEnrollMoreBtn');
+
+        let currentRosterData = null;
+
+        function openRosterModal(rosterData) {
+            if (!rosterData) return;
+            currentRosterData = rosterData;
+
+            rosterProgramTitle.textContent = rosterData.title || 'Training Program';
+            rosterProgramDetails.innerHTML = `Provider: <strong class="text-on-surface">${rosterData.provider}</strong> • Location: <strong class="text-on-surface">${rosterData.location}</strong> • Date: <strong class="text-on-surface">${rosterData.scheduled_date}</strong>`;
+            
+            const total = (rosterData.enrollees || []).length;
+            rosterCountBadge.textContent = `${total} Enrolled`;
+
+            if (rosterSearchInput) rosterSearchInput.value = '';
+
+            renderRosterCandidates(rosterData.enrollees || []);
+
+            if (rosterEnrollMoreBtn) {
+                rosterEnrollMoreBtn.onclick = () => {
+                    closeRosterModal();
+                    openEnrollModal(rosterData.id, rosterData.title);
+                };
+            }
+
+            rosterModal.classList.remove('hidden');
+            rosterModal.classList.add('flex');
+            setTimeout(() => {
+                rosterModalContainer.classList.remove('scale-95', 'opacity-0');
+                rosterModalContainer.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeRosterModal() {
+            rosterModalContainer.classList.remove('scale-100', 'opacity-100');
+            rosterModalContainer.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                rosterModal.classList.add('hidden');
+                rosterModal.classList.remove('flex');
+            }, 300);
+        }
+
+        function renderRosterCandidates(enrollees) {
+            rosterCandidatesList.innerHTML = '';
+
+            if (!enrollees || enrollees.length === 0) {
+                noRosterCandidatesPrompt.classList.remove('hidden');
+                return;
+            }
+            noRosterCandidatesPrompt.classList.add('hidden');
+
+            enrollees.forEach(c => {
+                const row = document.createElement('div');
+                row.className = 'roster-candidate-row px-4 py-3 hover:bg-surface-container-low flex items-center justify-between transition-colors text-sm';
+                row.dataset.name = (c.name || '').toLowerCase();
+                row.dataset.email = (c.email || '').toLowerCase();
+                row.dataset.job = (c.job || '').toLowerCase();
+
+                let statusBadge = `<span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800 uppercase">Enrolled</span>`;
+                if (c.status === 'Attended') {
+                    statusBadge = `<span class="text-[10px] font-bold px-2 py-0.5 rounded bg-green-100 text-green-800 uppercase">Attended</span>`;
+                } else if (c.status === 'No Show') {
+                    statusBadge = `<span class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-500 uppercase line-through">No Show</span>`;
+                }
+
+                row.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-secondary/10 text-secondary font-bold text-xs flex items-center justify-center">
+                            ${c.initials || 'AP'}
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-semibold text-on-surface leading-tight">${c.name}</span>
+                            <span class="text-[11px] text-on-surface-variant">${c.email}</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-surface-container text-on-surface-variant border border-outline-variant/40">
+                            Pref: ${c.job}
+                        </span>
+                        ${statusBadge}
+                        <button type="button" onclick="confirmUnenrollCandidate('${currentRosterData.id}', '${c.id}', '${c.name}')" class="p-1 text-on-surface-variant hover:text-error hover:bg-error/10 rounded transition-colors" title="Remove from program">
+                            <span class="material-symbols-outlined text-sm">person_remove</span>
+                        </button>
+                    </div>
+                `;
+                rosterCandidatesList.appendChild(row);
+            });
+        }
+
+        function filterRosterCandidates(query) {
+            const q = (query || '').toLowerCase().trim();
+            const rows = document.querySelectorAll('.roster-candidate-row');
+            let matches = 0;
+            rows.forEach(r => {
+                const name = r.dataset.name || '';
+                const email = r.dataset.email || '';
+                const job = r.dataset.job || '';
+                if (name.includes(q) || email.includes(q) || job.includes(q)) {
+                    r.style.display = 'flex';
+                    matches++;
+                } else {
+                    r.style.display = 'none';
+                }
+            });
+            if (matches === 0 && rows.length > 0) {
+                noRosterCandidatesPrompt.classList.remove('hidden');
+            } else if (rows.length > 0) {
+                noRosterCandidatesPrompt.classList.add('hidden');
+            }
+        }
+
+        function confirmUnenrollCandidate(programId, applicantId, applicantName) {
+            if (confirm(`Remove "${applicantName}" from this training program?`)) {
+                document.getElementById('unenrollProgramId').value = programId;
+                document.getElementById('unenrollApplicantId').value = applicantId;
+                document.getElementById('unenrollCandidateForm').submit();
+            }
+        }
+
+        document.addEventListener('click', (e) => {
+            if (rosterModal && e.target === rosterModal) {
+                closeRosterModal();
+            }
+        });
     </script>
 </body></html>

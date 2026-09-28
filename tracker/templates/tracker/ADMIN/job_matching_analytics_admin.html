@@ -1,530 +1,945 @@
-<!DOCTYPE html><html class="light" lang="en"><head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Analytics | SKILLUP</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "secondary": "#0051d5",
-                    "inverse-surface": "#213145",
-                    "on-primary-fixed-variant": "#3f465c",
-                    "outline-variant": "#c6c6cd",
-                    "primary-fixed": "#dae2fd",
-                    "on-error": "#ffffff",
-                    "surface-container": "#e5eeff",
-                    "on-tertiary": "#ffffff",
-                    "surface-tint": "#565e74",
-                    "on-tertiary-fixed-variant": "#005236",
-                    "surface-container-low": "#eff4ff",
-                    "on-surface": "#0b1c30",
-                    "on-secondary-fixed-variant": "#003ea8",
-                    "surface-bright": "#f8f9ff",
-                    "tertiary-fixed": "#6ffbbe",
-                    "on-primary-container": "#7c839b",
-                    "primary-fixed-dim": "#bec6e0",
-                    "outline": "#76777d",
-                    "on-secondary-fixed": "#00174b",
-                    "on-secondary": "#ffffff",
-                    "surface-container-highest": "#d3e4fe",
-                    "tertiary-container": "#002113",
-                    "primary-container": "#131b2e",
-                    "tertiary": "#000000",
-                    "on-secondary-container": "#fefcff",
-                    "surface-dim": "#cbdbf5",
-                    "error": "#ba1a1a",
-                    "on-primary": "#ffffff",
-                    "tertiary-fixed-dim": "#4edea3",
-                    "on-background": "#0b1c30",
-                    "on-surface-variant": "#45464d",
-                    "surface-container-lowest": "#ffffff",
-                    "on-tertiary-fixed": "#002113",
-                    "inverse-on-surface": "#eaf1ff",
-                    "background": "#f8f9ff",
-                    "secondary-fixed": "#dbe1ff",
-                    "primary": "#000000",
-                    "secondary-container": "#316bf3",
-                    "on-tertiary-container": "#009668",
-                    "surface-variant": "#d3e4fe",
-                    "surface-container-high": "#dce9ff",
-                    "error-container": "#ffdad6",
-                    "on-error-container": "#93000a",
-                    "surface": "#f8f9ff",
-                    "secondary-fixed-dim": "#b4c5ff",
-                    "on-primary-fixed": "#131b2e",
-                    "inverse-primary": "#bec6e0"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.125rem",
-                    "lg": "0.25rem",
-                    "xl": "0.5rem",
-                    "full": "0.75rem"
-            },
-            "spacing": {
-                    "gutter": "24px",
-                    "margin-mobile": "16px",
-                    "margin-desktop": "40px",
-                    "container-max": "1440px",
-                    "unit": "4px"
-            },
-            "fontFamily": {
-                    "body-md": ["Inter"],
-                    "headline-md": ["Inter"],
-                    "display-lg": ["Inter"],
-                    "body-lg": ["Inter"],
-                    "label-sm": ["JetBrains Mono"],
-                    "headline-lg-mobile": ["Inter"],
-                    "body-sm": ["Inter"],
-                    "headline-lg": ["Inter"],
-                    "label-md": ["JetBrains Mono"]
-            },
-            "fontSize": {
-                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-                    "label-sm": ["12px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
-                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}]
-            }
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Employment Analytics | SKILLUP DOLE-PESO Portal</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "secondary": "#0051d5",
+            "inverse-surface": "#213145",
+            "outline-variant": "#c6c6cd",
+            "surface-container": "#e5eeff",
+            "surface-container-low": "#eff4ff",
+            "on-surface": "#0b1c30",
+            "surface-bright": "#f8f9ff",
+            "tertiary-fixed": "#6ffbbe",
+            "on-tertiary-fixed": "#002113",
+            "primary": "#0f172a",
+            "surface-container-highest": "#d3e4fe",
+            "primary-container": "#131b2e",
+            "error": "#ba1a1a",
+            "error-container": "#ffdad6",
+            "on-error-container": "#93000a",
+            "surface-container-lowest": "#ffffff",
+            "background": "#f8f9ff",
+            "secondary-container": "#316bf3",
+            "surface": "#f8f9ff",
+            "on-surface-variant": "#45464d",
           },
+          spacing: {
+            "gutter": "24px",
+            "margin-mobile": "16px",
+            "margin-desktop": "40px",
+            "container-max": "1440px",
+            "unit": "4px"
+          },
+          fontFamily: {
+            "body-md": ["Inter", "sans-serif"],
+            "headline-md": ["Inter", "sans-serif"],
+            "display-lg": ["Inter", "sans-serif"],
+            "body-lg": ["Inter", "sans-serif"],
+            "label-sm": ["JetBrains Mono", "monospace"],
+            "headline-lg-mobile": ["Inter", "sans-serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "headline-lg": ["Inter", "sans-serif"],
+            "label-md": ["JetBrains Mono", "monospace"]
+          },
+          fontSize: {
+            "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+            "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+            "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+            "label-sm": ["12px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+            "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+            "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+            "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}]
+          }
         },
-      }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            display: inline-block;
-            line-height: 1;
-            vertical-align: middle;
-        }
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 24px;
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(12px);
-            border: 1px solid #E2E8F0;
-        }
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f8f9ff;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-    </style>
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      line-height: 1;
+      vertical-align: middle;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid #E2E8F0;
+      box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.04), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
+      transition: all 0.2s ease-in-out;
+    }
+    .glass-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.07);
+    }
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
 </head>
-<body class="bg-background text-on-background font-body-md min-h-screen">
-<!-- TopNavBar Shell -->
-<header class="fixed top-0 w-full z-50 bg-surface dark:bg-surface-container-low border-b border-outline-variant dark:border-outline flex items-center justify-between px-margin-desktop h-16 w-full">
-<div class="flex items-center gap-8">
-<h1 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-inverse-on-surface">SKILLUP</h1>
-</div>
-<div class="flex items-center gap-4">
-<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">notifications</button>
-<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">help</button>
-<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">settings</button>
-<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
-<img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCn5ndUBvKYHDdfjOtDcuDcmEa-zwbSgM-ZLHNPtfHm7uL9e355N19pHC8c-XBPUwwXHIzoATnKENMDvabjLGF5diSFylP09pwQghoAY0N70mks-GlVv2KmatElbeqz2_5J-gSw4HGwnHnPHYMLeRKflzGezIfmEqF1sJTCsVHaAp-3UBTYmVg6yrq3nRzkltjZyYRqaTWNO9ETM3eG6xeP_aE-PZkbZbeBZvG-dmCW3fgaiDFfFN1v9i2cwj6DH0AUyxyPRP9c4y2t">
-</div>
-</div>
-</header>
-<!-- SideNavBar Shell -->
-<aside class="fixed left-0 top-0 h-full w-64 pt-20 bg-surface-container-lowest dark:bg-primary-container border-r border-outline-variant dark:border-outline hidden md:flex flex-col p-4 gap-2 z-40">
-<div class="flex items-center gap-3 px-2 py-4 mb-4 border-b border-outline-variant/30">
-<div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center text-white font-black text-xl">P</div>
-<div>
-<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">Enterprise Portal</h2>
-<p class="text-[10px] text-on-surface-variant opacity-70">Talent Management</p>
-</div>
-</div>
-<nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
-<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'peso_dashboard_admin' %}">
-<span class="material-symbols-outlined">dashboard</span>
-<span>Dashboard</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'applicant_monitoring_admin' %}">
-<span class="material-symbols-outlined">groups</span>
-<span>Talent Bench</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'employer_management_admin' %}">
-<span class="material-symbols-outlined">domain</span>
-<span>Employers</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'vacancy_management_admin' %}">
-<span class="material-symbols-outlined">work</span>
-<span>Vacancies</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'employment_tracking_admin' %}">
-<span class="material-symbols-outlined">description</span>
-<span>Reports</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'skill_monitoring_admin' %}">
-<span class="material-symbols-outlined">analytics</span>
-<span>Skill Gaps</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'training_monitoring_admin' %}">
-<span class="material-symbols-outlined">school</span>
-<span>Learning Paths</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 bg-surface-container dark:bg-secondary-container text-on-surface dark:text-on-secondary-container font-bold rounded-lg scale-98 active:scale-95 duration-150 transition-all font-label-md text-label-md" href="{% url 'job_matching_analytics_admin' %}">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">monitoring</span>
-<span>Analytics</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'peso_profile_admin' %}">
-<span class="material-symbols-outlined">settings</span>
-<span>Settings</span>
-</a>
-</nav>
-<div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-1">
-<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="#">
-<span class="material-symbols-outlined">support_agent</span>
-<span>Support</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'logout' %}">
-<span class="material-symbols-outlined">logout</span>
-<span>Log Out</span>
-</a>
-</div>
-</aside>
-<!-- Main Canvas -->
-<main class="md:ml-64 pt-20 min-h-screen">
-<div class="p-margin-desktop space-y-gutter">
-<!-- Header Section -->
-<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
-<div>
-<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Analytics</h2>
-<p class="text-body-lg text-on-surface-variant max-w-2xl">Real-time mapping of applicant proficiencies against open organizational vacancies. Identify strategic hiring opportunities and critical skill shortages.</p>
-</div>
-<div class="flex items-center gap-3 bg-surface-container-low p-1.5 rounded-xl border border-outline-variant">
-<button class="px-4 py-2 bg-white shadow-sm rounded-lg text-label-md font-label-md text-secondary">Last 30 Days</button>
-<button class="px-4 py-2 text-label-md font-label-md text-on-surface-variant hover:text-on-surface transition-colors">Quarterly</button>
-<button class="px-4 py-2 text-label-md font-label-md text-on-surface-variant hover:text-on-surface transition-colors">Annual</button>
-</div>
-</div>
-<!-- Top KPI Cards -->
-<!-- Top KPI Cards -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-  <div class="glass-card p-6 rounded-xl flex flex-col justify-between">
-    <div>
-      <span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Placement Rate</span>
-      <h3 class="font-display-lg text-display-lg text-secondary mt-2">{{ conversion_rate|floatformat:1 }}%</h3>
+<body class="bg-background text-on-surface font-body-md min-h-screen">
+  <!-- TopNavBar Shell -->
+  <header class="fixed top-0 w-full z-50 bg-surface dark:bg-surface-container-low border-b border-outline-variant dark:border-outline flex items-center justify-between px-margin-desktop h-16 w-full no-print">
+    <div class="flex items-center gap-8">
+      <h1 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-inverse-on-surface">SKILLUP</h1>
     </div>
-    <div class="mt-2 text-xs text-on-surface-variant">
-      <strong>{{ placed_count }}</strong> successful job matches out of {{ total_referrals }} total referrals.
+    <div class="flex items-center gap-4">
+      <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">notifications</button>
+      <a href="{% url 'peso_profile_admin' %}" class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">settings</a>
+      <a href="{% url 'peso_profile_admin' %}" class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant bg-secondary/15 flex items-center justify-center font-bold text-xs text-secondary shrink-0 hover:ring-2 hover:ring-secondary transition-all" title="{{ request.user.get_full_name }}">
+        {% if request.user.profile.profile_picture %}
+          <img alt="{{ request.user.get_full_name }}" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+        {% else %}
+          {{ request.user.first_name|slice:":1"|upper }}{{ request.user.last_name|slice:":1"|upper|default:"P" }}
+        {% endif %}
+      </a>
     </div>
-  </div>
-  
-  <div class="glass-card p-6 rounded-xl flex flex-col justify-between">
-    <div>
-      <span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Avg. Time-to-Hire</span>
-      <h3 class="font-display-lg text-display-lg text-on-surface mt-2">{{ avg_days_to_hire|floatformat:1 }}d</h3>
-    </div>
-    <div class="mt-2 text-xs text-on-surface-variant">
-      Average days from referral to candidate reporting date.
-    </div>
-  </div>
+  </header>
 
-  <div class="glass-card p-6 rounded-xl flex flex-col justify-between">
-    <div>
-      <span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Regularization Rate</span>
-      <h3 class="font-display-lg text-display-lg text-on-tertiary-container mt-2">{{ regularization_rate|floatformat:1 }}%</h3>
+  <!-- SideNavBar Shell -->
+  <aside class="fixed left-0 top-0 h-full w-64 pt-20 bg-surface-container-lowest dark:bg-primary-container border-r border-outline-variant dark:border-outline hidden md:flex flex-col p-4 gap-2 z-40">
+    <div class="flex items-center gap-3 px-2 py-4 mb-4 border-b border-outline-variant/30">
+      {% if request.user.profile.profile_picture %}
+      <div class="w-10 h-10 rounded-lg overflow-hidden border border-outline-variant shrink-0">
+        <img alt="Office Logo" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+      </div>
+      {% else %}
+      <div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center text-white font-black text-xl shrink-0">P</div>
+      {% endif %}
+      <div>
+        <h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">SKILLUP Portal</h2>
+        <p class="text-[10px] text-on-surface-variant opacity-70">Public Employment Service</p>
+      </div>
     </div>
-    <div class="mt-2 text-xs text-on-surface-variant font-medium text-green-700">
-      Ratio of probationary candidates successfully regularized.
+    
+    <nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
+      <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'peso_dashboard_admin' %}">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span>Dashboard</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'applicant_monitoring_admin' %}">
+        <span class="material-symbols-outlined">groups</span>
+        <span>Talent Bench</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'employer_management_admin' %}">
+        <span class="material-symbols-outlined">domain</span>
+        <span>Employers</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'vacancy_management_admin' %}">
+        <span class="material-symbols-outlined">work</span>
+        <span>Vacancies</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'employment_tracking_admin' %}">
+        <span class="material-symbols-outlined">description</span>
+        <span>Reports</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'skill_monitoring_admin' %}">
+        <span class="material-symbols-outlined">analytics</span>
+        <span>Skill Gaps</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'training_monitoring_admin' %}">
+        <span class="material-symbols-outlined">school</span>
+        <span>Training Programs</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2 bg-surface-container dark:bg-secondary-container text-on-surface dark:text-on-secondary-container font-bold rounded-lg scale-98 active:scale-95 duration-150 transition-all font-label-md text-label-md" href="{% url 'job_matching_analytics_admin' %}">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">monitoring</span>
+        <span>Analytics</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'peso_profile_admin' %}">
+        <span class="material-symbols-outlined">settings</span>
+        <span>Settings</span>
+      </a>
+    </nav>
+    
+    <div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-1">
+      <a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'logout' %}">
+        <span class="material-symbols-outlined">logout</span>
+        <span>Log Out</span>
+      </a>
     </div>
-  </div>
+  </aside>
 
-  <div class="glass-card p-6 rounded-xl flex flex-col justify-between">
-    <div>
-      <span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Employer Responsiveness</span>
-      <h3 class="font-display-lg text-display-lg text-on-surface mt-2">{{ responsiveness_rate|floatformat:1 }}%</h3>
-    </div>
-    <div class="mt-2 text-xs text-on-surface-variant">
-      Employer active processing score of candidate profiles.
-    </div>
-  </div>
-</div>
+  <!-- Main Canvas -->
+  <main class="md:ml-64 pt-20 pb-16 min-h-screen px-4 sm:px-6 lg:px-8 xl:px-10">
+    <div class="w-full space-y-6">
 
-<!-- Onboarding & Retention Pipeline Analytics (Stage 8 Bento Sections) -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-  <div class="glass-card p-5 rounded-xl border border-outline-variant bg-surface-container-lowest">
-    <div class="flex items-center justify-between mb-2">
-      <span class="text-xs font-semibold text-on-surface-variant uppercase">Decline Rate</span>
-      <span class="material-symbols-outlined text-error text-[20px]">cancel</span>
-    </div>
-    <div class="flex items-end justify-between">
-      <span class="text-2xl font-bold text-error">{{ decline_rate|floatformat:1 }}%</span>
-      <span class="text-[11px] text-on-surface-variant">Refusal of offers</span>
-    </div>
-  </div>
+      <!-- Header Section & Operational Filters -->
+      <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-4 pb-2 border-b border-slate-200 w-full">
+        <div>
+          <div class="flex items-center gap-2 text-xs font-semibold text-secondary uppercase tracking-wider mb-1">
+            <span class="material-symbols-outlined text-[16px]">insights</span>
+            Labor Market Intelligence & Placement Conversion
+          </div>
+          <h2 class="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight">Employment & Matching Analytics</h2>
+          <p class="text-sm text-slate-600 mt-1 max-w-3xl">Real-time telemetry on candidate referrals, placement velocity, employer hiring responsiveness, and sectoral supply-demand imbalances.</p>
+        </div>
 
-  <div class="glass-card p-5 rounded-xl border border-outline-variant bg-surface-container-lowest">
-    <div class="flex items-center justify-between mb-2">
-      <span class="text-xs font-semibold text-on-surface-variant uppercase">No-Show Rate</span>
-      <span class="material-symbols-outlined text-error text-[20px]">warning</span>
-    </div>
-    <div class="flex items-end justify-between">
-      <span class="text-2xl font-bold text-error">{{ no_show_rate|floatformat:1 }}%</span>
-      <span class="text-[11px] text-on-surface-variant">Failed to report</span>
-    </div>
-  </div>
+        <!-- Filter & Export Controls -->
+        <div class="flex flex-wrap items-center gap-2">
+          <!-- Timeframe Selector -->
+          <div class="inline-flex bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-medium">
+            <a href="?timeframe=30d&category={{ selected_category }}" class="px-3 py-1.5 rounded-lg transition-all {% if timeframe == '30d' %}bg-white text-slate-900 font-bold shadow-sm{% else %}text-slate-600 hover:text-slate-900{% endif %}">
+              30 Days
+            </a>
+            <a href="?timeframe=90d&category={{ selected_category }}" class="px-3 py-1.5 rounded-lg transition-all {% if timeframe == '90d' %}bg-white text-slate-900 font-bold shadow-sm{% else %}text-slate-600 hover:text-slate-900{% endif %}">
+              90 Days
+            </a>
+            <a href="?timeframe=365d&category={{ selected_category }}" class="px-3 py-1.5 rounded-lg transition-all {% if timeframe == '365d' %}bg-white text-slate-900 font-bold shadow-sm{% else %}text-slate-600 hover:text-slate-900{% endif %}">
+              1 Year
+            </a>
+            <a href="?timeframe=all&category={{ selected_category }}" class="px-3 py-1.5 rounded-lg transition-all {% if timeframe == 'all' or not timeframe %}bg-white text-slate-900 font-bold shadow-sm{% else %}text-slate-600 hover:text-slate-900{% endif %}">
+              All Time
+            </a>
+          </div>
 
-  <div class="glass-card p-5 rounded-xl border border-outline-variant bg-surface-container-lowest">
-    <div class="flex items-center justify-between mb-2">
-      <span class="text-xs font-semibold text-on-surface-variant uppercase">Cross-Field Placements</span>
-      <span class="material-symbols-outlined text-secondary text-[20px]">sync_alt</span>
+          <!-- Sector Filter Dropdown -->
+          <form method="GET" class="inline-block m-0">
+            <input type="hidden" name="timeframe" value="{{ timeframe }}">
+            <select name="category" onchange="this.form.submit()" class="text-xs font-medium bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-700 focus:outline-none focus:ring-2 focus:ring-secondary">
+              <option value="all" {% if selected_category == 'all' or not selected_category %}selected{% endif %}>All Industry Sectors</option>
+              <option value="MED" {% if selected_category == 'MED' %}selected{% endif %}>Healthcare & Medical</option>
+              <option value="IT" {% if selected_category == 'IT' %}selected{% endif %}>Information Technology</option>
+              <option value="BPO" {% if selected_category == 'BPO' %}selected{% endif %}>BPO & Customer Service</option>
+              <option value="ENG" {% if selected_category == 'ENG' %}selected{% endif %}>Engineering & Construction</option>
+              <option value="ADM" {% if selected_category == 'ADM' %}selected{% endif %}>Administrative & Office</option>
+              <option value="FIN" {% if selected_category == 'FIN' %}selected{% endif %}>Finance & Accounting</option>
+              <option value="LOG" {% if selected_category == 'LOG' %}selected{% endif %}>Logistics & Warehousing</option>
+              <option value="TVT" {% if selected_category == 'TVT' %}selected{% endif %}>TESDA Vocational</option>
+              <option value="MKT" {% if selected_category == 'MKT' %}selected{% endif %}>Sales & Marketing</option>
+              <option value="OFW" {% if selected_category == 'OFW' %}selected{% endif %}>Overseas / OFW</option>
+            </select>
+          </form>
+
+          <!-- Export Action -->
+          <div class="flex items-center gap-1 bg-white border border-slate-200 rounded-xl p-1 shadow-sm">
+            <select id="exportReportType" class="text-xs font-medium border-none bg-transparent py-1 px-2.5 text-slate-700 focus:ring-0 cursor-pointer">
+              <option value="funnel">Placement Funnel CSV</option>
+              <option value="responsiveness">Employer Responsiveness CSV</option>
+              <option value="demand">Skill Demand Matrix CSV</option>
+              <option value="mismatch">Education Mismatch Audit CSV</option>
+              <option value="vacancies">Open Vacancy Inventory CSV</option>
+              <option value="all">Full Master Analytics CSV</option>
+            </select>
+            <button onclick="downloadAnalyticsReport()" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold inline-flex items-center gap-1.5 transition-all">
+              <span class="material-symbols-outlined text-[15px]">download</span> Export
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Executive Metrics Bar (6 Premium Cards) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+        
+        <!-- Metric 1: Vacancies & Open Slots -->
+        <div class="glass-card p-5 rounded-xl border border-slate-200 flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Active Labor Demand</span>
+            <span class="p-1.5 bg-blue-50 text-secondary rounded-lg material-symbols-outlined text-[18px]">work</span>
+          </div>
+          <div class="mt-3">
+            <div class="text-2xl font-black text-slate-900 font-label-md">{{ total_open_slots }} <span class="text-xs font-normal text-slate-500">slots</span></div>
+            <p class="text-xs text-slate-600 mt-1 font-medium">{{ total_vacancies }} Open Postings</p>
+          </div>
+          <div class="mt-3 pt-2 border-t border-slate-100 flex items-center gap-1 text-[11px] text-slate-500">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Verified Hiring Partners
+          </div>
+        </div>
+
+        <!-- Metric 2: Placement Conversion Rate -->
+        <div class="glass-card p-5 rounded-xl border border-slate-200 flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Placement Rate</span>
+            <span class="p-1.5 bg-emerald-50 text-emerald-700 rounded-lg material-symbols-outlined text-[18px]">check_circle</span>
+          </div>
+          <div class="mt-3">
+            <div class="text-2xl font-black text-emerald-600 font-label-md">{{ conversion_rate }}%</div>
+            <p class="text-xs text-slate-600 mt-1 font-medium">{{ placed_count }} Hired / {{ total_referrals }} Referred</p>
+          </div>
+          <div class="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
+            <span class="text-slate-500">DOLE Target: ≥15%</span>
+            <span class="text-emerald-700 font-semibold">Active</span>
+          </div>
+        </div>
+
+        <!-- Metric 3: Avg Time to Fill -->
+        <div class="glass-card p-5 rounded-xl border border-slate-200 flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Time-to-Placement</span>
+            <span class="p-1.5 bg-purple-50 text-purple-700 rounded-lg material-symbols-outlined text-[18px]">schedule</span>
+          </div>
+          <div class="mt-3">
+            <div class="text-2xl font-black text-slate-900 font-label-md">{{ avg_days_to_hire }} <span class="text-xs font-normal text-slate-500">days</span></div>
+            <p class="text-xs text-slate-600 mt-1 font-medium">Referral to reporting date</p>
+          </div>
+          <div class="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
+            <span class="text-slate-500">Benchmark: &lt;21d</span>
+            <span class="text-emerald-600 font-medium">Fast-track</span>
+          </div>
+        </div>
+
+        <!-- Metric 4: Employer Responsiveness -->
+        <div class="glass-card p-5 rounded-xl border border-slate-200 flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Partner Responsiveness</span>
+            <span class="p-1.5 bg-amber-50 text-amber-700 rounded-lg material-symbols-outlined text-[18px]">speed</span>
+          </div>
+          <div class="mt-3">
+            <div class="text-2xl font-black text-slate-900 font-label-md">{{ responsiveness_rate }}%</div>
+            <p class="text-xs text-slate-600 mt-1 font-medium">{{ screened_count }} Screened Candidates</p>
+          </div>
+          <div class="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
+            <span class="text-slate-500">Pending: {{ pending_count }}</span>
+            <span class="text-blue-600 font-medium">Tracking</span>
+          </div>
+        </div>
+
+        <!-- Metric 5: Field of Study Mismatch -->
+        <div class="glass-card p-5 rounded-xl border border-slate-200 flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Degree Mismatch</span>
+            <span class="p-1.5 bg-rose-50 text-rose-700 rounded-lg material-symbols-outlined text-[18px]">sync_alt</span>
+          </div>
+          <div class="mt-3">
+            <div class="text-2xl font-black text-rose-600 font-label-md">{{ mismatch_rate }}%</div>
+            <p class="text-xs text-slate-600 mt-1 font-medium">{{ mismatched_placed }} Cross-Field Placements</p>
+          </div>
+          <div class="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
+            <span class="text-slate-500">DOLE Underemployment</span>
+            <span class="text-rose-600 font-medium">Monitored</span>
+          </div>
+        </div>
+
+        <!-- Metric 6: Training to Hire Impact -->
+        <div class="glass-card p-5 rounded-xl border border-slate-200 flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Training-to-Hire</span>
+            <span class="p-1.5 bg-teal-50 text-teal-700 rounded-lg material-symbols-outlined text-[18px]">school</span>
+          </div>
+          <div class="mt-3">
+            <div class="text-2xl font-black text-teal-700 font-label-md">{{ training_to_hire_rate }}%</div>
+            <p class="text-xs text-slate-600 mt-1 font-medium">Upskilled candidate hires</p>
+          </div>
+          <div class="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
+            <span class="text-slate-500">TESDA Alignment</span>
+            <span class="text-teal-700 font-medium">High ROI</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Section 1: Referral Conversion Funnel & Attrition Breakdown -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Left: Visual Step-Down Conversion Funnel (8 cols) -->
+        <div class="lg:col-span-8 glass-card rounded-2xl p-6 border border-slate-200">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-slate-100">
+            <div>
+              <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                <span class="material-symbols-outlined text-secondary text-[22px]">filter_alt</span>
+                End-to-End Placement Conversion Funnel
+              </h3>
+              <p class="text-xs text-slate-500 mt-0.5">Tracking candidate progression through the DOLE-PESO referral lifecycle to regular employment.</p>
+            </div>
+            <span class="text-xs font-semibold px-2.5 py-1 bg-blue-50 text-secondary rounded-lg border border-blue-200 self-start sm:self-auto font-label-md">
+              Total Volume: {{ total_referrals }} Candidates
+            </span>
+          </div>
+
+          <!-- Step-by-Step Funnel Progression Bars -->
+          <div class="space-y-4">
+            
+            <!-- Stage 1: Referred -->
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 hover:bg-slate-100/80 transition-colors">
+              <div class="flex items-center justify-between mb-1.5">
+                <div class="flex items-center gap-2">
+                  <span class="w-6 h-6 rounded-full bg-slate-800 text-white flex items-center justify-center text-xs font-bold font-label-md">1</span>
+                  <span class="text-sm font-semibold text-slate-900">Referred to Employer</span>
+                  <span class="text-xs text-slate-500 hidden sm:inline">• Qualified candidate matching dispatched</span>
+                </div>
+                <div class="text-right">
+                  <span class="text-sm font-bold text-slate-900 font-label-md">{{ total_referrals }} candidates</span>
+                  <span class="text-xs text-slate-500 ml-2 font-label-md">100.0%</span>
+                </div>
+              </div>
+              <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
+                <div class="bg-slate-800 h-full rounded-full transition-all duration-700" style="width: 100%;"></div>
+              </div>
+            </div>
+
+            <!-- Stage 2: Screened & Evaluated -->
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 hover:bg-slate-100/80 transition-colors ml-0 md:ml-3">
+              <div class="flex items-center justify-between mb-1.5">
+                <div class="flex items-center gap-2">
+                  <span class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold font-label-md">2</span>
+                  <span class="text-sm font-semibold text-slate-900">Screened & Under Review</span>
+                  <span class="text-xs text-slate-500 hidden sm:inline">• Profile examined by HR hiring teams</span>
+                </div>
+                <div class="text-right">
+                  <span class="text-sm font-bold text-slate-900 font-label-md">{{ screened_count }} candidates</span>
+                  <span class="text-xs text-blue-700 font-bold ml-2 font-label-md">{{ screened_pct }}%</span>
+                </div>
+              </div>
+              <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
+                <div class="bg-blue-600 h-full rounded-full transition-all duration-700" style="width: {{ screened_pct }}%;"></div>
+              </div>
+            </div>
+
+            <!-- Stage 3: Interview Stage -->
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 hover:bg-slate-100/80 transition-colors ml-0 md:ml-6">
+              <div class="flex items-center justify-between mb-1.5">
+                <div class="flex items-center gap-2">
+                  <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-bold font-label-md">3</span>
+                  <span class="text-sm font-semibold text-slate-900">Interviewed / Shortlisted</span>
+                  <span class="text-xs text-slate-500 hidden sm:inline">• Completed technical & behavioral rounds</span>
+                </div>
+                <div class="text-right">
+                  <span class="text-sm font-bold text-slate-900 font-label-md">{{ interviewed_count }} candidates</span>
+                  <span class="text-xs text-indigo-700 font-bold ml-2 font-label-md">{{ interviewed_pct }}%</span>
+                </div>
+              </div>
+              <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
+                <div class="bg-indigo-600 h-full rounded-full transition-all duration-700" style="width: {{ interviewed_pct }}%;"></div>
+              </div>
+            </div>
+
+            <!-- Stage 4: Offer Extended -->
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 hover:bg-slate-100/80 transition-colors ml-0 md:ml-9">
+              <div class="flex items-center justify-between mb-1.5">
+                <div class="flex items-center gap-2">
+                  <span class="w-6 h-6 rounded-full bg-amber-500 text-white flex items-center justify-center text-xs font-bold font-label-md">4</span>
+                  <span class="text-sm font-semibold text-slate-900">Job Offer & Onboarding</span>
+                  <span class="text-xs text-slate-500 hidden sm:inline">• Pre-employment requirements processing</span>
+                </div>
+                <div class="text-right">
+                  <span class="text-sm font-bold text-slate-900 font-label-md">{{ offered_count }} candidates</span>
+                  <span class="text-xs text-amber-700 font-bold ml-2 font-label-md">{{ offered_pct }}%</span>
+                </div>
+              </div>
+              <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
+                <div class="bg-amber-500 h-full rounded-full transition-all duration-700" style="width: {{ offered_pct }}%;"></div>
+              </div>
+            </div>
+
+            <!-- Stage 5: Placed & Hired -->
+            <div class="p-3.5 rounded-xl bg-emerald-50/60 border border-emerald-200 hover:bg-emerald-50 transition-colors ml-0 md:ml-12">
+              <div class="flex items-center justify-between mb-1.5">
+                <div class="flex items-center gap-2">
+                  <span class="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs font-bold font-label-md">5</span>
+                  <span class="text-sm font-bold text-emerald-950">Successfully Placed & Employed</span>
+                  <span class="text-xs text-emerald-700 hidden sm:inline">• Active employment & regularized</span>
+                </div>
+                <div class="text-right">
+                  <span class="text-sm font-black text-emerald-900 font-label-md">{{ hired_count }} candidates</span>
+                  <span class="text-xs text-emerald-700 font-bold ml-2 font-label-md">{{ hired_pct }}%</span>
+                </div>
+              </div>
+              <div class="w-full bg-emerald-200 h-3.5 rounded-full overflow-hidden">
+                <div class="bg-emerald-600 h-full rounded-full transition-all duration-700" style="width: {{ hired_pct }}%;"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right: Leakage & Attrition Diagnostics (4 cols) -->
+        <div class="lg:col-span-4 glass-card rounded-2xl p-6 border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+              <h3 class="text-base font-bold text-slate-900 flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-rose-600 text-[20px]">warning</span>
+                Pipeline Drop-off Telemetry
+              </h3>
+              <span class="text-[11px] font-semibold px-2 py-0.5 bg-rose-50 text-rose-700 rounded-full">Leakage Audit</span>
+            </div>
+            
+            <p class="text-xs text-slate-500 mb-4">Breakdown of candidates dropping out of the hiring funnel before placement confirmation.</p>
+
+            <div class="space-y-3">
+              
+              <!-- Pending Initial Action -->
+              <div class="p-3 bg-amber-50/70 border border-amber-200 rounded-xl flex items-center justify-between">
+                <div>
+                  <div class="text-xs font-bold text-amber-900">Awaiting Employer Review</div>
+                  <div class="text-[11px] text-amber-700">Pending review > 5 business days</div>
+                </div>
+                <div class="text-right">
+                  <div class="text-base font-black text-amber-900 font-label-md">{{ pending_count }}</div>
+                  <div class="text-[10px] text-amber-700 font-semibold font-label-md">{{ pending_rate }}%</div>
+                </div>
+              </div>
+
+              <!-- Declined by Candidate -->
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
+                <div>
+                  <div class="text-xs font-bold text-slate-800">Candidate Declined Offer</div>
+                  <div class="text-[11px] text-slate-500">Compensation or location mismatch</div>
+                </div>
+                <div class="text-right">
+                  <div class="text-base font-black text-slate-800 font-label-md">{{ declined_count }}</div>
+                  <div class="text-[10px] text-slate-500 font-semibold font-label-md">{{ declined_rate }}%</div>
+                </div>
+              </div>
+
+              <!-- No-Show / Unresponsive -->
+              <div class="p-3 bg-rose-50/60 border border-rose-200 rounded-xl flex items-center justify-between">
+                <div>
+                  <div class="text-xs font-bold text-rose-900">No-Show / Unresponsive</div>
+                  <div class="text-[11px] text-rose-700">Failed to attend interview / report</div>
+                </div>
+                <div class="text-right">
+                  <div class="text-base font-black text-rose-900 font-label-md">{{ no_show_count }}</div>
+                  <div class="text-[10px] text-rose-700 font-semibold font-label-md">{{ no_show_rate }}%</div>
+                </div>
+              </div>
+
+              <!-- Employer Rejected -->
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
+                <div>
+                  <div class="text-xs font-bold text-slate-800">Employer Rejected / Skill Gap</div>
+                  <div class="text-[11px] text-slate-500">Unmet job qualification requirements</div>
+                </div>
+                <div class="text-right">
+                  <div class="text-base font-black text-slate-800 font-label-md">{{ not_hired_count }}</div>
+                  <div class="text-[10px] text-slate-500 font-semibold font-label-md">{{ not_hired_rate }}%</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Bottom Action Prompt -->
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-[11px] text-slate-500">Need to follow up pending referrals?</span>
+            <a href="{% url 'employment_tracking_admin' %}" class="text-xs text-secondary font-bold hover:underline inline-flex items-center gap-1">
+              Review Status <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Section 2: Labor Market Imbalance Analyzer & In-Demand Skills -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Left: Labor Demand vs Supply by Industry (7 cols) -->
+        <div class="lg:col-span-7 glass-card rounded-2xl p-6 border border-slate-200">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+            <div>
+              <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                <span class="material-symbols-outlined text-secondary text-[22px]">balance</span>
+                Labor Market Imbalance by Sector
+              </h3>
+              <p class="text-xs text-slate-500 mt-0.5">Comparative ratio of Open Vacancy Slots (Demand) against Registered Applicants (Supply).</p>
+            </div>
+            <div class="flex items-center gap-3 text-xs font-medium">
+              <span class="inline-flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-blue-600"></span> Demand</span>
+              <span class="inline-flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-emerald-500"></span> Supply</span>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            {% for item in sector_supply_demand|slice:":7" %}
+            <div class="p-3 rounded-xl border border-slate-200/80 bg-slate-50/50 hover:bg-slate-100/60 transition-all">
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-bold text-slate-900">{{ item.name }}</span>
+                  <span class="text-[10px] text-slate-500 font-label-md">({{ item.vacancies }} Vacancies)</span>
+                </div>
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold border {{ item.badge_class }}">
+                  {{ item.status }}
+                </span>
+              </div>
+
+              <!-- Dual Bars -->
+              <div class="space-y-1.5">
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] font-semibold text-slate-600 w-12 font-label-md">Demand</span>
+                  <div class="flex-grow bg-slate-200 h-2 rounded-full overflow-hidden">
+                    <div class="bg-blue-600 h-full rounded-full" style="width: {{ item.demand_bar_pct }}%;"></div>
+                  </div>
+                  <span class="text-[11px] font-bold text-blue-700 w-16 text-right font-label-md">{{ item.slots }} slots</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] font-semibold text-slate-600 w-12 font-label-md">Supply</span>
+                  <div class="flex-grow bg-slate-200 h-2 rounded-full overflow-hidden">
+                    <div class="bg-emerald-500 h-full rounded-full" style="width: {{ item.supply_bar_pct }}%;"></div>
+                  </div>
+                  <span class="text-[11px] font-bold text-emerald-700 w-16 text-right font-label-md">{{ item.supply }} talent</span>
+                </div>
+              </div>
+            </div>
+            {% empty %}
+            <div class="text-center py-8 text-xs text-slate-500 italic">No industry sector data available.</div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Right: Top In-Demand Skills & Upskilling Priorities (5 cols) -->
+        <div class="lg:col-span-5 glass-card rounded-2xl p-6 border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+              <h3 class="text-base font-bold text-slate-900 flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-secondary text-[20px]">trending_up</span>
+                Top Employer-Demanded Skills
+              </h3>
+              <a href="{% url 'skill_monitoring_admin' %}" class="text-xs text-secondary font-semibold hover:underline">View Gaps</a>
+            </div>
+            <p class="text-xs text-slate-500 mb-4">Skills appearing most frequently across active employer vacancy specifications.</p>
+
+            <div class="space-y-4">
+              {% for skill in most_demanded_skills %}
+              <div>
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-xs font-semibold text-slate-800">{{ skill.name }}</span>
+                  <span class="text-xs font-bold text-secondary font-label-md">{{ skill.requests }} Vacancies</span>
+                </div>
+                <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+                  <div class="bg-secondary h-full rounded-full transition-all duration-500" style="width: {{ skill.bar_pct }}%;"></div>
+                </div>
+              </div>
+              {% empty %}
+              <div class="text-center py-6 text-xs text-slate-500 italic">No skill requirements recorded yet.</div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- Quick Action Card -->
+          <div class="mt-6 p-4 rounded-xl bg-blue-50/70 border border-blue-200 flex items-center justify-between">
+            <div>
+              <div class="text-xs font-bold text-slate-900">Address Talent Shortfalls</div>
+              <div class="text-[11px] text-slate-600">Coordinate TESDA training programs for deficient skills.</div>
+            </div>
+            <a href="{% url 'training_monitoring_admin' %}" class="px-3 py-1.5 bg-secondary text-white rounded-lg text-xs font-semibold hover:bg-secondary/90 shrink-0 ml-3">
+              Trainings
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Section 3: High-Deficit & Urgent Vacancies (Operational Action Table) -->
+      <div class="glass-card rounded-2xl p-6 border border-slate-200">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-100">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span class="material-symbols-outlined text-rose-600 text-[22px]">notification_important</span>
+              High-Deficit & Urgent Vacancy Fulfillments
+            </h3>
+            <p class="text-xs text-slate-500 mt-0.5">Critical open positions with substantial unfilled slots requiring immediate PESO talent matching.</p>
+          </div>
+          <a href="{% url 'vacancy_management_admin' %}" class="text-xs font-semibold text-secondary hover:underline flex items-center gap-1 self-start sm:self-auto">
+            Manage All Vacancies <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+          </a>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-50/80 border-b border-slate-200 text-[11px] uppercase tracking-wider text-slate-600 font-label-md">
+                <th class="py-3 px-4 font-semibold">Vacancy Title</th>
+                <th class="py-3 px-4 font-semibold">Hiring Partner</th>
+                <th class="py-3 px-4 font-semibold">Sector</th>
+                <th class="py-3 px-4 font-semibold text-center">Unfilled Slots</th>
+                <th class="py-3 px-4 font-semibold">Days Open</th>
+                <th class="py-3 px-4 font-semibold">Key Skill Criteria</th>
+                <th class="py-3 px-4 font-semibold text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-xs">
+              {% for v in urgent_vacancies %}
+              <tr class="hover:bg-slate-50/70 transition-colors">
+                <td class="py-3 px-4 font-bold text-slate-900">{{ v.title }}</td>
+                <td class="py-3 px-4 text-slate-700 font-medium">{{ v.employer_name }}</td>
+                <td class="py-3 px-4">
+                  <span class="px-2.5 py-0.5 bg-blue-50 text-blue-700 font-semibold rounded-md border border-blue-200 text-[10px]">
+                    {{ v.category_display }}
+                  </span>
+                </td>
+                <td class="py-3 px-4 text-center">
+                  <span class="px-2.5 py-1 bg-rose-50 text-rose-700 font-black rounded-lg border border-rose-200 font-label-md">
+                    {{ v.remaining_slots }} / {{ v.slots }}
+                  </span>
+                </td>
+                <td class="py-3 px-4 text-slate-600 font-label-md">{{ v.days_open }} days</td>
+                <td class="py-3 px-4 text-slate-600 max-w-xs truncate" title="{{ v.top_skills }}">{{ v.top_skills }}</td>
+                <td class="py-3 px-4 text-right">
+                  <a href="{% url 'vacancy_detail_admin' v.id %}" class="px-3 py-1.5 bg-secondary text-white hover:bg-secondary/90 rounded-lg text-xs font-semibold inline-flex items-center gap-1 transition-all shadow-sm">
+                    <span class="material-symbols-outlined text-[14px]">person_search</span> Match Talent
+                  </a>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="7" class="py-6 text-center text-slate-500 italic">No urgent vacancies requiring fulfillment.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Section 4: Employer Scorecard & Degree Mismatch Telemetry -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Left: Employer Scorecard (7 cols) -->
+        <div class="lg:col-span-7 glass-card rounded-2xl p-6 border border-slate-200">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+            <div>
+              <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                <span class="material-symbols-outlined text-secondary text-[20px]">domain_verification</span>
+                Employer Hiring Responsiveness Leaderboard
+              </h3>
+              <p class="text-xs text-slate-500 mt-0.5">Monitoring partner processing speed and conversion of candidate referrals.</p>
+            </div>
+            <a href="{% url 'employer_management_admin' %}" class="text-xs font-semibold text-secondary hover:underline">View All</a>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-50/80 border-b border-slate-200 text-[10px] uppercase tracking-wider text-slate-500 font-label-md">
+                  <th class="py-2.5 px-3 font-semibold">Employer Partner</th>
+                  <th class="py-2.5 px-3 font-semibold text-center">Vacancies</th>
+                  <th class="py-2.5 px-3 font-semibold text-center">Referred</th>
+                  <th class="py-2.5 px-3 font-semibold text-center">Hired</th>
+                  <th class="py-2.5 px-3 font-semibold text-center">Response Rate</th>
+                  <th class="py-2.5 px-3 font-semibold text-right">Status</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 text-xs">
+                {% for emp in employer_scorecard %}
+                <tr class="hover:bg-slate-50/60 transition-colors">
+                  <td class="py-3 px-3">
+                    <div class="font-bold text-slate-900">{{ emp.name }}</div>
+                    <div class="text-[10px] text-slate-500">{{ emp.industry }}</div>
+                  </td>
+                  <td class="py-3 px-3 text-center font-label-md">{{ emp.vacancies }}</td>
+                  <td class="py-3 px-3 text-center font-label-md font-semibold text-slate-700">{{ emp.referrals }}</td>
+                  <td class="py-3 px-3 text-center font-label-md font-black text-emerald-600">{{ emp.hired }}</td>
+                  <td class="py-3 px-3 text-center">
+                    <span class="font-label-md font-bold text-slate-800">{{ emp.resp_rate }}%</span>
+                  </td>
+                  <td class="py-3 px-3 text-right">
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold border {{ emp.perf_badge }}">
+                      {{ emp.perf_status }}
+                    </span>
+                  </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="6" class="py-6 text-center text-slate-500 italic">No employer records found.</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Right: Degree-to-Job Mismatch Telemetry (5 cols) -->
+        <div class="lg:col-span-5 glass-card rounded-2xl p-6 border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+              <h3 class="text-base font-bold text-slate-900 flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-rose-600 text-[20px]">shuffle</span>
+                Cross-Field & Degree Mismatch
+              </h3>
+              <span class="text-xs font-black text-rose-600 font-label-md">{{ mismatch_rate }}% Rate</span>
+            </div>
+            <p class="text-xs text-slate-500 mb-4">Analysis of candidates successfully hired into career tracks distinct from their formal undergraduate degrees.</p>
+
+            <div class="space-y-3">
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                <div class="text-xs font-bold text-slate-800 mb-1">Observed Mismatch Patterns:</div>
+                <div class="text-xs text-slate-600 space-y-1">
+                  {% for ex in mismatch_examples %}
+                  <div class="flex items-center justify-between py-1 border-b border-slate-200/60 last:border-0">
+                    <span class="font-medium text-slate-900">{{ ex.fos }}</span>
+                    <span class="material-symbols-outlined text-slate-400 text-[14px]">arrow_right_alt</span>
+                    <span class="text-secondary font-semibold">{{ ex.job_title }}</span>
+                  </div>
+                  {% empty %}
+                  <div class="italic text-slate-500">All placements currently align with educational majors.</div>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="p-3.5 bg-emerald-50/70 border border-emerald-200 rounded-xl">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="material-symbols-outlined text-emerald-700 text-[18px]">verified</span>
+                  <span class="text-xs font-bold text-emerald-950">Upskilling as a Career Bridge</span>
+                </div>
+                <p class="text-[11px] text-emerald-800 leading-relaxed">
+                  <strong>{{ training_to_hire_rate }}%</strong> of placed career shifters completed vocational/TESDA modules prior to endorsement, dramatically raising employer retention.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+            <span class="text-slate-500">DOLE Underemployment Index</span>
+            <button onclick="window.location.href='{% url 'export_analytics_csv' %}?report=mismatch'" class="text-secondary font-semibold hover:underline inline-flex items-center gap-1">
+              Download Mismatch Log <span class="material-symbols-outlined text-[14px]">download</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Section 5: Talent Match Distribution & Searchable Referral Log -->
+      <div class="glass-card rounded-2xl p-6 border border-slate-200">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 pb-3 border-b border-slate-100">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <span class="material-symbols-outlined text-secondary text-[22px]">hub</span>
+              Talent Match Distribution & Candidate Placement Directory
+            </h3>
+            <p class="text-xs text-slate-500 mt-0.5">Live roster of candidates referred across open vacancies with compatibility scores.</p>
+          </div>
+
+          <!-- Search Box -->
+          <div class="relative w-full sm:w-72">
+            <span class="material-symbols-outlined absolute left-3 top-2.5 text-slate-400 text-[18px]">search</span>
+            <input type="text" id="candidateSearchInput" placeholder="Filter candidate or role..." onkeyup="filterTalentTable()" class="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-secondary focus:bg-white transition-all">
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse" id="talentMatchesTable">
+            <thead>
+              <tr class="bg-slate-50/80 border-b border-slate-200 text-[11px] uppercase tracking-wider text-slate-600 font-label-md">
+                <th class="py-3 px-4 font-semibold">Candidate Profile</th>
+                <th class="py-3 px-4 font-semibold">Matched Vacancy & Employer</th>
+                <th class="py-3 px-4 font-semibold text-center">Match Score</th>
+                <th class="py-3 px-4 font-semibold">Identified Skill Gaps</th>
+                <th class="py-3 px-4 font-semibold">Referral Status</th>
+                <th class="py-3 px-4 font-semibold text-right">Report</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-xs" id="talentMatchesBody">
+              {% for item in talent_match_distribution %}
+              <tr class="hover:bg-slate-50/70 transition-colors talent-row">
+                <td class="py-3 px-4">
+                  <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-xs shrink-0 font-label-md">
+                      {{ item.name|slice:":2"|upper }}
+                    </div>
+                    <div>
+                      <div class="font-bold text-slate-900 candidate-name">{{ item.name }}</div>
+                      <div class="text-[11px] text-slate-500">{{ item.title }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="py-3 px-4">
+                  <div class="font-semibold text-slate-800 matched-role">{{ item.role }}</div>
+                  <div class="text-[11px] text-slate-500 matched-employer">{{ item.employer }}</div>
+                </td>
+                <td class="py-3 px-4 text-center">
+                  <div class="inline-flex items-center gap-2">
+                    <div class="w-16 bg-slate-200 h-2 rounded-full overflow-hidden">
+                      <div class="h-full rounded-full {% if item.match_score >= 80 %}bg-emerald-500{% elif item.match_score >= 60 %}bg-blue-600{% else %}bg-amber-500{% endif %}" style="width: {{ item.match_score }}%;"></div>
+                    </div>
+                    <span class="font-label-md font-bold {% if item.match_score >= 80 %}text-emerald-700{% elif item.match_score >= 60 %}text-blue-700{% else %}text-amber-700{% endif %}">
+                      {{ item.match_score }}%
+                    </span>
+                  </div>
+                </td>
+                <td class="py-3 px-4 text-slate-600 max-w-xs truncate" title="{{ item.key_gaps }}">
+                  {{ item.key_gaps }}
+                </td>
+                <td class="py-3 px-4">
+                  {% if 'Hired' in item.status or 'Regular' in item.status %}
+                  <span class="px-2.5 py-0.5 bg-emerald-50 text-emerald-700 font-bold rounded-full border border-emerald-200 text-[10px]">
+                    {{ item.status }}
+                  </span>
+                  {% elif 'Interviewing' in item.status %}
+                  <span class="px-2.5 py-0.5 bg-indigo-50 text-indigo-700 font-bold rounded-full border border-indigo-200 text-[10px]">
+                    Interviewing
+                  </span>
+                  {% elif 'Accepted' in item.status or 'Onboarding' in item.status %}
+                  <span class="px-2.5 py-0.5 bg-blue-50 text-blue-700 font-bold rounded-full border border-blue-200 text-[10px]">
+                    Offer / Onboarding
+                  </span>
+                  {% elif 'Declined' in item.status %}
+                  <span class="px-2.5 py-0.5 bg-rose-50 text-rose-700 font-bold rounded-full border border-rose-200 text-[10px]">
+                    Declined
+                  </span>
+                  {% elif 'No Show' in item.status %}
+                  <span class="px-2.5 py-0.5 bg-rose-50 text-rose-700 font-bold rounded-full border border-rose-200 text-[10px]">
+                    No Show
+                  </span>
+                  {% else %}
+                  <span class="px-2.5 py-0.5 bg-slate-100 text-slate-700 font-bold rounded-full border border-slate-200 text-[10px]">
+                    {{ item.status }}
+                  </span>
+                  {% endif %}
+                </td>
+                <td class="py-3 px-4 text-right">
+                  <a href="{% url 'applicant_employment_report' item.applicant_id %}" class="text-xs text-secondary font-semibold hover:underline inline-flex items-center gap-0.5">
+                    Report <span class="material-symbols-outlined text-[13px]">open_in_new</span>
+                  </a>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="6" class="py-8 text-center text-slate-500 italic">No candidate referrals recorded for this filter.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
-    <div class="flex items-end justify-between">
-      <span class="text-2xl font-bold text-secondary">{{ mismatch_rate|floatformat:1 }}%</span>
-      <span class="text-[11px] text-on-surface-variant">Outside field of study</span>
-    </div>
-  </div>
+  </main>
 
-  <div class="glass-card p-5 rounded-xl border border-outline-variant bg-surface-container-lowest">
-    <div class="flex items-center justify-between mb-2">
-      <span class="text-xs font-semibold text-on-surface-variant uppercase">Training-to-Hire Rate</span>
-      <span class="material-symbols-outlined text-on-tertiary-container text-[20px]">school</span>
-    </div>
-    <div class="flex items-end justify-between">
-      <span class="text-2xl font-bold text-on-tertiary-container">{{ training_to_hire_rate|floatformat:1 }}%</span>
-      <span class="text-[11px] text-on-surface-variant">Upskilled candidates hired</span>
-    </div>
-  </div>
-</div>
-<!-- Bento Grid Main Content -->
-<div class="bento-grid">
-<!-- Match Rate Heatmap Placeholder -->
-<div class="col-span-12 lg:col-span-8 glass-card rounded-xl p-8 min-h-[400px]">
-<div class="flex items-center justify-between mb-8">
-<div>
-<h2 class="font-headline-md text-headline-md text-on-surface">Skill Match Heatmap</h2>
-<p class="text-body-sm text-on-surface-variant">Supply vs Demand by Department</p>
-</div>
-<div class="flex items-center gap-2">
-<span class="w-3 h-3 bg-error rounded-sm"></span><span class="text-label-sm font-label-sm mr-2">Shortage</span>
-<span class="w-3 h-3 bg-surface-container-highest rounded-sm"></span><span class="text-label-sm font-label-sm mr-2">Balanced</span>
-<span class="w-3 h-3 bg-secondary rounded-sm"></span><span class="text-label-sm font-label-sm">Surplus</span>
-</div>
-</div>
-<div class="grid grid-cols-6 gap-2">
-<!-- Header Row -->
-<div class="col-span-1"></div>
-<div class="text-label-sm font-label-sm text-center py-2">Eng</div>
-<div class="text-label-sm font-label-sm text-center py-2">Design</div>
-<div class="text-label-sm font-label-sm text-center py-2">Sales</div>
-<div class="text-label-sm font-label-sm text-center py-2">Product</div>
-<div class="text-label-sm font-label-sm text-center py-2">Ops</div>
-<!-- Data Rows -->
-<div class="text-label-sm font-label-sm py-4 flex items-center">Cloud Arch</div>
-<div class="bg-error/80 rounded-md h-12 flex items-center justify-center text-white text-label-sm font-bold">-24%</div>
-<div class="bg-surface-container-high rounded-md h-12"></div>
-<div class="bg-surface-container-high rounded-md h-12"></div>
-<div class="bg-secondary/40 rounded-md h-12 flex items-center justify-center text-on-surface font-bold">+12%</div>
-<div class="bg-surface-container-high rounded-md h-12"></div>
-<div class="text-label-sm font-label-sm py-4 flex items-center">Data Eng</div>
-<div class="bg-secondary/60 rounded-md h-12 flex items-center justify-center text-white font-bold">+38%</div>
-<div class="bg-surface-container-high rounded-md h-12"></div>
-<div class="bg-surface-container-high rounded-md h-12"></div>
-<div class="bg-error/40 rounded-md h-12 flex items-center justify-center text-on-surface font-bold">-8%</div>
-<div class="bg-surface-container-high rounded-md h-12"></div>
-<div class="text-label-sm font-label-sm py-4 flex items-center">UI/UX</div>
-<div class="bg-surface-container-high rounded-md h-12"></div>
-<div class="bg-error/90 rounded-md h-12 flex items-center justify-center text-white font-bold">-41%</div>
-<div class="bg-surface-container-high rounded-md h-12"></div>
-<div class="bg-surface-container-high rounded-md h-12"></div>
-<div class="bg-surface-container-high rounded-md h-12"></div>
-<div class="text-label-sm font-label-sm py-4 flex items-center">SecOps</div>
-<div class="bg-error/60 rounded-md h-12 flex items-center justify-center text-white font-bold">-18%</div>
-<div class="bg-surface-container-high rounded-md h-12"></div>
-<div class="bg-surface-container-high rounded-md h-12"></div>
-<div class="bg-surface-container-high rounded-md h-12"></div>
-<div class="bg-secondary/20 rounded-md h-12 flex items-center justify-center text-on-surface font-bold">+5%</div>
-</div>
-</div>
-<!-- Top In-Demand Skills Chart -->
-<div class="col-span-12 lg:col-span-4 glass-card rounded-xl p-8 flex flex-col">
-<h2 class="font-headline-md text-headline-md text-on-surface mb-6">Top In-Demand</h2>
-<div class="space-y-6 flex-1">
-{% for skill in most_demanded_skills %}
-<div>
-<div class="flex justify-between items-center mb-2">
-<span class="text-body-sm font-medium">{{ skill.name }}</span>
-<span class="text-label-sm font-label-sm text-secondary">{{ skill.requests }} Requests</span>
-</div>
-<div class="w-full bg-surface-container-low h-2 rounded-full overflow-hidden">
-<div class="bg-secondary h-full progress-bar" data-progress="{{ skill.requests }}"></div>
-</div>
-</div>
-{% empty %}
-<div class="text-xs text-on-surface-variant italic">No data yet</div>
-{% endfor %}
-</div>
-</div>
-<!-- Skill Inventory vs Vacancy Table -->
-<div class="col-span-12 glass-card rounded-xl overflow-hidden">
-<div class="px-8 py-6 border-b border-outline-variant flex items-center justify-between">
-<h2 class="font-headline-md text-headline-md text-on-surface">Talent Match Distribution</h2>
-<div class="flex gap-2 items-center">
-<select class="bg-surface-container-low border-none rounded-lg text-xs font-semibold focus:ring-secondary py-2 px-3">
-<option>Filter by Department</option>
-<option>Engineering</option>
-<option>Marketing</option>
-</select>
+  <script>
+    function downloadAnalyticsReport() {
+      const select = document.getElementById('exportReportType');
+      const val = select ? select.value : 'all';
+      window.location.href = `{% url 'export_analytics_csv' %}?report=${val}`;
+    }
 
-<div class="flex gap-1 items-center border-l pl-3 ml-1 border-outline-variant">
-  <select id="exportSelect" class="bg-surface-container-low border-none rounded-lg text-xs font-semibold focus:ring-secondary py-2 px-3">
-    <option value="all">Export All Summary</option>
-    <option value="demand">Export Skill Demand</option>
-    <option value="gaps">Export Skill Gaps</option>
-    <option value="mismatch">Export Mismatch Log</option>
-    <option value="responsiveness">Export Responsiveness</option>
-    <option value="funnel">Export Funnel Status</option>
-  </select>
-  <button onclick="triggerExport()" class="px-4 py-2 bg-primary hover:bg-primary/90 text-on-primary rounded-lg text-xs font-semibold inline-flex items-center gap-1">
-    <span class="material-symbols-outlined text-[16px]">download</span> Export
-  </button>
-</div>
-</div>
-</div>
-<div class="overflow-x-auto">
-<table class="w-full text-left border-collapse">
-<thead>
-<tr class="bg-surface-container-low border-b border-outline-variant">
-<th class="px-8 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Candidate Profile</th>
-<th class="px-8 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Matched Role</th>
-<th class="px-8 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Match Score</th>
-<th class="px-8 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Key Gaps</th>
-<th class="px-8 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Status</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-outline-variant">
-{% for item in talent_match_distribution %}
-<tr class="hover:bg-surface-container-low transition-colors {% cycle '' 'bg-surface-container-low/20' %}">
-<td class="px-8 py-6">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center font-bold text-secondary">
-    {{ item.name|slice:":2"|upper }}
-</div>
-<div>
-<p class="text-body-md font-semibold text-on-surface">{{ item.name }}</p>
-<p class="text-body-sm text-on-surface-variant">{{ item.title }}</p>
-</div>
-</div>
-</td>
-<td class="px-8 py-6 text-body-md">{{ item.role }}</td>
-<td class="px-8 py-6">
-<div class="flex items-center gap-2">
-<div class="w-16 bg-surface-container-low h-1.5 rounded-full overflow-hidden">
-<div class="bg-secondary h-full progress-bar" data-progress="{{ item.match_score }}"></div>
-</div>
-<span class="text-label-sm font-label-sm">{{ item.match_score }}%</span>
-</div>
-</td>
-<td class="px-8 py-6">
-<span class="text-body-sm text-on-surface-variant">{{ item.key_gaps }}</span>
-</td>
-<td class="px-8 py-6">
-{% if item.status == 'Top Choice' %}
-<span class="px-3 py-1 bg-tertiary-fixed text-on-tertiary-fixed rounded-full text-label-sm font-label-sm">Top Choice</span>
-{% elif item.status == 'In Review' %}
-<span class="px-3 py-1 bg-surface-container-highest text-secondary rounded-full text-label-sm font-label-sm">In Review</span>
-{% else %}
-<span class="px-3 py-1 bg-error-container text-error rounded-full text-label-sm font-label-sm">Upskilling Suggested</span>
-{% endif %}
-</td>
-</tr>
-{% empty %}
-<tr>
-<td colspan="5" class="px-8 py-6 text-center text-on-surface-variant italic">No matches tracked yet.</td>
-</tr>
-{% endfor %}
-</tbody>
-</table>
-</div>
-</div>
-<!-- Skill Trend Graph -->
-<div class="col-span-12 lg:col-span-12 glass-card rounded-xl p-8 h-[300px] relative overflow-hidden">
-<div class="absolute inset-0 opacity-20 pointer-events-none">
+    function filterTalentTable() {
+      const input = document.getElementById('candidateSearchInput');
+      const filter = input.value.toLowerCase();
+      const rows = document.querySelectorAll('#talentMatchesBody .talent-row');
 
-</div>
-<div class="relative z-10">
-<h2 class="font-headline-md text-headline-md text-on-surface">Talent Availability Trend</h2>
-<p class="text-body-sm text-on-surface-variant mb-6">Historical matching efficiency across the current recruitment cycle</p>
-<div class="flex items-end gap-1 h-32 w-full mt-4">
-<div class="flex-1 bg-secondary/20 h-1/2 rounded-t-sm transition-all hover:bg-secondary/40"></div>
-<div class="flex-1 bg-secondary/30 h-2/3 rounded-t-sm transition-all hover:bg-secondary/40"></div>
-<div class="flex-1 bg-secondary/40 h-1/2 rounded-t-sm transition-all hover:bg-secondary/40"></div>
-<div class="flex-1 bg-secondary/50 h-3/4 rounded-t-sm transition-all hover:bg-secondary/60"></div>
-<div class="flex-1 bg-secondary/60 h-2/3 rounded-t-sm transition-all hover:bg-secondary/80"></div>
-<div class="flex-1 bg-secondary/70 h-4/5 rounded-t-sm transition-all hover:bg-secondary/90"></div>
-<div class="flex-1 bg-secondary/80 h-full rounded-t-sm transition-all hover:bg-secondary"></div>
-<div class="flex-1 bg-secondary/90 h-5/6 rounded-t-sm transition-all hover:bg-secondary"></div>
-<div class="flex-1 bg-secondary h-4/5 rounded-t-sm transition-all hover:bg-secondary/80"></div>
-<div class="flex-1 bg-secondary/80 h-3/4 rounded-t-sm transition-all hover:bg-secondary"></div>
-<div class="flex-1 bg-secondary/70 h-2/3 rounded-t-sm transition-all hover:bg-secondary"></div>
-<div class="flex-1 bg-secondary/60 h-3/4 rounded-t-sm transition-all hover:bg-secondary"></div>
-</div>
-<div class="flex justify-between mt-4 text-[10px] font-label-md text-on-surface-variant uppercase tracking-tighter">
-<span>Week 1</span>
-<span>Week 2</span>
-<span>Week 3</span>
-<span>Week 4</span>
-<span>Week 5</span>
-<span>Week 6</span>
-<span>Week 7</span>
-<span>Week 8</span>
-<span>Week 9</span>
-<span>Week 10</span>
-<span>Week 11</span>
-<span>Current</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Footer / Bottom Spacing -->
-<footer class="pt-12 pb-8 border-t border-outline-variant text-center">
-<p class="text-body-sm text-on-surface-variant opacity-60">© 2024 SKILLUP Analytics Engine. All rights reserved for Enterprise Licensing.</p>
-</footer>
-</div>
-</main>
-<!-- FAB for quick action (Suppressed on analytics by standard, but allowed for report generation here) -->
-<button class="fixed bottom-8 right-8 w-14 h-14 bg-secondary-container text-on-secondary-container rounded-full shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-50">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
-</button>
-<script>
-        // Set progress bar widths dynamically to avoid inline template validation issues
-        document.querySelectorAll('.progress-bar').forEach(bar => {
-            bar.style.width = (bar.dataset.progress || '0') + '%';
-        });
+      rows.forEach(row => {
+        const name = row.querySelector('.candidate-name')?.textContent.toLowerCase() || '';
+        const role = row.querySelector('.matched-role')?.textContent.toLowerCase() || '';
+        const emp = row.querySelector('.matched-employer')?.textContent.toLowerCase() || '';
 
-        // Simple interactive elements
-        document.querySelectorAll('.glass-card').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.borderColor = '#0051d5';
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.borderColor = '#E2E8F0';
-            });
-        });
-
-        function triggerExport() {
-            const reportVal = document.getElementById('exportSelect').value;
-            window.location.href = `{% url 'export_analytics_csv' %}?report=${reportVal}`;
+        if (name.includes(filter) || role.includes(filter) || emp.includes(filter)) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
         }
-    </script>
-</body></html>
+      });
+    }
+  </script>
+</body>
+</html>

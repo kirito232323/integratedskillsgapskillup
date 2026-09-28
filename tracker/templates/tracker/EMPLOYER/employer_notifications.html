@@ -131,6 +131,15 @@
 {% if unread_match_alerts %}<span class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">{{ unread_match_alerts }}</span>{% endif %}
 </div>
 <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">settings</button>
+<a href="{% url 'company_profile_employer' %}" class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant bg-secondary/15 flex items-center justify-center font-bold text-xs text-secondary shrink-0 hover:ring-2 hover:ring-secondary transition-all" title="{{ request.user.profile.company_name|default:request.user.get_full_name }}">
+  {% if request.user.profile.company_logo %}
+    <img alt="{{ request.user.profile.company_name }}" class="w-full h-full object-cover" src="{{ request.user.profile.company_logo.url }}">
+  {% elif request.user.profile.profile_picture %}
+    <img alt="{{ request.user.get_full_name }}" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+  {% else %}
+    {{ request.user.profile.company_name|slice:":1"|upper|default:request.user.first_name|slice:":1"|upper|default:"E" }}
+  {% endif %}
+</a>
 </div>
 </header>
 <!-- SideNavBar — identical to employer_dashboard.html, Match Alerts is active -->
@@ -144,8 +153,8 @@
   {% endif %}
 </div>
 <div>
-<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">Enterprise Portal</h2>
-<p class="text-[10px] text-on-surface-variant opacity-70">Talent Management</p>
+<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">SKILLUP Portal</h2>
+<p class="text-[10px] text-on-surface-variant opacity-70">Enterprise Talent Network</p>
 </div>
 </div>
 <nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
@@ -272,7 +281,7 @@
           Send Offer
         </a>
         {% endif %}
-        <a href="{% url 'applicant_details_employer_id' alert.applicant.id %}"
+        <a href="{% url 'applicant_details_employer_id' alert.applicant.id %}?from_section=notifications&job_id={{ alert.vacancy.id }}"
            class="flex items-center gap-2 border border-outline-variant text-on-surface text-sm font-medium px-4 py-2 rounded-lg hover:bg-surface-container transition-all whitespace-nowrap">
           <span class="material-symbols-outlined text-sm">person</span>
           View Profile

@@ -8,35 +8,100 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "secondary": "#0051d5",
+                "inverse-surface": "#213145",
+                "on-primary-fixed-variant": "#3f465c",
+                "outline-variant": "#c6c6cd",
+                "primary-fixed": "#dae2fd",
+                "on-error": "#ffffff",
+                "surface-container": "#e5eeff",
+                "on-tertiary": "#ffffff",
+                "surface-tint": "#565e74",
+                "on-tertiary-fixed-variant": "#005236",
+                "surface-container-low": "#eff4ff",
+                "on-surface": "#0b1c30",
+                "on-secondary-fixed-variant": "#003ea8",
+                "surface-bright": "#f8f9ff",
+                "tertiary-fixed": "#6ffbbe",
+                "on-primary-container": "#7c839b",
+                "primary-fixed-dim": "#bec6e0",
+                "outline": "#76777d",
+                "on-secondary-fixed": "#00174b",
+                "on-secondary": "#ffffff",
+                "surface-container-highest": "#d3e4fe",
+                "tertiary-container": "#002113",
+                "primary-container": "#131b2e",
+                "tertiary": "#000000",
+                "on-secondary-container": "#fefcff",
+                "surface-dim": "#cbdbf5",
+                "error": "#ba1a1a",
+                "on-primary": "#ffffff",
+                "tertiary-fixed-dim": "#4edea3",
+                "on-background": "#0b1c30",
+                "on-surface-variant": "#45464d",
+                "surface-container-lowest": "#ffffff",
+                "on-tertiary-fixed": "#002113",
+                "inverse-on-surface": "#eaf1ff",
+                "background": "#f8f9ff",
+                "secondary-fixed": "#dbe1ff",
+                "primary": "#000000",
+                "secondary-container": "#316bf3",
+                "on-tertiary-container": "#009668",
+                "surface-variant": "#d3e4fe",
+                "surface-container-high": "#dce9ff",
+                "error-container": "#ffdad6",
+                "on-error-container": "#93000a",
+                "surface": "#f8f9ff",
+                "secondary-fixed-dim": "#b4c5ff",
+                "on-primary-fixed": "#131b2e",
+                "inverse-primary": "#bec6e0"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+            },
+            "spacing": {
+                "gutter": "24px",
+                "margin-mobile": "16px",
+                "margin-desktop": "40px",
+                "container-max": "1440px",
+                "unit": "4px"
+            },
+            "fontFamily": {
+                "body-md": ["Inter"],
+                "headline-md": ["Inter"],
+                "display-lg": ["Inter"],
+                "body-lg": ["Inter"],
+                "label-sm": ["JetBrains Mono"],
+                "headline-lg-mobile": ["Inter"],
+                "body-sm": ["Inter"],
+                "headline-lg": ["Inter"],
+                "label-md": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                "label-sm": ["12px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
     <style>
-        :root {
-            --primary: #0051d5;
-            --on-primary: #ffffff;
-            --primary-container: #d8e2ff;
-            --on-primary-container: #001a40;
-            --secondary: #316bf3;
-            --on-secondary: #ffffff;
-            --secondary-container: #ecf0ff;
-            --on-secondary-container: #001c4c;
-            --surface: #f8fafc;
-            --on-surface: #0f172a;
-            --surface-container-lowest: #ffffff;
-            --surface-container-low: #f1f5f9;
-            --surface-container-high: #e2e8f0;
-            --outline-variant: #cbd5e1;
-            --outline: #94a3b8;
-            --error: #ba1a1a;
-            --error-container: #ffdad6;
-            --on-error-container: #410002;
-            --on-tertiary-container: #00210f;
-            --tertiary-container: #93f2c0;
-            --bg-background: #f8fafc;
-            --margin-desktop: 24px;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-background);
-        }
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
             display: inline-block;
@@ -49,218 +114,631 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     </style>
 </head>
-<body class="bg-background text-on-background font-body-md min-h-screen">
+<body class="bg-[#f8f9ff] text-on-surface font-body-md min-h-screen">
 
 <!-- TopNavBar Shell -->
-<header class="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant flex items-center justify-between px-margin-desktop h-16 w-full">
+<header class="fixed top-0 w-full z-50 bg-white border-b border-outline-variant flex items-center justify-between px-margin-desktop h-16 w-full shadow-sm">
     <div class="flex items-center gap-8">
         <h1 class="font-headline-md text-headline-md font-bold text-on-surface">SKILLUP</h1>
     </div>
     <div class="flex items-center gap-4">
         <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">notifications</button>
-        <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">help</button>
-        <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80">settings</button>
-        <div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
-            <img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCn5ndUBvKYHDdfjOtDcuDcmEa-zwbSgM-ZLHNPtfHm7uL9e355N19pHC8c-XBPUwwXHIzoATnKENMDvabjLGF5diSFylP09pwQghoAY0N70mks-GlVv2KmatElbeqz2_5J-gSw4HGwnHnPHYMLeRKflzGezIfmEqF1sJTCsVHaAp-3UBTYmVg6yrq3nRzkltjZyYRqaTWNO9ETM3eG6xeP_aE-PZkbZbeBZvG-dmCW3fgaiDFfFN1v9i2cwj6DH0AUyxyPRP9c4y2t">
-        </div>
+        <a href="{% url 'peso_profile_admin' %}" class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors active:opacity-80" title="Settings">settings</a>
+        <a href="{% url 'peso_profile_admin' %}" class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant bg-secondary/15 flex items-center justify-center font-bold text-xs text-secondary shrink-0 hover:ring-2 hover:ring-secondary transition-all" title="{{ request.user.get_full_name }}">
+        {% if request.user.profile.profile_picture %}
+            <img alt="{{ request.user.get_full_name }}" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+        {% else %}
+            {{ request.user.first_name|slice:":1"|upper }}{{ request.user.last_name|slice:":1"|upper|default:"P" }}
+        {% endif %}
+        </a>
     </div>
 </header>
 
-<!-- SideNavBar Shell -->
-<aside class="fixed left-0 top-0 h-full w-64 pt-20 bg-surface-container-lowest border-r border-outline-variant hidden md:flex flex-col p-4 gap-2 z-40">
-    <div class="flex items-center gap-3 px-2 py-4 mb-4 border-b border-outline-variant/30">
-        <div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center text-white font-black text-xl">P</div>
-        <div>
-            <h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">Enterprise Portal</h2>
-            <p class="text-[10px] text-on-surface-variant opacity-70">Talent Management</p>
-        </div>
-    </div>
-    <nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
-        <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant opacity-70 hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="{% url 'peso_dashboard_admin' %}">
-            <span class="material-symbols-outlined">dashboard</span>
-            <span>Dashboard</span>
-        </a>
-        <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant opacity-70 hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="{% url 'applicant_monitoring_admin' %}">
-            <span class="material-symbols-outlined">group</span>
-            <span>Talent Bench</span>
-        </a>
-        <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant opacity-70 hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="{% url 'employer_management_admin' %}">
-            <span class="material-symbols-outlined">business</span>
-            <span>Employers</span>
-        </a>
-        <a class="flex items-center gap-3 px-3 py-2 bg-surface-container text-on-surface font-bold rounded-lg transition-all font-label-md text-label-md" href="{% url 'vacancy_management_admin' %}">
-            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">work</span>
-            <span>Vacancies</span>
-        </a>
-        <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant opacity-70 hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="{% url 'employment_tracking_admin' %}">
-            <span class="material-symbols-outlined">ads_click</span>
-            <span>Employment Tracking</span>
-        </a>
-        <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant opacity-70 hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="{% url 'skill_monitoring_admin' %}">
-            <span class="material-symbols-outlined">psychology</span>
-            <span>Skill Gap Analytics</span>
-        </a>
-        <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant opacity-70 hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="{% url 'training_monitoring_admin' %}">
-            <span class="material-symbols-outlined">school</span>
-            <span>Learning Paths</span>
-        </a>
-        <a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant opacity-70 hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="{% url 'logout' %}">
-            <span class="material-symbols-outlined">logout</span>
-            <span>Logout</span>
-        </a>
-    </nav>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-64 pt-20 bg-surface-container-lowest dark:bg-primary-container border-r border-outline-variant dark:border-outline hidden md:flex flex-col p-4 gap-2 z-40">
+<div class="flex items-center gap-3 px-2 py-4 mb-4 border-b border-outline-variant/30">
+{% if request.user.profile.profile_picture %}
+<div class="w-10 h-10 rounded-lg overflow-hidden border border-outline-variant shrink-0">
+  <img alt="Office Logo" class="w-full h-full object-cover" src="{{ request.user.profile.profile_picture.url }}">
+</div>
+{% else %}
+<div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center text-white font-black text-xl shrink-0">P</div>
+{% endif %}
+<div>
+<h2 class="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider whitespace-nowrap">SKILLUP Portal</h2>
+<p class="text-[10px] text-on-surface-variant opacity-70">Public Employment Service</p>
+</div>
+</div>
+<nav class="flex-grow flex flex-col gap-1 overflow-y-auto custom-scrollbar">
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'peso_dashboard_admin' %}">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'applicant_monitoring_admin' %}">
+<span class="material-symbols-outlined">groups</span>
+<span>Talent Bench</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'employer_management_admin' %}">
+<span class="material-symbols-outlined">domain</span>
+<span>Employers</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-surface-container dark:bg-secondary-container text-on-surface dark:text-on-secondary-container font-bold rounded-lg scale-98 active:scale-95 duration-150 transition-all font-label-md text-label-md" href="{% url 'vacancy_management_admin' %}">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">work</span>
+<span>Vacancies</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'employment_tracking_admin' %}">
+<span class="material-symbols-outlined">description</span>
+<span>Reports</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'skill_monitoring_admin' %}">
+<span class="material-symbols-outlined">analytics</span>
+<span>Skill Gaps</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'training_monitoring_admin' %}">
+<span class="material-symbols-outlined">school</span>
+<span>Training Programs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'job_matching_analytics_admin' %}">
+<span class="material-symbols-outlined">monitoring</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-primary-container opacity-70 hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-all rounded-lg scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'peso_profile_admin' %}">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant opacity-70 hover:bg-surface-container-high rounded-lg transition-all scale-98 active:scale-95 duration-150 font-label-md text-label-md" href="{% url 'logout' %}">
+<span class="material-symbols-outlined">logout</span>
+<span>Log Out</span>
+</a>
+</div>
 </aside>
 
 <!-- Main Container -->
-<main class="pt-20 pl-4 md:pl-72 pr-4 md:pr-12 pb-12 flex-grow">
-    <!-- Breadcrumbs / Back button -->
-    <div class="py-6 flex items-center justify-between">
-        <a href="{% url 'vacancy_management_admin' %}" class="inline-flex items-center gap-2 text-secondary hover:underline font-semibold transition-colors">
-            <span class="material-symbols-outlined">arrow_back</span>
-            <span>Back to Vacancies</span>
+<main class="md:ml-64 pt-24 px-6 md:px-8 pb-16 min-h-screen">
+    <!-- Back Button -->
+    <div class="mb-6">
+        <a href="{% url 'vacancy_management_admin' %}" class="inline-flex items-center gap-2 text-secondary font-bold text-sm hover:underline">
+            <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+            Back to Vacancies Directory
         </a>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Left: Job Details Panel (2 Cols) -->
-        <div class="lg:col-span-2 space-y-6">
-            <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm">
-                <div class="flex items-start justify-between gap-4 mb-4">
-                    <div>
-                        <h2 class="font-headline-md text-headline-md text-on-surface font-extrabold text-2xl">{{ vacancy.title }}</h2>
-                        <p class="text-secondary font-medium text-body-md mt-1">{{ vacancy.employer.company_name }}</p>
-                    </div>
-                    <span class="px-3 py-1 text-xs font-bold rounded-full uppercase tracking-wider {% if vacancy.status == 'Open' %}bg-green-100 text-green-800{% else %}bg-error-container text-error{% endif %}">
+    <!-- Vacancy Header Card -->
+    <div class="bg-white border border-outline-variant rounded-xl p-6 md:p-8 mb-8 shadow-sm">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-outline-variant">
+            <div>
+                <div class="flex items-center gap-3 mb-2 flex-wrap">
+                    <h1 class="font-headline-lg text-2xl md:text-3xl font-extrabold text-on-surface">{{ vacancy.title }}</h1>
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold {% if vacancy.status == 'Open' %}bg-emerald-50 text-emerald-700 border border-emerald-200{% else %}bg-slate-100 text-slate-700 border border-slate-300{% endif %}">
+                        <span class="w-2 h-2 rounded-full {% if vacancy.status == 'Open' %}bg-emerald-500{% else %}bg-slate-400{% endif %}"></span>
                         {{ vacancy.status }}
                     </span>
+                    <span class="px-3 py-1 bg-secondary/10 text-secondary border border-secondary/20 rounded-full text-xs font-bold uppercase tracking-wider">
+                        {{ vacancy.category_display }}
+                    </span>
                 </div>
-
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 py-4 border-t border-b border-outline-variant/50 text-body-sm font-medium my-6">
-                    <div>
-                        <span class="text-outline text-[11px] block uppercase">Location</span>
-                        <span class="text-on-surface">{{ vacancy.location }}</span>
-                    </div>
-                    <div>
-                        <span class="text-outline text-[11px] block uppercase">Category</span>
-                        <span class="text-on-surface">{{ vacancy.category }}</span>
-                    </div>
-                    <div>
-                        <span class="text-outline text-[11px] block uppercase">Salary Range</span>
-                        <span class="text-on-surface font-bold">{{ vacancy.salary_range|default:"Competitive" }}</span>
-                    </div>
-                    <div>
-                        <span class="text-outline text-[11px] block uppercase">Experience Required</span>
-                        <span class="text-on-surface">{{ vacancy.required_experience_years }} Years</span>
-                    </div>
+                <div class="flex items-center gap-4 text-on-surface-variant text-sm flex-wrap">
+                    {% if vacancy.employer %}
+                    <a href="{% url 'company_profile_detail' vacancy.employer.id %}" class="inline-flex items-center gap-1.5 font-bold text-secondary hover:text-blue-700 hover:underline transition-colors group" title="View {{ vacancy.employer.company_name|default:vacancy.employer.user.get_full_name }} Profile">
+                        <span class="material-symbols-outlined text-[18px] text-secondary group-hover:scale-110 transition-transform">business</span>
+                        <span>{{ vacancy.employer.company_name|default:vacancy.employer.user.get_full_name }}</span>
+                        <span class="material-symbols-outlined text-[13px] opacity-60 group-hover:opacity-100 transition-opacity">open_in_new</span>
+                    </a>
+                    {% else %}
+                    <span class="flex items-center gap-1 font-semibold text-on-surface">
+                        <span class="material-symbols-outlined text-[18px] text-secondary">business</span>
+                        {{ vacancy.employer.company_name|default:vacancy.employer.user.get_full_name }}
+                    </span>
+                    {% endif %}
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[18px] text-outline">location_on</span>
+                        {{ vacancy.location }}
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[18px] text-outline">payments</span>
+                        {{ vacancy.salary_range|default:"Competitive / Negotiable" }}
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[18px] text-outline">calendar_today</span>
+                        Posted {{ vacancy.created_at|date:"M d, Y" }}
+                    </span>
                 </div>
+            </div>
 
+            <!-- Quick Stats in Header -->
+            <div class="flex items-center gap-4 shrink-0 bg-surface-container-low p-3 rounded-xl border border-outline-variant/40">
+                <div class="text-center px-3 border-r border-outline-variant/60">
+                    <div class="text-xs text-on-surface-variant uppercase font-bold tracking-wider">Target Slots</div>
+                    <div class="font-headline-md text-xl font-bold text-on-surface mt-0.5">{{ vacancy.slots }}</div>
+                </div>
+                <div class="text-center px-3 border-r border-outline-variant/60">
+                    <div class="text-xs text-on-surface-variant uppercase font-bold tracking-wider">Available</div>
+                    <div class="font-headline-md text-xl font-bold text-secondary mt-0.5">{{ vacancy.remaining_slots }}</div>
+                </div>
+                <div class="text-center px-3">
+                    <div class="text-xs text-on-surface-variant uppercase font-bold tracking-wider">Candidates</div>
+                    <div class="font-headline-md text-xl font-bold text-emerald-600 mt-0.5">{{ referrals_data|length }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vacancy Details Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 pt-6 text-sm">
+            <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                <div class="text-xs uppercase font-bold text-outline tracking-wider mb-1">Employment Type</div>
+                <div class="font-bold text-on-surface">{{ vacancy.employment_type|default:"Full-time" }}</div>
+            </div>
+            <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                <div class="text-xs uppercase font-bold text-outline tracking-wider mb-1">Experience Required</div>
+                <div class="font-bold text-on-surface">{% if vacancy.required_experience_years %}{{ vacancy.required_experience_years }} Year{{ vacancy.required_experience_years|pluralize }}{% else %}Entry Level / Open{% endif %}</div>
+            </div>
+            <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                <div class="text-xs uppercase font-bold text-outline tracking-wider mb-1">Min Education</div>
+                <div class="font-bold text-on-surface">{{ vacancy.min_education|default:"None specified" }}</div>
+            </div>
+            <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                <div class="text-xs uppercase font-bold text-outline tracking-wider mb-1">Slots Status</div>
+                <div class="font-bold {% if vacancy.remaining_slots > 0 %}text-emerald-700{% else %}text-error{% endif %}">
+                    {{ vacancy.remaining_slots }} of {{ vacancy.slots }} Open
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Section: Job Description (2 Cols) & Requirements (1 Col) -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+        <!-- Left: Description (2 Cols) -->
+        <div class="lg:col-span-2 space-y-6">
+            <!-- Job Description -->
+            <div class="bg-white border border-outline-variant rounded-xl p-6 shadow-sm h-full">
+                <h2 class="font-headline-md text-lg font-bold text-on-surface mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-secondary">description</span>
+                    Job Description &amp; Details
+                </h2>
                 <div class="space-y-4">
                     <div>
-                        <h3 class="font-bold text-on-surface text-sm uppercase tracking-wider text-outline mb-2">Job Description</h3>
-                        <p class="text-on-surface-variant text-body-sm leading-relaxed">{{ vacancy.description|default:"No description provided." }}</p>
+                        <p class="text-on-surface-variant text-body-sm leading-relaxed whitespace-pre-line">{{ vacancy.description|default:"No description provided." }}</p>
                     </div>
                     {% if vacancy.remarks %}
-                    <div class="p-4 bg-surface-container-low rounded-lg border border-outline-variant/30">
-                        <h3 class="font-bold text-on-surface text-sm uppercase tracking-wider text-outline mb-1">Remarks</h3>
-                        <p class="text-on-surface-variant text-body-sm">{{ vacancy.remarks }}</p>
+                    <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                        <h3 class="font-bold text-blue-900 text-xs uppercase tracking-wider mb-1">Coordinator Remarks</h3>
+                        <p class="text-blue-800 text-sm">{{ vacancy.remarks }}</p>
                     </div>
                     {% endif %}
                 </div>
             </div>
-
-            <!-- Applicants/Referrals Table -->
-            <div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm">
-                <div class="p-6 border-b border-outline-variant bg-surface-container-low/40">
-                    <h3 class="font-headline-md text-headline-md text-on-surface font-bold text-lg">Applied &amp; Referred Candidates</h3>
-                    <p class="text-on-surface-variant text-body-sm mt-0.5">Candidates currently in the evaluation pipeline for this job.</p>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead class="bg-surface-container-low/60 border-b border-outline-variant">
-                            <tr>
-                                <th class="px-6 py-3.5 font-label-md text-label-md text-on-surface-variant uppercase">Candidate</th>
-                                <th class="px-6 py-3.5 font-label-md text-label-md text-on-surface-variant uppercase text-center">Match Score</th>
-                                <th class="px-6 py-3.5 font-label-md text-label-md text-on-surface-variant uppercase">Date Referred</th>
-                                <th class="px-6 py-3.5 font-label-md text-label-md text-on-surface-variant uppercase">Status</th>
-                                <th class="px-6 py-3.5 font-label-md text-label-md text-on-surface-variant uppercase text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-outline-variant">
-                            {% for ref in referrals_data %}
-                            <tr class="zebra-row hover:bg-surface-container/30 transition-colors">
-                                <td class="px-6 py-4.5">
-                                    <div class="font-semibold text-on-surface">{{ ref.referral.applicant.user.get_full_name }}</div>
-                                    <div class="text-xs text-on-surface-variant">{{ ref.referral.applicant.phone_number|default:"No Phone" }} | {{ ref.referral.applicant.user.email }}</div>
-                                </td>
-                                <td class="px-6 py-4.5 text-center">
-                                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-bold {% if ref.match_pct >= 70 %}bg-green-100 text-green-800{% elif ref.match_pct >= 50 %}bg-blue-100 text-blue-800{% else %}bg-error-container text-error{% endif %}">
-                                        {{ ref.match_pct }}% Match
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4.5 text-on-surface-variant text-body-sm">
-                                    {{ ref.referral.date_referred|date:"M d, Y" }}
-                                </td>
-                                <td class="px-6 py-4.5">
-                                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold 
-                                        {% if ref.referral.status == 'Hired' or ref.referral.status == 'Hired — Probationary' or ref.referral.status == 'Hired — Regular' or ref.referral.status == 'Regularly Employed' %}bg-green-100 text-green-800
-                                        {% elif ref.referral.status == 'Interviewing' or ref.referral.status == 'Shortlisted' %}bg-blue-100 text-blue-800
-                                        {% elif ref.referral.status == 'Pending' %}bg-yellow-100 text-yellow-800
-                                        {% else %}bg-outline-variant/40 text-on-surface-variant{% endif %}">
-                                        {{ ref.referral.status }}
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4.5 text-right">
-                                    <a href="{% url 'coordinator_interview' ref.referral.applicant.id %}" class="px-3 py-1.5 bg-secondary text-white rounded text-xs font-semibold hover:bg-secondary/90 transition-all shadow-sm">
-                                        View Candidate
-                                    </a>
-                                </td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="5" class="px-6 py-8 text-center text-on-surface-variant italic">No candidates have been referred or applied to this vacancy yet.</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
         </div>
 
-        <!-- Right: Requirements Side Panel (1 Col) -->
+        <!-- Right: Requirements & Qualifications (1 Col) -->
         <div class="space-y-6">
-            <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm">
-                <h3 class="font-headline-md text-headline-md text-on-surface font-bold text-lg mb-4">Required Skills</h3>
-                <div class="space-y-3">
+            <div class="bg-white border border-outline-variant rounded-xl p-6 shadow-sm">
+                <h3 class="font-headline-md text-lg font-bold text-on-surface mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-secondary">psychology</span>
+                    Required Skills
+                </h3>
+                <div class="space-y-2.5">
                     {% for req in vacancy.requirements.all %}
-                    <div class="flex items-center justify-between p-3 bg-surface-container-low/50 rounded-lg border border-outline-variant/20">
-                        <span class="font-semibold text-on-surface text-body-sm">{{ req.skill.name }}</span>
-                        <span class="px-2 py-0.5 bg-secondary/10 text-secondary text-xs font-bold rounded">Level {{ req.required_proficiency }}/5</span>
+                    <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-lg border border-slate-200">
+                        <span class="font-semibold text-on-surface text-sm">{{ req.skill.name }}</span>
+                        <span class="px-2.5 py-0.5 bg-secondary/10 text-secondary text-xs font-bold rounded-full border border-secondary/20">Level {{ req.required_proficiency }}/5</span>
                     </div>
                     {% empty %}
-                    <p class="text-on-surface-variant text-body-sm italic">No specific skill requirements listed for this job.</p>
+                    <p class="text-on-surface-variant text-sm italic">No specific skill requirements listed for this job.</p>
                     {% endfor %}
                 </div>
             </div>
 
             {% if vacancy.min_education or vacancy.required_certifications %}
-            <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm space-y-4">
+            <div class="bg-white border border-outline-variant rounded-xl p-6 shadow-sm space-y-4">
+                <h3 class="font-headline-md text-lg font-bold text-on-surface mb-3 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-secondary">school</span>
+                    Qualifications
+                </h3>
                 {% if vacancy.min_education %}
-                <div>
+                <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
                     <h4 class="font-bold text-[11px] text-outline uppercase tracking-wider mb-1">Education Requirements</h4>
-                    <p class="text-on-surface-variant text-body-sm font-medium">{{ vacancy.min_education }}</p>
+                    <p class="text-on-surface text-sm font-semibold">{{ vacancy.min_education }}</p>
                 </div>
                 {% endif %}
                 {% if vacancy.required_certifications %}
-                <div>
+                <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
                     <h4 class="font-bold text-[11px] text-outline uppercase tracking-wider mb-1">Required Certifications</h4>
-                    <p class="text-on-surface-variant text-body-sm font-medium">{{ vacancy.required_certifications }}</p>
+                    <p class="text-on-surface text-sm font-semibold">{{ vacancy.required_certifications }}</p>
                 </div>
                 {% endif %}
             </div>
             {% endif %}
         </div>
     </div>
+
+    <!-- Full-Width Section: Applied & Referred Candidates Table -->
+    <div class="bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm w-full mb-8">
+        <div class="p-6 border-b border-outline-variant bg-slate-50 flex items-center justify-between flex-wrap gap-4">
+            <div>
+                <h3 class="font-headline-md text-lg font-bold text-on-surface">Applied &amp; Referred Candidates</h3>
+                <p class="text-on-surface-variant text-xs mt-0.5">Candidates currently in the evaluation pipeline for this job.</p>
+            </div>
+            <span id="totalBadge" class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full border border-secondary/20">
+                {{ referrals_data|length }} Candidate{{ referrals_data|length|pluralize }}
+            </span>
+        </div>
+
+        <!-- Filter & Search Toolbar -->
+        <div class="p-4 bg-slate-50/70 border-b border-outline-variant flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="relative w-full md:w-80">
+                <span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-[18px]">search</span>
+                <input type="text" id="candidateSearchInput" placeholder="Search candidate name, email, or phone..."
+                    class="w-full pl-10 pr-4 py-2 bg-white border border-outline-variant rounded-lg text-xs focus:ring-2 focus:ring-secondary focus:border-transparent outline-none shadow-sm">
+            </div>
+            
+            <div class="flex items-center gap-3 w-full md:w-auto flex-wrap justify-start md:justify-end">
+                <!-- Status Filter -->
+                <div class="flex items-center gap-1.5">
+                    <span class="text-xs text-on-surface-variant font-semibold">Status:</span>
+                    <select id="statusFilter" class="bg-white border border-outline-variant rounded-lg px-3 py-1.5 text-xs font-medium focus:ring-2 focus:ring-secondary outline-none shadow-sm">
+                        <option value="">All Statuses</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Shortlisted">Shortlisted</option>
+                        <option value="Interviewing">Interviewing</option>
+                        <option value="Hired">Hired / Regular</option>
+                        <option value="Declined">Declined</option>
+                        <option value="Not Hired">Not Hired</option>
+                    </select>
+                </div>
+
+                <!-- Match Score Filter -->
+                <div class="flex items-center gap-1.5">
+                    <span class="text-xs text-on-surface-variant font-semibold">Match:</span>
+                    <select id="matchFilter" class="bg-white border border-outline-variant rounded-lg px-3 py-1.5 text-xs font-medium focus:ring-2 focus:ring-secondary outline-none shadow-sm">
+                        <option value="">All Match Scores</option>
+                        <option value="high">High Match (≥ 70%)</option>
+                        <option value="medium">Moderate Match (50% - 69%)</option>
+                        <option value="low">Low Match (< 50%)</option>
+                    </select>
+                </div>
+
+                <!-- Clear Filters Button -->
+                <button type="button" onclick="clearCandidateFilters()" class="text-xs text-secondary hover:underline font-bold px-2 py-1">
+                    Clear Filters
+                </button>
+
+                <span id="resultsCounter" class="text-xs text-on-surface-variant font-medium ml-1">
+                    Showing {{ referrals_data|length }} of {{ referrals_data|length }}
+                </span>
+            </div>
+        </div>
+
+        <div>
+            <table class="w-full text-left border-collapse table-auto">
+                <thead class="bg-slate-100/75 border-b border-outline-variant">
+                    <tr>
+                        <th class="px-6 py-3.5 font-label-md text-xs font-bold text-on-surface-variant uppercase">Candidate</th>
+                        <th class="px-6 py-3.5 font-label-md text-xs font-bold text-on-surface-variant uppercase text-center">Match Score</th>
+                        <th class="px-6 py-3.5 font-label-md text-xs font-bold text-on-surface-variant uppercase">Date Referred</th>
+                        <th class="px-6 py-3.5 font-label-md text-xs font-bold text-on-surface-variant uppercase">Status</th>
+                        <th class="px-6 py-3.5 font-label-md text-xs font-bold text-on-surface-variant uppercase text-right whitespace-nowrap">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="candidateTableBody" class="divide-y divide-outline-variant">
+                    {% for ref in referrals_data %}
+                    <tr class="candidate-row zebra-row hover:bg-blue-50/40 transition-colors"
+                        data-name="{{ ref.referral.applicant.user.get_full_name|lower }}"
+                        data-email="{{ ref.referral.applicant.user.email|lower }}"
+                        data-phone="{{ ref.referral.applicant.phone_number|default:''|lower }}"
+                        data-status="{{ ref.referral.status }}"
+                        data-match="{{ ref.match_pct }}">
+                        <td class="px-6 py-4.5">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-secondary/15 text-secondary font-black text-sm flex items-center justify-center shrink-0 border border-secondary/20 shadow-sm">
+                                    {{ ref.initials }}
+                                </div>
+                                <div>
+                                    <a href="{% url 'applicant_details_employer_id' ref.referral.applicant.id %}?from_section=vacancies&from_id={{ vacancy.id }}" class="font-bold text-on-surface text-sm hover:text-secondary transition-colors inline-flex items-center gap-1 group">
+                                        {{ ref.referral.applicant.user.get_full_name }}
+                                        <span class="material-symbols-outlined text-xs opacity-0 group-hover:opacity-100 transition-opacity">open_in_new</span>
+                                    </a>
+                                    <div class="text-xs text-on-surface-variant">{{ ref.referral.applicant.phone_number|default:"No Phone" }} &bull; {{ ref.referral.applicant.user.email }}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4.5 text-center whitespace-nowrap">
+                            <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold {% if ref.match_pct >= 70 %}bg-emerald-100 text-emerald-800 border border-emerald-200{% elif ref.match_pct >= 50 %}bg-blue-100 text-blue-800 border border-blue-200{% else %}bg-amber-100 text-amber-800 border border-amber-200{% endif %}">
+                                {{ ref.match_pct }}% Match
+                            </span>
+                        </td>
+                        <td class="px-6 py-4.5 text-on-surface-variant text-sm whitespace-nowrap">
+                            {{ ref.referral.date_referred|date:"M d, Y" }}
+                        </td>
+                        <td class="px-6 py-4.5 whitespace-nowrap">
+                            <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold 
+                                {% if ref.referral.status == 'Hired' or ref.referral.status == 'Hired — Probationary' or ref.referral.status == 'Hired — Regular' or ref.referral.status == 'Regularly Employed' %}bg-emerald-100 text-emerald-800 border border-emerald-200
+                                {% elif ref.referral.status == 'Interviewing' or ref.referral.status == 'Shortlisted' %}bg-blue-100 text-blue-800 border border-blue-200
+                                {% elif ref.referral.status == 'Pending' %}bg-amber-100 text-amber-800 border border-amber-200
+                                {% else %}bg-slate-100 text-slate-700 border border-slate-200{% endif %}">
+                                {{ ref.referral.status }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4.5 text-right whitespace-nowrap">
+                            <div class="inline-flex items-center justify-end gap-2">
+                                <!-- Full Page Candidate Profile Link -->
+                                <a href="{% url 'applicant_details_employer_id' ref.referral.applicant.id %}?from_section=vacancies&from_id={{ vacancy.id }}" 
+                                   class="h-8 px-3.5 inline-flex items-center justify-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold whitespace-nowrap shrink-0 transition-all shadow-sm active:scale-95"
+                                   title="View Full Applicant Profile">
+                                    <span class="material-symbols-outlined text-[16px]">person</span>
+                                    <span>View Profile</span>
+                                </a>
+                                
+                                <!-- Direct Interview Assessment Button -->
+                                <a href="{% url 'coordinator_interview' ref.referral.applicant.id %}" 
+                                   class="h-8 px-3.5 inline-flex items-center justify-center gap-1.5 bg-slate-800 hover:bg-black text-white rounded-lg text-xs font-semibold whitespace-nowrap shrink-0 transition-all shadow-sm active:scale-95"
+                                   title="Conduct Coordinator Interview Assessment">
+                                    <span class="material-symbols-outlined text-[16px]">rate_review</span>
+                                    <span>Interview</span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="px-6 py-12 text-center text-on-surface-variant">
+                            <span class="material-symbols-outlined text-4xl text-outline/40 mb-2 block">person_search</span>
+                            <p class="font-bold text-on-surface">No Candidates in Pipeline</p>
+                            <p class="text-xs text-on-surface-variant mt-1">No applicants have applied or been referred to this vacancy yet.</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </main>
+
+<!-- Candidate Profile Modal -->
+<div id="applicantDetailModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col shadow-2xl animate-in fade-in zoom-in duration-200 border border-outline-variant">
+        <!-- Modal Header -->
+        <div class="p-6 bg-slate-50 border-b border-outline-variant flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div id="modalAvatar" class="w-12 h-12 rounded-full bg-secondary text-white font-black text-lg flex items-center justify-center shadow">
+                    CF
+                </div>
+                <div>
+                    <h3 id="modalName" class="font-bold text-xl text-on-surface">Candidate Name</h3>
+                    <p id="modalSub" class="text-xs text-on-surface-variant">applicant@example.com</p>
+                </div>
+            </div>
+            <button onclick="closeApplicantModal()" class="w-8 h-8 rounded-full bg-white border border-outline-variant text-on-surface-variant hover:bg-slate-100 flex items-center justify-center transition-colors">
+                <span class="material-symbols-outlined text-[18px]">close</span>
+            </button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="p-6 space-y-6 overflow-y-auto custom-scrollbar flex-1 text-sm">
+            <!-- Match Score Banner -->
+            <div class="flex items-center justify-between p-4 bg-blue-50 border border-blue-200 rounded-xl">
+                <div>
+                    <span class="text-xs font-bold uppercase text-blue-900 tracking-wider">Vacancy Match Level</span>
+                    <div id="modalMatchScore" class="text-2xl font-black text-secondary mt-0.5">85% Match</div>
+                </div>
+                <div class="text-right">
+                    <span class="text-xs font-bold uppercase text-blue-900 tracking-wider">Referral Status</span>
+                    <div id="modalStatusBadge" class="mt-1 inline-block px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-200">Pending</div>
+                </div>
+            </div>
+
+            <!-- Contact & Location Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                    <div class="text-xs uppercase font-bold text-outline tracking-wider mb-1">Contact Phone</div>
+                    <div id="modalPhone" class="font-semibold text-on-surface">+63 912 345 6789</div>
+                </div>
+                <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                    <div class="text-xs uppercase font-bold text-outline tracking-wider mb-1">Address / Location</div>
+                    <div id="modalLocation" class="font-semibold text-on-surface">Bulacan, Philippines</div>
+                </div>
+            </div>
+
+            <!-- Skills List -->
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                <div class="text-xs uppercase font-bold text-outline tracking-wider mb-2 flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[16px] text-secondary">psychology</span>
+                    Recorded Skills &amp; Proficiencies
+                </div>
+                <div id="modalSkills" class="text-sm font-medium text-on-surface leading-relaxed">Python, React, Django</div>
+            </div>
+
+            <!-- Education & Experience -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                    <div class="text-xs uppercase font-bold text-outline tracking-wider mb-1 flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-[16px] text-secondary">school</span>
+                        Education
+                    </div>
+                    <div id="modalEducation" class="text-sm font-medium text-on-surface">BS in Computer Science</div>
+                </div>
+                <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                    <div class="text-xs uppercase font-bold text-outline tracking-wider mb-1 flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-[16px] text-secondary">work</span>
+                        Work Experience
+                    </div>
+                    <div id="modalExperience" class="text-sm font-medium text-on-surface">3 Years Experience</div>
+                </div>
+            </div>
+
+            <!-- Certifications -->
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                <div class="text-xs uppercase font-bold text-outline tracking-wider mb-1 flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[16px] text-secondary">verified</span>
+                    TESDA &amp; Professional Certifications
+                </div>
+                <div id="modalCertifications" class="text-sm font-medium text-on-surface">NC II Certification</div>
+            </div>
+
+            <!-- Update Status Form -->
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                <div class="text-xs uppercase font-bold text-outline tracking-wider mb-3">Update Candidate Pipeline Status</div>
+                <form id="modalStatusForm" method="post" action="" class="flex items-center gap-3">
+                    {% csrf_token %}
+                    <select name="status" id="modalStatusSelect" class="flex-1 bg-white border border-outline-variant rounded-lg px-3 py-2 text-sm font-semibold outline-none focus:ring-2 focus:ring-secondary">
+                        <option value="Pending">Pending</option>
+                        <option value="Shortlisted">Shortlisted</option>
+                        <option value="Interviewing">Interviewing</option>
+                        <option value="Hired">Hired</option>
+                        <option value="Not Hired">Not Hired</option>
+                        <option value="Declined">Declined</option>
+                    </select>
+                    <button type="submit" class="px-4 py-2 bg-secondary text-white rounded-lg text-sm font-bold hover:bg-secondary/90 transition-all shadow-sm">
+                        Update Status
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="p-4 bg-slate-50 border-t border-outline-variant flex items-center justify-between">
+            <button type="button" onclick="closeApplicantModal()" class="px-4 py-2 bg-white border border-outline-variant text-on-surface font-semibold rounded-lg text-sm hover:bg-slate-100 transition-colors">
+                Close
+            </button>
+            <a id="modalInterviewBtn" href="#" class="px-5 py-2 bg-slate-800 hover:bg-black text-white font-bold rounded-lg text-sm transition-colors flex items-center gap-1.5 shadow-sm">
+                <span class="material-symbols-outlined text-[18px]">rate_review</span>
+                Conduct Full Interview Assessment
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.view-applicant-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const data = {
+                id: btn.dataset.id,
+                referralId: btn.dataset.referralId,
+                name: btn.dataset.name,
+                email: btn.dataset.email,
+                phone: btn.dataset.phone,
+                location: btn.dataset.location,
+                status: btn.dataset.status,
+                matchPct: btn.dataset.match,
+                skills: btn.dataset.skills,
+                education: btn.dataset.education,
+                experience: btn.dataset.experience,
+                certifications: btn.dataset.certifications,
+                interviewUrl: btn.dataset.interviewUrl
+            };
+            openApplicantModal(data);
+        });
+    });
+
+    function openApplicantModal(data) {
+        document.getElementById('modalName').textContent = data.name;
+        document.getElementById('modalSub').textContent = data.email;
+        document.getElementById('modalPhone').textContent = data.phone;
+        document.getElementById('modalLocation').textContent = data.location;
+        document.getElementById('modalMatchScore').textContent = data.matchPct + '% Match';
+        document.getElementById('modalSkills').textContent = data.skills;
+        document.getElementById('modalEducation').textContent = data.education;
+        document.getElementById('modalExperience').textContent = data.experience;
+        document.getElementById('modalCertifications').textContent = data.certifications;
+        document.getElementById('modalStatusBadge').textContent = data.status;
+        
+        // Initials avatar
+        const initials = data.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'C';
+        document.getElementById('modalAvatar').textContent = initials;
+        
+        // Setup Form Action
+        document.getElementById('modalStatusForm').action = '/peso-admin/referrals/' + data.referralId + '/status/';
+        document.getElementById('modalStatusSelect').value = data.status;
+        
+        // Setup Interview Link
+        document.getElementById('modalInterviewBtn').href = data.interviewUrl;
+        
+        document.getElementById('applicantDetailModal').classList.remove('hidden');
+    }
+
+    function closeApplicantModal() {
+        document.getElementById('applicantDetailModal').classList.add('hidden');
+    }
+
+    // Close modal on Escape or clicking outside
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeApplicantModal();
+    });
+    document.getElementById('applicantDetailModal').addEventListener('click', (e) => {
+        if (e.target === document.getElementById('applicantDetailModal')) {
+            closeApplicantModal();
+        }
+    });
+
+    // Interactive Candidate Table Filtering Logic
+    const searchInput = document.getElementById('candidateSearchInput');
+    const statusFilter = document.getElementById('statusFilter');
+    const matchFilter = document.getElementById('matchFilter');
+    const resultsCounter = document.getElementById('resultsCounter');
+    const candidateRows = document.querySelectorAll('.candidate-row');
+    const totalCount = candidateRows.length;
+
+    function filterTable() {
+        const query = (searchInput ? searchInput.value.toLowerCase().trim() : '');
+        const selectedStatus = (statusFilter ? statusFilter.value : '');
+        const selectedMatch = (matchFilter ? matchFilter.value : '');
+        let visible = 0;
+
+        candidateRows.forEach(row => {
+            const name = row.dataset.name || '';
+            const email = row.dataset.email || '';
+            const phone = row.dataset.phone || '';
+            const status = row.dataset.status || '';
+            const match = parseInt(row.dataset.match || '0', 10);
+
+            // Match query
+            const matchesQuery = !query || name.includes(query) || email.includes(query) || phone.includes(query);
+
+            // Match status
+            let matchesStatus = true;
+            if (selectedStatus) {
+                if (selectedStatus === 'Hired') {
+                    matchesStatus = status.includes('Hired') || status.includes('Employed');
+                } else {
+                    matchesStatus = status === selectedStatus;
+                }
+            }
+
+            // Match score tier
+            let matchesScore = true;
+            if (selectedMatch === 'high') {
+                matchesScore = match >= 70;
+            } else if (selectedMatch === 'medium') {
+                matchesScore = match >= 50 && match < 70;
+            } else if (selectedMatch === 'low') {
+                matchesScore = match < 50;
+            }
+
+            if (matchesQuery && matchesStatus && matchesScore) {
+                row.classList.remove('hidden');
+                visible++;
+            } else {
+                row.classList.add('hidden');
+            }
+        });
+
+        if (resultsCounter) {
+            resultsCounter.textContent = `Showing ${visible} of ${totalCount}`;
+        }
+    }
+
+    if (searchInput) searchInput.addEventListener('input', filterTable);
+    if (statusFilter) statusFilter.addEventListener('change', filterTable);
+    if (matchFilter) matchFilter.addEventListener('change', filterTable);
+
+    function clearCandidateFilters() {
+        if (searchInput) searchInput.value = '';
+        if (statusFilter) statusFilter.value = '';
+        if (matchFilter) matchFilter.value = '';
+        filterTable();
+    }
+</script>
 
 </body>
 </html>

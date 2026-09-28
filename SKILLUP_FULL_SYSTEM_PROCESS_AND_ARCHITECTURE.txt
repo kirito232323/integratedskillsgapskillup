@@ -1,0 +1,348 @@
+====================================================================================================
+                                SKILLUP: SYSTEM ARCHITECTURE & FULL PROCESS GUIDE
+                   Integrated Skills Gap, Talent Matching, and Employment Lifecycle System
+====================================================================================================
+Entity: Public Employment Service Office (PESO) & Enterprise Network
+Document Type: Complete End-to-End System Process & Technical Architecture Specification
+====================================================================================================
+
+----------------------------------------------------------------------------------------------------
+TABLE OF CONTENTS
+----------------------------------------------------------------------------------------------------
+1. EXECUTIVE SUMMARY & SYSTEM PURPOSE
+2. TECHNOLOGY STACK & SYSTEM ARCHITECTURE
+3. DATABASE SCHEMA & DATA MODEL OVERVIEW
+4. USER ROLES & ACCESS MATRIX
+5. END-TO-END SYSTEM LIFECYCLE WORKFLOWS
+   5.1. Stage 1: Registration, Verification & Role Dispatch
+   5.2. Stage 2: Applicant Profile Setup, Skill Taxonomy & Proficiency Self-Assessment
+   5.3. Stage 3: Employer Registration, Verification & Vacancy Creation with Skill Mapping
+   5.4. Stage 4: Algorithmic Skill Gap Analysis & Compatibility Match Scoring
+   5.5. Stage 5: Job Discovery, Application, and Multi-Stage Hiring Pipeline
+   5.6. Stage 6: PESO Coordinator Referral & Pre-Employment Compliance Tracking
+   5.7. Stage 7: Targeted Training Recommendations, Enrollment & Competency Certification
+   5.8. Stage 8: Post-Placement Monitoring & 30/60/90-Day Retention Auditing
+6. STEP-BY-STEP ROLE INTERACTION MATRIX (WHO DOES WHAT)
+7. COMPLETE ROUTING & ENDPOINT DIRECTORY
+8. MAINTENANCE & DATABASE SEEDING SCRIPTS
+
+====================================================================================================
+1. EXECUTIVE SUMMARY & SYSTEM PURPOSE
+====================================================================================================
+SKILLUP is a multi-tenant web platform designed to align workforce competency with labor market 
+demands. It facilitates real-time collaboration between three key stakeholders:
+  1. Job Applicants / Upskilling Candidates: Individuals seeking employment or vocational upskilling.
+  2. Employers / Enterprise Recruiters: Companies posting vacancies with specific skill requirements.
+  3. PESO Administrators / Employment Officers: Government coordinators who audit employers,
+     screen applicants, manage training programs, facilitate referrals, and monitor retention.
+
+Core Value Propositions:
+- Skill-Driven Matching: Replaces unstructured keyword search with verified competency ratings (1 to 5).
+- Automated Skill Gap Detection: Pinpoints exact missing or deficient skills per applicant per vacancy.
+- Integrated Upskilling Loop: Automatically links identified skill gaps to relevant PESO/TESDA training courses.
+- Comprehensive Employment Tracking: Monitors the end-to-end recruitment lifecycle from application to 
+  onboarding, pre-employment document verification, and 30/60/90-day employment retention.
+
+====================================================================================================
+2. TECHNOLOGY STACK & SYSTEM ARCHITECTURE
+====================================================================================================
+- Backend Framework: Python / Django Web Framework
+- Database Layer: Relational Database (SQLite / PostgreSQL) managed via Django ORM
+- User Authentication: Django Auth System extended via custom Profile models & OTP verification
+- Frontend Architecture: Semantic HTML5, CSS3, JavaScript (Vanilla ES6+), Chart.js / ApexCharts
+- Application Structure:
+    * `skillup_project/`: Main Django project configuration, settings, routing, and WSGI/ASGI handlers.
+    * `tracker/`: Core application containing models, views, URL routes, forms, templates, and business logic.
+    * `tracker/templates/tracker/`: Role-segregated presentation templates (ADMIN, APPLICANT, EMPLOYER).
+    * `media/`: Storage for candidate documents, resumes, certifications, pre-employment files, and logos.
+
+====================================================================================================
+3. DATABASE SCHEMA & DATA MODEL OVERVIEW
+====================================================================================================
+The system is built on normalized relational entities defining users, competencies, vacancies, and referrals:
+
+1. `Profile` (One-to-One with Django `User`):
+   - Handles role-based partitioning (`applicant`, `employer`, `admin`).
+   - Applicant Fields: title, birthdate, civil_status, experience_years, preferred_job, profile_picture.
+   - Employer Fields: company_name, industry, company_size, website, contact_email, company_logo.
+
+2. `CentralizedSkill`:
+   - Standardized taxonomy of skills (e.g., Python, Welding SMAW, Customer Service, Revit 3D CAD).
+   - Categorized by industry domain (IT, BPO, Engineering, Healthcare, Trade/Vocational, etc.).
+
+3. `ApplicantSkill`:
+   - Relates an applicant's `Profile` to a `CentralizedSkill` with a proficiency level (1 to 5) and source (`self` vs `PESO Verified`).
+
+4. `JobVacancy` & `JobSkillRequirement`:
+   - Vacancy details: title, employer, category, salary range, slots, remaining_slots, status (Open/Closed).
+   - Requirements: Maps required `CentralizedSkill` items with target proficiency thresholds (1 to 5).
+
+5. `TrainingProgram` & `TrainingEnrollment`:
+   - Programs: title, provider (e.g., TESDA/PESO), skills addressed, duration, schedule, max slots, remaining slots, status.
+   - Enrollments: links applicant profile to training program with status (`Enrolled`, `Attended & Completed`, `No Show`).
+
+6. `Referral` (Central Placement & Compliance Hub):
+   - Multi-stage state machine tracking applicant progress through the entire recruitment and onboarding process.
+   - Pre-employment uploads: NBI clearance, Medical certificate, SSS, PhilHealth, Pag-IBIG, BIR TIN, Transcript.
+   - Post-hiring audit: Start date, reporting status, mid-probation evaluations, and regularization status.
+
+7. `Interview`:
+   - Tracks scheduling between applicant and employer (date, time, interview type, meeting link, notes).
+
+8. `Notification`:
+   - Real-time in-app alerts for job matches, referral updates, interview invites, and status updates.
+
+9. `GapScoreLog` & `JobBookmark`:
+   - Stores algorithmic match percentage snapshots and applicant saved jobs.
+
+====================================================================================================
+4. USER ROLES & ACCESS MATRIX
+====================================================================================================
++-----------------------+--------------------------------------------------------------------------+
+| Role                  | Primary Responsibilities & Permitted Actions                            |
++-----------------------+--------------------------------------------------------------------------+
+| 1. Job Applicant      | - Build profile, upload resume & certificates.                           |
+|                       | - Self-rate technical/soft skills (1-5 scale).                           |
+|                       | - Inspect personalized skill gap reports on target vacancies.            |
+|                       | - Browse matched jobs and apply in 1 click.                              |
+|                       | - Enroll in PESO/TESDA training courses to resolve gaps.                 |
+|                       | - Upload pre-employment requirements and confirm onboarding status.      |
++-----------------------+--------------------------------------------------------------------------+
+| 2. Employer           | - Maintain verified company profile.                                     |
+|                       | - Post vacancies and specify required skills + proficiency levels.       |
+|                       | - Review candidate pool with real-time match scores & gap breakdowns.   |
+|                       | - Schedule interviews (Video Call, Phone, In-Person).                    |
+|                       | - Advance candidates across hiring pipeline stages.                      |
+|                       | - Submit post-placement employee evaluations.                            |
++-----------------------+--------------------------------------------------------------------------+
+| 3. PESO Administrator | - Verify newly registered employer accounts.                             |
+|                       | - Monitor applicant talent bench and conduct coordinator interviews.     |
+|                       | - Manage centralized training course catalog and applicant enrollments.  |
+|                       | - Certify training graduates and upgrade verified profile competencies.  |
+|                       | - Audit pre-employment compliance checklists.                           |
+|                       | - Conduct 30/60/90-day retention and regularization reviews.             |
+|                       | - Export labor market analytics and DOLE compliance reports.             |
++-----------------------+--------------------------------------------------------------------------+
+
+====================================================================================================
+5. END-TO-END SYSTEM LIFECYCLE WORKFLOWS
+====================================================================================================
+
+----------------------------------------------------------------------------------------------------
+5.1. STAGE 1: REGISTRATION, VERIFICATION & ROLE DISPATCH
+----------------------------------------------------------------------------------------------------
+1. User navigates to `/signup/` and registers by selecting their target role (Applicant, Employer, Admin).
+2. The system generates an account record, creates an associated `Profile`, and creates a 6-digit OTP.
+3. User verifies identity on `/verify/`.
+4. Upon authentication (`/login/`), the role-dispatch middleware routes the user:
+   - Applicant  -> `/applicant-dashboard/`
+   - Employer   -> `/employer-dashboard/`
+   - PESO Admin -> `/admin-dashboard/`
+
+----------------------------------------------------------------------------------------------------
+5.2. STAGE 2: APPLICANT PROFILE SETUP & SKILL TAXONOMY ASSESSMENT
+----------------------------------------------------------------------------------------------------
+1. Applicant completes the profile setup wizard (`/applicant/wizard/` or `/applicant/profile/`).
+2. Enters personal background, education, work history, and target career preferences.
+3. Adds competencies from the Centralized Skills Registry.
+4. Rates initial proficiency level on a standardized 1-to-5 scale:
+   - Level 1: Novice / Fundamental Awareness
+   - Level 2: Basic / Supervised Application
+   - Level 3: Intermediate / Autonomous Practitioner
+   - Level 4: Advanced / Subject Matter Specialist
+   - Level 5: Expert / Master Practitioner
+5. Uploads resume, certifications (e.g. TESDA NC II), and supporting credentials.
+
+----------------------------------------------------------------------------------------------------
+5.3. STAGE 3: EMPLOYER VACANCY CREATION WITH SKILL MAPPING
+----------------------------------------------------------------------------------------------------
+1. Employer accesses Job Management (`/employer/job-management/`) and creates a new vacancy.
+2. Specifies job metadata: Title, Category (IT, BPO, Engineering, Healthcare, etc.), Slots, Salary, Location.
+3. Skill Mapping Requirement:
+   - Employer selects 3 to 10 mandatory skills from `CentralizedSkill`.
+   - Assigns a required proficiency threshold (1 to 5) for each skill.
+4. System publishes the vacancy and activates the automated matching engine.
+
+----------------------------------------------------------------------------------------------------
+5.4. STAGE 4: ALGORITHMIC SKILL GAP ANALYSIS & COMPATIBILITY MATCH SCORING
+----------------------------------------------------------------------------------------------------
+1. The matching engine evaluates the applicant's skill inventory against vacancy requirements:
+   - Match Score Calculation:
+     * Full Match: Applicant proficiency >= Required proficiency (100% credit for that skill).
+     * Partial Match: Applicant proficiency < Required proficiency (proportional credit).
+     * Missing Skill: Skill absent from applicant profile (0% credit).
+   - Weighted overall compatibility score (%) is computed and cached in `GapScoreLog`.
+2. Visual Diagnostic Breakdown:
+   - Green (Sufficient): Applicant meets or exceeds required proficiency level.
+   - Amber (Deficiency): Applicant possesses the skill but needs higher proficiency.
+   - Red (Missing): Critical skill is entirely missing from applicant profile.
+3. Automated Course Mapping: Missing and deficient skills are dynamically cross-referenced with
+   available `TrainingProgram` records to suggest actionable upskilling courses.
+
+----------------------------------------------------------------------------------------------------
+5.5. STAGE 5: JOB DISCOVERY, APPLICATION & HIRING PIPELINE
+----------------------------------------------------------------------------------------------------
+1. Discovery: Applicant browses `/applicant/job-search/` with vacancies sorted by highest compatibility.
+2. Submission: Applicant clicks "Apply Now" (`/applicant/apply/<vacancy_id>/`).
+   - Creates a `Referral` record in status `Pending`.
+   - Notifies employer and PESO coordinators in real time.
+3. Employer Evaluation:
+   - Employer reviews candidate pool on `/employer/applicants/`.
+   - Views applicant gap analysis (`/employer/applicant-detail/<id>/`).
+4. Interview Scheduling:
+   - Employer schedules an interview (`/employer/schedule-interview/`).
+   - System records interview details in `Interview` model and alerts applicant.
+5. Offer & Hiring:
+   - Employer extends job offer via Hiring Tracker (`/employer/hiring-tracker/`).
+   - Applicant reviews and accepts offer.
+   - Employer marks applicant as `Hired — Probationary` or `Hired — Regular`.
+   - Vacancy `remaining_slots` automatically decrements.
+
+----------------------------------------------------------------------------------------------------
+5.6. STAGE 6: PESO COORDINATOR REFERRAL & PRE-EMPLOYMENT COMPLIANCE
+----------------------------------------------------------------------------------------------------
+1. PESO Admin oversees the onboarding pipeline on `/peso-admin/employment-tracking/`.
+2. Pre-Employment Checklist Verification:
+   - Applicant uploads mandatory compliance documents:
+     * NBI Clearance / Police Clearance
+     * Medical Examination Certificate / Fit-to-Work
+     * SSS Number / PhilHealth Number / Pag-IBIG MID / BIR TIN
+     * Official Transcript / Diploma
+   - PESO Coordinator audits each document and marks status as `Complete`.
+3. Physical Report to Work:
+   - PESO verifies candidate's actual start date at the company facility.
+
+----------------------------------------------------------------------------------------------------
+5.7. STAGE 7: TARGETED TRAINING RECOMMENDATIONS, ENROLLMENT & CERTIFICATION
+----------------------------------------------------------------------------------------------------
+1. If an applicant is not hired or wishes to upskill, they visit `/applicant/training/`.
+2. System displays courses mapped to resolve their specific identified skill gaps.
+3. Applicant self-enrolls in open courses (`/applicant/training/enroll/<id>/`).
+4. Training Lifecycle Stages:
+   - `Scheduled`: Open for candidate enrollment.
+   - `Full / Closed`: Maximum slots filled; registration locked.
+   - `In Progress`: Course active.
+   - `Completed`: Course concluded.
+5. Certification & Skill Upgrading:
+   - PESO Coordinator accesses program roster (`/peso-admin/training-programs/<id>/`).
+   - Marks graduating trainees as `Attended & Completed`.
+   - System automatically upgrades the graduate's profile skill proficiency and marks source as `PESO Verified`.
+
+----------------------------------------------------------------------------------------------------
+5.8. STAGE 8: POST-PLACEMENT MONITORING & 30/60/90-DAY RETENTION AUDITING
+----------------------------------------------------------------------------------------------------
+1. PESO Coordinator initiates retention check-ins at 30, 60, and 90-day intervals post-hiring.
+2. 30-Day Check: Initial onboarding adjustment and employer satisfaction.
+3. 60-Day Check: Mid-probation performance evaluation and skill readiness confirmation.
+4. 90-Day Check: Final regularization review and long-term retention status.
+5. System logs outcomes (`Regularly Employed`, `Probation Extended`, `Separated`).
+6. Exportable DOLE/LGU compliance reporting generated via `/peso-admin/analytics/export/`.
+
+====================================================================================================
+6. STEP-BY-STEP ROLE INTERACTION MATRIX
+====================================================================================================
++------------------------------------+-----------------------+-----------------------+-----------------------+
+| Milestone                          | Applicant Action      | Employer Action       | PESO Admin Action     |
++------------------------------------+-----------------------+-----------------------+-----------------------+
+| 1. Account Onboarding              | Registers & completes | Registers company &   | Audits and verifies   |
+|                                    | profile wizard.       | submits legitimacy.   | employer legitimacy.  |
++------------------------------------+-----------------------+-----------------------+-----------------------+
+| 2. Competency Setup & Vacancies   | Rates skills (1-5)    | Posts vacancy with    | Monitors labor supply |
+|                                    | & uploads resume.     | required skill levels.| and skill demands.    |
++------------------------------------+-----------------------+-----------------------+-----------------------+
+| 3. Application & Matching          | Reviews match scores  | Inspects candidate    | Tracks active referral|
+|                                    | & applies to vacancy. | radar gap analysis.   | throughput.           |
++------------------------------------+-----------------------+-----------------------+-----------------------+
+| 4. Interview & Selection           | Attends interview     | Schedules & conducts  | Facilitates applicant |
+|                                    | and accepts offer.    | interviews; extends   | follow-ups if needed. |
+|                                    |                       | offer in tracker.     |                       |
++------------------------------------+-----------------------+-----------------------+-----------------------+
+| 5. Pre-Employment Compliance       | Uploads NBI, Medical, | Confirms reporting    | Audits compliance     |
+|                                    | SSS, PhilHealth, TIN. | date and start terms. | checklist documents.  |
++------------------------------------+-----------------------+-----------------------+-----------------------+
+| 6. Upskilling & Retraining         | Enrolls in PESO/TESDA | Provides feedback on  | Manages class slots   |
+|                                    | courses to fix gaps.  | missing candidate     | and certifies         |
+|                                    |                       | competencies.         | graduate skills.      |
++------------------------------------+-----------------------+-----------------------+-----------------------+
+| 7. Post-Hiring Retention           | Reports employment    | Submits 6-month       | Conducts 30/60/90-day |
+|                                    | stability & status.   | probation review.     | retention audits.     |
++------------------------------------+-----------------------+-----------------------+-----------------------+
+
+====================================================================================================
+7. COMPLETE ROUTING & ENDPOINT DIRECTORY
+====================================================================================================
+
+--- AUTHENTICATION & CORE ---
+  /login/                                      : User login portal
+  /signup/                                     : Multi-role account registration
+  /logout/                                     : Session termination
+  /verify/                                     : 6-digit OTP verification
+  /verify/resend/                              : Resend verification code
+  /forgot-password/                            : Password recovery request
+  /reset-password/                             : Set new account password
+  /reset-db/                                   : Database sample re-initialization
+
+--- APPLICANT PORTAL ---
+  /applicant-dashboard/                        : Main applicant dashboard
+  /applicant/profile/                          : Profile, experience & skill management
+  /applicant/wizard/                           : Step-by-step onboarding wizard
+  /applicant/job-search/                       : Job discovery with match scoring
+  /applicant/skill-gap/                        : Real-time skill gap analysis tool
+  /applicant/apply/<int:vacancy_id>/           : 1-Click job application submission
+  /applicant/bookmark/<int:vacancy_id>/        : Save / favorite job vacancy
+  /applicant/applications/                     : Applications status & onboarding tracker
+  /applicant/applications/<int:referral_id>/   : Pre-employment document uploads & details
+  /applicant/training/                         : Recommended PESO/TESDA courses
+  /applicant/training/enroll/<int:program_id>/ : Training program enrollment
+  /applicant/notifications/                    : Real-time applicant notification center
+  /applicant/settings/                         : Account settings & credentials
+
+--- EMPLOYER PORTAL ---
+  /employer-dashboard/                         : Main employer recruitment dashboard
+  /employer/job-management/                    : Vacancy creation, editing & skill mapping
+  /employer/job-management/<id>/status/        : Open / Close vacancy toggle
+  /employer/job-management/<id>/delete/        : Delete vacancy
+  /employer/applicants/                        : Candidate talent pool & match scores
+  /employer/applicant-detail/<int:applicant_id>/: Candidate profile, resume & radar gap chart
+  /employer/gap-analysis/                      : Batch gap analysis for active openings
+  /employer/hiring-tracker/                    : Kanban hiring pipeline (Applied->Interview->Hired)
+  /employer/schedule-interview/                : Schedule candidate interview
+  /employer/cancel-interview/<int:id>/         : Cancel scheduled interview
+  /employer/send-offer/<applicant_id>/<job_id>/: Extend formal job offer
+  /employer/company-profile/                   : Company branding, logo & contact settings
+  /employer/notifications/                     : Employer notification center
+
+--- PESO ADMINISTRATOR PORTAL ---
+  /admin-dashboard/                            : PESO Executive analytics dashboard
+  /peso-admin/applicants/                      : Central talent bench directory
+  /peso-admin/applicants/<id>/matches/         : Candidate-to-vacancy match inspector
+  /peso-admin/applicants/<id>/interview/       : PESO coordinator assessment interview
+  /peso-admin/applicants/<id>/status-update/   : Update candidate active/employed status
+  /peso-admin/applicants/import/               : Bulk import applicants from CSV/data
+  /peso-admin/employers/                       : Employer company directory
+  /peso-admin/employers/<id>/verify/           : Employer legitimacy verification toggle
+  /peso-admin/vacancies/                       : City-wide job vacancy management
+  /peso-admin/vacancies/<int:vacancy_id>/      : Vacancy candidate referrals & match roster
+  /peso-admin/training-monitoring/             : Centralized training program manager
+  /peso-admin/training-programs/<int:id>/      : Training course detail, roster & certification
+  /peso-admin/skill-monitoring/                : City labor supply vs demand skill heatmap
+  /peso-admin/job-matching/                    : Macro job matching & analytics
+  /peso-admin/employment-tracking/             : Placement, onboarding & 30/60/90-day retention
+  /peso-admin/employment-tracking/applicant/<id>/: Detailed applicant employment report
+  /peso-admin/referrals/create/                : Manual coordinator candidate referral
+  /peso-admin/referrals/<id>/update-status/    : Referral status updater
+  /peso-admin/referrals/<id>/log-contact/      : Log candidate/employer contact attempts
+  /peso-admin/analytics/export/                : Export placement data to CSV
+  /peso-admin/profile/                         : Administrator profile & settings
+
+====================================================================================================
+8. MAINTENANCE & DATABASE SEEDING SCRIPTS
+====================================================================================================
+The project contains pre-built management and maintenance utility scripts:
+  - `seed_data.py`: Populates database with sample applicants, employers, skills, vacancies, and courses.
+  - `reset_database_data.py`: Resets all transactional data to a pristine state for demonstrations.
+  - `check_system.py`: Performs system integrity checks across models, routes, and database integrity.
+
+====================================================================================================
+                                       END OF DOCUMENT
+====================================================================================================
