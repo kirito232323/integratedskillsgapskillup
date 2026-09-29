@@ -168,10 +168,11 @@
 <p class="font-body-md text-body-md text-on-surface-variant">We've sent a 6-digit verification code to <span class="font-semibold text-secondary">{{ email }}</span>. Please enter it below to complete your setup.</p>
 </div>
 {% if messages %}
-<div class="space-y-2 mb-4">
+<div class="space-y-3 mb-6">
     {% for message in messages %}
-    <div class="p-4 rounded-lg {% if message.tags == 'error' %}bg-error-container text-on-error-container{% else %}bg-tertiary-fixed-dim/20 text-on-tertiary-fixed-variant{% endif %} font-body-sm">
-        {{ message }}
+    <div class="p-4 rounded-xl flex items-center gap-3 font-body-sm text-sm {% if message.tags == 'error' %}bg-error-container text-on-error-container{% elif message.tags == 'success' %}bg-emerald-50 text-emerald-800 border border-emerald-200{% else %}bg-secondary-fixed/20 text-on-secondary-fixed-variant border border-secondary/20{% endif %}">
+        <span class="material-symbols-outlined text-[20px] shrink-0">{% if message.tags == 'error' %}error{% elif message.tags == 'success' %}check_circle{% else %}key{% endif %}</span>
+        <div class="font-medium flex-1">{{ message }}</div>
     </div>
     {% endfor %}
 </div>
@@ -207,13 +208,10 @@
 <span class="material-symbols-outlined text-on-surface-variant text-[20px]">info</span>
 </div>
 <p class="font-body-sm text-body-sm text-on-surface-variant">
-                    Didn't receive a code? Check your spam folder or ensure the phone number provided is correct. Code expires in <span class="font-mono font-medium text-on-surface" id="timer">04:59</span>.
+                    Didn't receive a code? Check your spam folder or ensure the email provided is correct. Code expires in <span class="font-mono font-medium text-on-surface" id="timer">04:59</span>.
                 </p>
 </div>
 </div>
-<footer class="absolute bottom-8 text-center w-full px-margin-mobile">
-<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest opacity-50">© 2024 SKILLUP. Enterprise Protocol.</p>
-</footer>
 </main>
 <script>
         const inputs = document.querySelectorAll('.otp-input');

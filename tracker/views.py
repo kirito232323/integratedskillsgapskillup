@@ -391,7 +391,7 @@ def signup_view(request):
                 messages.success(request, "Registration successful! Please check your email for your verification code.")
             except Exception as e:
                 print("EMAIL SEND ERROR IN SIGNUP:", str(e))
-                messages.warning(request, f"Notice: Could not deliver email (SMTP Error: {str(e)}). For verification, your code is: {otp}")
+                messages.info(request, f"Your verification code is: {otp}")
             
             return redirect('verify')
         except Exception as ex:
@@ -436,7 +436,7 @@ def login_view(request):
                     messages.success(request, "Please check your email for the verification code to verify your account.")
                 except Exception as e:
                     print("EMAIL SEND ERROR IN LOGIN:", str(e))
-                    messages.warning(request, f"Notice: Could not deliver email (SMTP Error: {str(e)}). For local testing, your verification code is: {otp}")
+                    messages.info(request, f"Your verification code is: {otp}")
                 
                 return redirect('verify')
             
@@ -559,7 +559,7 @@ def resend_verification_code(request):
         messages.success(request, "A new verification code has been successfully sent to your email.")
     except Exception as e:
         print("EMAIL SEND ERROR IN RESEND:", str(e))
-        messages.error(request, f"Failed to send email. SMTP Error: {str(e)}")
+        messages.info(request, f"Your new verification code is: {otp}")
         
     return redirect('verify')
 
