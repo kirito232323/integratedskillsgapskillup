@@ -79,10 +79,11 @@
             </div>
 
             {% if messages %}
-            <div class="space-y-2 mb-6">
+            <div class="space-y-3 mb-6">
                 {% for message in messages %}
-                <div class="p-4 rounded-lg bg-red-100 text-red-800 font-body-sm">
-                    {{ message }}
+                <div class="p-4 rounded-xl flex items-center gap-3 font-body-sm text-sm {% if message.tags == 'error' %}bg-red-50 text-red-800 border border-red-200{% elif message.tags == 'success' %}bg-emerald-50 text-emerald-800 border border-emerald-200{% elif message.tags == 'warning' %}bg-amber-50 text-amber-800 border border-amber-200{% else %}bg-blue-50 text-blue-800 border border-blue-200{% endif %}">
+                    <span class="material-symbols-outlined text-[20px] shrink-0">{% if message.tags == 'error' %}error{% elif message.tags == 'success' %}check_circle{% elif message.tags == 'warning' %}warning{% else %}info{% endif %}</span>
+                    <div class="font-medium flex-1">{{ message }}</div>
                 </div>
                 {% endfor %}
             </div>
