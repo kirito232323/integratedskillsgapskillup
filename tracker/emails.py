@@ -7,14 +7,41 @@ from django.core.mail import send_mail
 
 def send_notification_email(subject, message, recipient_list):
     """
-    Sends an email using HTTPS API (Resend / Brevo) if configured,
-    or falls back to Django standard SMTP.
-    Works seamlessly on Render Free Tier (where SMTP ports are blocked).
+    Sends an email using:
+    1. Google Apps Script / Gmail Webhook (sends directly from your Gmail via HTTPS Port 443)
+    2. Resend HTTPS API (Port 443)
+    3. Brevo HTTPS API (Port 443)
+    4. Django standard SMTP (Local / Unblocked hosts)
     """
+    gmail_webhook_url = os.environ.get('GMAIL_WEBHOOK_URL')
     resend_api_key = os.environ.get('RESEND_API_KEY')
     brevo_api_key = os.environ.get('BREVO_API_KEY')
     
-    # 1. Try Resend HTTPS API (Port 443 - 100% compatible with Render free tier)
+    # 1. Try Gmail Webhook (Native Gmail via HTTPS Port 443 - zero block on Render)
+    if gmail_webhook_url:
+        try:
+            for recipient in recipient_list:
+                payload = {
+                    "to": recipient,
+                    "subject": subject,
+                    "body": message
+                }
+                data = json.dumps(payload).encode('utf-8')
+                req = urllib.request.Request(
+                    gmail_webhook_url,
+                    data=data,
+                    headers={
+                        "Content-Type": "application/json",
+                        "User-Agent": "SkillupApp/1.0"
+                    }
+                )
+                with urllib.request.urlopen(req, timeout=8) as response:
+                    print(f"Gmail Webhook sent to {recipient}, status: {response.status}")
+            return True
+        except Exception as e:
+            print("Gmail Webhook API error:", e)
+
+    # 2. Try Resend HTTPS API (Port 443)
     if resend_api_key:
         try:
             url = "https://api.resend.com/emails"
@@ -41,7 +68,7 @@ def send_notification_email(subject, message, recipient_list):
         except Exception as e:
             print("Resend API Email error:", e)
 
-    # 2. Try Brevo HTTPS API (Port 443)
+    # 3. Try Brevo HTTPS API (Port 443)
     if brevo_api_key:
         try:
             url = "https://api.brevo.com/v3/smtp/email"
@@ -68,7 +95,7 @@ def send_notification_email(subject, message, recipient_list):
         except Exception as e:
             print("Brevo API Email error:", e)
 
-    # 3. Standard SMTP send_mail (Works in local dev, and on paid hosts / unblocked hosts)
+    # 4. Standard SMTP send_mail (Works in local dev, and on paid/unblocked hosts)
     try:
         sent_count = send_mail(
             subject=subject,
