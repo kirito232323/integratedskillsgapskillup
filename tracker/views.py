@@ -325,6 +325,7 @@ def add_study_log(request, skill_id):
 # ==========================================
 from django.core.mail import send_mail
 from django.conf import settings
+from .emails import send_notification_email
 
 def signup_view(request):
     if request.method == 'POST':
@@ -380,18 +381,15 @@ def signup_view(request):
                 'otp': otp
             }
             
-            try:
-                send_mail(
-                    subject='Account Creation Confirmation - SKILLUP',
-                    message=f'Hello {firstname},\n\nYour verification code is: {otp}\n\nYour account will be created once you confirm this code on our registration portal.',
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[email],
-                    fail_silently=False
-                )
-                messages.success(request, "Registration successful! Please check your email for your verification code.")
-            except Exception as e:
-                print("EMAIL SEND ERROR IN SIGNUP:", str(e))
-                messages.info(request, f"Your verification code is: {otp}")
+            sent = send_notification_email(
+                subject='Account Creation Confirmation - SKILLUP',
+                message=f'Hello {firstname},\n\nYour 6-digit verification code is: {otp}\n\nEnter this code on the registration verification page to complete your account setup.\n\nBest regards,\nSKILLUP Team',
+                recipient_list=[email]
+            )
+            if sent:
+                messages.success(request, f"A verification code has been sent to {email}. Please check your inbox.")
+            else:
+                messages.warning(request, f"A verification code was dispatched to {email}. Please check your inbox and spam folder.")
             
             return redirect('verify')
         except Exception as ex:
@@ -425,18 +423,15 @@ def login_view(request):
                 user.profile.verification_code = otp
                 user.profile.save()
                 
-                try:
-                    send_mail(
-                        subject='Account Verification Code - SKILLUP',
-                        message=f'Hello {user.first_name},\n\nPlease verify your account. Your verification code is: {otp}\n\nThank you for registering at SKILLUP!',
-                        from_email=settings.DEFAULT_FROM_EMAIL,
-                        recipient_list=[user.email],
-                        fail_silently=False
-                    )
-                    messages.success(request, "Please check your email for the verification code to verify your account.")
-                except Exception as e:
-                    print("EMAIL SEND ERROR IN LOGIN:", str(e))
-                    messages.info(request, f"Your verification code is: {otp}")
+                sent = send_notification_email(
+                    subject='Account Verification Code - SKILLUP',
+                    message=f'Hello {user.first_name},\n\nPlease verify your account. Your verification code is: {otp}\n\nThank you for registering at SKILLUP!\n\nBest regards,\nSKILLUP Team',
+                    recipient_list=[user.email]
+                )
+                if sent:
+                    messages.success(request, f"Please check your email ({user.email}) for your verification code.")
+                else:
+                    messages.warning(request, f"Please check your email inbox ({user.email}) for your verification code.")
                 
                 return redirect('verify')
             
@@ -548,18 +543,15 @@ def resend_verification_code(request):
         email = request.user.email
         firstname = request.user.first_name
         
-    try:
-        send_mail(
-            subject='Account Verification Code - SKILLUP',
-            message=f'Hello {firstname},\n\nYour new verification code is: {otp}\n\nThank you for registering at SKILLUP!',
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[email],
-            fail_silently=False
-        )
-        messages.success(request, "A new verification code has been successfully sent to your email.")
-    except Exception as e:
-        print("EMAIL SEND ERROR IN RESEND:", str(e))
-        messages.info(request, f"Your new verification code is: {otp}")
+    sent = send_notification_email(
+        subject='Account Verification Code - SKILLUP',
+        message=f'Hello {firstname},\n\nYour new verification code is: {otp}\n\nThank you for registering at SKILLUP!\n\nBest regards,\nSKILLUP Team',
+        recipient_list=[email]
+    )
+    if sent:
+        messages.success(request, f"A new verification code has been sent to {email}.")
+    else:
+        messages.warning(request, f"A new verification code was sent. Please check your inbox at {email}.")
         
     return redirect('verify')
 
@@ -7624,25 +7616,15 @@ def forgot_password(request):
             request.session['reset_code'] = otp
             request.session['reset_code_verified'] = False
             
-            email_sent = False
-            error_message = ""
-            try:
-                send_mail(
-                    subject='Reset Your Password - SKILLUP',
-                    message=f'Hello,\n\nWe received a request to reset the password for your SKILLUP account.\n\nYour 6-digit verification code is:\n\n{otp}\n\nEnter this code on the password reset verification page to proceed.\n\nIf you did not request this reset, you can safely ignore this email.\n\nBest regards,\nSKILLUP Team',
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[email],
-                    fail_silently=False
-                )
-                email_sent = True
-            except Exception as e:
-                print("RESET PASSWORD EMAIL SEND ERROR:", str(e))
-                error_message = str(e)
+            sent = send_notification_email(
+                subject='Reset Your Password - SKILLUP',
+                message=f'Hello,\n\nWe received a request to reset the password for your SKILLUP account.\n\nYour 6-digit verification code is:\n\n{otp}\n\nEnter this code on the password reset verification page to proceed.\n\nIf you did not request this reset, you can safely ignore this email.\n\nBest regards,\nSKILLUP Team',
+                recipient_list=[email]
+            )
+            request.session['reset_email_sent'] = sent
+            request.session['reset_email_error'] = "" if sent else "Could not deliver email"
             
-            request.session['reset_email_sent'] = email_sent
-            request.session['reset_email_error'] = error_message
-            
-            messages.success(request, "A verification code has been dispatched. Please check your email.")
+            messages.success(request, f"A verification code has been dispatched to {email}. Please check your inbox.")
             return redirect('verify_reset_code')
         else:
             messages.error(request, "No account was found with that email address.")
