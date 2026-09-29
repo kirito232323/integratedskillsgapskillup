@@ -242,14 +242,5 @@
                 }
             });
         }
-
-        // Visual feedback for social buttons
-        const socialBtns = document.querySelectorAll('button[class*="border-outline-variant"]');
-        socialBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                btn.classList.add('opacity-50');
-                setTimeout(() => btn.classList.remove('opacity-50'), 200);
-            });
-        });
     </script>
 </body></html>
