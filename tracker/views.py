@@ -4902,6 +4902,7 @@ def profile_wizard(request):
                 profile_skills_list.append(skill_obj.name)
                 
         # 4. Finalize Profile
+        preferred_job = request.POST.get('preferred_job', '').strip()
         profile.is_profile_complete = True
         if not is_fresh_grad and position:
             profile.title = position
@@ -4911,10 +4912,10 @@ def profile_wizard(request):
             profile.title = preferred_job
         else:
             profile.title = "General Applicant"
+            
         if profile_skills_list:
             profile.skills = ", ".join(profile_skills_list)
             
-        preferred_job = request.POST.get('preferred_job', '').strip()
         if preferred_job:
             profile.preferred_job = preferred_job
                 
