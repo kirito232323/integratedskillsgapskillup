@@ -154,3 +154,4 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'integratedskillsgapskillup@gmail.com'
 EMAIL_HOST_PASSWORD = 'pgwcxwmzxbixfgcw'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_TIMEOUT = 5

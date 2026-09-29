@@ -328,68 +328,77 @@ from django.conf import settings
 
 def signup_view(request):
     if request.method == 'POST':
-        firstname = request.POST.get('firstname', '').strip()
-        lastname = request.POST.get('lastname', '').strip()
-        email = request.POST.get('email', '').strip()
-        phone = request.POST.get('phone', '').strip()
-        password = request.POST.get('password', '')
-        confirm_password = request.POST.get('confirm_password', '')
-        role = request.POST.get('role', 'applicant')
-        birthdate = request.POST.get('birthdate')
-        civil_status = request.POST.get('civil_status')
-        company_name = request.POST.get('company_name', '').strip()
+        try:
+            firstname = request.POST.get('firstname', '').strip()
+            lastname = request.POST.get('lastname', '').strip()
+            email = request.POST.get('email', '').strip()
+            phone = request.POST.get('phone', '').strip()
+            password = request.POST.get('password', '')
+            confirm_password = request.POST.get('confirm_password', '')
+            role = request.POST.get('role', 'applicant')
+            birthdate = request.POST.get('birthdate', '').strip()
+            civil_status = request.POST.get('civil_status', '').strip()
+            company_name = request.POST.get('company_name', '').strip()
 
-        if password != confirm_password:
-            messages.error(request, "Passwords do not match.")
-            return render(request, 'tracker/LOGIN/sign_up_account_details.html')
-
-        if role == 'employer' and not company_name:
-            messages.error(request, "Company Name is required for Employer accounts.")
-            return render(request, 'tracker/LOGIN/sign_up_account_details.html')
-
-        if User.objects.filter(username=email).exists():
-            messages.error(request, "An account with this email already exists.")
-            return render(request, 'tracker/LOGIN/sign_up_account_details.html')
-
-        # Check duplicate applicant by name and birthdate
-        if role == 'applicant' and birthdate:
-            duplicate = Profile.objects.filter(
-                user__first_name__iexact=firstname,
-                user__last_name__iexact=lastname,
-                birthdate=birthdate
-            ).first()
-            if duplicate:
-                messages.error(request, f"An applicant profile for {firstname} {lastname} with birthdate {birthdate} already exists.")
+            if password != confirm_password:
+                messages.error(request, "Passwords do not match.")
                 return render(request, 'tracker/LOGIN/sign_up_account_details.html')
 
-        otp = str(random.randint(100000, 999999))
-        request.session['pending_signup'] = {
-            'firstname': firstname,
-            'lastname': lastname,
-            'email': email,
-            'phone': phone,
-            'password': password,
-            'role': role,
-            'birthdate': birthdate,
-            'civil_status': civil_status,
-            'company_name': company_name,
-            'otp': otp
-        }
-        
-        try:
-            send_mail(
-                subject='Account Creation Confirmation - SKILLUP',
-                message=f'Hello {firstname},\n\nYour verification code is: {otp}\n\nYour account will be created once you confirm this code on our registration portal.',
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[email],
-                fail_silently=False
-            )
-            messages.success(request, "Registration successful! Please check your email for your verification code.")
-        except Exception as e:
-            print("EMAIL SEND ERROR IN SIGNUP:", str(e))
-            messages.warning(request, f"Notice: Could not deliver email (SMTP Error: {str(e)}). For local testing, your verification code is: {otp}")
-        
-        return redirect('verify')
+            if role == 'employer' and not company_name:
+                messages.error(request, "Company Name is required for Employer accounts.")
+                return render(request, 'tracker/LOGIN/sign_up_account_details.html')
+
+            if User.objects.filter(username=email).exists():
+                messages.error(request, "An account with this email already exists.")
+                return render(request, 'tracker/LOGIN/sign_up_account_details.html')
+
+            # Check duplicate applicant by name and birthdate
+            if role == 'applicant' and birthdate:
+                try:
+                    duplicate = Profile.objects.filter(
+                        user__first_name__iexact=firstname,
+                        user__last_name__iexact=lastname,
+                        birthdate=birthdate
+                    ).first()
+                    if duplicate:
+                        messages.error(request, f"An applicant profile for {firstname} {lastname} with birthdate {birthdate} already exists.")
+                        return render(request, 'tracker/LOGIN/sign_up_account_details.html')
+                except Exception as _b_err:
+                    print("Duplicate check notice:", _b_err)
+
+            otp = str(random.randint(100000, 999999))
+            request.session['pending_signup'] = {
+                'firstname': firstname,
+                'lastname': lastname,
+                'email': email,
+                'phone': phone,
+                'password': password,
+                'role': role,
+                'birthdate': birthdate if birthdate else None,
+                'civil_status': civil_status,
+                'company_name': company_name,
+                'otp': otp
+            }
+            
+            try:
+                send_mail(
+                    subject='Account Creation Confirmation - SKILLUP',
+                    message=f'Hello {firstname},\n\nYour verification code is: {otp}\n\nYour account will be created once you confirm this code on our registration portal.',
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[email],
+                    fail_silently=False
+                )
+                messages.success(request, "Registration successful! Please check your email for your verification code.")
+            except Exception as e:
+                print("EMAIL SEND ERROR IN SIGNUP:", str(e))
+                messages.warning(request, f"Notice: Could not deliver email (SMTP Error: {str(e)}). For verification, your code is: {otp}")
+            
+            return redirect('verify')
+        except Exception as ex:
+            import traceback
+            traceback.print_exc()
+            messages.error(request, f"Signup error: {str(ex)}")
+            return render(request, 'tracker/LOGIN/sign_up_account_details.html')
     return render(request, 'tracker/LOGIN/sign_up_account_details.html')
 
 def login_view(request):

@@ -3,7 +3,7 @@ services:
     name: skillup-tracker
     runtime: python
     buildCommand: "./build.sh"
-    startCommand: "gunicorn skillup_project.wsgi:application"
+    startCommand: "python manage.py migrate && gunicorn skillup_project.wsgi:application"
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.5
